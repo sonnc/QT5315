@@ -23,6 +23,7 @@
         }
         url.append(request.getContextPath());
         String URL = url.toString() + "/";
+        session.setAttribute("httpURL", URL);
     %>
     <base href="<%=URL%>">
     <title>Hệ thống đăng ký thực tập trực tuyến - HUST</title>

@@ -5,12 +5,19 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
+
 <!DOCTYPE html>
 <html>
-        <%@include file="HeaderFooter/head.jsp" %>
+    <%@include file="pages/HeaderFooter/head.jsp" %>
     <body>
-        <%@include file="HeaderFooter/header.jsp" %>
-
+        <%= session.setAttribute("sinhVien", "sinhVien")%>
+        <%            if (session.getAttribute("sinhVien").equals("sinhVien")) {
+        %>
+        <%@include file="pages/HeaderFooter/sinhVienHeader.jsp" %>
+        <%
+            }
+        %>
         <div class="banner-bottom-w3l" id="about">
             <div class="container">
                 <div class="title-div">
@@ -403,7 +410,7 @@
         </div>
         <!-- //testimonials -->
 
-        <%@include file="HeaderFooter/footer.jsp" %>
-        <%@include file="HeaderFooter/js.jsp" %>
+        <%@include file="pages/HeaderFooter/footer.jsp" %>
+        <%@include file="pages/HeaderFooter/js.jsp" %>
     </body>
 </html>

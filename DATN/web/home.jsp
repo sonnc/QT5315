@@ -11,7 +11,7 @@
 <html>
     <%@include file="pages/HeaderFooter/head.jsp" %>
     <body>
-        <%= session.setAttribute("sinhVien", "sinhVien")%>
+       
         <%            if (session.getAttribute("sinhVien").equals("sinhVien")) {
         %>
         <%@include file="pages/HeaderFooter/sinhVienHeader.jsp" %>

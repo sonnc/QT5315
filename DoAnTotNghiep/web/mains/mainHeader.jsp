@@ -1,17 +1,22 @@
 <%-- 
     Document   : mainHeader
-    Created on : Feb 26, 2018, 9:40:34 AM
+    Created on : Mar 6, 2018, 11:10:13 PM
     Author     : sonnc
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<div>
+<%                session.setAttribute("email", "sinhVien");
+    if (session.getAttribute("email").equals("sinhVien")) {
+%>
+<%@include file="/mains/sinhVienHeader.jsp" %>
+<%
+} else {
+%>
+<%@include  file="/mains/header.jsp"%>
+<%
+    }
+%>
+</div>

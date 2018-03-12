@@ -12,3 +12,5 @@
 <script src="./pages/libs/js/google-code-prettify/prettify.js"></script>
 <script src="./pages/libs/js/animate.js"></script>
 <script src="./pages/libs/js/custom.js"></script>
+<script src="./pages/libs/js/jquery.validate.min.js"></script>
+<script src="./pages/libs/js/validate.js"></script>

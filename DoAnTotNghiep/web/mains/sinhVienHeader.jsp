@@ -35,11 +35,10 @@
                                         <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown">Đề tài</a>
                                         <ul class="dropdown-menu">
                                             <li><a href="./pages/sinhvien/detai.jsp">Danh sách đề tài</a></li>
-                                            <li><a href="right-sidebar.html">Đăng ký đề tài</a></li>
                                             <li><a href="left-sidebar.html">Đề tài đã đăng ký</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="portfolio.html">Điểm thi</a></li>
+                                    <li><a href="./pages/sinhvien/diemthi.jsp">Điểm thi</a></li>
                                     <li><a href="portfolio.html">Quy trình</a></li>
                                 </ul>
                             </li>

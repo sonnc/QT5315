@@ -4,7 +4,6 @@
     Author     : sonnc
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <%
         StringBuffer url = new StringBuffer();
@@ -25,7 +24,6 @@
         session.setAttribute("httpURL", URL);
     %>
     <base href="<%=URL%>">
-    <title>Hệ thống đăng ký thực tập trực tuyến - HUST</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Bootstrap 3 template for corporate business" />
     <!-- css -->
@@ -39,4 +37,4 @@
 
     <!-- boxed bg -->
     <link id="bodybg" href="./pages/libs/bodybg/bg1.css" rel="stylesheet" type="text/css" />
-</head>
+    <link href="./pages/libs/img/logoEn.png" rel="shortcut icon" type="image/x-icon" />

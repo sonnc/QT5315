@@ -8,7 +8,10 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
-    <%@include file="mains/head.jsp" %>
+    <head>
+        <title>Hệ thống đăng ký thực tập trực tuyến - HUST</title>
+        <%@include file="mains/head.jsp" %>
+    </head>
     <body>
         <div id="wrapper">
             <%@include file="mains/mainHeader.jsp" %>
@@ -17,8 +20,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <%
-                                for (int i = 0; i < 5; i++) {
+                            <%                                for (int i = 0; i < 5; i++) {
                             %>
                             <div class="row" style="margin: 0px">
                                 <div class="col-lg-2">
@@ -57,7 +59,7 @@
                             </div>
                             <div class="clear"></div>
                         </div>
-                            <%@include file="mains/RightSidebar.jsp" %>
+                        <%@include file="mains/RightSidebar.jsp" %>
                     </div>
                 </div>
             </section>

@@ -59,7 +59,7 @@
                             </div>
                             <div class="clear"></div>
                         </div>
-                            <%@include file="../../mains/RightSidebar.jsp" %>
+                        <%@include file="../../mains/RightSidebar.jsp" %>
                     </div>
                 </div>
             </section>

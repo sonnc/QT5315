@@ -55,12 +55,12 @@
     <body>
         <div class="wrap">
             <div class="logo">
-                <img src="pages/libs/img/404.png" alt=""  />
-                <p><a href="home.jsp">Trở về trang chủ</a></p>
+                <img src="<%=request.getContextPath()%>/pages/libs/img/404.png" alt=""  />
+                <p><a href="<%=request.getContextPath()%>/home.jsp">Trở về trang chủ</a></p>
             </div>
         </div>
         <div class="footer">
-           
+
         </div>
 
     </body>

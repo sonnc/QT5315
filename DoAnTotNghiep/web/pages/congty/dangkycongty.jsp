@@ -1,6 +1,6 @@
 <%-- 
-    Document   : capnhatthongtin
-    Created on : Mar 6, 2018, 11:22:30 PM
+    Document   : dangkycongty
+    Created on : Mar 13, 2018, 9:28:31 AM
     Author     : sonnc
 --%>
 
@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Cập nhật thông tin cá nhân.</title>
+        <title>JSP Page</title>
     </head>
     <body>
         <h1>Hello World!</h1>

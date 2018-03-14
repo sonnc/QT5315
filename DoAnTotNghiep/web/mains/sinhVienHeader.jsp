@@ -19,36 +19,36 @@
                         </button>
 
                     </div>
-                    <a class="navbar-brand" href="index.html"><img src="./pages/libs/img/logoEn.png" alt="" style="width: 100%; height: 100%"/></a>
+                    <a class="navbar-brand" href="<%=request.getContextPath()%>/home.jsp"><img src="./pages/libs/img/logoEn.png" alt="" style="width: 100%; height: 100%"/></a>
                 </div>
                 <div class="col-lg-6">
                     <div class="navbar-collapse collapse ">
                         <ul class="nav navbar-nav">
                             <li class="dropdown active">
-                                <a href="home.jsp">Trang chủ</a>
+                                <a href="<%=request.getContextPath()%>/home.jsp">Trang chủ</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Thực tập<i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="typography.html">Công ty</a></li>
+                                    <li><a href="#">Công ty</a></li>
                                     <li class="dropdown-submenu">
-                                        <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown">Đề tài</a>
+                                        <a class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown">Đề tài</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="./pages/sinhvien/detai.jsp">Danh sách đề tài</a></li>
-                                            <li><a href="left-sidebar.html">Đề tài đã đăng ký</a></li>
+                                            <li><a href="<%=session.getAttribute("httpURL")%>pages/sinhvien/detai.jsp">Danh sách đề tài</a></li>
+                                            <li><a href="<%=session.getAttribute("httpURL")%>pages/sinhvien/detaidangky.jsp">Đề tài đã đăng ký</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="./pages/sinhvien/diemthi.jsp">Điểm thi</a></li>
-                                    <li><a href="portfolio.html">Quy trình</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/sinhvien/diemthi.jsp">Điểm thi</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/sinhvien/quytrinh.jsp">Quy trình</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown"><a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Tài liệu<i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="blog-rightsidebar.html">Báo cáo</a></li>
-                                    <li><a href="blog-leftsidebar.html">Tài liệu học tập</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>">Báo cáo</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>">Tài liệu học tập</a></li>
                                 </ul>
                             </li>
-                            <li><a href="contact.html">Email</a></li>
+                            <li><a href="<%=session.getAttribute("httpURL")%>">Email</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false"><img style="width: 25px; height: 25px" src="./pages/libs/img/avatar.png"></a>
                                 <ul class="dropdown-menu">

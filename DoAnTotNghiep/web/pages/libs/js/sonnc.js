@@ -29,9 +29,32 @@ $(document).ready(function () {
                 required: true,
                 digits: true
             },
-            myFile:{
+            khoaVien: {
+                required: true
+            },
+            gioiTinh: {
+                required: true
+            },
+            ngaySinh: {
+                required: true,
+                date: true
+            },
+            diaChi: {
+                required: true
+            },
+            dienThoai: {
+                required: true,
+                minlength: 10,
+                maxlength: 15,
+                digits: true
+            },
+            laptop: {
+                required: true
+            },
+            myFile: {
                 required: true
             }
+
         },
         messages: {
             email: {
@@ -56,6 +79,31 @@ $(document).ready(function () {
             khoa: {
                 required: "Xin hãy nhập khóa học của bạn !",
                 digits: "Khóa học phải là số nguyên dương !"
+            },
+            khoaVien: {
+                required: "Hãy điền khoa/ viện của bạn !"
+            },
+            gioiTinh: {
+                required: "Hãy chọn giới tính !"
+            },
+            ngaySinh: {
+                required: "Ngày sinh không được để trống !",
+                date: "Định dạng ngày không chính xác !"
+            },
+            diaChi: {
+                required: "Địa chỉ không được để trống !"
+            },
+            dienThoai: {
+                required: "Điện thoại không được để trống !",
+                minlength: "Điện thoại tối thiểu 10 số !",
+                maxlength: "Điện thoại quá 15 số !",
+                digits: "Điện thoại phải là số nguyên dương !"
+            },
+            laptop: {
+                required: "Laptop không được để trống !"
+            },
+            myFile: {
+                required: "Ảnh thẻ không được để trống !"
             }
 
         }

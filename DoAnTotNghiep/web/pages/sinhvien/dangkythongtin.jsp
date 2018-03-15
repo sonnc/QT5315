@@ -41,17 +41,17 @@
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="khoa" placeholder="Khóa" required="true"/>
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="khoaVien" placeholder="Khoa/ Viện" required="true"/>
                                         <select style="margin-bottom: 15px;height: 45px;" name="gioiTinh" class="form-control" required="required"> 
-                                            <option value="Null">Giới tính</option>
+                                            <option>Giới tính</option>
                                             <option value="True">Nam</option>
                                             <option value="False">Nữ</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-4">
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="hoten" placeholder="Ngày sinh"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="hoten" placeholder="Địa chỉ"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="hoten" placeholder="Điện thoại"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="hoten" placeholder="Email"/>
-                                        <select style="margin-bottom: 15px;height: 45px;" name="sinhVien.lapTop" class="form-control" required="required"> 
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="ngaySinh" placeholder="Ngày sinh" required="true" />
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="diaChi" placeholder="Địa chỉ" required="true" />
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="dienThoai" placeholder="Điện thoại" required="true" />
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="email" placeholder="Email" required="true" />
+                                        <select style="margin-bottom: 15px;height: 45px;" name="laptop" class="form-control" required="true"> 
                                             <option value="Null">LapTop</option>
                                             <option value="True">Có</option>
                                             <option value="False">Không</option>
@@ -90,23 +90,23 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <label>Ngoại ngữ</label>
-                                        <textarea style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Các chứng chỉ Tiếng anh, Tiếng pháp, Tiếng nhật,...."></textarea>
+                                        <textarea name="ngoaiNgu" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Các chứng chỉ Tiếng anh, Tiếng pháp, Tiếng nhật,...."></textarea>
                                         <label>Kỹ năng lập trình</label>
-                                        <textarea style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng lập trình nào? Hãy viết tất cả các kỹ năng mà bạn có theo hướng dẫn ở trên."></textarea>
+                                        <textarea name="kyNangLT" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng lập trình nào? Hãy viết tất cả các kỹ năng mà bạn có theo hướng dẫn ở trên."></textarea>
                                         <label>Kỹ năng mềm/ kỹ năng khác</label>
-                                        <textarea style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng mềm nào? Kỹ năng, tình nguyện, văn phòng,..."></textarea>
+                                        <textarea name="kyNangMem" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng mềm nào? Kỹ năng, tình nguyện, văn phòng,..."></textarea>
                                         <label>Mục tiêu</label>
-                                        <textarea style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Mục tiêu của bạn trước - trong - sau khi được thực tập tại doanh nghiệp?"></textarea>
+                                        <textarea name="mucTieu" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Mục tiêu của bạn trước - trong - sau khi được thực tập tại doanh nghiệp?"></textarea>
                                     </div>
                                     <div class="col-lg-6">
                                         <label>Hoạt động</label>
-                                        <textarea style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn tham gia các hoạt động nào? Hãy kể ra các hoạt động của bạn."></textarea>
+                                        <textarea name="hoatDong" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn tham gia các hoạt động nào? Hãy kể ra các hoạt động của bạn."></textarea>
                                         <label>Giải thưởng</label>
-                                        <textarea style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những giải thưởng nào? Học tập, học bổng, nghiên cứu,...?"></textarea>
+                                        <textarea name="giaiThuong" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những giải thưởng nào? Học tập, học bổng, nghiên cứu,...?"></textarea>
                                         <label>Sở thích</label>
-                                        <textarea style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những ở thích gì? Hãy kể ra một vài sở thích tiêu biểu?"></textarea>
+                                        <textarea name="soThich" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những ở thích gì? Hãy kể ra một vài sở thích tiêu biểu?"></textarea>
                                         <label>Dự án</label>
-                                        <textarea style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn đã tham gia các dự án nào? Tên dự án, vị trí, vai trò, sản phẩm,...."></textarea>
+                                        <textarea name="duAn" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn đã tham gia các dự án nào? Tên dự án, vị trí, vai trò, sản phẩm,...."></textarea>
                                     </div>
 
                                 </div>

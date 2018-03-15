@@ -55,7 +55,7 @@
                                     <li><a><p style="color: red">Nguyễn Công Sơn</p></a></li>
                                     <li><a href="typography.html">Thông tin cá nhân</a></li>
                                     <li><a href="portfolio.html">scac</a></li>
-                                    <li><a href="portfolio.html">Đăng xuất</a></li>
+                                    <li><a href="logout">Đăng xuất</a></li>
                                 </ul>
                             </li>
                         </ul>

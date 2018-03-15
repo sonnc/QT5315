@@ -20,4 +20,7 @@
         <error-code>404</error-code>
         <location>/404.jsp</location>
     </error-page>
+    <listener>
+        <listener-class>hust.sie.inpg12.sonnc.systemauto.Action</listener-class>
+    </listener>
 </web-app>

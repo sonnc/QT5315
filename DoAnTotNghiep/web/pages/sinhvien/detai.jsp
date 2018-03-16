@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-lg-1">
                                     <p><strong>0/20</strong></p>
-                                    <button class="btn-add">Đăng ký</button>
+                                    <button class="btn btn-info">Đăng ký</button>
                                 </div>
                             </div>
                             <%

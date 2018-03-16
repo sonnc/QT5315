@@ -49,21 +49,21 @@ Contributor(s):
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.jdbc.fetch_size">100000</property>
     <property name="hibernate.current_session_context_class">thread</property>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/GiangVienHuongDan.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/DeTai.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/SinhVienDiem.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/SinhVienInfo.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/CongTy.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/Email.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/DaiDienCongTy.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/SinhVienFile.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/Login.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/SinhVienThucTap.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/HeSoDiem.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/SinhVienDangKy.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/ThongBao.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/Logs.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/GiangVienPhuTrach.hbm.xml"/>
-    <mapping resource="hust/sie/inpg12/sonnc/entities/SinhVien.hbm.xml"/>
+    <mapping resource="entities/DeTai.hbm.xml"/>
+    <mapping resource="entities/GiangVienHuongDan.hbm.xml"/>
+    <mapping resource="entities/SinhVienThucTap.hbm.xml"/>
+    <mapping resource="entities/SinhVienFile.hbm.xml"/>
+    <mapping resource="entities/SinhVien.hbm.xml"/>
+    <mapping resource="entities/Logs.hbm.xml"/>
+    <mapping resource="entities/HeSoDiem.hbm.xml"/>
+    <mapping resource="entities/SinhVienDangKy.hbm.xml"/>
+    <mapping resource="entities/ThongBao.hbm.xml"/>
+    <mapping resource="entities/CongTy.hbm.xml"/>
+    <mapping resource="entities/DaiDienCongTy.hbm.xml"/>
+    <mapping resource="entities/SinhVienDiem.hbm.xml"/>
+    <mapping resource="entities/Login.hbm.xml"/>
+    <mapping resource="entities/SinhVienInfo.hbm.xml"/>
+    <mapping resource="entities/GiangVienPhuTrach.hbm.xml"/>
+    <mapping resource="entities/Email.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 1:43:24 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.Logs" table="logs" catalog="doantotnghiep" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="login" class="entities.Login" fetch="select">
+            <column name="nguoi_dung" not-null="true" />
+        </many-to-one>
+        <property name="thoiGian" type="time">
+            <column name="thoi_gian" length="8" />
+        </property>
+        <property name="ngayThang" type="date">
+            <column name="ngay_thang" length="10" />
+        </property>
+        <property name="noiDung" type="string">
+            <column name="noi_dung" />
+        </property>
+    </class>
+</hibernate-mapping>

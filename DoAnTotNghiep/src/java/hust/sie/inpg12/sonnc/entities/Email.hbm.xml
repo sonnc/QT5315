@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 1:46:11 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="hust.sie.inpg12.sonnc.entities.Email" table="email" catalog="doantotnghiep" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="login" class="hust.sie.inpg12.sonnc.entities.Login" fetch="select">
+            <column name="nguoi_gui" not-null="true" />
+        </many-to-one>
+        <property name="tieuDe" type="string">
+            <column name="tieu_de" length="500" />
+        </property>
+        <property name="noiDung" type="string">
+            <column name="noi_dung" length="65535" />
+        </property>
+        <property name="nguoiNhan" type="string">
+            <column name="nguoi_nhan" length="1000" />
+        </property>
+        <property name="thoiGian" type="timestamp">
+            <column name="thoi_gian" length="19" />
+        </property>
+        <property name="trangThai" type="java.lang.Boolean">
+            <column name="trang_thai" />
+        </property>
+    </class>
+</hibernate-mapping>

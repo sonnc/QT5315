@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 1:43:24 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entities.Login" table="login" catalog="doantotnghiep" optimistic-lock="version">
+        <id name="email" type="string">
+            <column name="email" />
+            <generator class="assigned" />
+        </id>
+        <property name="pass" type="string">
+            <column name="pass" not-null="true" />
+        </property>
+        <property name="rule" type="int">
+            <column name="rule" not-null="true" />
+        </property>
+        <set name="thongBaos" table="thong_bao" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="nguoi_dang" not-null="true" />
+            </key>
+            <one-to-many class="entities.ThongBao" />
+        </set>
+        <set name="sinhViens" table="sinh_vien" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="email" not-null="true" />
+            </key>
+            <one-to-many class="entities.SinhVien" />
+        </set>
+        <set name="giangVienHuongDans" table="giang_vien_huong_dan" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="email" not-null="true" />
+            </key>
+            <one-to-many class="entities.GiangVienHuongDan" />
+        </set>
+        <set name="daiDienCongTies" table="dai_dien_cong_ty" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="email" not-null="true" />
+            </key>
+            <one-to-many class="entities.DaiDienCongTy" />
+        </set>
+        <set name="logses" table="logs" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="nguoi_dung" not-null="true" />
+            </key>
+            <one-to-many class="entities.Logs" />
+        </set>
+        <set name="giangVienPhuTraches" table="giang_vien_phu_trach" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="email" not-null="true" />
+            </key>
+            <one-to-many class="entities.GiangVienPhuTrach" />
+        </set>
+        <set name="emails" table="email" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="nguoi_gui" not-null="true" />
+            </key>
+            <one-to-many class="entities.Email" />
+        </set>
+    </class>
+</hibernate-mapping>

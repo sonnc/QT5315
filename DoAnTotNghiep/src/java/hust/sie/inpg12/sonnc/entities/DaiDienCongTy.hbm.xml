@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 1:46:11 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="hust.sie.inpg12.sonnc.entities.DaiDienCongTy" table="dai_dien_cong_ty" catalog="doantotnghiep" optimistic-lock="version">
+        <id name="maDaiDien" type="java.lang.Integer">
+            <column name="ma_dai_dien" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="congTy" class="hust.sie.inpg12.sonnc.entities.CongTy" fetch="select">
+            <column name="ma_cong_ty" not-null="true" />
+        </many-to-one>
+        <many-to-one name="login" class="hust.sie.inpg12.sonnc.entities.Login" fetch="select">
+            <column name="email" not-null="true" />
+        </many-to-one>
+        <property name="hoTen" type="string">
+            <column name="ho_ten" not-null="true" />
+        </property>
+        <property name="chucVu" type="string">
+            <column name="chuc_vu" />
+        </property>
+        <property name="diaChi" type="string">
+            <column name="dia_chi" length="65535" />
+        </property>
+        <property name="dienThoai" type="string">
+            <column name="dien_thoai" length="15" not-null="true" />
+        </property>
+        <property name="avatar" type="string">
+            <column name="avatar" length="500" />
+        </property>
+    </class>
+</hibernate-mapping>

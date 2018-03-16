@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 1:46:11 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="hust.sie.inpg12.sonnc.entities.SinhVienInfo" table="sinh_vien_info" catalog="doantotnghiep" optimistic-lock="version">
+        <id name="mssv" type="int">
+            <column name="mssv" />
+            <generator class="foreign">
+                <param name="property">sinhVien</param>
+            </generator>
+        </id>
+        <one-to-one name="sinhVien" class="hust.sie.inpg12.sonnc.entities.SinhVien" constrained="true"></one-to-one>
+        <property name="ngoaiNgu" type="string">
+            <column name="ngoai_ngu" length="500" />
+        </property>
+        <property name="kyNangLt" type="string">
+            <column name="ky_nang_lt" length="65535" />
+        </property>
+        <property name="nyNangKhac" type="string">
+            <column name="ny_nang_khac" length="65535" />
+        </property>
+        <property name="mucTieu" type="string">
+            <column name="muc_tieu" length="65535" />
+        </property>
+        <property name="hoatDong" type="string">
+            <column name="hoat_dong" length="65535" />
+        </property>
+        <property name="giaiThuong" type="string">
+            <column name="giai_thuong" length="65535" />
+        </property>
+        <property name="soThich" type="string">
+            <column name="so_thich" length="65535" />
+        </property>
+        <property name="duAn" type="string">
+            <column name="du_an" length="65535" />
+        </property>
+    </class>
+</hibernate-mapping>

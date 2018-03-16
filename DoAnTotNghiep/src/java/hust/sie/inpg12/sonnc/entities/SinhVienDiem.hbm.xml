@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 16, 2018 1:46:11 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="hust.sie.inpg12.sonnc.entities.SinhVienDiem" table="sinh_vien_diem" catalog="doantotnghiep" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="sinhVien" class="hust.sie.inpg12.sonnc.entities.SinhVien" fetch="select">
+            <column name="mssv" not-null="true" />
+        </many-to-one>
+        <property name="diemPhanHoi" type="java.lang.Double">
+            <column name="diem_phan_hoi" precision="2" />
+        </property>
+        <property name="diemBcqt" type="java.lang.Double">
+            <column name="diem_bcqt" precision="2" />
+        </property>
+        <property name="diemQuaTrinh" type="java.lang.Double">
+            <column name="diem_qua_trinh" precision="2" />
+        </property>
+        <property name="diemCuoiKy" type="java.lang.Double">
+            <column name="diem_cuoi_ky" precision="2" />
+        </property>
+    </class>
+</hibernate-mapping>

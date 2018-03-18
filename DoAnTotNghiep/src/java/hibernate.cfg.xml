@@ -46,9 +46,11 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/doantotnghiep?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">sonnc</property>
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.jdbc.fetch_size">100000</property>
     <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.jdbc.fetch_size">10000000</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
+    <property name="hibernate.format_sql">true</property>
     <mapping resource="hust/sie/inpg12/sonnc/entities/GiangVienHuongDan.hbm.xml"/>
     <mapping resource="hust/sie/inpg12/sonnc/entities/DeTai.hbm.xml"/>
     <mapping resource="hust/sie/inpg12/sonnc/entities/SinhVienDiem.hbm.xml"/>

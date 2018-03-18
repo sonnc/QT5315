@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <header>
     <div class="navbar navbar-default navbar-static-top">
@@ -52,7 +53,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false"><img style="width: 25px; height: 25px" src="./pages/libs/img/avatar.png"></a>
                                 <ul class="dropdown-menu">
-                                    <li><a><p style="color: red">Nguyễn Công Sơn</p></a></li>
+                                    <li><a><p style="color: red"><%=session.getAttribute("email").toString() %></p></a></li>
                                     <li><a href="typography.html">Thông tin cá nhân</a></li>
                                     <li><a href="portfolio.html">scac</a></li>
                                     <li><a href="logout">Đăng xuất</a></li>

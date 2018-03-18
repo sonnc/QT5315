@@ -8,15 +8,15 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <div>
-<%                session.setAttribute("email", "sinhVien");
-    if (session.getAttribute("email").equals("sinhVien")) {
-%>
-<%@include file="/mains/sinhVienHeader.jsp" %>
-<%
-} else {
-%>
-<%@include  file="/mains/header.jsp"%>
-<%
-    }
-%>
+    <%
+        if (Integer.parseInt(session.getAttribute("rule").toString()) == 0) {
+    %>
+    <%@include file="/mains/sinhVienHeader.jsp" %>
+    <%
+    } else {
+    %>
+    <%@include  file="/mains/header.jsp"%>
+    <%
+        }
+    %>
 </div>

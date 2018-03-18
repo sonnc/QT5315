@@ -21,15 +21,15 @@ public class Action implements ServletContextListener {
  
     @Override
     public void contextInitialized(ServletContextEvent event) {
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        Runnable command = new Controller(event.getServletContext());
-        // Delay 1 Minute to first execution
-        long initialDelay = 1;
-        TimeUnit unit = TimeUnit.MINUTES;
-        // period the period between successive executions
-        long period = 1;// 60 Minute!
- 
-        scheduler.scheduleAtFixedRate(command, initialDelay, period, unit);
+//        scheduler = Executors.newSingleThreadScheduledExecutor();
+//        Runnable command = new Controller(event.getServletContext());
+//        // Delay 1 Minute to first execution
+//        long initialDelay = 1;
+//        TimeUnit unit = TimeUnit.MINUTES;
+//        // period the period between successive executions
+//        long period = 1;// 60 Minute!
+// 
+//        scheduler.scheduleAtFixedRate(command, initialDelay, period, unit);
     }
  
     @Override

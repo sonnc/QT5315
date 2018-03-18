@@ -41,20 +41,20 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="doantotnghiep"/>
-  <table-filter match-name="sinh_vien_diem"/>
-  <table-filter match-name="de_tai"/>
-  <table-filter match-name="sinh_vien_info"/>
-  <table-filter match-name="dai_dien_cong_ty"/>
-  <table-filter match-name="email"/>
-  <table-filter match-name="he_so_diem"/>
-  <table-filter match-name="sinh_vien_file"/>
-  <table-filter match-name="sinh_vien"/>
-  <table-filter match-name="giang_vien_phu_trach"/>
-  <table-filter match-name="sinh_vien_dang_ky"/>
-  <table-filter match-name="cong_ty"/>
   <table-filter match-name="sinh_vien_thuc_tap"/>
+  <table-filter match-name="cong_ty"/>
+  <table-filter match-name="sinh_vien_diem"/>
   <table-filter match-name="login"/>
-  <table-filter match-name="logs"/>
-  <table-filter match-name="thong_bao"/>
   <table-filter match-name="giang_vien_huong_dan"/>
+  <table-filter match-name="logs"/>
+  <table-filter match-name="dai_dien_cong_ty"/>
+  <table-filter match-name="thong_bao"/>
+  <table-filter match-name="sinh_vien_file"/>
+  <table-filter match-name="de_tai"/>
+  <table-filter match-name="sinh_vien_dang_ky"/>
+  <table-filter match-name="giang_vien_phu_trach"/>
+  <table-filter match-name="he_so_diem"/>
+  <table-filter match-name="sinh_vien"/>
+  <table-filter match-name="sinh_vien_info"/>
+  <table-filter match-name="email"/>
 </hibernate-reverse-engineering>

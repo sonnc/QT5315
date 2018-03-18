@@ -11,6 +11,7 @@
     <head>
         <title>Hệ thống đăng ký thực tập trực tuyến - HUST</title>
         <%@include file="mains/head.jsp" %>
+    
     </head>
     <body>
         <div id="wrapper">
@@ -20,6 +21,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
+                                <s:property value="<p>vávsadvs</p></br><p>vsavbs</p>"/>
                             <%                                for (int i = 0; i < 5; i++) {
                             %>
                             <div class="row" style="margin: 0px">

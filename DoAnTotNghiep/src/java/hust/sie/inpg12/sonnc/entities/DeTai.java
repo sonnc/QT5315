@@ -1,5 +1,5 @@
 package hust.sie.inpg12.sonnc.entities;
-// Generated Mar 16, 2018 1:46:10 PM by Hibernate Tools 4.3.1
+// Generated Mar 17, 2018 9:53:40 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;

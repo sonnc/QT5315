@@ -1,6 +1,6 @@
 <%-- 
-    Document   : detaisinhvien
-    Created on : Mar 13, 2018, 9:29:47 AM
+    Document   : detaicongty
+    Created on : Mar 13, 2018, 9:30:07 AM
     Author     : sonnc
 --%>
 
@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Đề tài sinh viên</title>
+        <title>Danh sách công ty</title>
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
@@ -30,7 +30,7 @@
                         <div class="col-lg-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
-                                <p style="margin: 0px">DUYỆT ĐỀ TÀI SINH VIÊN THỰC TẬP</p>
+                                <p style="margin: 0px">DANH SÁCH CÔNG TY</p>
                             </div>
                             <div>
                                 <div class="row">
@@ -49,13 +49,12 @@
                             </style>
                             <table border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                 <tr>
-                                    <td><strong> Mã SV </strong></td>
-                                    <td><strong> Họ và tên </strong></td>
-                                    <td><strong> Đề tài </strong></td>
-                                    <td><strong> Công ty </strong></td>
-                                    <td><strong> Người hướng dẫn </strong></td>
-                                    <td><strong> So khớp </strong></td>
-                                    <td><strong> Kỳ thực tập </strong></td>
+                                    <td><strong> Logo </strong></td>
+                                    <td><strong> Mã CT </strong></td>
+                                    <td><strong> Tên công ty </strong></td>
+                                    <td><strong> Đại diện </strong></td>
+                                    <td><strong> Email </strong></td>
+                                    <td><strong> Điện thoại</strong></td>
                                     <%                                        if (Integer.parseInt(session.getAttribute("rule").toString()) == 2) {
                                     %>
                                     <td><strong> Trạng thái </strong></td>
@@ -67,13 +66,13 @@
                                 <%                                    for (int i = 0; i < 20; i++) {
                                 %>
                                 <tr>
-                                    <td>20138374</td>
-                                    <td>Nguyễn Công Sơn</td>
-                                    <td>IoT - Phát triển hệ thống nhà thông minh</td>
+                                    <td><img style="height: 50px; width: 50px" src="./pages/libs/img/logo.png"/></td>
+                                    <td>0001</td>
                                     <td>Công ty hệ thống FPT</td>
                                     <td>Nguyễn Thị Thanh</td>
-                                    <td>90.5%</td>
-                                    <td>20181</td><%
+                                    <td>fpt.com.vn</td>
+                                    <td>Nguyễn Thị Thanh</td>
+                                    <%
                                         if (Integer.parseInt(session.getAttribute("rule").toString()) == 2) {
                                     %>
                                     <td>Đã duyệt</td>
@@ -103,4 +102,7 @@
             <%@include file="../../mains/js.jsp" %>
     </body>
 </html>
+
+
+
 

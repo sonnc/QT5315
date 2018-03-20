@@ -1,6 +1,6 @@
 <%-- 
-    Document   : detaisinhvien
-    Created on : Mar 13, 2018, 9:29:47 AM
+    Document   : chamdiem
+    Created on : Mar 13, 2018, 9:29:00 AM
     Author     : sonnc
 --%>
 
@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Đề tài sinh viên</title>
+        <title>Điểm thi</title>
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
@@ -30,56 +30,36 @@
                         <div class="col-lg-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
-                                <p style="margin: 0px">DUYỆT ĐỀ TÀI SINH VIÊN THỰC TẬP</p>
+                                <p style="margin: 0px">ĐIỂM THI</p>
                             </div>
-                            <div>
-                                <div class="row">
-                                    <div class="col-lg-9">
-                                        <a><button class="btn btn-info">All</button></a>
-                                        <a><button class="btn btn-danger">Chưa duyệt</button></a>
-                                        <a><button class="btn btn-primary">Đã duyệt</button></a>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <input class="form-control" id="s" style="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
-                                    </div>
-                                </div>
-                            </div>
+                            <p>DPH: Điểm phản hồi (auto)</p>
+                            <p>DBCQT: Điểm báo cáo quá trình</p>
+                            <p>DBCCK: Điểm báo cáo cuối kỳ</p>
+                            <input class="form-control" id="s" style="float: right; width: 50%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
                             <style>
-                                td{padding: 5px; font-size: 13px}
+                                td{padding: 5px}
                             </style>
                             <table border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                 <tr>
                                     <td><strong> Mã SV </strong></td>
                                     <td><strong> Họ và tên </strong></td>
-                                    <td><strong> Đề tài </strong></td>
-                                    <td><strong> Công ty </strong></td>
-                                    <td><strong> Người hướng dẫn </strong></td>
-                                    <td><strong> So khớp </strong></td>
-                                    <td><strong> Kỳ thực tập </strong></td>
-                                    <%                                        if (Integer.parseInt(session.getAttribute("rule").toString()) == 2) {
-                                    %>
-                                    <td><strong> Trạng thái </strong></td>
-                                    <%
-                                        }
-                                    %>
-
+                                    <td><strong> Lớp </strong></td>
+                                    <td><strong> DPH </strong></td>
+                                    <td><strong> DBCQT</strong></td>
+                                    <td><strong> DBCCK </strong></td>
+                                    <td><strong> DBCCK </strong></td>
                                 </tr>
                                 <%                                    for (int i = 0; i < 20; i++) {
                                 %>
                                 <tr>
                                     <td>20138374</td>
                                     <td>Nguyễn Công Sơn</td>
-                                    <td>IoT - Phát triển hệ thống nhà thông minh</td>
-                                    <td>Công ty hệ thống FPT</td>
-                                    <td>Nguyễn Thị Thanh</td>
-                                    <td>90.5%</td>
-                                    <td>20181</td><%
-                                        if (Integer.parseInt(session.getAttribute("rule").toString()) == 2) {
-                                    %>
-                                    <td>Đã duyệt</td>
-                                    <%
-                                        }
-                                    %>
+                                    <td>INPG12</td>
+                                    <td>8</td>
+                                    <td><input style="width: 50%"/></td>
+                                    <td><input style="width: 50%"/></td>
+                                    <td><input style="width: 50%"/></td>
+                                    <td><a href="" style="color: red">Xem</a></td>
                                 </tr>
                                 <%
                                     }

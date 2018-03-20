@@ -1,6 +1,6 @@
 <%-- 
-    Document   : forgotpassword
-    Created on : Mar 4, 2018, 10:38:38 PM
+    Document   : resetpassword
+    Created on : Mar 19, 2018, 9:04:09 AM
     Author     : sonnc
 --%>
 
@@ -41,26 +41,28 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-                            <form role="form" class="register-form" id="formValidate" action="forgotpasswordAction" method="post">
-                                <h2>Quên mật khẩu <small>đăng nhập vào hệ thống</small></h2>
+                            <form role="form" class="register-form" id="formValidate" action="resetpasswordAction" method="post">
+                                <h2>Đặt lại mật khẩu <small>đăng nhập</small></h2>
                                 <hr class="colorgraph">
                                 <script type="text/javascript">
-                                    function getConfirmation() {
-                                        var retVal = confirm("Hệ thống sẽ gửi mã xác thực OTP qua điện thoại và mật khẩu reset qua email đã đăng ký. Nếu có vấn đề, xin liên hệ quản trị viên.");
-                                        if (retVal == true) {
-                                            return true;
-                                        } else {
-                                            return false;
-                                        }
-                                    }
+                                    
                                 </script>
                                 <div class="form-group">
-                                    <s:textfield type="email" name="email" cssClass="form-control input-lg" placeholder="Tài khoản email" tabindex="4" required="true" onclick="getConfirmation()"></s:textfield>
-                                    </div>
-                                    <hr class="colorgraph">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-6"><input type="submit" value="Đặt lại mật khẩu" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-                                        <div class="col-xs-12 col-md-6">
+                                    <s:textfield type="text" name="password" cssClass="form-control input-lg" placeholder="Mật khẩu mới" tabindex="4" required="true"></s:textfield>
+                                </div>
+                                <div class="form-group">
+                                    <s:textfield type="text" name="repassword" cssClass="form-control input-lg" placeholder="Xác thực mật khẩu mới" tabindex="4" required="true"></s:textfield>
+                                </div>
+                                <div class="form-group">
+                                    <s:textfield type="text" name="resetcode" cssClass="form-control input-lg" placeholder="Mã reset mật khẩu" tabindex="4" required="true" ></s:textfield>
+                                </div>
+                                <div class="form-group">
+                                    <s:textfield type="number" name="otpcode" cssClass="form-control input-lg" placeholder="Mã OTP" tabindex="4" required="true"></s:textfield>
+                                </div>
+                                <hr class="colorgraph">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6"><input type="submit" value="Đổi mật khẩu" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+                                    <div class="col-xs-12 col-md-6">
                                         <div>Trở về <a href="<%=session.getAttribute("httpURL")%>home.jsp">Trang chủ</a>
                                         </div>
                                     </div>

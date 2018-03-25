@@ -41,16 +41,12 @@ public class LoginController {
      */
     public List<Login> login(String email, String pass) {
         List<Login> lstLogin = new ArrayList<>();
-        List<DeTai> lstDeTai = new ArrayList<>();
-        List<DeTai> list = new ArrayList<>();
         try {
             transaction = session.beginTransaction();
             Query query = session.createQuery("FROM Login WHERE email =:email and pass =:pass");
             query.setParameter("email", email);
             query.setParameter("pass", pass);
             lstLogin = query.list();
-            Query query1 = session.createQuery("FROM DeTai d join fetch d.congTy join fetch d.giangVienHuongDan");
-            list = query1.list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {

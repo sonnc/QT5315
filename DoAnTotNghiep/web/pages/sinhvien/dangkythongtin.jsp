@@ -23,23 +23,50 @@
     </head>
     <body>
         <div id="wrapper">
-            <%@include file="../../mains/mainHeader.jsp" %>
+            <header>
+                <div class="navbar navbar-default navbar-static-top">
+                    <div class="container">
+                        <div class="row" style="margin: 0 0 0 0;">
+                            <div class="col-lg-6">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+
+                                </div>
+                                <a class="navbar-brand" href="<%=request.getContextPath()%>/home.jsp"><img src="./pages/libs/img/logoEn.png" alt="" style="width: 100%; height: 100%"/></a>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="navbar-collapse collapse ">
+                                    <ul class="nav navbar-nav">
+                                        <li class="dropdown active">
+                                            <a href="<%=request.getContextPath()%>/home.jsp">Trang chủ</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
             <%@include file="../../mains/banner.jsp" %>
             <section id="content">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <form role="form" id="formValidate"> 
+                            <form role="form" id="formValidate" action="sinhVienDangKyThongTin" method="post"> 
                                 <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                     <p style="margin: 0px">THÔNG TIN CÁ NHÂN</p>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="hoTen" placeholder="Họ và tên" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="lop" placeholder="Lớp" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="khoa" placeholder="Khóa" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="khoaVien" placeholder="Khoa/ Viện" required="true"/>
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.hoTen" placeholder="Họ và tên" required="true"/>
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.lop" placeholder="Lớp" required="true"/>
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.khoa" placeholder="Khóa" required="true"/>
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.khoaVien" placeholder="Khoa/ Viện" required="true"/>
                                         <select style="margin-bottom: 15px;height: 45px;" name="gioiTinh" class="form-control" required="required"> 
                                             <option>Giới tính</option>
                                             <option value="True">Nam</option>
@@ -48,10 +75,10 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="ngaySinh" placeholder="Ngày sinh" required="true" />
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="diaChi" placeholder="Địa chỉ" required="true" />
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="dienThoai" placeholder="Điện thoại" required="true" />
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="email" placeholder="Email" required="true" />
-                                        <select style="margin-bottom: 15px;height: 45px;" name="laptop" class="form-control" required="true"> 
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.diaChi" placeholder="Địa chỉ" required="true" />
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.dienThoai" placeholder="Điện thoại" required="true" />
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.email" placeholder="Email" required="true" />
+                                        <select style="margin-bottom: 15px;height: 45px;" name="sinhVien.laptop" class="form-control" required="true"> 
                                             <option value="Null">LapTop</option>
                                             <option value="True">Có</option>
                                             <option value="False">Không</option>
@@ -88,36 +115,36 @@
                                 </div>
 
                                 <div class="row">
+                                    <style>
+                                        textarea{
+                                            resize: none;
+                                        }
+                                    </style>
                                     <div class="col-lg-6">
                                         <label>Ngoại ngữ</label>
-                                        <textarea name="ngoaiNgu" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Các chứng chỉ Tiếng anh, Tiếng pháp, Tiếng nhật,...."></textarea>
+                                        <textarea name="sinhVienInfo.ngoaiNgu" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Các chứng chỉ Tiếng anh, Tiếng pháp, Tiếng nhật,...."></textarea>
+                                        <div class="clear"></div>
                                         <label>Kỹ năng lập trình</label>
-                                        <textarea name="kyNangLT" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng lập trình nào? Hãy viết tất cả các kỹ năng mà bạn có theo hướng dẫn ở trên."></textarea>
+                                        <textarea name="sinhVienInfo.kyNangLt" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng lập trình nào? Hãy viết tất cả các kỹ năng mà bạn có theo hướng dẫn ở trên."></textarea>
                                         <label>Kỹ năng mềm/ kỹ năng khác</label>
-                                        <textarea name="kyNangMem" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng mềm nào? Kỹ năng, tình nguyện, văn phòng,..."></textarea>
+                                        <textarea name="sinhVienInfo.kyNangKhac" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng mềm nào? Kỹ năng, tình nguyện, văn phòng,..."></textarea>
                                         <label>Mục tiêu</label>
-                                        <textarea name="mucTieu" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Mục tiêu của bạn trước - trong - sau khi được thực tập tại doanh nghiệp?"></textarea>
+                                        <textarea name="sinhVienInfo.mucTieu" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Mục tiêu của bạn trước - trong - sau khi được thực tập tại doanh nghiệp?"></textarea>
                                     </div>
                                     <div class="col-lg-6">
                                         <label>Hoạt động</label>
-                                        <textarea name="hoatDong" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn tham gia các hoạt động nào? Hãy kể ra các hoạt động của bạn."></textarea>
+                                        <textarea name="sinhVienInfo.hoatDong" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn tham gia các hoạt động nào? Hãy kể ra các hoạt động của bạn."></textarea>
                                         <label>Giải thưởng</label>
-                                        <textarea name="giaiThuong" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những giải thưởng nào? Học tập, học bổng, nghiên cứu,...?"></textarea>
+                                        <textarea name="sinhVienInfo.giaiThuong" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những giải thưởng nào? Học tập, học bổng, nghiên cứu,...?"></textarea>
                                         <label>Sở thích</label>
-                                        <textarea name="soThich" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những ở thích gì? Hãy kể ra một vài sở thích tiêu biểu?"></textarea>
+                                        <textarea name="sinhVienInfo.soThich" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những ở thích gì? Hãy kể ra một vài sở thích tiêu biểu?"></textarea>
                                         <label>Dự án</label>
-                                        <textarea name="duAn" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn đã tham gia các dự án nào? Tên dự án, vị trí, vai trò, sản phẩm,...."></textarea>
+                                        <textarea name="sinhVienInfo.duAn" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn đã tham gia các dự án nào? Tên dự án, vị trí, vai trò, sản phẩm,...."></textarea>
                                     </div>
 
                                 </div>
                                 <s:submit value="gửi"></s:submit>
                                 </form>
-                                <div id="pagination">
-                                    <span class="all">Page 1 of 3</span>
-                                    <span class="current">1</span>
-                                    <a href="#" class="inactive">2</a>
-                                    <a href="#" class="inactive">3</a>
-                                </div>
                                 <div class="clear"></div>
                             </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>

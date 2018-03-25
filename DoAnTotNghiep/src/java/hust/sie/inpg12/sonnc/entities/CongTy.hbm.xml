@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 17, 2018 9:53:41 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Mar 25, 2018 2:40:18 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="hust.sie.inpg12.sonnc.entities.CongTy" table="cong_ty" catalog="doantotnghiep" optimistic-lock="version">
         <id name="maCongTy" type="java.lang.Integer">
             <column name="ma_cong_ty" />
             <generator class="identity" />
         </id>
+        <property name="maDaiDien" type="java.lang.Integer">
+            <column name="ma_dai_dien" not-null="true" />
+        </property>
         <property name="tenCongTy" type="string">
             <column name="ten_cong_ty" length="500" not-null="true" />
         </property>
@@ -35,12 +38,6 @@
         <property name="trangThai" type="java.lang.Integer">
             <column name="trang_thai" />
         </property>
-        <set name="daiDienCongTies" table="dai_dien_cong_ty" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ma_cong_ty" not-null="true" />
-            </key>
-            <one-to-many class="hust.sie.inpg12.sonnc.entities.DaiDienCongTy" />
-        </set>
         <set name="deTais" table="de_tai" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ma_cong_ty" not-null="true" />

@@ -1,7 +1,3 @@
-﻿DROP DATABASE IF EXISTS `doantotnghiep`;
-CREATE DATABASE `doantotnghiep`;
-USE `doantotnghiep`;
-
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: doantotnghiep
@@ -37,8 +33,11 @@ CREATE TABLE `cong_ty` (
   `mo_ta` text CHARACTER SET utf8,
   `logo` varchar(500) CHARACTER SET utf8 DEFAULT NULL,
   `trang_thai` int(1) DEFAULT NULL,
-  PRIMARY KEY (`ma_cong_ty`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `ma_dai_dien` int(9) NOT NULL,
+  PRIMARY KEY (`ma_cong_ty`),
+  KEY `fk_cong_ty_dai_dien_cong_ty1_idx` (`ma_dai_dien`),
+  CONSTRAINT `fk_cong_ty_dai_dien_cong_ty1` FOREIGN KEY (`ma_dai_dien`) REFERENCES `dai_dien_cong_ty` (`ma_dai_dien`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +46,7 @@ CREATE TABLE `cong_ty` (
 
 LOCK TABLES `cong_ty` WRITE;
 /*!40000 ALTER TABLE `cong_ty` DISABLE KEYS */;
-INSERT INTO `cong_ty` VALUES (1,'Công ty hệ thống thông tin FPT','Tầng 20 - Keangnam - Nam Từ Liêm - Hà Nội','0987654321','support@fpt.com.vn','fpt.com.vn','Công ty Cổ phần FPT (FPT Corporation), thành lập ngày 13/09/1988, đã liên tục phát triển và trở thành tập đoàn CNTT và viễn thông hàng đầu Việt Nam. Lĩnh vực kinh doanh cốt lõi gồm 3 mảng chính: Dịch vụ CNTT, Nội dung số và Viễn thông. Trong nhiều năm qua, FPT triển khai các dự án công nghệ cho hầu hết các ngành trọng yếu của Việt Nam như tài chính - ngân hàng, thuế - kho bạc, dầu khí, an ninh quốc phòng, y tế, giáo dục… Các khách hàng chính gồm: Ngân hàng Nhà nước Việt Nam, Bộ Tài chính, Tổng cục Thuế, Kho bạc Nhà nước, Tổng cục Hải quan, Tổng Công ty Điện lực Việt Nam, Petrolimex, Bộ Thông tin Truyền thông, Bộ Công an, các ngân hàng, các tổng công ty lớn của Việt Nam …','FPT cũng đồng hành cùng nhiều doanh nghiệp Việt Nam. Nhiều hệ thống ERP đã được FPT triển khai và nghiệm thu đưa vào sử dụng hiệu quả, tại các đơn vị: Bộ Tài chính Việt Nam, Tập đoàn Thép Việt- Pomina, Công ty CP giấy Sài Gòn, Prime Group, Vinamilk, Đồng Tâm Group, Toàn Mỹ, Điện Quang, Vietsov Petro,... FPT là đơn vị tiên phong về xuất khẩu phần mềm và hiện đã có mặt tại 11 quốc gia trên thế giới như Mỹ, Nhật Bản, Châu Âu, Singapore, Úc, Thái Lan, Malaysia, Philippin, Lào, Campuchia. Với mong muốn hỗ trợ xây dựng thương hiệu quốc gia của ngành phần mềm Việt Nam, FPT đã chuyển giao bộ tài liệu về kinh nghiệm triển khai xây dựng, áp dụng và thi lấy chứng chỉ CMMi mức 5 cho cộng đồng doanh nghiệp CNTT Việt Nam thông qua Bộ TT&TT. ','null',0);
+INSERT INTO `cong_ty` VALUES (1,'Công ty Hệ thống FPT','Keangnam - Hà Nội','0987654321','fpt@fpt.com.vn','fpt.com.vn','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','null',1,0),(2,'Công ty ABC','Haf Nooijbrfb','0987654321','abc.com.vn','abc.com.vn','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','null',1,0),(3,'Công ty hjv','Nooijbrfb','0987654321','vadsv.com.vn','ewfe.com.vn','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','null',1,0),(4,'Công ty jryku','Nooijbrfb','0987654321','bsb.com.vn','dfff.com.vn','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','null',1,0),(5,'Công ty htrj','Nooijbrfb','0987654321','etjr.com.vn','fgrht.com.vn','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','null',1,0),(6,'Công ty iukltyhj','Nooijbrfb','0987654321','bdnd.com.vn','erht.com.vn','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','null',1,0);
 /*!40000 ALTER TABLE `cong_ty` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,19 +59,16 @@ DROP TABLE IF EXISTS `dai_dien_cong_ty`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dai_dien_cong_ty` (
   `ma_dai_dien` int(9) NOT NULL AUTO_INCREMENT,
-  `ma_cong_ty` int(9) NOT NULL,
   `ho_ten` varchar(255) CHARACTER SET utf8 NOT NULL,
   `chuc_vu` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `dia_chi` text CHARACTER SET utf8,
-  `dien_thoai` varchar(15) CHARACTER SET utf8 NOT NULL,
+  `dien_thoai` varchar(15) CHARACTER SET utf8 DEFAULT NULL,
   `email` varchar(255) CHARACTER SET utf8 NOT NULL,
   `avatar` varchar(500) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`ma_dai_dien`),
-  KEY `dai_dien_cong_ty_ibfk_1` (`ma_cong_ty`),
   KEY `dai_dien_cong_ty_ibfk_2` (`email`),
-  CONSTRAINT `dai_dien_cong_ty_ibfk_1` FOREIGN KEY (`ma_cong_ty`) REFERENCES `cong_ty` (`ma_cong_ty`),
   CONSTRAINT `dai_dien_cong_ty_ibfk_2` FOREIGN KEY (`email`) REFERENCES `login` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,6 +77,7 @@ CREATE TABLE `dai_dien_cong_ty` (
 
 LOCK TABLES `dai_dien_cong_ty` WRITE;
 /*!40000 ALTER TABLE `dai_dien_cong_ty` DISABLE KEYS */;
+INSERT INTO `dai_dien_cong_ty` VALUES (3,'Nguyễn Hoàng Long','Giám đốc','Phòng 201 - Tòa nhà B - Hai bà Trưng - Hà Nội','0987654321','daidiencongty@gmail.com','null'),(4,'Nguyễn Bảo Khánh','Giám đốc','Phong 401 - Tòa nhà số 1 - Hà Nội','0987654321','daidiencongty1@gmail.com','null'),(5,'Nguyễn Mạnh Hùng','Giám đốc','Tầng 22- phòng 1010 - Tòa nhà ABC - Hoàn Kiếm - Hà Nội','0987654321','daidiencongty2@gmail.com','null'),(6,'Hoàng Bảo Long','Giám đốc','Phong 40 - Tòa nhà ABC - Thanh Xuân - Hà Nội','0987654321','daidiencongty3@gmail.com','null'),(7,'Trương Thế Tùng','Giám đốc','Phòng 01 - Tòa nhà CLC - Hai Bà Trưng - Hà Nội','0987654321','daidiencongty4@gmail.com','null'),(8,'Nguyễn Văn Đức','Giám đốc','Phòng 99 - Khu công nghiệp CLC - Hà Nội','0987654321','daidiencongty5@gmail.com','null');
 /*!40000 ALTER TABLE `dai_dien_cong_ty` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,13 +98,15 @@ CREATE TABLE `de_tai` (
   `nguoi_dang` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `so_luong` int(3) NOT NULL,
   `so_luong_con` int(3) DEFAULT NULL,
-  `trang_thai` int(1) DEFAULT NULL,
+  `trang_thai` int(1) NOT NULL,
+  `ngay_dang` date NOT NULL,
+  `han_dang_ky` date NOT NULL,
   PRIMARY KEY (`ma_de_tai`),
   KEY `de_tai_ibfk_2` (`ma_gvhd`),
   KEY `de_tai_ibfk_1` (`ma_cong_ty`),
   CONSTRAINT `de_tai_ibfk_1` FOREIGN KEY (`ma_cong_ty`) REFERENCES `cong_ty` (`ma_cong_ty`),
   CONSTRAINT `de_tai_ibfk_2` FOREIGN KEY (`ma_gvhd`) REFERENCES `giang_vien_huong_dan` (`ma_gvhd`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,8 +115,32 @@ CREATE TABLE `de_tai` (
 
 LOCK TABLES `de_tai` WRITE;
 /*!40000 ALTER TABLE `de_tai` DISABLE KEYS */;
-INSERT INTO `de_tai` VALUES (1,1,1,'Phân tích thiết kế hệ thống nhà thông minh','FPT cũng là một trong 4 nhà cung cấp đường truyền internet đầu tiên tại Việt Nam và đến nay đã trở thành công ty hàng đầu trong lĩnh vực viễn thông và dịch vụ trực tuyến gồm internet băng thông rộng, internet cáp quang, dịch vụ truyền hình trực tuyến. FPT Telecom đã được cấp giấy phép VoIP, ICP, ISP, OSP, IXP, giấy phép thiết lập mạng và cung cấp dịch vụ viễn thông, giấy phép thử nghiệm Wimax di động, giấy phép thử nghiệm công nghệ LTE (4G). Để tiếp tục khẳng định năng lực trong lĩnh vực ICT, hiện FPT đã triển khai và phát triển hạ tầng viễn thông tại 36 tỉnh thành thuộc cả 3 miền Bắc, Trung, Nam.','FPT cũng là một trong 4 nhà cung cấp đường truyền internet đầu tiên tại Việt Nam và đến nay đã trở thành công ty hàng đầu trong lĩnh vực viễn thông và dịch vụ trực tuyến gồm internet băng thông rộng, internet cáp quang, dịch vụ truyền hình trực tuyến. FPT Telecom đã được cấp giấy phép VoIP, ICP, ISP, OSP, IXP, giấy phép thiết lập mạng và cung cấp dịch vụ viễn thông, giấy phép thử nghiệm Wimax di động, giấy phép thử nghiệm công nghệ LTE (4G). Để tiếp tục khẳng định năng lực trong lĩnh vực ICT, hiện FPT đã triển khai và phát triển hạ tầng viễn thông tại 36 tỉnh thành thuộc cả 3 miền Bắc, Trung, Nam.','Admin',20,20,0);
 /*!40000 ALTER TABLE `de_tai` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dot_thuc_tap`
+--
+
+DROP TABLE IF EXISTS `dot_thuc_tap`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dot_thuc_tap` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ma_dot` int(11) NOT NULL,
+  `thoi_gian_bat_dau` date NOT NULL,
+  `thoi_gian_ket_thuc` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dot_thuc_tap`
+--
+
+LOCK TABLES `dot_thuc_tap` WRITE;
+/*!40000 ALTER TABLE `dot_thuc_tap` DISABLE KEYS */;
+/*!40000 ALTER TABLE `dot_thuc_tap` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -148,6 +171,33 @@ CREATE TABLE `email` (
 LOCK TABLES `email` WRITE;
 /*!40000 ALTER TABLE `email` DISABLE KEYS */;
 /*!40000 ALTER TABLE `email` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `file`
+--
+
+DROP TABLE IF EXISTS `file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
+  `ten_file` varchar(500) DEFAULT NULL,
+  `noi_dung` varchar(1000) DEFAULT NULL,
+  `link` varchar(500) DEFAULT NULL,
+  `loai_nguoi_dung` int(11) DEFAULT NULL COMMENT '1: đối với giang viên phụ trách\n2: đối với người hướng dẫn (giảng viên hướng dẫn)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `file`
+--
+
+LOCK TABLES `file` WRITE;
+/*!40000 ALTER TABLE `file` DISABLE KEYS */;
+/*!40000 ALTER TABLE `file` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -182,7 +232,6 @@ CREATE TABLE `giang_vien_huong_dan` (
 
 LOCK TABLES `giang_vien_huong_dan` WRITE;
 /*!40000 ALTER TABLE `giang_vien_huong_dan` DISABLE KEYS */;
-INSERT INTO `giang_vien_huong_dan` VALUES (1,1,'Nguyễn Công Sơn','Nhân Viên FIS','0898595657','20138374@student.hust.edu.vn','null','Bách Khoa - Hai Bà Trưng - Hà Nội','Phân tích thiết kế hệ thống ngân hàng','Trang bị giải pháp quản lý tiền gửi và khoản vay');
 /*!40000 ALTER TABLE `giang_vien_huong_dan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,7 +317,7 @@ CREATE TABLE `login` (
 
 LOCK TABLES `login` WRITE;
 /*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES ('20138374@student.hust.edu.vn','SonNguyen',0);
+INSERT INTO `login` VALUES ('20138374@student.hust.edu.vn','SonNguyen',0),('20138375@student.hust.edu.vn','1234567890',0),('20138376@student.hust.edu.vn','1234567890',0),('20138377@student.hust.edu.vn','1234567890',0),('20138378@student.hust.edu.vn','1234567890',0),('20138379@student.hust.edu.vn','1234567890',0),('20138380@student.hust.edu.vn','1234567890',0),('daidiencongty1@gmail.com','1234567890',1),('daidiencongty2@gmail.com','1234567890',1),('daidiencongty3@gmail.com','1234567890',1),('daidiencongty4@gmail.com','1234567890',1),('daidiencongty5@gmail.com','1234567890',1),('daidiencongty@gmail.com','1234567890',1),('giangvienhuongdan1@gmail.com','1234567890',2),('giangvienhuongdan2@gmail.com','1234567890',2),('giangvienhuongdan3@gmail.com','1234567890',2),('giangvienhuongdan4@gmail.com','1234567890',2),('giangvienhuongdan5@gmail.com','1234567890',2),('giangvienhuongdan@gmail.com','1234567890',2),('nguoihuongdan1@gmail.com','1234567890',3),('nguoihuongdan2@gmail.com','1234567890',3),('nguoihuongdan3@gmail.com','1234567890',3),('nguoihuongdan4@gmail.com','1234567890',3),('nguoihuongdan5@gmail.com','1234567890',3),('nguoihuongdan@gmail.com','1234567890',3);
 /*!40000 ALTER TABLE `login` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,6 +347,34 @@ CREATE TABLE `logs` (
 LOCK TABLES `logs` WRITE;
 /*!40000 ALTER TABLE `logs` DISABLE KEYS */;
 /*!40000 ALTER TABLE `logs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `quy_trinh`
+--
+
+DROP TABLE IF EXISTS `quy_trinh`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `quy_trinh` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tieu_de` varchar(500) DEFAULT NULL,
+  `noi_dung` text,
+  `ngay_bat_dau` date DEFAULT NULL,
+  `ngay_ket_thuc` date DEFAULT NULL,
+  `ma_xac_thuc` varchar(45) DEFAULT NULL,
+  `trang_thai` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `quy_trinh`
+--
+
+LOCK TABLES `quy_trinh` WRITE;
+/*!40000 ALTER TABLE `quy_trinh` DISABLE KEYS */;
+/*!40000 ALTER TABLE `quy_trinh` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -349,7 +426,7 @@ CREATE TABLE `sinh_vien_dang_ky` (
   `ma_de_tai` int(9) NOT NULL,
   `trang_thai` int(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -358,7 +435,6 @@ CREATE TABLE `sinh_vien_dang_ky` (
 
 LOCK TABLES `sinh_vien_dang_ky` WRITE;
 /*!40000 ALTER TABLE `sinh_vien_dang_ky` DISABLE KEYS */;
-INSERT INTO `sinh_vien_dang_ky` VALUES (1,20138374,1,1,1);
 /*!40000 ALTER TABLE `sinh_vien_dang_ky` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -428,7 +504,6 @@ DROP TABLE IF EXISTS `sinh_vien_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sinh_vien_info` (
-  `mssv` int(8) NOT NULL,
   `ngoai_ngu` varchar(500) CHARACTER SET utf8 DEFAULT NULL,
   `ky_nang_lt` text CHARACTER SET utf8,
   `ny_nang_khac` text CHARACTER SET utf8,
@@ -437,8 +512,9 @@ CREATE TABLE `sinh_vien_info` (
   `giai_thuong` text CHARACTER SET utf8,
   `so_thich` text CHARACTER SET utf8,
   `du_an` text CHARACTER SET utf8,
-  PRIMARY KEY (`mssv`),
-  CONSTRAINT `sinh_vien_info_ibfk_1` FOREIGN KEY (`mssv`) REFERENCES `sinh_vien` (`mssv`)
+  `mssv` int(8) NOT NULL,
+  KEY `fk_sinh_vien_info_sinh_vien1_idx` (`mssv`),
+  CONSTRAINT `fk_sinh_vien_info_sinh_vien1` FOREIGN KEY (`mssv`) REFERENCES `sinh_vien` (`mssv`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -448,7 +524,7 @@ CREATE TABLE `sinh_vien_info` (
 
 LOCK TABLES `sinh_vien_info` WRITE;
 /*!40000 ALTER TABLE `sinh_vien_info` DISABLE KEYS */;
-INSERT INTO `sinh_vien_info` VALUES (20138374,'tiếng pháp','dávbdasbv','vsbsdfb','vsfdbsdb','sbsdfbsd','dfsbsdfbsdf','fdsbfdbs','ssbsdbsfd');
+INSERT INTO `sinh_vien_info` VALUES ('tiếng pháp','dávbdasbv','vsbsdfb','vsfdbsdb','sbsdfbsd','dfsbsdfbsdf','fdsbfdbs','ssbsdbsfd',0);
 /*!40000 ALTER TABLE `sinh_vien_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -466,12 +542,13 @@ CREATE TABLE `sinh_vien_thuc_tap` (
   `thoi_gian_bat_dau` date DEFAULT NULL,
   `thoi_gian_ket_thuc` date DEFAULT NULL,
   `trang_thai` bit(1) NOT NULL,
+  `dot_thuc_tap` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `sinh_vien_thuc_tap_ibfk_1` (`mssv`),
   KEY `sinh_vien_thuc_tap_ibfk_2` (`ma_de_tai`),
   CONSTRAINT `sinh_vien_thuc_tap_ibfk_1` FOREIGN KEY (`mssv`) REFERENCES `sinh_vien` (`mssv`),
   CONSTRAINT `sinh_vien_thuc_tap_ibfk_2` FOREIGN KEY (`ma_de_tai`) REFERENCES `de_tai` (`ma_de_tai`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -480,7 +557,6 @@ CREATE TABLE `sinh_vien_thuc_tap` (
 
 LOCK TABLES `sinh_vien_thuc_tap` WRITE;
 /*!40000 ALTER TABLE `sinh_vien_thuc_tap` DISABLE KEYS */;
-INSERT INTO `sinh_vien_thuc_tap` VALUES (1,20138374,1,'2018-03-03','2018-04-03','');
 /*!40000 ALTER TABLE `sinh_vien_thuc_tap` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -523,4 +599,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-17 21:50:11
+-- Dump completed on 2018-03-25 11:08:44

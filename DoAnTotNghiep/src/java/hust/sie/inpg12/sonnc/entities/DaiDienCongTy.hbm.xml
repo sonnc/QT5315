@@ -1,19 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 17, 2018 9:53:41 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Mar 25, 2018 2:40:18 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="hust.sie.inpg12.sonnc.entities.DaiDienCongTy" table="dai_dien_cong_ty" catalog="doantotnghiep" optimistic-lock="version">
         <id name="maDaiDien" type="java.lang.Integer">
             <column name="ma_dai_dien" />
             <generator class="identity" />
         </id>
-        <many-to-one name="congTy" class="hust.sie.inpg12.sonnc.entities.CongTy" fetch="select">
-            <column name="ma_cong_ty" not-null="true" />
-        </many-to-one>
-        <many-to-one name="login" class="hust.sie.inpg12.sonnc.entities.Login" fetch="select">
+        <property name="email" type="string">
             <column name="email" not-null="true" />
-        </many-to-one>
+        </property>
         <property name="hoTen" type="string">
             <column name="ho_ten" not-null="true" />
         </property>
@@ -24,10 +21,16 @@
             <column name="dia_chi" length="65535" />
         </property>
         <property name="dienThoai" type="string">
-            <column name="dien_thoai" length="15" not-null="true" />
+            <column name="dien_thoai" length="15" />
         </property>
         <property name="avatar" type="string">
             <column name="avatar" length="500" />
         </property>
+        <set name="congTies" table="cong_ty" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ma_dai_dien" not-null="true" />
+            </key>
+            <one-to-many class="hust.sie.inpg12.sonnc.entities.CongTy" />
+        </set>
     </class>
 </hibernate-mapping>

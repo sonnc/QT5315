@@ -3,25 +3,27 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 25, 2018 2:40:18 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="hust.sie.inpg12.sonnc.entities.SinhVienFile" table="sinh_vien_file" catalog="doantotnghiep" optimistic-lock="version">
+    <class name="hust.sie.inpg12.sonnc.entities.FileAll" table="file_all" catalog="doantotnghiep" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
             <column name="id" />
             <generator class="identity" />
         </id>
-        <property name="mssv" type="int">
-            <column name="mssv" not-null="true" />
+        <property name="email" type="string">
+            <column name="email" not-null="true" />
         </property>
         <property name="tenFile" type="string">
             <column name="ten_file" length="500" />
         </property>
-        <property name="moTa" type="string">
-            <column name="mo_ta" length="1000" />
+        <property name="noiDung" type="string">
+            <column name="noi_dung" length="1000" />
         </property>
         <property name="link" type="string">
             <column name="link" length="500" />
         </property>
-        <property name="loaiFile" type="java.lang.Integer">
-            <column name="loai_file" />
+        <property name="loaiNguoiDung" type="java.lang.Integer">
+            <column name="loai_nguoi_dung">
+                <comment>1: ??i v?i giang vi&#234;n ph? tr&#225;ch 2: ??i v?i ng??i h??ng d?n (gi?ng vi&#234;n h??ng d?n)</comment>
+            </column>
         </property>
     </class>
 </hibernate-mapping>

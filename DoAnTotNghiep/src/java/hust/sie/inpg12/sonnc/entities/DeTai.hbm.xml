@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 17, 2018 9:53:41 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Mar 25, 2018 2:40:18 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="hust.sie.inpg12.sonnc.entities.DeTai" table="de_tai" catalog="doantotnghiep" optimistic-lock="version">
         <id name="maDeTai" type="java.lang.Integer">
             <column name="ma_de_tai" />
             <generator class="identity" />
         </id>
-        <many-to-one name="congTy" class="hust.sie.inpg12.sonnc.entities.CongTy" fetch="select">
+        <property name="maCongTy" type="java.lang.Integer">
             <column name="ma_cong_ty" not-null="true" />
-        </many-to-one>
-        <many-to-one name="giangVienHuongDan" class="hust.sie.inpg12.sonnc.entities.GiangVienHuongDan" fetch="select">
+        </property>
+        <property name="maGvhd" type="java.lang.Integer">
             <column name="ma_gvhd" not-null="true" />
-        </many-to-one>
+        </property>
         <property name="tenDeTai" type="string">
             <column name="ten_de_tai" length="500" not-null="true" />
         </property>
@@ -32,8 +32,14 @@
         <property name="soLuongCon" type="java.lang.Integer">
             <column name="so_luong_con" />
         </property>
-        <property name="trangThai" type="java.lang.Integer">
-            <column name="trang_thai" />
+        <property name="trangThai" type="int">
+            <column name="trang_thai" not-null="true" />
+        </property>
+        <property name="ngayDang" type="date">
+            <column name="ngay_dang" length="10" not-null="true" />
+        </property>
+        <property name="hanDangKy" type="date">
+            <column name="han_dang_ky" length="10" not-null="true" />
         </property>
         <set name="sinhVienThucTaps" table="sinh_vien_thuc_tap" inverse="true" lazy="true" fetch="select">
             <key>

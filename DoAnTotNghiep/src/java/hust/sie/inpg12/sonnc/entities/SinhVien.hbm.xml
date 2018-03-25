@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 17, 2018 9:53:41 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Mar 25, 2018 2:40:18 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="hust.sie.inpg12.sonnc.entities.SinhVien" table="sinh_vien" catalog="doantotnghiep" optimistic-lock="version">
         <id name="mssv" type="int">
             <column name="mssv" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="login" class="hust.sie.inpg12.sonnc.entities.Login" fetch="select">
+        <property name="email" type="string">
             <column name="email" not-null="true" />
-        </many-to-one>
+        </property>
         <property name="hoTen" type="string">
             <column name="ho_ten" not-null="true" />
         </property>
@@ -38,6 +38,15 @@
         <property name="avatar" type="string">
             <column name="avatar" length="500" />
         </property>
+        <property name="laptop" type="java.lang.Boolean">
+            <column name="laptop" />
+        </property>
+        <set name="sinhVienInfos" table="sinh_vien_info" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="mssv" not-null="true" />
+            </key>
+            <one-to-many class="hust.sie.inpg12.sonnc.entities.SinhVienInfo" />
+        </set>
         <set name="sinhVienDiems" table="sinh_vien_diem" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="mssv" not-null="true" />
@@ -56,6 +65,5 @@
             </key>
             <one-to-many class="hust.sie.inpg12.sonnc.entities.SinhVienThucTap" />
         </set>
-        <one-to-one name="sinhVienInfo" class="hust.sie.inpg12.sonnc.entities.SinhVienInfo"></one-to-one>
     </class>
 </hibernate-mapping>

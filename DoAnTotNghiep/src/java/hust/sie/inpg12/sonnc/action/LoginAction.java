@@ -7,8 +7,10 @@ package hust.sie.inpg12.sonnc.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import hust.sie.inpg12.sonnc.controller.LoginController;
+import hust.sie.inpg12.sonnc.controller.SinhVienController;
 import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.Login;
+import hust.sie.inpg12.sonnc.entities.SinhVien;
 import hust.sie.inpg12.sonnc.entities.SinhVienThucTap;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import org.apache.struts2.interceptor.SessionAware;
 public class LoginAction extends ActionSupport implements SessionAware, ServletRequestAware {
 
     private LoginController loginController;
+    private SinhVienController sinhVienController;
     private HttpServletRequest request;
     private Map<String, Object> session;
     List<DeTai> list = new ArrayList<>();
@@ -38,6 +41,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 
     public LoginAction() {
         loginController = new LoginController();
+        sinhVienController = new SinhVienController();
     }
 
     /**
@@ -53,12 +57,18 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         lstLogin = loginController.login(email, password);
-        session.put("email", email);
-        session.put("rule", lstLogin.get(0).getRule());
 
         if (lstLogin.size() == 1) {
-            if (true) {
-
+            session.put("email", email);
+            session.put("rule", lstLogin.get(0).getRule());
+            if (lstLogin.get(0).getRule() == 0) {
+                int mssv = Integer.parseInt(email.substring(0, 8));
+                if (sinhVienController.getSinhVienInfo(mssv).size() == 1) {
+                    session.put("mssv", mssv);
+                    return SUCCESS;
+                } else {
+                    return "DANGKYTHONGTINSINHVIEN";
+                }
             }
         } else {
             addFieldError("email", "Tài khoản hoặc mật khẩu không đúng !");

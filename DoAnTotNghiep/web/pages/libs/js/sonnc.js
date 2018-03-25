@@ -19,36 +19,36 @@ $(document).ready(function () {
                 required: true,
                 equalTo: "#password"
             },
-            hoTen: {
+            "sinhVien.hoTen": {
                 required: true
             },
-            lop: {
+            "sinhVien.lop": {
                 required: true
             },
-            khoa: {
+            "sinhVien.khoa": {
                 required: true,
                 digits: true
             },
-            khoaVien: {
+            "sinhVien.khoaVien": {
                 required: true
             },
-            gioiTinh: {
+            "sinhVien.gioiTinh": {
                 required: true
             },
-            ngaySinh: {
+            "sinhVien.ngaySinh": {
                 required: true,
                 date: true
             },
-            diaChi: {
+            "sinhVien.diaChi": {
                 required: true
             },
-            dienThoai: {
+            "sinhVien.dienThoai": {
                 required: true,
                 minlength: 10,
                 maxlength: 15,
                 digits: true
             },
-            laptop: {
+            "sinhVien.laptop": {
                 required: true
             },
             myFile: {
@@ -70,36 +70,36 @@ $(document).ready(function () {
                 required: "Mật khẩu xác thực không được để trống !",
                 equalTo: "Mật khẩu xác thực không chính xác !"
             },
-            hoTen: {
+            "sinhVien.hoTen": {
                 required: "Xin vui lòng nhập tên !"
             },
-            lop: {
+            "sinhVien.lop": {
                 required: "Xin hãy nhập lớp học của bạn !"
             },
-            khoa: {
+            "sinhVien.khoa": {
                 required: "Xin hãy nhập khóa học của bạn !",
                 digits: "Khóa học phải là số nguyên dương !"
             },
-            khoaVien: {
+            "sinhVien.khoaVien": {
                 required: "Hãy điền khoa/ viện của bạn !"
             },
-            gioiTinh: {
+            "sinhVien.gioiTinh": {
                 required: "Hãy chọn giới tính !"
             },
-            ngaySinh: {
+            "sinhVien.ngaySinh": {
                 required: "Ngày sinh không được để trống !",
                 date: "Định dạng ngày không chính xác !"
             },
-            diaChi: {
+            "sinhVien.diaChi": {
                 required: "Địa chỉ không được để trống !"
             },
-            dienThoai: {
+            "sinhVien.dienThoai": {
                 required: "Điện thoại không được để trống !",
                 minlength: "Điện thoại tối thiểu 10 số !",
                 maxlength: "Điện thoại quá 15 số !",
                 digits: "Điện thoại phải là số nguyên dương !"
             },
-            laptop: {
+            "sinhVien.laptop": {
                 required: "Laptop không được để trống !"
             },
             myFile: {

@@ -67,17 +67,17 @@
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.lop" placeholder="Lớp" required="true"/>
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.khoa" placeholder="Khóa" required="true"/>
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.khoaVien" placeholder="Khoa/ Viện" required="true"/>
-                                        <select style="margin-bottom: 15px;height: 45px;" name="gioiTinh" class="form-control" required="required"> 
+                                        <select style="margin-bottom: 15px;height: 45px;" name="sinhVien.gioiTinh" class="form-control" required="required"> 
                                             <option>Giới tính</option>
-                                            <option value="True">Nam</option>
-                                            <option value="False">Nữ</option>
+                                            <option value="true">Nam</option>
+                                            <option value="false">Nữ</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-4">
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="ngaySinh" placeholder="Ngày sinh" required="true" />
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.diaChi" placeholder="Địa chỉ" required="true" />
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.dienThoai" placeholder="Điện thoại" required="true" />
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.email" placeholder="Email" required="true" />
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.email" placeholder="Email" value="<%=session.getAttribute("email")%>" readonly="readonly" required="true" />
                                         <select style="margin-bottom: 15px;height: 45px;" name="sinhVien.laptop" class="form-control" required="true"> 
                                             <option value="Null">LapTop</option>
                                             <option value="True">Có</option>
@@ -143,7 +143,7 @@
                                     </div>
 
                                 </div>
-                                <s:submit value="gửi"></s:submit>
+                                        <button value="Đăng ký thông tin" class="btn btn-green"/>
                                 </form>
                                 <div class="clear"></div>
                             </div>

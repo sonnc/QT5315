@@ -62,9 +62,10 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
             session.put("email", email);
             session.put("rule", lstLogin.get(0).getRule());
             if (lstLogin.get(0).getRule() == 0) {
-                int mssv = Integer.parseInt(email.substring(0, 8));
-                if (sinhVienController.getSinhVienInfo(mssv).size() == 1) {
-                    session.put("mssv", mssv);
+                int mssv = Integer.parseInt(email.substring(0, 8));    
+                session.put("mssv", mssv);
+                if (sinhVienController.getSinhVien(mssv).size() == 1) {
+               
                     return SUCCESS;
                 } else {
                     return "DANGKYTHONGTINSINHVIEN";

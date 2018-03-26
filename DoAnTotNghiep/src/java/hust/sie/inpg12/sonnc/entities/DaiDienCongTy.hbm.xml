@@ -18,7 +18,7 @@
             <column name="chuc_vu" />
         </property>
         <property name="diaChi" type="string">
-            <column name="dia_chi" length="65535" />
+            <column name="dia_chi" length="500" />
         </property>
         <property name="dienThoai" type="string">
             <column name="dien_thoai" length="15" />

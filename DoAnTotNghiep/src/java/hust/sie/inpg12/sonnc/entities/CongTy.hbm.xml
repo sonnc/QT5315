@@ -26,8 +26,8 @@
         <property name="website" type="string">
             <column name="website" not-null="true" />
         </property>
-        <property name="linhVungHoatDong" type="string">
-            <column name="linh_vung_hoat_dong" length="65535" />
+        <property name="linhVucHoatDong" type="string">
+            <column name="linh_vuc_hoat_dong" length="65535" />
         </property>
         <property name="moTa" type="string">
             <column name="mo_ta" length="65535" />

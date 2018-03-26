@@ -19,9 +19,9 @@
             <result name="error" type="redirect">404.jsp</result>
             <result name="input">/pages/sinhvien/dangkythongtin.jsp</result>
         </action>
-<!--        <action name="test" class="hust.sie.inpg12.sonnc.action.LoginAction" method="test">
+        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
             <result name="success">test.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
-        </action>-->
+        </action>
     </package>
 </struts>

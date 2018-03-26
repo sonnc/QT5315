@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-4">
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="hoTen" placeholder="Họ và tên" required="true"/>
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.hoTen" value="%{sinhVien.hoTen}"placeholder="Họ và tên" required="true"/>
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="lop" placeholder="Lớp" required="true"/>
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="khoa" placeholder="Khóa" required="true"/>
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="khoaVien" placeholder="Khoa/ Viện" required="true"/>
@@ -92,7 +92,7 @@
                                         <label>Ngoại ngữ</label>
                                         <textarea name="ngoaiNgu" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Các chứng chỉ Tiếng anh, Tiếng pháp, Tiếng nhật,...."></textarea>
                                         <label>Kỹ năng lập trình</label>
-                                        <textarea name="kyNangLT" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng lập trình nào? Hãy viết tất cả các kỹ năng mà bạn có theo hướng dẫn ở trên."></textarea>
+                                        <textarea name="kyNangLt" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng lập trình nào? Hãy viết tất cả các kỹ năng mà bạn có theo hướng dẫn ở trên."></textarea>
                                         <label>Kỹ năng mềm/ kỹ năng khác</label>
                                         <textarea name="kyNangMem" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng mềm nào? Kỹ năng, tình nguyện, văn phòng,..."></textarea>
                                         <label>Mục tiêu</label>

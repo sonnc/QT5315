@@ -10,7 +10,7 @@
         </id>
         <property name="email" type="string">
             <column name="email" not-null="true" />
-        </many-to-one>
+        </property>
         <property name="hoTen" type="string">
             <column name="ho_ten" not-null="true" />
         </property>

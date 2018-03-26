@@ -20,8 +20,11 @@
         <property name="noiDung" type="string">
             <column name="noi_dung" length="65535" not-null="true" />
         </property>
-        <property name="yeuCau" type="string">
-            <column name="yeu_cau" length="65535" not-null="true" />
+        <property name="yeuCauKhac" type="string">
+            <column name="yeu_cau_khac" length="65535" />
+        </property>
+        <property name="yeuCauLapTrinh" type="string">
+            <column name="yeu_cau_lap_trinh" length="65535" not-null="true" />
         </property>
         <property name="nguoiDang" type="string">
             <column name="nguoi_dang" />

@@ -12,7 +12,7 @@ public class ThongBao  implements java.io.Serializable {
 
      private Integer id;
      private Login login;
-     private String nguoiDung;
+     private String nguoiDang;
      private String tieuDe;
      private String noiDung;
      private Date ngayThang;
@@ -26,9 +26,9 @@ public class ThongBao  implements java.io.Serializable {
     public ThongBao(Login login) {
         this.login = login;
     }
-    public ThongBao(Login login, String nguoiDung, String tieuDe, String noiDung, Date ngayThang, Integer type, String photoLink) {
+    public ThongBao(Login login, String nguoiDang, String tieuDe, String noiDung, Date ngayThang, Integer type, String photoLink) {
        this.login = login;
-       this.nguoiDung = nguoiDung;
+       this.nguoiDang = nguoiDang;
        this.tieuDe = tieuDe;
        this.noiDung = noiDung;
        this.ngayThang = ngayThang;
@@ -51,12 +51,12 @@ public class ThongBao  implements java.io.Serializable {
         this.login = login;
     }
 
-    public String getNguoiDung() {
-        return nguoiDung;
+    public String getNguoiDang() {
+        return nguoiDang;
     }
 
-    public void setNguoiDung(String nguoiDung) {
-        this.nguoiDung = nguoiDung;
+    public void setNguoiDang(String nguoiDang) {
+        this.nguoiDang = nguoiDang;
     }
     
     public String getTieuDe() {

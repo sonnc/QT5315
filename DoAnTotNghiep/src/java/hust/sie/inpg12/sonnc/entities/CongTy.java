@@ -19,7 +19,7 @@ public class CongTy  implements java.io.Serializable {
      private String dienThoai;
      private String email;
      private String website;
-     private String linhVungHoatDong;
+     private String linhVucHoatDong;
      private String moTa;
      private String logo;
      private Integer trangThai;
@@ -38,7 +38,7 @@ public class CongTy  implements java.io.Serializable {
         this.email = email;
         this.website = website;
     }
-    public CongTy(DaiDienCongTy daiDienCongTy, int maDaiDien, String tenCongTy, String diaChi, String dienThoai, String email, String website, String linhVungHoatDong, String moTa, String logo, Integer trangThai, Set deTais, Set giangVienHuongDans) {
+    public CongTy(DaiDienCongTy daiDienCongTy, int maDaiDien, String tenCongTy, String diaChi, String dienThoai, String email, String website, String linhVucHoatDong, String moTa, String logo, Integer trangThai, Set deTais, Set giangVienHuongDans) {
        this.daiDienCongTy = daiDienCongTy;
        this.maDaiDien = maDaiDien;
        this.tenCongTy = tenCongTy;
@@ -46,7 +46,7 @@ public class CongTy  implements java.io.Serializable {
        this.dienThoai = dienThoai;
        this.email = email;
        this.website = website;
-       this.linhVungHoatDong = linhVungHoatDong;
+       this.linhVucHoatDong = linhVucHoatDong;
        this.moTa = moTa;
        this.logo = logo;
        this.trangThai = trangThai;
@@ -112,12 +112,12 @@ public class CongTy  implements java.io.Serializable {
     public void setWebsite(String website) {
         this.website = website;
     }
-    public String getLinhVungHoatDong() {
-        return this.linhVungHoatDong;
+    public String getLinhVucHoatDong() {
+        return this.linhVucHoatDong;
     }
     
-    public void setLinhVungHoatDong(String linhVungHoatDong) {
-        this.linhVungHoatDong = linhVungHoatDong;
+    public void setLinhVucHoatDong(String linhVucHoatDong) {
+        this.linhVucHoatDong = linhVucHoatDong;
     }
     public String getMoTa() {
         return this.moTa;

@@ -9,6 +9,13 @@
 <!DOCTYPE html>
 <html>
     <%@include file="../../mains/head.jsp" %>
+    <%    if (session.getAttribute("getAllDeTai") == null) {
+    %>
+    <s:action name="getAllDeTai" executeResult="true"/>
+    <%
+        }
+        session.removeAttribute("getAllDeTai");
+    %>
     <body>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
@@ -17,40 +24,38 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <%                              
-                                for (int i = 0; i < 5; i++) {
-                            %>
-                            <div class="row" style="margin: 0px">
-                                <div class="col-lg-2">
-                                    <img src="pages/libs/img/index.png" alt="" class="img-responsive" style="height: 100%; width: 100%" />
-                                </div>
-                                <div class="col-lg-9">
-                                    <article style="margin-bottom: 0px; padding-bottom: 0px">
-                                        <div class="post-image" style="margin: 0px">
-                                            <div class="post-heading">
-                                                <p style="margin: 0;"><a href="#"><strong>IoT - hệ thống điều khiển nhà thông minh thế hệ mới</strong></a></p>
+                            <s:iterator value="lstDeTai">
+                                <div class="row" style="margin: 0px">
+                                    <div class="col-lg-2">
+                                        <img src="<s:property value="logo"/>" alt="" class="img-responsive" style="height: 100%; width: 100%" />
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <article style="margin-bottom: 0px; padding-bottom: 0px">
+                                            <div class="post-image" style="margin: 0px">
+                                                <div class="post-heading">
+                                                    <p style="margin: 0;"><a href="chiTietDeTai?maDetai=<s:property value="maDeTai"/>"><strong><s:property value="tenDeTai"/></strong></a></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <p style="margin: 0;"><strong>Nội dung:</strong> Ngày 06/02/2018, Hội đồng Trường tổ chức họp phiên thứ 6, nhiệm kỳ 2015-2020 tại Trường ĐHBK Hà Nội với sự tham gia của 15/19 thành viên dưới sự chủ trì của PGS Lê Minh Thắng - Chủ tịch Hội đồng Trường.</p>
-                                        <p style="margin: 0;"><strong>Yêu cầu:</strong> Ngày 06/02/2018, Hội đồng Trường tổ chức họp phiên thứ 6, nhiệm kỳ 2015-2020 tại Trường ĐHBK Hà Nội với sự tham gia của 15/19 thành viên dưới sự chủ trì của PGS Lê Minh Thắng - Chủ tịch Hội đồng Trường.</p>
-                                        <div >
-                                            <ul class="meta-post">
-                                                <li><i class="fa fa-user"></i><a href="#"> Admin</a></li>
-                                                <li><i class="fa fa-comments"></i><a href="#">Ngày đăng: 2018-03-16</a></li>
-                                                <li><i class="fa fa-comments"></i><a href="#">Hạn đăng ký: 2018-04-16</a></li>
-                                            </ul>
-                                            <a style="margin-bottom: 10px" href="#" class="readmore pull-right">Xem chi tiết <i class="fa fa-angle-right"></i></a>
-                                        </div>
-                                    </article>
+                                                    <p style="margin: 0;"><strong>Công ty: </strong><a href="chiTietCongTy?maCongTy=<s:property value="maCongTy"/>"><s:property value="tenCongTy"/></a></p>
+                                            <p style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung"/></p>
+                                            <p style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh"/></p>
+                                            <p style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac"/></p>
+                                            <div >
+                                                <ul class="meta-post">
+                                                    <li><i class="fa fa-calendar"></i><a>Ngày đăng: <s:property value="ngayDang"/></a></li>
+                                                    <li><i class="fa fa-calendar-o"></i><a>Hạn đăng ký: <s:property value="hanDangKy"/></a></li>
+                                                    <li><i class="fa fa-users"></i><a>Số lượng: <s:property value="soLuong"/></a></li>
+                                                </ul>
+                                                <a style="margin-bottom: 10px" href="chiTietDeTai?maDetai=<s:property value="maDeTai"/>" class="readmore pull-right">Xem chi tiết <i class="fa fa-angle-right"></i></a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <p><strong style="color: blue"><s:property value="soLuongCon"/></strong>/<strong style="color: red"><s:property value="soLuongCon"/></strong></p>
+                                        <button class="btn btn-info">Đăng ký</button>
+                                    </div>
                                 </div>
-                                <div class="col-lg-1">
-                                    <p><strong>0/20</strong></p>
-                                    <button class="btn btn-info">Đăng ký</button>
-                                </div>
-                            </div>
-                            <%
-                                }
-                            %>
+                            </s:iterator>
                             <div id="pagination">
                                 <span class="all">Page 1 of 3</span>
                                 <span class="current">1</span>

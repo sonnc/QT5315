@@ -56,7 +56,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <form role="form" id="formValidate" action="sinhVienDangKyThongTin" method="post"> 
+                            <form role="form" id="formValidate" action="sinhVienDangKyThongTin" method="post" enctype = "multipart/form-data"> 
                                 <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                     <p style="margin: 0px">THÔNG TIN CÁ NHÂN</p>
@@ -143,10 +143,10 @@
                                     </div>
 
                                 </div>
-                                        <button value="Đăng ký thông tin" class="btn btn-green"/>
-                                </form>
-                                <div class="clear"></div>
-                            </div>
+                                <input type="submit" class="btn btn-success" value="Đăng ký thông tin"/>
+                            </form>
+                            <div class="clear"></div>
+                        </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>
                     </div>
                 </div>

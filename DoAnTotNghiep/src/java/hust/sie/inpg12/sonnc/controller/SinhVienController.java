@@ -5,13 +5,11 @@
  */
 package hust.sie.inpg12.sonnc.controller;
 
-import hust.sie.inpg12.sonnc.entities.CongTy;
-import hust.sie.inpg12.sonnc.entities.DeTai;
-import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
-import hust.sie.inpg12.sonnc.entities.SinhVien;
-import hust.sie.inpg12.sonnc.entities.SinhVienInfo;
+import hust.sie.inpg12.sonnc.entities.*;
 import hust.sie.inpg12.sonnc.model.HibernateUtil;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -46,6 +44,7 @@ public class SinhVienController {
     public boolean saveSinhVienInfo(SinhVien sv, SinhVienInfo svi) {
         boolean r = false;
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(sv);
             session.save(svi);
@@ -72,6 +71,7 @@ public class SinhVienController {
     public List<SinhVien> getSinhVien(int mssv) {
         List<SinhVien> lstSV = new ArrayList<>();
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Query q = session.createQuery("FROM SinhVien WHERE mssv =:ms");
             q.setParameter("ms", mssv);
@@ -98,6 +98,7 @@ public class SinhVienController {
     public SinhVien getSinhVienByClass(int mssv) {
         SinhVien sv = new SinhVien();
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             sv = (SinhVien) session.get(SinhVien.class, mssv);
             transaction.commit();
@@ -119,11 +120,14 @@ public class SinhVienController {
      * @since v1 - 26.03.18
      * @author SonNC
      */
-    public SinhVienInfo getSinhVienInfo(int mssv) {
-        SinhVienInfo sv = new SinhVienInfo();
+    public List getSinhVienInfo(int mssv) {
+        List<SinhVienInfo> lstSVI = new ArrayList<>();
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            sv = (SinhVienInfo) session.get(SinhVienInfo.class, mssv);
+            Query q = session.createQuery("FROM SinhVienInfo WHERE mssv =:ms");
+            q.setParameter("ms", mssv);
+            lstSVI = q.list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -133,7 +137,7 @@ public class SinhVienController {
         } finally {
             session.close();
         }
-        return sv;
+        return lstSVI;
     }
 
     /**
@@ -146,6 +150,7 @@ public class SinhVienController {
     public boolean updateSinhVienThongTin(SinhVien sv, SinhVienInfo svi) {
         boolean r = false;
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.update(sv);
             session.update(svi);
@@ -172,6 +177,7 @@ public class SinhVienController {
     public List<CongTy> getAllCongTy() {
         List<CongTy> lstCongTy = new ArrayList<>();
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             // 0: chưa được duyệt, 1 chấp nhận, 2 không chấp nhận
             Query query = session.createQuery("FROM CongTy WHERE TrangThai = 1");
@@ -198,6 +204,7 @@ public class SinhVienController {
     public List<GiangVienHuongDan> getAllGiangVienHuongDan() {
         List<GiangVienHuongDan> lstGiangVienHuongDan = new ArrayList<>();
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             // 0: chưa được duyệt, 1 chấp nhận, 2 không chấp nhận
             Query query = session.createQuery("FROM GiangVienHuongDan");
@@ -224,6 +231,7 @@ public class SinhVienController {
     public List<Object[]> getAllDeTai() {
         List<Object[]> results = new ArrayList<>();
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
 
             results = (List<Object[]>) session.createSQLQuery("select d.ma_de_tai, d.ma_cong_ty, d.ma_gvhd, d.ngay_dang,\n"
@@ -244,4 +252,217 @@ public class SinhVienController {
         }
         return results;
     }
+
+    public DeTai getDeTaiByID(int maDeTai) {
+        DeTai dt = new DeTai();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            dt = (DeTai) session.get(DeTai.class, maDeTai);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return dt;
+    }
+
+    public List getListDeTaiMotSVDK(int mssv) {
+        List<SinhVienDangKy> lstDeTaiMotSinhVienDangKy = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM SinhVienDangKy WHERE mssv =:ms");
+            q.setParameter("ms", mssv);
+            lstDeTaiMotSinhVienDangKy = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstDeTaiMotSinhVienDangKy;
+    }
+
+    public boolean saveDeTaiSinhVienDangKy(SinhVienDangKy svdk) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(svdk);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    // xem lại phần này
+    public List getDotThucTap(int maDot) {
+        List<DotThucTap> lst = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM DotThucTap WHERE maDot =:maDot");
+            q.setParameter("maDot", maDot);
+            lst = q.list();
+//            results = q.list();
+//            for (Object[] result : results) {
+//                dotThucTap = new DotThucTap();
+//                dotThucTap.setThoiGian((BigInteger) result[0]);
+//                dotThucTap.setId((int) result[1]);
+//                dotThucTap.setMaDot((int) result[2]);
+//                dotThucTap.setThoiGianBatDau((Date) result[3]);
+//                dotThucTap.setThoiGianKetThuc((Date) result[4]);
+//                dotThucTap.setMoTa((String) result[5]);
+//            }
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lst;
+    }
+
+    public List GetListFileSinhVien(int mssv) {
+        List<SinhVienFile> lstSinhVienFile = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM SinhVienFile WHERE mssv =:ms");
+            query.setParameter("ms", mssv);
+            lstSinhVienFile = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstSinhVienFile;
+    }
+
+    public boolean UploadFileSinhVien(SinhVienFile file) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(file);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public List getDiemThiSinhVien(int mssv) {
+        List<SinhVienDiem> lsSinhVienDiem = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM SinhVienDiem WHERE mssv =:ms");
+            query.setParameter("ms", mssv);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lsSinhVienDiem;
+    }
+
+    public List getAllHeSoDiem() {
+        List<HeSoDiem> lstHeSoDiem = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM HeSoDiem h ORDER BY h.id DESC");
+            query.setMaxResults(1);
+            lstHeSoDiem = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstHeSoDiem;
+    }
+
+    public List getAllCongTyforSV() {
+        List<CongTy> lstCongTy = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM CongTy WHERE trangThai = 1");
+            lstCongTy = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstCongTy;
+    }
+
+    public List<Object[]> getDeTaiInfo(int maDeTai) {
+        List<Object[]> results = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+
+            results = (List<Object[]>) session.createSQLQuery("select d.ma_de_tai, d.ma_cong_ty, d.ma_gvhd, d.ngay_dang,\n"
+                    + "d.nguoi_dang, d.noi_dung,d.so_luong, d.so_luong_con,\n"
+                    + " d.ten_de_tai, d.yeu_cau_khac, d.yeu_cau_lap_trinh, \n"
+                    + " d.han_dang_ky, c.logo, c.ten_cong_ty, g.ho_ten, g.avatar, g.email, g.dien_thoai, g.chucvu\n"
+                    + "from de_tai d join cong_ty c on d.ma_cong_ty = c.ma_cong_ty \n"
+                    + "join giang_vien_huong_dan g on d.ma_gvhd = g.ma_gvhd\n"
+                    + "where d.trang_thai =1 and ma_de_tai = "+maDeTai+"").list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+    
+    // ====BẮT ĐẦU LẤY TOÀN BỘ THÔNG TIN CỦA CÔNG TY, ĐẠI DIỆN CÔNG TY 
+    // VÀ DANH SÁCH GIẢNG VIÊN HƯỚNG DẪN CỦA CÔNG TY
+    public 
 }

@@ -14,6 +14,7 @@ public class DotThucTap  implements java.io.Serializable {
      private int maDot;
      private Date thoiGianBatDau;
      private Date thoiGianKetThuc;
+     private String moTa;
 
     public DotThucTap() {
     }
@@ -53,6 +54,15 @@ public class DotThucTap  implements java.io.Serializable {
         this.thoiGianKetThuc = thoiGianKetThuc;
     }
 
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
+    }
+  
+    
 
 
 

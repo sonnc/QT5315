@@ -25,7 +25,6 @@
 %>
 <base href="<%=URL%>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Bootstrap 3 template for corporate business" />
 <!-- css -->
 <link href="./pages/libs/css/bootstrap.min.css" rel="stylesheet" />
 <link href="./pages/libs/plugins/flexslider/flexslider.css" rel="stylesheet" media="screen" />

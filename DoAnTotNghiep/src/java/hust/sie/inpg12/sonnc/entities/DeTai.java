@@ -27,7 +27,7 @@ public class DeTai{
      private int trangThai;
      private Date ngayDang;
      private Date hanDangKy;
-     private Set sinhVienThucTaps = new HashSet(0);
+//     private Set sinhVienThucTaps = new HashSet(0);
 
     public DeTai() {
     }
@@ -45,7 +45,7 @@ public class DeTai{
         this.hanDangKy = hanDangKy;
         this.yeuCauKhac = yeuCauKhac;
     }
-    public DeTai(CongTy congTy, GiangVienHuongDan giangVienHuongDan, int maCongTy, int maGvhd, String tenDeTai, String noiDung, String yeuCauLapTrinh, String yeuCauKhac, String nguoiDang, int soLuong, Integer soLuongCon, int trangThai, Date ngayDang, Date hanDangKy, Set sinhVienThucTaps) {
+    public DeTai(CongTy congTy, GiangVienHuongDan giangVienHuongDan, int maCongTy, int maGvhd, String tenDeTai, String noiDung, String yeuCauLapTrinh, String yeuCauKhac, String nguoiDang, int soLuong, Integer soLuongCon, int trangThai, Date ngayDang, Date hanDangKy) {
        this.congTy = congTy;
        this.giangVienHuongDan = giangVienHuongDan;
        this.maCongTy = maCongTy;
@@ -60,7 +60,6 @@ public class DeTai{
        this.ngayDang = ngayDang;
        this.hanDangKy = hanDangKy;
        this.yeuCauKhac = yeuCauKhac;
-       this.sinhVienThucTaps = sinhVienThucTaps;
     }
    
     public Integer getMaDeTai() {
@@ -171,13 +170,7 @@ public class DeTai{
     public void setHanDangKy(Date hanDangKy) {
         this.hanDangKy = hanDangKy;
     }
-    public Set getSinhVienThucTaps() {
-        return this.sinhVienThucTaps;
-    }
-    
-    public void setSinhVienThucTaps(Set sinhVienThucTaps) {
-        this.sinhVienThucTaps = sinhVienThucTaps;
-    }
+
 
 
 

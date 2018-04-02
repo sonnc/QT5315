@@ -23,5 +23,8 @@
         <property name="loaiFile" type="java.lang.Integer">
             <column name="loai_file" />
         </property>
+        <property name="ngayThang" type="date">
+            <column name="ngay_thang" />
+        </property>
     </class>
 </hibernate-mapping>

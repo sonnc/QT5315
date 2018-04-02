@@ -31,7 +31,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Thực tập<i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/congty/danhsachcongty.jsp">Công ty</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/sinhvien/danhsachcongty.jsp">Công ty</a></li>
                                     <li class="dropdown-submenu">
                                         <a class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown">Đề tài</a>
                                         <ul class="dropdown-menu">

@@ -29,6 +29,10 @@ public class DetaiCongtyNguoihuongdan {
     private Date ngayDang;
     private Date hanDangKy;
     private String logo;
+    private String avatarNHD;
+    private String emailNHD;
+    private String dienThoaiNHD;
+    private String chucVuNHD;
 
     public DetaiCongtyNguoihuongdan() {
     }
@@ -179,5 +183,39 @@ public class DetaiCongtyNguoihuongdan {
         this.logo = logo;
     }
 
+    public String getAvatarNHD() {
+        return avatarNHD;
+    }
+
+    public void setAvatarNHD(String avatarNHD) {
+        this.avatarNHD = avatarNHD;
+    }
+
+    public String getEmailNHD() {
+        return emailNHD;
+    }
+
+    public void setEmailNHD(String emailNHD) {
+        this.emailNHD = emailNHD;
+    }
+
+    public String getDienThoaiNHD() {
+        return dienThoaiNHD;
+    }
+
+    public void setDienThoaiNHD(String dienThoaiNHD) {
+        this.dienThoaiNHD = dienThoaiNHD;
+    }
+
+    public String getChucVuNHD() {
+        return chucVuNHD;
+    }
+
+    public void setChucVuNHD(String chucVuNHD) {
+        this.chucVuNHD = chucVuNHD;
+    }
+
+
+    
     
 }

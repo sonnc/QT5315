@@ -10,10 +10,43 @@
 <html>
     <head>
         <title>Quy trình thực tập</title>
-        <%@include file="../../mains/head.jsp" %>
-        <script src="./pages/libs/js/validate.js"></script>
-        <script src="./pages/libs/js/jquery.min.js"></script>
-        <script src="./pages/libs/js/sonnc.js"></script>
+        <%
+            StringBuffer url = new StringBuffer();
+            int port = request.getServerPort();
+            if (port < 0) {
+                port = 80; // Work around java.net.URL bug
+            }
+            String scheme = request.getScheme();
+            url.append(scheme);
+            url.append("://");
+            url.append(request.getServerName());
+            if (("http".equals(scheme) && (port != 80)) || ("https".equals(scheme) && (port != 443))) {
+                url.append(':');
+                url.append(port);
+            }
+            url.append(request.getContextPath());
+            String URL = url.toString() + "/";
+            session.setAttribute("httpURL", URL);
+        %>
+        <base href="<%=URL%>">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- css -->
+        <link href="./pages/libs/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="./pages/libs/plugins/flexslider/flexslider.css" rel="stylesheet" media="screen" />
+        <link href="./pages/libs/css/cubeportfolio.min.css" rel="stylesheet" />
+        <link href="./pages/libs/css/style.css" rel="stylesheet" />
+        <!-- Theme skin -->
+        <link id="t-colors" href="./pages/libs/skins/default.css" rel="stylesheet" />
+
+        <!-- boxed bg -->
+        <link id="bodybg" href="./pages/libs/bodybg/bg1.css" rel="stylesheet" type="text/css" />
+        <link href="./pages/libs/img/logoEn.png" rel="shortcut icon" type="image/x-icon" />
+
+        <link href="./pages/sinhvien/libs/fullcalendar.min.css" rel="stylesheet" />
+        <link href="./pages/sinhvien/libs/fullcalendar.print.min.css" rel="stylesheet" media="print" />
+        <script src="./pages/sinhvien/libs/moment.min.js"></script>
+        <script src="./pages/sinhvien/libs/jquery.min.js"></script>
+        <script src="./pages/sinhvien/libs/fullcalendar.min.js"></script>
         <style>
             .error{
                 color: red;
@@ -34,6 +67,82 @@
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                     <p style="margin: 0px">QUY TRÌNH THỰC TẬP</p>
                                 </div>
+                                <script>
+
+                                    $(document).ready(function () {
+
+                                        $('#calendar').fullCalendar({
+                                            header: {
+                                                left: 'prev,next today',
+                                                center: 'title',
+                                                right: 'month,basicWeek,basicDay'
+                                            },
+                                            defaultDate: '2018-03-12',
+                                            navLinks: true, // can click day/week names to navigate views
+                                            editable: true,
+                                            eventLimit: true, // allow "more" link when too many events
+                                            events: [
+                                                {
+                                                    title: 'All Day Event',
+                                                    start: '2018-03-01'
+                                                },
+                                                {
+                                                    title: 'Long Event',
+                                                    start: '2018-03-07',
+                                                    end: '2018-03-10'
+                                                },
+                                                {
+                                                    id: 999,
+                                                    title: 'Repeating Event',
+                                                    start: '2018-03-09T16:00:00'
+                                                },
+                                                {
+                                                    id: 999,
+                                                    title: 'Repeating Event',
+                                                    start: '2018-03-16T16:00:00'
+                                                },
+                                                {
+                                                    title: 'Conference',
+                                                    start: '2018-03-11',
+                                                    end: '2018-03-13'
+                                                },
+                                                {
+                                                    title: 'Meeting',
+                                                    start: '2018-03-12T10:30:00',
+                                                    end: '2018-03-12T12:30:00'
+                                                },
+                                                {
+                                                    title: 'Lunch',
+                                                    start: '2018-03-12T12:00:00'
+                                                },
+                                                {
+                                                    title: 'Meeting',
+                                                    start: '2018-03-12T14:30:00'
+                                                },
+                                                {
+                                                    title: 'Happy Hour',
+                                                    start: '2018-03-12T17:30:00'
+                                                },
+                                                {
+                                                    title: 'Dinner',
+                                                    start: '2018-03-12T20:00:00'
+                                                },
+                                                {
+                                                    title: 'Birthday Party',
+                                                    start: '2018-03-13T07:00:00'
+                                                },
+                                                {
+                                                    title: 'Click for Google',
+                                                    url: 'http://google.com/',
+                                                    start: '2018-03-28'
+                                                }
+                                            ]
+                                        });
+
+                                    });
+
+                                </script>
+                                <div id="calendar"></div>
                                 <div>Dưới đây là mọi thông tin của quy trình thực tập <strong>20181</strong>
                                     . Hãy thực hiện đúng theo quy trình và thời hạn của mỗi nhiệm vụ. </div>
                                 <table border="1">
@@ -72,3 +181,112 @@
             <%@include file="../../mains/js.jsp" %>
     </body>
 </html>
+
+
+
+<!--<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<link href='../fullcalendar.min.css' rel='stylesheet' />
+<link href='../fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<script src='../lib/moment.min.js'></script>
+<script src='../lib/jquery.min.js'></script>
+<script src='../fullcalendar.min.js'></script>
+<script>
+
+  $(document).ready(function() {
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      defaultDate: '2018-03-12',
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+        {
+          title: 'All Day Event',
+          start: '2018-03-01'
+        },
+        {
+          title: 'Long Event',
+          start: '2018-03-07',
+          end: '2018-03-10'
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: '2018-03-09T16:00:00'
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: '2018-03-16T16:00:00'
+        },
+        {
+          title: 'Conference',
+          start: '2018-03-11',
+          end: '2018-03-13'
+        },
+        {
+          title: 'Meeting',
+          start: '2018-03-12T10:30:00',
+          end: '2018-03-12T12:30:00'
+        },
+        {
+          title: 'Lunch',
+          start: '2018-03-12T12:00:00'
+        },
+        {
+          title: 'Meeting',
+          start: '2018-03-12T14:30:00'
+        },
+        {
+          title: 'Happy Hour',
+          start: '2018-03-12T17:30:00'
+        },
+        {
+          title: 'Dinner',
+          start: '2018-03-12T20:00:00'
+        },
+        {
+          title: 'Birthday Party',
+          start: '2018-03-13T07:00:00'
+        },
+        {
+          title: 'Click for Google',
+          url: 'http://google.com/',
+          start: '2018-03-28'
+        }
+      ]
+    });
+
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='calendar'></div>
+
+</body>
+</html>-->

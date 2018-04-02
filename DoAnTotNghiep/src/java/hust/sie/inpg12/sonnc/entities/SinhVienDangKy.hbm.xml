@@ -20,5 +20,14 @@
         <property name="trangThai" type="int">
             <column name="trang_thai" not-null="true" />
         </property>
+        <property name="soKhop" type="double">
+            <column name="so_khop" not-null="true" />
+        </property>
+        <property name="ngayDangKy" type="date">
+            <column name="ngay_dang_ky" />
+        </property>
+        <property name="dotThucTap" type="int">
+            <column name="dot_thuc_tap"  />
+        </property>
     </class>
 </hibernate-mapping>

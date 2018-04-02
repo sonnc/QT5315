@@ -7,11 +7,7 @@ package hust.sie.inpg12.sonnc.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import hust.sie.inpg12.sonnc.controller.SinhVienController;
-import hust.sie.inpg12.sonnc.entities.CongTy;
-import hust.sie.inpg12.sonnc.entities.DeTai;
-import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
-import hust.sie.inpg12.sonnc.entities.SinhVien;
-import hust.sie.inpg12.sonnc.entities.SinhVienInfo;
+import hust.sie.inpg12.sonnc.entities.*;
 import hust.sie.inpg12.sonnc.other.DetaiCongtyNguoihuongdan;
 import hust.sie.inpg12.sonnc.other.SoKhop;
 import java.text.SimpleDateFormat;
@@ -21,6 +17,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.commons.io.FileUtils;
 import java.io.File;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +38,87 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
     private SinhVien sinhVien;
     private SinhVienInfo sinhVienInfo;
     private List<DetaiCongtyNguoihuongdan> lstDeTai = new ArrayList<>();
+    private List<SinhVienFile> lstSinhVienFile = new ArrayList<>();
+    private List<SinhVienDiem> lstSinhVienDiem = new ArrayList<>();
+    private List<SinhVienInfo> lstSVI = new ArrayList<>();
+    private List<CongTy> lstCongTyforSV = new ArrayList<>();
+    private List<SinhVien> lstSinhVien = new ArrayList<>();
+    private List<HeSoDiem> lstHeSoDiem = new ArrayList<>();
+    private CongTy congTy = new CongTy();
+    private DaiDienCongTy daiDienCongTy = new DaiDienCongTy();
+    private List<GiangVienHuongDan> lstGiangVienHuongDan = new ArrayList<>();
+
+    public CongTy getCongTy() {
+        return congTy;
+    }
+
+    public void setCongTy(CongTy congTy) {
+        this.congTy = congTy;
+    }
+
+    public DaiDienCongTy getDaiDienCongTy() {
+        return daiDienCongTy;
+    }
+
+    public void setDaiDienCongTy(DaiDienCongTy daiDienCongTy) {
+        this.daiDienCongTy = daiDienCongTy;
+    }
+
+    public List<GiangVienHuongDan> getLstGiangVienHuongDan() {
+        return lstGiangVienHuongDan;
+    }
+
+    public void setLstGiangVienHuongDan(List<GiangVienHuongDan> lstGiangVienHuongDan) {
+        this.lstGiangVienHuongDan = lstGiangVienHuongDan;
+    }
+
+    public List<HeSoDiem> getLstHeSoDiem() {
+        return lstHeSoDiem;
+    }
+
+    public void setLstHeSoDiem(List<HeSoDiem> lstHeSoDiem) {
+        this.lstHeSoDiem = lstHeSoDiem;
+    }
+
+    public List<SinhVien> getLstSinhVien() {
+        return lstSinhVien;
+    }
+
+    public void setLstSinhVien(List<SinhVien> lstSinhVien) {
+        this.lstSinhVien = lstSinhVien;
+    }
+
+    public List<CongTy> getLstCongTyforSV() {
+        return lstCongTyforSV;
+    }
+
+    public void setLstCongTyforSV(List<CongTy> lstCongTyforSV) {
+        this.lstCongTyforSV = lstCongTyforSV;
+    }
+
+    public List<SinhVienInfo> getLstSVI() {
+        return lstSVI;
+    }
+
+    public void setLstSVI(List<SinhVienInfo> lstSVI) {
+        this.lstSVI = lstSVI;
+    }
+
+    public List<SinhVienFile> getLstSinhVienFile() {
+        return lstSinhVienFile;
+    }
+
+    public List<SinhVienDiem> getLstSinhVienDiem() {
+        return lstSinhVienDiem;
+    }
+
+    public void setLstSinhVienDiem(List<SinhVienDiem> lstSinhVienDiem) {
+        this.lstSinhVienDiem = lstSinhVienDiem;
+    }
+
+    public void setLstSinhVienFile(List<SinhVienFile> lstSinhVienFile) {
+        this.lstSinhVienFile = lstSinhVienFile;
+    }
 
     public List<DetaiCongtyNguoihuongdan> getLstDeTai() {
         return lstDeTai;
@@ -142,7 +220,24 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
      * @author SonNC
      */
     public String SinhVienCapNhatThongTin() {
+        try {
 
+            //Phải lấy thêm trường dữ liệu thông tin cúa sinh viên 
+            // sau đó mới bắt đầu xem trường nào cần thay đổi, 
+            // trường nào cần giữ lại thông tin
+            String date = request.getParameter("ngaySinh");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+            java.util.Date dateString = sdf.parse(date);
+            java.sql.Date ngaySinh = new java.sql.Date(dateString.getTime());
+            sinhVien.setMssv((int) session.get("mssv"));
+            sinhVien.setNgaySinh(ngaySinh);
+            sinhVienInfo.setMssv((int) session.get("mssv"));
+            if (sinhVienController.saveSinhVienInfo(sinhVien, sinhVienInfo)) {
+                return SUCCESS;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ERROR;
     }
 
@@ -153,9 +248,12 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
      * @author SonNC
      */
     public String getSinhVienThongTin() {
+        // kiểm tra lại thông tin của sinhVienInfo.
+        // giá trị trả về là null, 
         try {
-            sinhVien = sinhVienController.getSinhVienByClass(Integer.parseInt((String) session.get("mssv")));
-            sinhVienInfo = sinhVienController.getSinhVienInfo(Integer.parseInt((String) session.get("mssv")));
+            sinhVien = sinhVienController.getSinhVienByClass((int) session.get("mssv"));
+            lstSVI = sinhVienController.getSinhVienInfo((int) session.get("mssv"));
+            session.put("getSinhVienThongTin", "getSinhVienThongTin");
             return SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,17 +272,143 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
      * @author SonNC
      */
     public String setDangKyDeTai() {
+        // Đầu tiên lấy thông tin của sinh viên trong tường kỹ năng lập trình
+        // sau đó lấy thông tin yêu cầu lập trình của đề tài
+        // Dùng vòng lặp for để lấy thông tin và tính giá trị so khớp bằng cách 
+        // lấy toàn bộ điểm so khớp của sinh viên, chia cho tổng toàn bộ đề tài yêu cầu.
         String knlt = null;
-        SoKhop sksv = new SoKhop();
-        SoKhop skdt = new SoKhop();
-        DeTai dt = new DeTai();
+        DeTai deTai = new DeTai();
+        DotThucTap dotThucTap = new DotThucTap();
+        List<SinhVienDangKy> lstSVDK = new ArrayList<>();
+        List<SoKhop> lstSoKhopSV = new ArrayList<>();
+        List<SoKhop> lstSoKhopDT = new ArrayList<>();
+        List<DotThucTap> lstDotThucTap = new ArrayList<>();
+        String strSKSV = null;
+        String strSKDT = null;
         try {
-            sinhVienInfo = sinhVienController.getSinhVienInfo(Integer.parseInt((String) session.get("mssv")));
-            knlt = sinhVienInfo.getKyNangLt();
+            int maDeTai = Integer.parseInt(request.getParameter("maDeTai"));
+            int maDotThucTap = Integer.parseInt(request.getParameter("dotThucTap"));
+            lstSVDK = sinhVienController.getListDeTaiMotSVDK((int) session.get("mssv"));
+            lstDotThucTap = sinhVienController.getDotThucTap(maDotThucTap);
+            if (lstDotThucTap.size() == 0) {
+                session.put("messageDangKyDeTai", "Không tồn tại đợt thực tập này, xin vui lòng kiểm tra lại hoặc liên hệ với quản trị viên");
+                return SUCCESS;
+            } else {
+                Date date = new Date();
+                int x = (int) (lstDotThucTap.get(0).getThoiGianKetThuc().getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
+                if (x < 0) {
+                    session.put("messageDangKyDeTai", "Đã hết hạn đăng ký thực tập đợt " + maDotThucTap + ", Vui lòng chờ đến đợt thực tập tiếp theo.");
+                    return SUCCESS;
+                } else {
+
+                    // lấy thông tin đợt thực tập ở đây và kiểm tra xem có bị quá hạn đăng ký thực tập hay không?\
+                    if (lstSVDK.size() < 3) {
+                        // thuc hien dang ky de tai
+                        // xem lại chỗ này, phải kiểm tra hết dt mà sv đăng ký trong lstSVDK rồi mới tính đến có cho đk đê tài không.
+                        // Kiểm tra bằng cách thêm một biến kiểm tra trùng đê tài
+                        boolean checkTrungDeTai = false;
+                        for (int i = 0; i < lstSVDK.size(); i++) {
+                            // thông báo trùng đề tài
+                            if (lstSVDK.get(i).getMaDeTai() == maDeTai) {
+                                session.put("messageDangKyDeTai", "Bạn đã đăng ký đề tài này, xin vui lòng đăng ký đề tài khác.");
+                                checkTrungDeTai = true;
+                                break;
+                            }
+                        }
+
+                        if (checkTrungDeTai == false) {
+                            lstSVI = sinhVienController.getSinhVienInfo((int) session.get("mssv"));
+                            deTai = sinhVienController.getDeTaiByID(maDeTai);
+                            strSKSV = lstSVI.get(0).getKyNangLt();
+                            strSKDT = deTai.getYeuCauLapTrinh();
+                            double phanTramSoKhop = 0;// x là phần trăm so khớp của một đối tượng ví dụ java băng cách lấy sv/dt
+                            int count = 0;
+
+                            // thực hiện so khớp
+                            lstSoKhopSV = getDeTaiSoKhop(strSKSV);
+                            lstSoKhopDT = getDeTaiSoKhop(strSKDT);
+                            for (int i = 0; i < lstSoKhopDT.size(); i++) {
+                                for (int j = 0; j < lstSoKhopSV.size(); j++) {
+                                    if (lstSoKhopDT.get(i).getKyNang().contains(lstSoKhopSV.get(j).getKyNang())) {
+                                        phanTramSoKhop = phanTramSoKhop + ((lstSoKhopSV.get(j).getPhanTram()) / (lstSoKhopDT.get(i).getPhanTram()));
+                                    }
+                                }
+                                count++;
+                            }
+                            // thực hiện đăng ký đề tài
+                            SinhVienDangKy svdk = new SinhVienDangKy();
+                            svdk.setMaCongTy(deTai.getMaCongTy());
+                            svdk.setMaDeTai(deTai.getMaDeTai());
+                            svdk.setMssv((int) session.get("mssv"));
+                            svdk.setTrangThai(2);
+                            svdk.setSoKhop((phanTramSoKhop / count) * 100);
+                            java.util.Date utilDate = new java.util.Date();
+                            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                            svdk.setNgayDangKy(sqlDate);
+                            svdk.setDotThucTap(maDotThucTap);
+
+                            if (sinhVienController.saveDeTaiSinhVienDangKy(svdk)) {
+                                // đăng ký thành công
+                                session.put("messageDangKyDeTai", "Bạn đã đăng ký thành công đề tài: " + deTai.getTenDeTai() + ". Xin chờ giảng viên phê duyệt.");
+                            } else {
+                                session.put("messageDangKyDeTai", "Có lỗi xảy ra khi đăng ký đề tài: " + deTai.getTenDeTai() + ". Xin vui lòng xem lại hoặc "
+                                        + "liên hệ với quản trị viên.");
+                            }
+                        }
+                        return SUCCESS;
+                    } else {
+                        session.put("messageDangKyDeTai", "Bạn đã đăng ký 3 đề tài, bạn không thể đăng ký thêm đề tài nào nữa.");
+                        return SUCCESS;
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return ERROR;
+    }
+
+    /**
+     * Phương thức cắt chuỗi để đưa vào hệ thống so khớp
+     *
+     * @param str
+     * @return
+     */
+    public List getDeTaiSoKhop(String str) {
+        str.replaceAll(" ", "");
+        int start1 = 0;
+        int start2 = 0;
+        SoKhop soKhop = null;
+        List<SoKhop> lstSoKhop = new ArrayList<>();;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '[') {
+                start1 = i + 1;
+                soKhop = new SoKhop();
+            }
+            if (str.charAt(i) == '-') {
+                String x = str.substring(start1, i);
+                soKhop.setKyNang(x);
+                start2 = i + 1;
+            }
+            if (str.charAt(i) == ']') {
+                String x = str.substring(start2, i);
+                double giaTri = 0;
+                if (x.equalsIgnoreCase("thanhthao")) {
+                    giaTri = 100;
+                } else if (x.equalsIgnoreCase("tot")) {
+                    giaTri = 75;
+                } else if (x.equalsIgnoreCase("kha")) {
+                    giaTri = 50;
+                } else if (x.equalsIgnoreCase("biet")) {
+                    giaTri = 25;
+                } else if (x.equalsIgnoreCase("khongbiet")) {
+                    giaTri = 0;
+                }
+                soKhop.setPhanTram(giaTri);
+                lstSoKhop.add(soKhop);
+            }
+        }
+        return lstSoKhop;
     }
 
     /**
@@ -225,7 +449,149 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         }
         session.put("getAllDeTai", "getAllDeTai");
         return SUCCESS;
+    }
 
+    /**
+     * phương thức lấy toàn bộ thông tin hệ số điểm thi
+     */
+//    public String GetAllHeSoDiem(){
+//        try {
+//            
+//        } catch (Exception e) {
+//        }
+//    
+//    }
+    /**
+     * Phương thức lấy toàn bộ danh sách đề tài sinh viên đã đăng ký
+     *
+     */
+//    public String getAllDeTaiSVDK(){
+//    
+//    
+//    }
+    /**
+     * Phương thức này cho phép lấy toàn bộ thông tin về file của sinh viên
+     *
+     */
+    public String GetListFileSinhVien() {
+        lstSinhVienFile = sinhVienController.GetListFileSinhVien((int) session.get("mssv"));
+        session.put("lstSVF", "lstSVF");
+        return SUCCESS;
+    }
+
+    /**
+     * Phương thức này cho phép sinh viên upload file
+     */
+    public String UploadFileSinhVien() {
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        String link = null;
+        SinhVienFile sinhVienFile = new SinhVienFile();
+        int tp = Integer.parseInt(request.getParameter("loaiFile"));
+        try {
+            path = request.getSession().getServletContext().getRealPath("/").concat("file/sinhvien/");
+            File fileToCreate = new File(path, this.myFileFileName);
+            FileUtils.copyFile(this.myFile, fileToCreate);
+            link = "file/sinhvien/" + myFileFileName;
+        } catch (Exception e) {
+            e.printStackTrace();
+            addActionError(e.getMessage());
+            return ERROR;
+        }
+        sinhVienFile.setMssv((int) session.get("mssv"));
+        sinhVienFile.setLoaiFile(Integer.parseInt(request.getParameter("loaiFile")));
+        sinhVienFile.setTenFile(request.getParameter("tenFile"));
+        sinhVienFile.setLink(link);
+        sinhVienFile.setMoTa(request.getParameter("moTa"));
+        sinhVienFile.setNgayThang(sqlDate);
+        if (sinhVienController.UploadFileSinhVien(sinhVienFile)) {
+            return SUCCESS;
+        }
+        return ERROR;
+    }
+
+    /**
+     * Phương thức lấy toàn bộ điểm thi cho sinh viên
+     *
+     */
+    public String getDiemThiSinhVien() {
+        try {
+            lstSinhVienDiem = sinhVienController.getDiemThiSinhVien((int) session.get("mssv"));
+            lstSinhVien = sinhVienController.getSinhVien((int) session.get("mssv"));
+            lstHeSoDiem = sinhVienController.getAllHeSoDiem();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (lstSinhVienDiem.size() == 0) {
+            session.put("getDiemThiSinhVienNotFound", "getDiemThiSinhVienNotFound");
+        }
+        session.put("getDiemThiSinhVien", "getDiemThiSinhVien");
+        return SUCCESS;
+    }
+
+    /**
+     * Phương thức lấy danh sách công ty
+     *
+     */
+    public String getAllCongTyforSV() {
+        try {
+            lstCongTyforSV = sinhVienController.getAllCongTyforSV();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ERROR;
+        }
+        session.put("getAllCongTyforSV", "getAllCongTyforSV");
+        return SUCCESS;
+    }
+
+    /**
+     * Phương thức lấy thông tin chi tiết đề tài
+     *
+     */
+    public String getDeTaiInfo() {
+        try {
+            List<Object[]> results = sinhVienController.getDeTaiInfo(Integer.parseInt(request.getParameter("maDeTai")));
+            for (Object[] result : results) {
+                DetaiCongtyNguoihuongdan d = new DetaiCongtyNguoihuongdan();
+                d.setMaDeTai((int) result[0]);
+                d.setMaCongTy((int) result[1]);
+                d.setMaGvhd((int) result[2]);
+                d.setNgayDang((Date) result[3]);
+                d.setNguoiDang((String) result[4]);
+                d.setNoiDung((String) result[5]);
+                d.setSoLuong((int) result[6]);
+                d.setSoLuongCon((int) result[7]);
+                d.setTenDeTai((String) result[8]);
+                d.setYeuCauKhac((String) result[9]);
+                d.setYeuCauLapTrinh((String) result[10]);
+                d.setHanDangKy((Date) result[11]);
+                d.setLogo((String) result[12]);
+                d.setTenCongTy((String) result[13]);
+                d.setNguoiHuongDan((String) result[14]);
+                d.setAvatarNHD((String) result[15]);
+                d.setEmailNHD((String) result[16]);
+                d.setDienThoaiNHD((String) result[17]);
+                d.setChucVuNHD((String) result[18]);
+                lstDeTai.add(d);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ERROR;
+        }
+        session.put("getDeTaiInfo", "getDeTaiInfo");
+        return SUCCESS;
+    }
+    
+    /**
+     * Phương thức lấy chi tiết công ty
+     * Các thông tin cần lấy bao gồm có công ty, đại diện và danh sách người hướng dẫn
+     * 
+     */
+    public String getCongTyInfo(){
+        try {
+            ls
+        } catch (Exception e) {
+        }
     }
 
     public String test() {

@@ -14,7 +14,10 @@
     <s:action name="getAllDeTai" executeResult="true"/>
     <%
         }
-        session.removeAttribute("getAllDeTai");
+    %>
+    <%
+        if (session.getAttribute("getAllDeTai") != null) {
+            session.removeAttribute("getAllDeTai");
     %>
     <body>
         <div id="wrapper">
@@ -24,36 +27,45 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
+                            <%                                if (session.getAttribute("messageDangKyDeTai") != null) {
+                            %>
+                            <p style="color: red">${messageDangKyDeTai}</p>
+                            <%
+                                }
+                                session.removeAttribute("messageDangKyDeTai");
+                            %>
                             <s:iterator value="lstDeTai">
                                 <div class="row" style="margin: 0px">
                                     <div class="col-lg-2">
                                         <img src="<s:property value="logo"/>" alt="" class="img-responsive" style="height: 100%; width: 100%" />
                                     </div>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-8">
                                         <article style="margin-bottom: 0px; padding-bottom: 0px">
                                             <div class="post-image" style="margin: 0px">
                                                 <div class="post-heading">
-                                                    <p style="margin: 0;"><a href="chiTietDeTai?maDetai=<s:property value="maDeTai"/>"><strong><s:property value="tenDeTai"/></strong></a></p>
+                                                    <p style="margin: 0;"><a href="<%session.getAttribute("URL");%>getDeTaiInfo?maDeTai=<s:property value="maDeTai"/>"><strong><s:property value="tenDeTai"/></strong></a></p>
                                                 </div>
                                             </div>
-                                                    <p style="margin: 0;"><strong>Công ty: </strong><a href="chiTietCongTy?maCongTy=<s:property value="maCongTy"/>"><s:property value="tenCongTy"/></a></p>
+                                            <p style="margin: 0;"><strong>Công ty: </strong><a href="chiTietCongTy?maCongTy=<s:property value="maCongTy"/>"><s:property value="tenCongTy"/></a></p>
                                             <p style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung"/></p>
                                             <p style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh"/></p>
                                             <p style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac"/></p>
                                             <div >
                                                 <ul class="meta-post">
-                                                    <li><i class="fa fa-calendar"></i><a>Ngày đăng: <s:property value="ngayDang"/></a></li>
-                                                    <li><i class="fa fa-calendar-o"></i><a>Hạn đăng ký: <s:property value="hanDangKy"/></a></li>
-                                                    <li><i class="fa fa-users"></i><a>Số lượng: <s:property value="soLuong"/></a></li>
+                                                    <li style="padding-right: 0px"><i class="fa fa-calendar"></i><a>Ngày đăng: <s:property value="ngayDang"/></a></li>
+                                                    <li style="padding-right: 0px"><i class="fa fa-calendar-o"></i><a>Hạn đăng ký: <s:property value="hanDangKy"/></a></li>
+                                                    <li style="padding-right: 0px"><i class="fa fa-users"></i><a>Số lượng: <s:property value="soLuong"/></a></li>
                                                 </ul>
-                                                <a style="margin-bottom: 10px" href="chiTietDeTai?maDetai=<s:property value="maDeTai"/>" class="readmore pull-right">Xem chi tiết <i class="fa fa-angle-right"></i></a>
                                             </div>
                                         </article>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <p><strong style="color: blue"><s:property value="soLuongCon"/></strong>/<strong style="color: red"><s:property value="soLuongCon"/></strong></p>
-                                        <button class="btn btn-info">Đăng ký</button>
-                                    </div>
+                                    </div> <form action="dangkydetai" method="post">
+                                        <div class="col-lg-2">
+                                            <input name="maDeTai" value="<s:property value="maDeTai"/>" style="height: 0px; width: 0px;display: contents;" />
+                                            <p><strong style="color: blue"><s:property value="soLuongCon"/></strong>/<strong style="color: red"><s:property value="soLuong"/></strong></p>
+                                            <input class="form-control" name="dotThucTap" placeholder="Đợt thực tập" required="true" style="padding: 0px 4px; font-size: 13px"/>
+                                            <button class="btn btn-info" style="width: 100%; margin-top: 10px">Đăng ký</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </s:iterator>
                             <div id="pagination">
@@ -73,4 +85,6 @@
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
             <%@include file="../../mains/js.jsp" %>
     </body>
+    <%
+        }%>
 </html>

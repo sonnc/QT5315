@@ -23,6 +23,41 @@
             <result name="success">/pages/sinhvien/detai.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="getSinhVienThongTin" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getSinhVienThongTin">
+            <result name="success">/pages/sinhvien/capnhatthongtin.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="SinhVienCapNhatThongTin" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="SinhVienCapNhatThongTin">
+            <result name="success">/pages/sinhvien/capnhatthongtin.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="dangkydetai" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="setDangKyDeTai">
+            <result name="success" type="redirect">/pages/sinhvien/detai.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllCongTyforSV" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getAllCongTyforSV">
+            <result name="success">/pages/sinhvien/danhsachcongty.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getDiemThiSinhVien" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getDiemThiSinhVien">
+            <result name="success">/pages/sinhvien/diemthi.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getDiemThiSinhVien" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getDiemThiSinhVien">
+            <result name="success">/pages/sinhvien/diemthi.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getDeTaiInfo" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getDeTaiInfo">
+            <result name="success">/pages/sinhvien/chitietdetai.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        
+        
+        
+        
+        
+        
+        
         <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
             <result name="success">test.jsp</result>
             <result name="error" type="redirect">404.jsp</result>

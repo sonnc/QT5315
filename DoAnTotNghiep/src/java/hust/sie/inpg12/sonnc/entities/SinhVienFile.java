@@ -1,6 +1,9 @@
 package hust.sie.inpg12.sonnc.entities;
 // Generated Mar 25, 2018 2:40:17 PM by Hibernate Tools 4.3.1
 
+import java.util.Date;
+
+
 
 
 /**
@@ -16,6 +19,7 @@ public class SinhVienFile  implements java.io.Serializable {
      private String moTa;
      private String link;
      private Integer loaiFile;
+     private Date ngayThang;
 
     public SinhVienFile() {
     }
@@ -85,6 +89,15 @@ public class SinhVienFile  implements java.io.Serializable {
         this.loaiFile = loaiFile;
     }
 
+    public Date getNgayThang() {
+        return ngayThang;
+    }
+
+    public void setNgayThang(Date ngayThang) {
+        this.ngayThang = ngayThang;
+    }
+
+    
 
 
 

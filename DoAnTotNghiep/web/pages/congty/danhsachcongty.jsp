@@ -19,7 +19,17 @@
                 text-orientation: initial;
             }
         </style>
+        <%            if (session.getAttribute("getAllCongTy") == null) {
+        %>
+        <s:action name="getAllCongTy" executeResult="true"/>
+        <%
+            }
+        %>
     </head>
+    <%
+        if (session.getAttribute("getAllCongTy") != null) {
+            session.removeAttribute("getAllCongTy");
+    %>
     <body>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
@@ -69,5 +79,8 @@
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
             <%@include file="../../mains/js.jsp" %>
     </body>
+    <%
+    }
+    %>
 </html>
 

@@ -1,6 +1,9 @@
 package hust.sie.inpg12.sonnc.entities;
 // Generated Mar 25, 2018 2:40:17 PM by Hibernate Tools 4.3.1
 
+import java.util.Date;
+
+
 
 
 /**
@@ -14,6 +17,9 @@ public class SinhVienDangKy  implements java.io.Serializable {
      private int maCongTy;
      private int maDeTai;
      private int trangThai;
+     private double soKhop;
+     private Date ngayDangKy;
+     private int dotThucTap;
 
     public SinhVienDangKy() {
     }
@@ -61,7 +67,31 @@ public class SinhVienDangKy  implements java.io.Serializable {
         this.trangThai = trangThai;
     }
 
+    public double getSoKhop() {
+        return soKhop;
+    }
 
+    public void setSoKhop(double soKhop) {
+        this.soKhop = soKhop;
+    }
+
+    public Date getNgayDangKy() {
+        return ngayDangKy;
+    }
+
+    public void setNgayDangKy(Date ngayDangKy) {
+        this.ngayDangKy = ngayDangKy;
+    }
+
+    public int getDotThucTap() {
+        return dotThucTap;
+    }
+
+    public void setDotThucTap(int dotThucTap) {
+        this.dotThucTap = dotThucTap;
+    }
+
+    
 
 
 }

@@ -14,3 +14,4 @@
 <script src="./pages/libs/js/custom.js"></script>
 <script src="./pages/libs/js/jquery.validate.min.js"></script>
 <script src="./pages/libs/js/validate.js"></script>
+

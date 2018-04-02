@@ -44,11 +44,11 @@
         <property name="hanDangKy" type="date">
             <column name="han_dang_ky" length="10" not-null="true" />
         </property>
-        <set name="sinhVienThucTaps" table="sinh_vien_thuc_tap" inverse="true" lazy="true" fetch="select">
+<!--        <set name="sinhVienThucTaps" table="sinh_vien_thuc_tap" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ma_de_tai" not-null="true" />
             </key>
             <one-to-many class="hust.sie.inpg12.sonnc.entities.SinhVienThucTap" />
-        </set>
+        </set>-->
     </class>
 </hibernate-mapping>

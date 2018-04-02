@@ -17,5 +17,8 @@
         <property name="thoiGianKetThuc" type="date">
             <column name="thoi_gian_ket_thuc" length="10" not-null="true" />
         </property>
+        <property name="moTa" type="string">
+            <column name="mo_ta" length="2000" />
+        </property>
     </class>
 </hibernate-mapping>

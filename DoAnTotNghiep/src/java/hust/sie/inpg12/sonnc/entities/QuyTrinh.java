@@ -15,19 +15,17 @@ public class QuyTrinh  implements java.io.Serializable {
      private String noiDung;
      private Date ngayBatDau;
      private Date ngayKetThuc;
-     private String maXacThuc;
-     private Integer trangThai;
+//     private String maXacThuc;
+//     private Integer trangThai;
 
     public QuyTrinh() {
     }
 
-    public QuyTrinh(String tieuDe, String noiDung, Date ngayBatDau, Date ngayKetThuc, String maXacThuc, Integer trangThai) {
+    public QuyTrinh(String tieuDe, String noiDung, Date ngayBatDau, Date ngayKetThuc) {
        this.tieuDe = tieuDe;
        this.noiDung = noiDung;
        this.ngayBatDau = ngayBatDau;
        this.ngayKetThuc = ngayKetThuc;
-       this.maXacThuc = maXacThuc;
-       this.trangThai = trangThai;
     }
    
     public Integer getId() {
@@ -65,23 +63,6 @@ public class QuyTrinh  implements java.io.Serializable {
     public void setNgayKetThuc(Date ngayKetThuc) {
         this.ngayKetThuc = ngayKetThuc;
     }
-    public String getMaXacThuc() {
-        return this.maXacThuc;
-    }
-    
-    public void setMaXacThuc(String maXacThuc) {
-        this.maXacThuc = maXacThuc;
-    }
-    public Integer getTrangThai() {
-        return this.trangThai;
-    }
-    
-    public void setTrangThai(Integer trangThai) {
-        this.trangThai = trangThai;
-    }
-
-
-
 
 }
 

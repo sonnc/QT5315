@@ -340,12 +340,33 @@ public class SinhVienController {
         return lst;
     }
 
-    public List GetListFileSinhVien(int mssv) {
+    public List GetListFileSinhVienHT(int mssv) {
         List<SinhVienFile> lstSinhVienFile = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query query = session.createQuery("FROM SinhVienFile WHERE mssv =:ms");
+            Query query = session.createQuery("FROM SinhVienFile WHERE mssv =:ms AND (loaiFile = 4 or loaiFile = 5)");
+            query.setParameter("ms", mssv);
+            lstSinhVienFile = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstSinhVienFile;
+    }
+
+    public List GetListFileSinhVienBC(int mssv) {
+        List<SinhVienFile> lstSinhVienFile = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM SinhVienFile WHERE mssv =:ms AND (loaiFile = 0 or loaiFile = 1"
+                    + "or loaiFile = 2 or loaiFile = 3)");
             query.setParameter("ms", mssv);
             lstSinhVienFile = query.list();
             transaction.commit();
@@ -366,6 +387,27 @@ public class SinhVienController {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(file);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public boolean deleteFileSinhVien(int id) {
+        boolean r = false;
+        SinhVienFile svf = new SinhVienFile();
+        svf.setId(id);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.delete(svf);
             transaction.commit();
             r = true;
         } catch (Exception e) {
@@ -449,7 +491,7 @@ public class SinhVienController {
                     + " d.han_dang_ky, c.logo, c.ten_cong_ty, g.ho_ten, g.avatar, g.email, g.dien_thoai, g.chucvu\n"
                     + "from de_tai d join cong_ty c on d.ma_cong_ty = c.ma_cong_ty \n"
                     + "join giang_vien_huong_dan g on d.ma_gvhd = g.ma_gvhd\n"
-                    + "where d.trang_thai =1 and ma_de_tai = "+maDeTai+"").list();
+                    + "where d.trang_thai =1 and ma_de_tai = " + maDeTai + "").list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -461,8 +503,49 @@ public class SinhVienController {
         }
         return results;
     }
-    
+
     // ====BẮT ĐẦU LẤY TOÀN BỘ THÔNG TIN CỦA CÔNG TY, ĐẠI DIỆN CÔNG TY 
     // VÀ DANH SÁCH GIẢNG VIÊN HƯỚNG DẪN CỦA CÔNG TY
-    public 
+    public CongTy getCongTyByClass(int maCongTy) {
+        CongTy ct = new CongTy();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            ct = (CongTy) session.get(CongTy.class, maCongTy);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return ct;
+    }
+
+    // ====KẾT THÚC LẤY TOÀN BỘ THÔNG TIN CỦA CÔNG TY, ĐẠI DIỆN CÔNG TY 
+    // VÀ DANH SÁCH GIẢNG VIÊN HƯỚNG DẪN CỦA CÔNG TY
+    /**
+     * Lấy toàn bộ lịch trình cho sinh viên
+     */
+    public List getLichTrinhForSV() {
+        List<QuyTrinh> lstQuyTrinhs = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM QuyTrinh");
+            lstQuyTrinhs = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstQuyTrinhs;
+    }
+
 }

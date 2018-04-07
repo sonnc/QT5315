@@ -20,11 +20,11 @@
         <property name="ngayKetThuc" type="date">
             <column name="ngay_ket_thuc" length="10" />
         </property>
-        <property name="maXacThuc" type="string">
+<!--        <property name="maXacThuc" type="string">
             <column name="ma_xac_thuc" length="45" />
         </property>
         <property name="trangThai" type="java.lang.Integer">
             <column name="trang_thai" />
-        </property>
+        </property>-->
     </class>
 </hibernate-mapping>

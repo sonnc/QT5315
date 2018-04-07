@@ -8,17 +8,20 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
-    <%@include file="../../mains/head.jsp" %>
-    <%    if (session.getAttribute("getAllDeTai") == null) {
-    %>
-    <s:action name="getAllDeTai" executeResult="true"/>
-    <%
-        }
-    %>
-    <%
-        if (session.getAttribute("getAllDeTai") != null) {
-            session.removeAttribute("getAllDeTai");
-    %>
+    <head>
+        <%@include file="../../mains/head.jsp" %>
+        
+        <%    if (session.getAttribute("getAllDeTai") == null) {
+        %>
+        <s:action name="getAllDeTai" executeResult="true"/>
+        <%
+            }
+        %>
+        <%
+            if (session.getAttribute("getAllDeTai") != null) {
+                session.removeAttribute("getAllDeTai");
+        %>
+    </head>
     <body>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
@@ -63,7 +66,7 @@
                                             <input name="maDeTai" value="<s:property value="maDeTai"/>" style="height: 0px; width: 0px;display: contents;" />
                                             <p><strong style="color: blue"><s:property value="soLuongCon"/></strong>/<strong style="color: red"><s:property value="soLuong"/></strong></p>
                                             <input class="form-control" name="dotThucTap" placeholder="Đợt thực tập" required="true" style="padding: 0px 4px; font-size: 13px"/>
-                                            <button class="btn btn-info" style="width: 100%; margin-top: 10px">Đăng ký</button>
+                                            <button onclick=""  class="btn btn-info" style="width: 100%; margin-top: 10px">Đăng ký</button>
                                         </div>
                                     </form>
                                 </div>
@@ -83,7 +86,7 @@
         </div>   
         <%@include file="../../mains/footer.jsp" %>
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-            <%@include file="../../mains/js.jsp" %>
+        <%@include file="../../mains/js.jsp" %>
     </body>
     <%
         }%>

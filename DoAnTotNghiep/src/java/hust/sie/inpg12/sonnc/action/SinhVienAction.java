@@ -38,7 +38,8 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
     private SinhVien sinhVien;
     private SinhVienInfo sinhVienInfo;
     private List<DetaiCongtyNguoihuongdan> lstDeTai = new ArrayList<>();
-    private List<SinhVienFile> lstSinhVienFile = new ArrayList<>();
+    private List<SinhVienFile> lstSinhVienFileBC = new ArrayList<>();
+    private List<SinhVienFile> lstSinhVienFileHT = new ArrayList<>();
     private List<SinhVienDiem> lstSinhVienDiem = new ArrayList<>();
     private List<SinhVienInfo> lstSVI = new ArrayList<>();
     private List<CongTy> lstCongTyforSV = new ArrayList<>();
@@ -47,6 +48,22 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
     private CongTy congTy = new CongTy();
     private DaiDienCongTy daiDienCongTy = new DaiDienCongTy();
     private List<GiangVienHuongDan> lstGiangVienHuongDan = new ArrayList<>();
+
+    public List<SinhVienFile> getLstSinhVienFileBC() {
+        return lstSinhVienFileBC;
+    }
+
+    public void setLstSinhVienFileBC(List<SinhVienFile> lstSinhVienFileBC) {
+        this.lstSinhVienFileBC = lstSinhVienFileBC;
+    }
+
+    public List<SinhVienFile> getLstSinhVienFileHT() {
+        return lstSinhVienFileHT;
+    }
+
+    public void setLstSinhVienFileHT(List<SinhVienFile> lstSinhVienFileHT) {
+        this.lstSinhVienFileHT = lstSinhVienFileHT;
+    }
 
     public CongTy getCongTy() {
         return congTy;
@@ -104,20 +121,12 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         this.lstSVI = lstSVI;
     }
 
-    public List<SinhVienFile> getLstSinhVienFile() {
-        return lstSinhVienFile;
-    }
-
     public List<SinhVienDiem> getLstSinhVienDiem() {
         return lstSinhVienDiem;
     }
 
     public void setLstSinhVienDiem(List<SinhVienDiem> lstSinhVienDiem) {
         this.lstSinhVienDiem = lstSinhVienDiem;
-    }
-
-    public void setLstSinhVienFile(List<SinhVienFile> lstSinhVienFile) {
-        this.lstSinhVienFile = lstSinhVienFile;
     }
 
     public List<DetaiCongtyNguoihuongdan> getLstDeTai() {
@@ -473,9 +482,10 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
      * Phương thức này cho phép lấy toàn bộ thông tin về file của sinh viên
      *
      */
-    public String GetListFileSinhVien() {
-        lstSinhVienFile = sinhVienController.GetListFileSinhVien((int) session.get("mssv"));
-        session.put("lstSVF", "lstSVF");
+    public String getTaiLieuSinhVien() {
+        lstSinhVienFileBC = sinhVienController.GetListFileSinhVienBC((int) session.get("mssv"));
+        lstSinhVienFileHT = sinhVienController.GetListFileSinhVienHT((int) session.get("mssv"));
+        session.put("getTaiLieuSinhVien", "getTaiLieuSinhVien");
         return SUCCESS;
     }
 
@@ -489,6 +499,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         SinhVienFile sinhVienFile = new SinhVienFile();
         int tp = Integer.parseInt(request.getParameter("loaiFile"));
         try {
+            System.out.println(request.getSession().getServletContext().getRealPath("/"));
             path = request.getSession().getServletContext().getRealPath("/").concat("file/sinhvien/");
             File fileToCreate = new File(path, this.myFileFileName);
             FileUtils.copyFile(this.myFile, fileToCreate);
@@ -508,6 +519,20 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
             return SUCCESS;
         }
         return ERROR;
+    }
+
+    /**
+     * Phuong thức xóa tài liệu của sinh viên
+     */
+    public String deleteTaiLieuSinhVien() {
+        if (sinhVienController.deleteFileSinhVien(Integer.parseInt(request.getParameter("maTaiLieu")))) {
+            session.put("messageTaiLieuSinhVien", "Xóa tài liệu thành công. Mã lài liệu đã xóa là: " + request.getParameter("maTaiLieu") + "");
+            return SUCCESS;
+        } else {
+            session.put("messageTaiLieuSinhVien", "Đã có lỗi xảy ra khi xóa tài liệu này. "
+                    + " Mã lài liệu đã xóa là: " + request.getParameter("maTaiLieu") + "");
+            return ERROR;
+        }
     }
 
     /**
@@ -581,19 +606,42 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         session.put("getDeTaiInfo", "getDeTaiInfo");
         return SUCCESS;
     }
-    
+
     /**
-     * Phương thức lấy chi tiết công ty
-     * Các thông tin cần lấy bao gồm có công ty, đại diện và danh sách người hướng dẫn
-     * 
+     * Phương thức lấy lịch trình sinh viên
      */
-    public String getCongTyInfo(){
-        try {
-            ls
-        } catch (Exception e) {
+    public String getLichTrinhForSV() {
+        List<QuyTrinh> lstQuyTrinh = sinhVienController.getLichTrinhForSV();
+        String lichTrinh = "[";
+        String nd = null;
+        for (int i = 0; i < lstQuyTrinh.size(); i++) {
+            if (i + 1 == lstQuyTrinh.size()) {
+                nd = "{title:'" + lstQuyTrinh.get(i).getTieuDe() + "',content:'" + lstQuyTrinh.get(i).getNoiDung() + "',"
+                        + "start:'" + lstQuyTrinh.get(i).getNgayBatDau() + "',end:'" + lstQuyTrinh.get(i).getNgayKetThuc() + "'}";
+            }
+            if (i + 1 < lstQuyTrinh.size()) {
+                nd = "{title:'" + lstQuyTrinh.get(i).getTieuDe() + "',content:'" + lstQuyTrinh.get(i).getNoiDung() + "',"
+                        + "start:'" + lstQuyTrinh.get(i).getNgayBatDau() + "',end:'" + lstQuyTrinh.get(i).getNgayKetThuc() + "'},";
+            }
+            lichTrinh = lichTrinh + nd;
         }
+        lichTrinh = lichTrinh + "]";
+        session.put("getLichTrinhForSV", "not null");
+        session.put("getLichTrinh", lichTrinh);
+        return SUCCESS;
     }
 
+    /**
+     * Phương thức lấy chi tiết công ty Các thông tin cần lấy bao gồm có công
+     * ty, đại diện và danh sách người hướng dẫn
+     *
+     */
+//    public String getCongTyInfo(){
+//        try {
+//            ls
+//        } catch (Exception e) {
+//        }
+//    }
     public String test() {
         sinhVienController.getAllDeTai();
         return null;

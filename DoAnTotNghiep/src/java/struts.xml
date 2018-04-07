@@ -51,6 +51,22 @@
             <result name="success">/pages/sinhvien/chitietdetai.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="getLichTrinhForSV" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getLichTrinhForSV">
+            <result name="success">/pages/sinhvien/quytrinh.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="UploadFileSinhVien" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="UploadFileSinhVien">
+            <result name="success">/pages/sinhvien/tailieu.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getTaiLieuSinhVien" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getTaiLieuSinhVien">
+            <result name="success">/pages/sinhvien/tailieu.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="deleteTaiLieuSinhVien" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="deleteTaiLieuSinhVien">
+            <result name="success">/pages/sinhvien/tailieu.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
         
         

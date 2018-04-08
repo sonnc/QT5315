@@ -67,6 +67,14 @@
             <result name="success">/pages/sinhvien/tailieu.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="getAllEmailSV" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getAllEmailSV">
+            <result name="success">/pages/sinhvien/email.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="sendEmailSV" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="sendEmailSV">
+            <result name="success">/pages/sinhvien/email.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
         
         

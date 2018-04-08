@@ -48,6 +48,42 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
     private CongTy congTy = new CongTy();
     private DaiDienCongTy daiDienCongTy = new DaiDienCongTy();
     private List<GiangVienHuongDan> lstGiangVienHuongDan = new ArrayList<>();
+    private List<Email> lstAllEmailSV = new ArrayList<>();
+    private List<Email> lstEmailSVRead = new ArrayList<>();
+    private List<Email> lstEmailSVUnread = new ArrayList<>();
+    private List<Email> lstEmailSVSend = new ArrayList<>();
+
+    public List<Email> getLstEmailSVSend() {
+        return lstEmailSVSend;
+    }
+
+    public void setLstEmailSVSend(List<Email> lstEmailSVSend) {
+        this.lstEmailSVSend = lstEmailSVSend;
+    }
+
+    public List<Email> getLstEmailSVRead() {
+        return lstEmailSVRead;
+    }
+
+    public void setLstEmailSVRead(List<Email> lstEmailSVRead) {
+        this.lstEmailSVRead = lstEmailSVRead;
+    }
+
+    public List<Email> getLstEmailSVUnread() {
+        return lstEmailSVUnread;
+    }
+
+    public void setLstEmailSVUnread(List<Email> lstEmailSVUnread) {
+        this.lstEmailSVUnread = lstEmailSVUnread;
+    }
+
+    public List<Email> getLstAllEmailSV() {
+        return lstAllEmailSV;
+    }
+
+    public void setLstAllEmailSV(List<Email> lstAllEmailSV) {
+        this.lstAllEmailSV = lstAllEmailSV;
+    }
 
     public List<SinhVienFile> getLstSinhVienFileBC() {
         return lstSinhVienFileBC;
@@ -631,6 +667,37 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         return SUCCESS;
     }
 
+    public String getAllEmailSV() {
+        lstAllEmailSV = sinhVienController.getAllEmailSV((String) session.get("email"));
+        lstEmailSVRead = sinhVienController.getAllEmailSVRead((String) session.get("email"));
+        lstEmailSVUnread = sinhVienController.getAllEmailSVUnread((String) session.get("email"));
+        lstEmailSVSend = sinhVienController.getAllEmailSVSend((String) session.get("email"));
+        session.put("getAllEmailSV", "lstAllEmailSV");
+        return SUCCESS;
+    }
+
+    public String sendEmailSV() {
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        Email email = new Email();
+        email.setNguoiGui((String) session.get("email"));
+        email.setNguoiNhan(request.getParameter("nguoiNhan"));
+        email.setNoiDung(request.getParameter("noiDung"));
+        email.setTieuDe(request.getParameter("tieuDe"));
+        email.setTrangThai(Boolean.FALSE);
+        email.setThoiGian(sqlDate);
+        if (sinhVienController.sendEmailSV(email)) {
+            session.put("emailMessage", "Bạn đã gửi Email trong hệ thống thành công !");
+        } else {
+            session.put("emailMessage", "Đã có lỗi khi thực hiện hành động gửi Email này. Nếu tình trạng này tiếp tục xảy ra, vui lòng liên hệ với quản trị viên.!");
+        }
+        return SUCCESS;
+    }
+
+//    public String deleteEmailSV(){
+//    
+//    }
+//    
     /**
      * Phương thức lấy chi tiết công ty Các thông tin cần lấy bao gồm có công
      * ty, đại diện và danh sách người hướng dẫn

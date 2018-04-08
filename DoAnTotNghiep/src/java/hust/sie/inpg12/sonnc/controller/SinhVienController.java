@@ -548,4 +548,103 @@ public class SinhVienController {
         return lstQuyTrinhs;
     }
 
+    public List getAllEmailSV(String email) {
+        List<Email> lstEmails = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM Email WHERE nguoiGui =:email OR nguoiNhan =:email  ORDER BY id DESC");
+            q.setParameter("email", email);
+            lstEmails = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstEmails;
+    }
+
+    public List getAllEmailSVRead(String email) {
+        List<Email> lstEmails = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM Email WHERE nguoiNhan =:email and trangThai = TRUE  ORDER BY id DESC");
+            q.setParameter("email", email);
+            lstEmails = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstEmails;
+    }
+
+    public List getAllEmailSVUnread(String email) {
+        List<Email> lstEmails = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM Email WHERE nguoiNhan =:email and trangThai = FALSE  ORDER BY id DESC");
+            q.setParameter("email", email);
+            lstEmails = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstEmails;
+    }
+
+    public List getAllEmailSVSend(String email) {
+        List<Email> lstEmails = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM Email WHERE nguoiGui =:email ORDER BY id DESC");
+            q.setParameter("email", email);
+            lstEmails = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstEmails;
+    }
+
+    public boolean sendEmailSV(Email email) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(email);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
 }

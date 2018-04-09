@@ -11,19 +11,46 @@
     <head>
         <%@include file="../../mains/head.jsp" %>
         <title>Tài liệu</title>
-        <%      
-            if (session.getAttribute("getTaiLieuSinhVien") == null) {
+        <%            if (session.getAttribute("getTaiLieuSinhVien") == null) {
         %>
-        <s:action name="getTaiLieuSinhVien" executeResult="true"/>
+        <s:action name="getTaiLieuSinhVien" executeResult="true" />
         <%
             }
         %>
+        <script>
+            document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                var form = this;
+                e.preventDefault();
+                swal({
+                    title: "ĐĂNG TÀI LIỆU",
+                    text: "Bạn có chắc chắn muốn gửi tài liệu này lên hệ thống không?",
+                    icon: "warning",
+                    buttons: [
+                        'KHÔNG, Hãy hủy bỏ!',
+                        'CÓ, Tôi chắc chắn!'
+                    ],
+                    dangerMode: true,
+                }).then(function (isConfirm) {
+                    if (isConfirm) {
+                        swal({
+                            title: 'ĐANG SỬ LÝ',
+                            text: 'Bạn đã xác nhận đăng tài liệu, xin vui lòng đợi phản hồi từ hệ thống!',
+                            icon: 'success'
+                        }).then(function () {
+                            form.submit();
+                        });
+                    } else {
+                        swal("HỦY BỎ", "Bạn đã hủy bỏ đăng tài liệu !", "error");
+                    }
+                });
+            });
+        </script>
     </head>
     <%
         if (session.getAttribute("getTaiLieuSinhVien") != null) {
             session.removeAttribute("getTaiLieuSinhVien");
     %>
-    <body>
+    <body onLoad="mess()">
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>
@@ -35,6 +62,18 @@
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                 <p style="margin: 0px">QUẢN LÝ TÀI LIỆU</p>
                             </div>
+                            <%                                if (session.getAttribute("fileMessage") != null) {
+                            %>
+                            <script type="text/javascript">
+                                function mess() {
+                                    swal("Thông báo", "<%=session.getAttribute("fileMessage")%>", "info");
+                                }
+                                ;
+                            </script>
+                            <%
+                                    session.removeAttribute("fileMessage");
+                                }
+                            %>
                             <div class="alert alert-warning">
                                 <form role="form" id="formValidate" action="UploadFileSinhVien" method="post" enctype = "multipart/form-data"> 
                                     <input  style="margin-bottom: 15px;" class="form-control" name="tenFile" placeholder="Tên tài liệu"/>
@@ -74,7 +113,36 @@
                                                 </div>
                                                 <div class="col-lg-3"> 
                                                     <a href="<s:property value="link"/>"><i class="glyphicon glyphicon-download-alt"></i></a>
-                                                    <a href="deleteTaiLieuSinhVien?maTaiLieu=<s:property value="id"/>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                    <a  id="tagA<s:property value="id"/>" href="deleteTaiLieuSinhVien?maTaiLieu=<s:property value="id"/>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                    <script>
+                                                        var action = document.getElementById("tagA<s:property value="id"/>");
+                                                        action.addEventListener('click', function (e) {
+                                                            var form = this;
+                                                            e.preventDefault();
+                                                            swal({
+                                                                title: "XÓA TÀI LIỆU",
+                                                                text: "Bạn có chắc chắn muốn xóa tài liệu <s:property value="tenFile"  escapeHtml="false"/> ra khỏi hệ thống không? ",
+                                                                icon: "warning",
+                                                                buttons: [
+                                                                    'KHÔNG, Hãy hủy bỏ!',
+                                                                    'CÓ, Tôi chắc chắn!'
+                                                                ],
+                                                                dangerMode: true,
+                                                            }).then(function (isConfirm) {
+                                                                if (isConfirm) {
+                                                                    swal({
+                                                                        title: 'ĐANG SỬ LÝ',
+                                                                        text: 'Bạn đã xác nhận Xóa tài liệu, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                                        icon: 'success'
+                                                                    }).then(function () {
+                                                                        window.location.href = document.getElementById('tagA<s:property value="id"/>').href;
+                                                                    });
+                                                                } else {
+                                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ việc xóa bỏ tài liệu.", "error");
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
                                                 </div>
                                             </div>
                                         </s:iterator>
@@ -93,7 +161,36 @@
                                                 </div>
                                                 <div class="col-lg-3"> 
                                                     <a href="<s:property value="link"/>"><i class="glyphicon glyphicon-download-alt"></i></a>
-                                                    <a href="deleteTaiLieuSinhVien?maTaiLieu=<s:property value="id"/>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                    <a id="tagA<s:property value="id"/>" href="deleteTaiLieuSinhVien?maTaiLieu=<s:property value="id"/>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                    <script>
+                                                        var action = document.getElementById("tagA<s:property value="id"/>");
+                                                        action.addEventListener('click', function (e) {
+                                                            var form = this;
+                                                            e.preventDefault();
+                                                            swal({
+                                                                title: "XÓA TÀI LIỆU",
+                                                                text: "Bạn có chắc chắn muốn xóa tài liệu <s:property value="tenFile"  escapeHtml="false"/> ra khỏi hệ thống không? ",
+                                                                icon: "warning",
+                                                                buttons: [
+                                                                    'KHÔNG, Hãy hủy bỏ!',
+                                                                    'CÓ, Tôi chắc chắn!'
+                                                                ],
+                                                                dangerMode: true,
+                                                            }).then(function (isConfirm) {
+                                                                if (isConfirm) {
+                                                                    swal({
+                                                                        title: 'ĐANG SỬ LÝ',
+                                                                        text: 'Bạn đã xác nhận Xóa tài liệu, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                                        icon: 'success'
+                                                                    }).then(function () {
+                                                                        form.click();
+                                                                    });
+                                                                } else {
+                                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ việc xóa bỏ tài liệu.", "error");
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
                                                 </div>
                                             </div>
                                         </s:iterator>

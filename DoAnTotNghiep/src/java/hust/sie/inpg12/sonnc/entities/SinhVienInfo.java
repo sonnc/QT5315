@@ -9,7 +9,7 @@ package hust.sie.inpg12.sonnc.entities;
 public class SinhVienInfo  implements java.io.Serializable {
 
 
-     private Integer id;
+    // private Integer id;
      private SinhVien sinhVien;
      private int mssv;
      private String ngoaiNgu;
@@ -41,13 +41,13 @@ public class SinhVienInfo  implements java.io.Serializable {
        this.duAn = duAn;
     }
    
-    public Integer getId() {
-        return this.id;
-    }
-    
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    public Integer getId() {
+//        return this.id;
+//    }
+//    
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
     public SinhVien getSinhVien() {
         return this.sinhVien;
     }

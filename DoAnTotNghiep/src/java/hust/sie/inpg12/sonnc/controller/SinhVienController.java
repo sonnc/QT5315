@@ -112,6 +112,23 @@ public class SinhVienController {
         }
         return sv;
     }
+    public SinhVienInfo getSinhVienInfoByClass(int mssv) {
+        SinhVienInfo svi = new SinhVienInfo();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            svi = (SinhVienInfo) session.get(SinhVienInfo.class, mssv);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return svi;
+    }
 
     /**
      * Phương thức lấy thông tin của một sinh viên

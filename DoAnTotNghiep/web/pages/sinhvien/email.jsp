@@ -4,11 +4,6 @@
     Author     : sonnc
 --%>
 
-<%@page import="hust.sie.inpg12.sonnc.controller.SinhVienController"%>
-<%@page import="hust.sie.inpg12.sonnc.entities.Email"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="hust.sie.inpg12.sonnc.action.SinhVienAction"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
@@ -18,16 +13,17 @@
         <title>Email</title>
         <%            if (session.getAttribute("getAllEmailSV") == null) {
         %>
-        <s:action name="getAllEmailSV" executeResult="true"/>
+        <s:action name="getAllEmailSV" executeResult="true" />
         <%
             }
         %>
+   
     </head>
     <%
         if (session.getAttribute("getAllEmailSV") != null) {
             session.removeAttribute("getAllEmailSV");
     %>
-    <body>
+    <body onLoad="mess()">
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>
@@ -41,9 +37,14 @@
                             </div>
                             <%                                if (session.getAttribute("emailMessage") != null) {
                             %>
-                            <p style="color: red"><%=session.getAttribute("emailMessage")%></p>
-                            <% 
-                                session.removeAttribute("emailMessage");
+                            <script type="text/javascript">
+                                function mess() {
+                                    swal("Thông báo", "<%=session.getAttribute("emailMessage")%>", "info");
+                                }
+                                ;
+                            </script>
+                            <%
+                                    session.removeAttribute("emailMessage");
                                 }
                             %>
                             <%-- up load file --%>
@@ -131,21 +132,17 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="alert alert-warning" id="sendEmail" style="display: none">
-                                        <form class="contactForm"  role="form" id="formValidate" action="sendEmailSV" method="post" enctype = "multipart/form-data"> 
+                                        <form class="contactForm" id="from" role="form" id="formValidate" action="sendEmailSV" method="post" enctype = "multipart/form-data"> 
                                             <div class="form-group">
-                                                <input name="nguoiNhan" class="form-control" id="name" placeholder="Người nhận: " type="email">
-                                                <div class="validation"></div>
-                                            </div>
-                                            <!--                                            <div class="form-group">
-                                                                                            <input class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" type="email">
-                                                                                            <div class="validation"></div>
-                                                                                        </div>-->
-                                            <div class="form-group">
-                                                <input class="form-control" name="tieuDe" id="subject" placeholder="Tiêu đề: ..." type="text">
+                                                <input name="nguoiNhan" class="form-control" id="name" placeholder="Người nhận: " type="email" required="true">
                                                 <div class="validation"></div>
                                             </div>
                                             <div class="form-group">
-                                                <textarea class="form-control" name="noiDung" rows="10"  placeholder="Nội dung: ..."></textarea>
+                                                <input class="form-control" name="tieuDe" id="subject" placeholder="Tiêu đề: ..." type="text" required="true">
+                                                <div class="validation"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="noiDung" rows="10"  placeholder="Nội dung: ..."  required="true"></textarea>
                                                 <div class="validation"></div>
                                             </div>
                                             <div class="text-center"><button type="submit" class="btn btn-theme btn-block btn-md">GỬI ĐI</button></div>

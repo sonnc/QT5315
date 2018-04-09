@@ -23,12 +23,12 @@
             <result name="success">/pages/sinhvien/detai.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-        <action name="getSinhVienThongTin" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getSinhVienThongTin">
+        <action name="getSinhVienThongTinByClass" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getSinhVienThongTinByClass">
             <result name="success">/pages/sinhvien/capnhatthongtin.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-        <action name="SinhVienCapNhatThongTin" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="SinhVienCapNhatThongTin">
-            <result name="success">/pages/sinhvien/capnhatthongtin.jsp</result>
+        <action name="getSinhVienThongTinByList" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getSinhVienThongTinByList">
+            <result name="success">/pages/sinhvien/thongtincanhan.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         <action name="dangkydetai" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="setDangKyDeTai">
@@ -56,23 +56,36 @@
             <result name="error" type="redirect">404.jsp</result>
         </action>
         <action name="UploadFileSinhVien" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="UploadFileSinhVien">
-            <result name="success">/pages/sinhvien/tailieu.jsp</result>
+            <result name="success" type="redirectAction" >
+                <param name="actionName">upfilesv</param>
+            </result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="upfilesv">
+            <result>/pages/sinhvien/tailieu.jsp</result>
+        </action>
+        
+        
         <action name="getTaiLieuSinhVien" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getTaiLieuSinhVien">
             <result name="success">/pages/sinhvien/tailieu.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         <action name="deleteTaiLieuSinhVien" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="deleteTaiLieuSinhVien">
-            <result name="success">/pages/sinhvien/tailieu.jsp</result>
+            <result name="success" type="redirectAction" >
+                <param name="actionName">delfilesv</param>     
+            </result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="delfilesv">
+            <result>/pages/sinhvien/tailieu.jsp</result>
+        </action>
+        
         <action name="getAllEmailSV" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getAllEmailSV">
             <result name="success">/pages/sinhvien/email.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         <action name="sendEmailSV" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="sendEmailSV">
-            <result name="success">/pages/sinhvien/email.jsp</result>
+            <result name="success" type="">/pages/sinhvien/email.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         

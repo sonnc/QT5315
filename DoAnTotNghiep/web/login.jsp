@@ -23,7 +23,11 @@
                 color: red;
                 text-orientation: initial;
             }
-        </style>
+        </style> 
+        <%            if (session.getAttribute("email") != null) {
+                response.sendRedirect(session.getAttribute("httpURL")+"home.jsp");
+            }
+        %>
     </head>
     <body>
         <div id="wrapper">

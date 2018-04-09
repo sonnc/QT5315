@@ -12,19 +12,19 @@
             <column name="nguoi_gui" not-null="true" />
         </property>
         <property name="tieuDe" type="string">
-            <column name="tieu_de" length="500" />
+            <column name="tieu_de" length="500" not-null="true" />
         </property>
         <property name="noiDung" type="string">
-            <column name="noi_dung" length="65535" />
+            <column name="noi_dung" length="65535" not-null="true" />
         </property>
         <property name="nguoiNhan" type="string">
-            <column name="nguoi_nhan" length="1000" />
+            <column name="nguoi_nhan" length="1000" not-null="true" />
         </property>
         <property name="thoiGian" type="timestamp">
             <column name="thoi_gian" length="19" />
         </property>
         <property name="trangThai" type="java.lang.Boolean">
-            <column name="trang_thai" />
+            <column name="trang_thai" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

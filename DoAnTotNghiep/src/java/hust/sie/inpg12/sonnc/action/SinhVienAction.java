@@ -292,13 +292,26 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
      * @since v1 - 26.03.18
      * @author SonNC
      */
-    public String getSinhVienThongTin() {
+    public String getSinhVienThongTinByClass() {
         // kiểm tra lại thông tin của sinhVienInfo.
         // giá trị trả về là null, 
         try {
             sinhVien = sinhVienController.getSinhVienByClass((int) session.get("mssv"));
+            sinhVienInfo = sinhVienController.getSinhVienInfoByClass((int) session.get("mssv"));
+            session.put("getSinhVienThongTinByClass", "getSinhVienThongTinByClass");
+            return SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ERROR;
+    }
+    public String getSinhVienThongTinByList() {
+        // kiểm tra lại thông tin của sinhVienInfo.
+        // giá trị trả về là null, 
+        try {
+            lstSinhVien = sinhVienController.getSinhVien((int) session.get("mssv"));
             lstSVI = sinhVienController.getSinhVienInfo((int) session.get("mssv"));
-            session.put("getSinhVienThongTin", "getSinhVienThongTin");
+            session.put("getSinhVienThongTinByList", "getSinhVienThongTinByList");
             return SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
@@ -543,6 +556,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
+            session.put("fileMessage", "Tải file lên hệ thống không thành công! ");
             return ERROR;
         }
         sinhVienFile.setMssv((int) session.get("mssv"));
@@ -552,8 +566,10 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         sinhVienFile.setMoTa(request.getParameter("moTa"));
         sinhVienFile.setNgayThang(sqlDate);
         if (sinhVienController.UploadFileSinhVien(sinhVienFile)) {
+            session.put("fileMessage", "Tải file lên hệ thống thành công! ");
             return SUCCESS;
         }
+        session.put("fileMessage", "Tải file lên hệ thống không thành công! Đã có lỗi xảy ra. Hãy thử lại.");
         return ERROR;
     }
 

@@ -20,14 +20,17 @@
                 text-orientation: initial;
             }
         </style>
-        <%    if (session.getAttribute("getSinhVienThongTin") == null) {
+        <%    if (session.getAttribute("getSinhVienThongTinByClass") == null) {
         %>
-        <s:action name="getSinhVienThongTin" executeResult="true"/>
+        <s:action name="getSinhVienThongTinByClass" executeResult="true"/>
         <%
             }
-            session.removeAttribute("getSinhVienThongTin");
         %>
     </head>
+    <%
+     if (session.getAttribute("getSinhVienThongTinByClass") != null) {
+            session.removeAttribute("getSinhVienThongTinByClass");
+    %>
     <body>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
@@ -43,12 +46,12 @@
                                     <p style="margin: 0px">THÔNG TIN CÁ NHÂN</p>
                                 </div>
                                 <div class="row">    
-                                    <s:iterator value="sinhVien">
+                                    <%--   <s:iterator value="sinhVien"> --%>
                                     <div class="col-lg-4">
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.hoTen" value="%{sinhVien.hoTen}"placeholder="Họ và tên" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.lop" value="%{sinhVien.lop}" placeholder="Lớp" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.khoa"  value="%{sinhVien.khoa}" placeholder="Khóa" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.khoaVien"  value="%{sinhVien.khoaVien}" placeholder="Khoa/ Viện" required="true"/>
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.hoTen" value="%{sinhVien.hoTen}" placeholder="Họ và tên" required="true"/>
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.lop" value="%{sinhVien.lop}" placeholder="Lớp" required="true"/>
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.khoa"  value="%{sinhVien.khoa}" placeholder="Khóa" required="true"/>
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.khoaVien"  value="%{sinhVien.khoaVien}" placeholder="Khoa/ Viện" required="true"/>
                                         <select style="margin-bottom: 15px;height: 45px;" name="sinhVien.gioiTinh"  value="%{sinhVien.gioiTinh}" class="form-control" required="required"> 
                                             <option>Giới tính</option>
                                             <option value="True">Nam</option>
@@ -56,10 +59,10 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-4">
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.ngaySinh"  value="%{sinhVien.ngaySinh}" placeholder="Ngày sinh" required="true" />
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.diaChi"  value="%{sinhVien.diaChi}" placeholder="Địa chỉ" required="true" />
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.dienThoai"  value="%{sinhVien.dienThoai}" placeholder="Điện thoại" required="true" />
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.email"  value="%{sinhVien.email}" readonly="true" placeholder="Email" required="true" />
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.ngaySinh"  value="%{sinhVien.ngaySinh}" placeholder="Ngày sinh" required="true" />
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.diaChi"  value="%{sinhVien.diaChi}" placeholder="Địa chỉ" required="true" />
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.dienThoai"  value="%{sinhVien.dienThoai}" placeholder="Điện thoại" required="true" />
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.email"  value="%{sinhVien.email}" readonly="true" placeholder="Email" required="true" />
                                         <select style="margin-bottom: 15px;height: 45px;" name="sinhVien.laptop"  value="%{sinhVien.laptop}" class="form-control" required="true"> 
                                             <option value="Null">LapTop</option>
                                             <option value="True">Có</option>
@@ -68,7 +71,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <p>Ảnh đại diện</p>
-                                        <img id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
+                                        <img src="%{sinhVien.avatar}" id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
                                         <s:textfield  name="myFile" type="file" accept="image/*" onchange="loadFile(event)" required="required"/>
                                         <script>
                                             var loadFile = function (event) {
@@ -81,7 +84,7 @@
                                             };
                                         </script>
                                     </div>
-                                        </s:iterator>
+                                      <%--  </s:iterator> --%>
                                 </div> 
                                 <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
@@ -98,28 +101,26 @@
                                 </div>
 
                                 <div class="row">
-                                    <s:iterator value="sinhVienInfo">
                                     <div class="col-lg-6">
                                         <label>Ngoại ngữ</label>
-                                        <textarea name="sinhVienInfo.ngoaiNgu"  value="%{sinhVienInfo.ngoaiNgu}" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Các chứng chỉ Tiếng anh, Tiếng pháp, Tiếng nhật,...."></textarea>
+                                        <s:textarea name="sinhVienInfo.ngoaiNgu"  value="%{sinhVienInfo.ngoaiNgu}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control"></s:textarea>
                                         <label>Kỹ năng lập trình</label>
-                                        <textarea name="sinhVienInfo.kyNangLt"  value="%{sinhVienInfo.kyNangLt}" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng lập trình nào? Hãy viết tất cả các kỹ năng mà bạn có theo hướng dẫn ở trên."></textarea>
+                                        <s:textarea name="sinhVienInfo.kyNangLt"  value="%{sinhVienInfo.kyNangLt}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                         <label>Kỹ năng mềm/ kỹ năng khác</label>
-                                        <textarea name="sinhVienInfo.kyNangMem"  value="%{sinhVienInfo.kyNangMem}" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng mềm nào? Kỹ năng, tình nguyện, văn phòng,..."></textarea>
+                                        <s:textarea name="sinhVienInfo.kyNangKhac"  value="%{sinhVienInfo.kyNangKhac}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                         <label>Mục tiêu</label>
-                                        <textarea name="sinhVienInfo.mucTieu"  value="%{sinhVienInfo.mucTieu}" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Mục tiêu của bạn trước - trong - sau khi được thực tập tại doanh nghiệp?"></textarea>
+                                        <s:textarea name="sinhVienInfo.mucTieu"  value="%{sinhVienInfo.mucTieu}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                     </div>
                                     <div class="col-lg-6">
                                         <label>Hoạt động</label>
-                                        <textarea name="sinhVienInfo.hoatDong"  value="%{sinhVienInfo.hoatDong}" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn tham gia các hoạt động nào? Hãy kể ra các hoạt động của bạn."></textarea>
+                                        <s:textarea name="sinhVienInfo.hoatDong"  value="%{sinhVienInfo.hoatDong}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                         <label>Giải thưởng</label>
-                                        <textarea name="sinhVienInfo.giaiThuong"  value="%{sinhVienInfo.giaiThuong}"  required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những giải thưởng nào? Học tập, học bổng, nghiên cứu,...?"></textarea>
+                                        <s:textarea name="sinhVienInfo.giaiThuong"  value="%{sinhVienInfo.giaiThuong}"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                         <label>Sở thích</label>
-                                        <textarea name="sinhVienInfo.soThich"  value="%{sinhVienInfo.soThich}"  required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những ở thích gì? Hãy kể ra một vài sở thích tiêu biểu?"></textarea>
+                                        <s:textarea name="sinhVienInfo.soThich"  value="%{sinhVienInfo.soThich}"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                         <label>Dự án</label>
-                                        <textarea name="sinhVienInfo.duAn" value="%{sinhVienInfo.duAn}" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn đã tham gia các dự án nào? Tên dự án, vị trí, vai trò, sản phẩm,...."></textarea>
+                                        <s:textarea name="sinhVienInfo.duAn" value="%{sinhVienInfo.duAn}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                     </div>
-                                    </s:iterator>
                                 </div>
                                 <s:submit value="gửi"></s:submit>
                                 </form>
@@ -134,6 +135,9 @@
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
             <%@include file="../../mains/js.jsp" %>
     </body>
+    <%
+    }
+    %>
 </html>
 
 

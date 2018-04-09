@@ -17,13 +17,12 @@
         <%
             }
         %>
-        <%
-            if (session.getAttribute("getAllDeTai") != null) {
-                session.removeAttribute("getAllDeTai");
-        %>
-
 
     </head>
+    <%
+        if (session.getAttribute("getAllDeTai") != null) {
+            session.removeAttribute("getAllDeTai");
+    %>
     <body onLoad="mess()">
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>

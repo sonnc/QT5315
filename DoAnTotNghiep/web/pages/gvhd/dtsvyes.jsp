@@ -20,16 +20,16 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("getAllDeTaiSV") == null) {
+        <%            if (session.getAttribute("getAllDeTaiSVYES") == null) {
         %>
-        <s:action name="getAllDeTaiSV" executeResult="true"/>
+        <s:action name="getAllDeTaiSVYES" executeResult="true"/>
         <%
             }
         %>
     </head>
     <%
-        if (session.getAttribute("getAllDeTaiSV") != null) {
-            session.removeAttribute("getAllDeTaiSV");
+        if (session.getAttribute("getAllDeTaiSVYES") != null) {
+            session.removeAttribute("getAllDeTaiSVYES");
     %>
     <body>
         <div id="wrapper">
@@ -67,7 +67,7 @@
                                     <td><strong> Người hướng dẫn </strong></td>
                                     <td><strong> So khớp </strong></td>
                                     <td><strong> Kỳ TT </strong></td>
-                                    <td><strong> Trạng thái </strong></td>
+                                    <td><strong> Hành động </strong></td>
                                 </tr>
                                 <s:iterator value="lstSvDtCtNhds">
                                     <tr>
@@ -100,6 +100,7 @@
             <%@include file="../../mains/js.jsp" %>
     </body>
     <%
+            session.removeAttribute("chuaDuyet");
         }
     %>
 </html>

@@ -93,7 +93,7 @@ public class SinhVienThucTap  implements java.io.Serializable {
     public void setThoiGianKetThuc(Date thoiGianKetThuc) {
         this.thoiGianKetThuc = thoiGianKetThuc;
     }
-    public boolean isTrangThai() {
+    public boolean getTrangThai() {
         return this.trangThai;
     }
     

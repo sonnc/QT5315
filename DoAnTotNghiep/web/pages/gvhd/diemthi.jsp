@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +20,17 @@
                 text-orientation: initial;
             }
         </style>
+        <%            if (session.getAttribute("getDanhSachChamDiem") == null) {
+
+        %>
+        <s:action name="getDanhSachChamDiem" executeResult="true"/>
+        <%            }
+        %>
     </head>
+    <%
+        if (session.getAttribute("getDanhSachChamDiem") != null) {
+            session.removeAttribute("getDanhSachChamDiem");
+    %>
     <body>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
@@ -44,26 +55,28 @@
                                     <td><strong> Mã SV </strong></td>
                                     <td><strong> Họ và tên </strong></td>
                                     <td><strong> Lớp </strong></td>
-                                    <td><strong> DPH </strong></td>
-                                    <td><strong> DBCQT</strong></td>
-                                    <td><strong> DBCCK </strong></td>
-                                    <td><strong> DBCCK </strong></td>
+                                    <td><strong> Khóa </strong></td>
+                                    <td><strong> Kỳ TT </strong></td>
+                                    <td><strong> BCQT </strong></td>
+                                    <td><strong> BCCK </strong></td>
+                                    <td><strong> Chấm điểm </strong></td>
                                 </tr>
-                                <%                                    for (int i = 0; i < 20; i++) {
-                                %>
-                                <tr>
-                                    <td>20138374</td>
-                                    <td>Nguyễn Công Sơn</td>
-                                    <td>INPG12</td>
-                                    <td>8</td>
-                                    <td><input style="width: 50%"/></td>
-                                    <td><input style="width: 50%"/></td>
-                                    <td><input style="width: 50%"/></td>
-                                    <td><a href="" style="color: red">Xem</a></td>
-                                </tr>
-                                <%
-                                    }
-                                %>
+                                <s:iterator value="lstDanhSachSinhViens"> 
+                                    <form action="chamDiem" method="post" >
+                                        <tr>
+                                            <td><input name="mssv" value="<s:property value="mssv" />" disabled="true" style="width: 70px;margin-right: -15px;"/></td>
+                                            <td><s:property value="hoTen" /></td>
+                                            <td><s:property value="lop" /></td>
+                                            <td><s:property value="khoa" /></td>
+                                            <td><s:property value="dotThucTap" /></td>
+                                            <td><input name="bcqt" style="width: 50px"/></td>
+                                            <td><input name="bcck" style="width: 50px"/></td>
+                                            <td>
+                                                <button class="btn btn-info" style="width: 100%; margin-top: 10px">Chấm điểm</button>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                </s:iterator>
                             </table>
                             <div id="pagination">
                                 <span class="all">Page 1 of 3</span>
@@ -82,5 +95,7 @@
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
             <%@include file="../../mains/js.jsp" %>
     </body>
+    <%        }
+    %>
 </html>
 

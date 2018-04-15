@@ -106,9 +106,14 @@
                                 <div class="col-lg-6">
                                     <a style="width: 100%" class="btn btn-success">Xuất file CV</a>
                                 </div>
+                                <%                                    if (Integer.parseInt(session.getAttribute("rule").toString()) == 0) {
+                                %>
                                 <div class="col-lg-6">
                                     <a style="width: 100%" href="<%=session.getAttribute("httpURL")%>pages/sinhvien/capnhatthongtin.jsp" class="btn btn-danger">Cập nhật thông tin cá nhân</a>
                                 </div>
+                                <%
+                                    }
+                                %>
                             </div>
                             <div class="clear"></div>
                         </div>  

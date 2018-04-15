@@ -45,12 +45,81 @@
                 });
             });
         </script>
+        <style>
+            .preloading {
+                /*                overflow: hidden;*/
+            }
+            .preload-container {
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                z-index: 99999999999;
+                display: block;
+                padding-right: 17px;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            .preload-icon {
+                font-size: 66px;
+                color: #fff;
+                margin-top: 20%;
+            }
+            @-webkit-keyframes {
+                from {
+                    -webkit-transform: rotate(0deg);
+                    -o-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                to {
+                    -webkit-transform: rotate(360deg);
+                    -o-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+            @keyframes rotating {
+                from {
+                    -ms-transform: rotate(0deg);
+                    -moz-transform: rotate(0deg);
+                    -webkit-transform: rotate(0deg);
+                    -o-transform: rotate(0deg);
+                    transform: rotate(0deg);
+                }
+                to {
+                    -ms-transform: rotate(360deg);
+                    -moz-transform: rotate(360deg);
+                    -webkit-transform: rotate(360deg);
+                    -o-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+            .rotating {
+                -webkit-animation: rotating 1.5s linear infinite;
+                -moz-animation: rotating 1.5s linear infinite;
+                -ms-animation: rotating 1.5s linear infinite;
+                -o-animation: rotating 1.5s linear infinite;
+                animation: rotating 1.5s linear infinite;
+            }
+        </style>
+        <script>
+            $(window).load(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            });
+        </script>
     </head>
     <%
         if (session.getAttribute("getTaiLieuSinhVien") != null) {
             session.removeAttribute("getTaiLieuSinhVien");
     %>
-    <body onLoad="mess()">
+    <body onLoad="mess()" class="preloading">
+        <div id="preload" class="preload-container text-center">
+            <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
+        </div>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>

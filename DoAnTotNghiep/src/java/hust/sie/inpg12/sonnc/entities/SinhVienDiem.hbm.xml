@@ -23,5 +23,8 @@
         <property name="diemCuoiKy" type="java.lang.Double">
             <column name="diem_cuoi_ky" precision="2" />
         </property>
+        <property name="dotThucTap" type="int">
+            <column name="dot_thuc_tap" />
+        </property>
     </class>
 </hibernate-mapping>

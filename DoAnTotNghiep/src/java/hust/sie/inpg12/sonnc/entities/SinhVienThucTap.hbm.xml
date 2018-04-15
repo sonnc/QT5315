@@ -9,7 +9,7 @@
             <generator class="identity" />
         </id>
         <property name="maDeTai" type="int">
-            <column name="ma_de_tai" not-null="true" />
+            <column name="ma_de_tai"/>
         </property>
         <property name="mssv" type="int">
             <column name="mssv" not-null="true" />

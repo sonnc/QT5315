@@ -16,6 +16,7 @@ public class SinhVienDiem  implements java.io.Serializable {
      private Double diemBcqt;
      private Double diemQuaTrinh;
      private Double diemCuoiKy;
+     private int dotThucTap;
 
     public SinhVienDiem() {
     }
@@ -82,6 +83,14 @@ public class SinhVienDiem  implements java.io.Serializable {
     
     public void setDiemCuoiKy(Double diemCuoiKy) {
         this.diemCuoiKy = diemCuoiKy;
+    }
+
+    public int getDotThucTap() {
+        return dotThucTap;
+    }
+
+    public void setDotThucTap(int dotThucTap) {
+        this.dotThucTap = dotThucTap;
     }
 
 

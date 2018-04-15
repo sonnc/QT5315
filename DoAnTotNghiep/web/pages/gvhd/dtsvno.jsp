@@ -20,16 +20,17 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("getAllDeTaiSV") == null) {
+        <%      
+            if (session.getAttribute("getAllDeTaiSVNO") == null) {
         %>
-        <s:action name="getAllDeTaiSV" executeResult="true"/>
+        <s:action name="getAllDeTaiSVNO" executeResult="true"/>
         <%
             }
         %>
     </head>
     <%
-        if (session.getAttribute("getAllDeTaiSV") != null) {
-            session.removeAttribute("getAllDeTaiSV");
+        if (session.getAttribute("getAllDeTaiSVNO") != null) {
+            session.removeAttribute("getAllDeTaiSVNO");
     %>
     <body>
         <div id="wrapper">
@@ -67,7 +68,7 @@
                                     <td><strong> Người hướng dẫn </strong></td>
                                     <td><strong> So khớp </strong></td>
                                     <td><strong> Kỳ TT </strong></td>
-                                    <td><strong> Trạng thái </strong></td>
+                                    <td><strong> Hành động </strong></td>
                                 </tr>
                                 <s:iterator value="lstSvDtCtNhds">
                                     <tr>
@@ -78,7 +79,18 @@
                                         <td><a href=""><s:property value="nguoiHuongDan"/></a></td>
                                         <td><s:property value="soKhop"/>%</td>
                                         <td><s:property value="dotThucTap"/></td>
-                                        <td><s:property value="trangThai"/></td>
+                                        <td>
+                                            <div>
+                                                <a href="duyetDeTaiSV?mssv=<s:property value="mssv"/>&maDeTai=<s:property value="maDeTai"/>&dotThucTap=<s:property value="dotThucTap"/>&trangThai=false">
+                                                    <button class="btn btn-danger" style="height: 25px; margin-bottom: 5px; font-size: 12px; width: 100%">Từ chối</button>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="duyetDeTaiSV?mssv=<s:property value="mssv"/>&maDeTai=<s:property value="maDeTai"/>&dotThucTap=<s:property value="dotThucTap"/>&trangThai=true">
+                                                    <button class="btn btn-primary" style="height: 25px; margin-bottom: 5px; font-size: 12px; width: 100%">Đồng ý</button>
+                                                </a>
+                                            </div>        
+                                        </td>
                                     </tr>
                                 </s:iterator>
                             </table>
@@ -100,6 +112,7 @@
             <%@include file="../../mains/js.jsp" %>
     </body>
     <%
+            session.removeAttribute("chuaDuyet");
         }
     %>
 </html>

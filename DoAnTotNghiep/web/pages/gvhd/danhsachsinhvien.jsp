@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +20,19 @@
                 text-orientation: initial;
             }
         </style>
+        <%
+        if (session.getAttribute("getAllDanhSachSinhVien") == null) {
+                
+            %>
+            <s:action name="getAllDanhSachSinhVien" executeResult="true"/>
+        <%
+            }
+        %>
     </head>
+    <%
+        if (session.getAttribute("getAllDanhSachSinhVien") != null) {
+                session.removeAttribute("getAllDanhSachSinhVien");
+    %>
     <body>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
@@ -41,23 +54,24 @@
                                     <td><strong> Mã SV </strong></td>
                                     <td><strong> Họ và tên </strong></td>
                                     <td><strong> Lớp </strong></td>
-                                    <td><strong> Khoa viện </strong></td>
-                                    <td><strong> Kỳ thực tập </strong></td>
-                                    <td><strong> Xem CV </strong></td>
+                                    <td><strong> Khóa </strong></td>
+                                    <td><strong> Khoa/ viện </strong></td>
+                                    <td><strong> Kỳ TT </strong></td>
+                                    <td><strong> Trạng thái </strong></td>
+                                    <td><strong> CV </strong></td>
                                 </tr>
-                                <%                                    for (int i = 0; i < 20; i++) {
-                                %>
+                                <s:iterator value="lstDanhSachSinhViens">
                                 <tr>
-                                    <td>20138374</td>
-                                    <td>Nguyễn Công Sơn</td>
-                                    <td>INPG12</td>
-                                    <td>Viện đào tạo Quốc Tế</td>
-                                    <td>20181</td>
-                                    <td><a href="" style="color: red">Xem</a></td>
+                                    <td><s:property value="mssv" /></td>
+                                    <td><s:property value="hoTen" /></td>
+                                    <td><s:property value="lop" /></td>
+                                    <td><s:property value="khoa" /></td>
+                                    <td><s:property value="khoaVien" /></td>
+                                    <td><s:property value="dotThucTap" /></td>
+                                    <td><s:property value="trangThai" /></td>
+                                    <td><a href="getThongTinSV?mssv=<s:property value="mssv" />" style="color: red">Xem</a></td>
                                 </tr>
-                                <%
-                                    }
-                                %>
+                                </s:iterator>
                             </table>
                             <div id="pagination">
                                 <span class="all">Page 1 of 3</span>
@@ -76,4 +90,7 @@
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
             <%@include file="../../mains/js.jsp" %>
     </body>
+    <%
+    }
+    %>
 </html>

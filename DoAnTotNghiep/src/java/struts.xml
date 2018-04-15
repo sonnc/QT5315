@@ -94,10 +94,52 @@
         
         
         
+        <!--
+        ========= CÁC CHỨC NĂNG DÀNH CHO GIẢNG VIÊN HƯỚNG DẪN (GIẢNG VIÊN PHỤ TRÁCH)
+-->
         
-        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
-            <result name="success">test.jsp</result>
+        <action name="getAllDanhSachSinhVien" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllDanhSachSinhVien">
+            <result name="success" type="">/pages/gvhd/danhsachsinhvien.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="getThongTinSV" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getThongTinSV">
+            <result name="success">/pages/sinhvien/thongtincanhan.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllDeTaiSV" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllDeTaiSV">
+            <result name="success">/pages/gvhd/detaisinhvien.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllDeTaiSVNO" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllDeTaiSVNO">
+            <result name="success">/pages/gvhd/dtsvno.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllDeTaiSVYES" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllDeTaiSVYES">
+            <result name="success">/pages/gvhd/dtsvyes.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="duyetDeTaiSV" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="duyetDeTaiSV">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">duyetDTSV</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+          <action name="duyetDTSV">
+            <result>/pages/gvhd/dtsvno.jsp</result>
+        </action>
+        <action name="getDanhSachChamDiem" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getDanhSachChamDiem">
+            <result name="success">/pages/gvhd/diemthi.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="chamDiem" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="chamDiem">
+            <result name="success">/pages/gvhd/diemthi.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        
+        
+<!--        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
+            <result name="success">test.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>-->
     </package>
 </struts>

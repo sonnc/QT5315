@@ -1,16 +1,15 @@
 <%-- 
-    Document   : chamdiem
-    Created on : Mar 13, 2018, 9:29:00 AM
+    Document   : danhsachdiemthi
+    Created on : Apr 15, 2018, 5:52:52 PM
     Author     : sonnc
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Điểm thi</title>
+        <title>Danh sách điểm thi</title>
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
@@ -20,16 +19,16 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("getDanhSachChamDiem") == null) {
+        <%            if (session.getAttribute("getAllDiemSV") == null) {
 
         %>
-        <s:action name="getDanhSachChamDiem" executeResult="true"/>
+        <s:action name="getAllDiemSV" executeResult="true"/>
         <%            }
         %>
     </head>
     <%
-        if (session.getAttribute("getDanhSachChamDiem") != null) {
-            session.removeAttribute("getDanhSachChamDiem");
+        if (session.getAttribute("getAllDiemSV") != null) {
+            session.removeAttribute("getAllDiemSV");
     %>
     <body>
         <div id="wrapper">
@@ -57,25 +56,25 @@
                                     <td><strong> Lớp </strong></td>
                                     <td><strong> Khóa </strong></td>
                                     <td><strong> Kỳ TT </strong></td>
+                                    <td><strong> PH </strong></td>
                                     <td><strong> BCQT </strong></td>
-                                    <td><strong> BCCK </strong></td>
-                                    <td><strong> Chấm điểm </strong></td>
+                                    <td><strong> QT </strong></td>
+                                    <td><strong> CK </strong></td>
+                                    <td><strong> Trạng thái </strong></td>
                                 </tr>
-                                <s:iterator value="lstDanhSachSinhViens"> 
-                                    <form action="chamDiem" method="post" >
-                                        <tr>
-                                            <td><input name="mssv" value="<s:property value="mssv" />" readonly="true" style="width: 70px;margin-right: -15px;border: none;background: white;"/></td>
-                                            <td><s:property value="hoTen" /></td>
-                                            <td><s:property value="lop" /></td>
-                                            <td><s:property value="khoa" /></td>
-                                            <td><input name="dotThucTap" readonly="true" style="width: 50px;margin-right: -15px;border: none;background: white;" value="<s:property value="dotThucTap" />"/></td>
-                                            <td><input name="bcqt" style="width: 50px"/></td>
-                                            <td><input name="bcck" style="width: 50px"/></td>
-                                            <td>
-                                                <button class="btn btn-info" style="width: 100%; margin-top: 10px">Chấm điểm</button>
-                                            </td>
-                                        </tr>
-                                    </form>
+                                <s:iterator value="lstSinhVienDiemThi"> 
+                                    <tr>
+                                        <td><s:property value="mssv" /></td>
+                                        <td><s:property value="hoTen" /></td>
+                                        <td><s:property value="lop" /></td>
+                                        <td><s:property value="khoa" /></td>
+                                        <td><s:property value="dotThucTap"/></td>
+                                        <td><s:property value="diemPhanHoi"/></td>
+                                        <td><s:property value="diemBCQT"/></td>
+                                        <td><s:property value="diemQuaTrinh"/></td>
+                                        <td><s:property value="diemBCCK"/></td>
+                                        <td><s:property value="trangThai"/></td>
+                                    </tr>
                                 </s:iterator>
                             </table>
                             <div id="pagination">

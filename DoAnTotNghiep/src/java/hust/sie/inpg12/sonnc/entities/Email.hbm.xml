@@ -26,5 +26,14 @@
         <property name="trangThai" type="java.lang.Boolean">
             <column name="trang_thai" not-null="true" />
         </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="type"/>
+        </property>
+        <property name="mssv" type="java.lang.Integer">
+            <column name="mssv"/>
+        </property>
+        <property name="dotThucTap" type="java.lang.Integer">
+            <column name="dot_thuc_tap"/>
+        </property>
     </class>
 </hibernate-mapping>

@@ -13,7 +13,7 @@ public class SinhVienThucTap  implements java.io.Serializable {
      private Integer id;
      private DeTai deTai;
      private SinhVien sinhVien;
-     private int maDeTai;
+     private Integer maDeTai;
      private int mssv;
      private Date thoiGianBatDau;
      private Date thoiGianKetThuc;
@@ -30,7 +30,7 @@ public class SinhVienThucTap  implements java.io.Serializable {
         this.trangThai = trangThai;
         this.dotThucTap = dotThucTap;
     }
-    public SinhVienThucTap(DeTai deTai, SinhVien sinhVien, int maDeTai, int mssv, Date thoiGianBatDau, Date thoiGianKetThuc, boolean trangThai, int dotThucTap) {
+    public SinhVienThucTap(DeTai deTai, SinhVien sinhVien, Integer maDeTai, int mssv, Date thoiGianBatDau, Date thoiGianKetThuc, boolean trangThai, int dotThucTap) {
        this.deTai = deTai;
        this.sinhVien = sinhVien;
        this.maDeTai = maDeTai;
@@ -63,11 +63,11 @@ public class SinhVienThucTap  implements java.io.Serializable {
         this.sinhVien = sinhVien;
     }
 
-    public int getMaDeTai() {
+    public Integer getMaDeTai() {
         return maDeTai;
     }
 
-    public void setMaDeTai(int maDeTai) {
+    public void setMaDeTai(Integer maDeTai) {
         this.maDeTai = maDeTai;
     }
 

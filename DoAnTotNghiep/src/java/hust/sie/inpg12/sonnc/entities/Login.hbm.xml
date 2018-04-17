@@ -14,7 +14,7 @@
         <property name="rule" type="int">
             <column name="rule" not-null="true" />
         </property>
-        <set name="thongBaos" table="thong_bao" inverse="true" lazy="true" fetch="select">
+<!--        <set name="thongBaos" table="thong_bao" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="nguoi_dang" not-null="true" />
             </key>
@@ -55,6 +55,6 @@
                 <column name="nguoi_gui" not-null="true" />
             </key>
             <one-to-many class="hust.sie.inpg12.sonnc.entities.Email" />
-        </set>
+        </set>-->
     </class>
 </hibernate-mapping>

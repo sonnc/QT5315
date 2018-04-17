@@ -438,6 +438,7 @@ public class SinhVienController {
         return r;
     }
 
+    // XỬ LÝ KHI CÓ NHIỀU ĐIỂM THI => XEM LẠI
     public List getDiemThiSinhVien(int mssv) {
         List<SinhVienDiem> lsSinhVienDiem = new ArrayList<>();
         try {
@@ -445,6 +446,7 @@ public class SinhVienController {
             transaction = session.beginTransaction();
             Query query = session.createQuery("FROM SinhVienDiem WHERE mssv =:ms");
             query.setParameter("ms", mssv);
+            lsSinhVienDiem = query.list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {

@@ -95,8 +95,8 @@
         
         
         <!--
-        ========= CÁC CHỨC NĂNG DÀNH CHO GIẢNG VIÊN HƯỚNG DẪN (GIẢNG VIÊN PHỤ TRÁCH)
--->
+                ========= CÁC CHỨC NĂNG DÀNH CHO GIẢNG VIÊN HƯỚNG DẪN (GIẢNG VIÊN PHỤ TRÁCH)
+        -->
         
         <action name="getAllDanhSachSinhVien" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllDanhSachSinhVien">
             <result name="success" type="">/pages/gvhd/danhsachsinhvien.jsp</result>
@@ -124,20 +124,45 @@
             </result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-          <action name="duyetDTSV">
+        <action name="duyetDTSV">
             <result>/pages/gvhd/dtsvno.jsp</result>
         </action>
         <action name="getDanhSachChamDiem" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getDanhSachChamDiem">
             <result name="success">/pages/gvhd/diemthi.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-        <action name="chamDiem" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="chamDiem">
-            <result name="success">/pages/gvhd/diemthi.jsp</result>
+                <action name="chamDiem" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="chamDiem">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">dsv</param>
+            </result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="dsv">
+            <result>/pages/gvhd/diemthi.jsp</result>
+        </action>
+        <action name="getAllDiemSV" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllDiemSV">
+            <result name="success">/pages/gvhd/danhsachdiemthi.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllFileGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllFileGVHD">
+            <result name="success">/pages/gvhd/file.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="UploadFileGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="UploadFileGVHD">
+            <result name="success">/pages/gvhd/file.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="deleteTaiLieuGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="deleteTaiLieuGVHD">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">deleteFile</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="deleteFile">
+            <result>/pages/gvhd/file.jsp</result>
+        </action>
         
-        
-<!--        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
+        <!--        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
             <result name="success">test.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>-->

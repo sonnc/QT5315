@@ -20,10 +20,13 @@
         <property name="link" type="string">
             <column name="link" length="500" />
         </property>
-        <property name="loaiNguoiDung" type="java.lang.Integer">
-            <column name="loai_nguoi_dung">
-                <comment>1: ??i v?i giang vi&#234;n ph? tr&#225;ch 2: ??i v?i ng??i h??ng d?n (gi?ng vi&#234;n h??ng d?n)</comment>
+        <property name="type" type="java.lang.Integer">
+            <column name="type">
+                <comment>1: cong khai 2: rieng tu</comment>
             </column>
+        </property>
+        <property name="ngayThang" type="timestamp">
+            <column name="ngay_thang" length="19" />
         </property>
     </class>
 </hibernate-mapping>

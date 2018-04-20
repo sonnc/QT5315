@@ -1,6 +1,6 @@
 <%-- 
-    Document   : detaicongty
-    Created on : Mar 13, 2018, 9:30:07 AM
+    Document   : duyetCT
+    Created on : Apr 17, 2018, 6:43:46 PM
     Author     : sonnc
 --%>
 
@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Danh sách công ty</title>
+        <title>Danh sách công ty đã duyệt</title>
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
@@ -20,16 +20,16 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("getAllCongTy") == null) {
+        <%            if (session.getAttribute("GetAllCongTyReviewed") == null) {
         %>
-        <s:action name="getAllCongTy" executeResult="true"></s:action>
+        <s:action name="GetAllCongTyReviewed" executeResult="true"></s:action>
         <%
             }
         %>
     </head>
     <%
-        if (session.getAttribute("getAllCongTy") != null) {
-            session.removeAttribute("getAllCongTy");
+        if (session.getAttribute("GetAllCongTyReviewed") != null) {
+            session.removeAttribute("GetAllCongTyReviewed");
     %>
     <body>
         <div id="wrapper">
@@ -41,7 +41,7 @@
                         <div class="col-lg-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
-                                <p style="margin: 0px">DANH SÁCH CÔNG TY</p>
+                                <p style="margin: 0px">DANH SÁCH CÔNG TY ĐÃ DUYỆT</p>
                             </div>
                             <div>
                                 <div class="row">
@@ -100,7 +100,4 @@
     <%        }
     %>
 </html>
-
-
-
 

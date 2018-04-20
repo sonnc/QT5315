@@ -1,9 +1,8 @@
 <%-- 
-    Document   : duyetcongty
-    Created on : Mar 13, 2018, 9:34:56 AM
+    Document   : duyetDTCT
+    Created on : Apr 21, 2018, 1:56:52 AM
     Author     : sonnc
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
@@ -21,16 +20,16 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("GetAllDeTaiCT") == null) {
+        <%            if (session.getAttribute("GetAllDeTaiReviewed") == null) {
         %>
-        <s:action name="GetAllDeTaiCT" executeResult="true"/>
+        <s:action name="GetAllDeTaiReviewed" executeResult="true"/>
         <%
             }
         %>
     </head>
     <%
-        if (session.getAttribute("GetAllDeTaiCT") != null) {
-            session.removeAttribute("GetAllDeTaiCT");
+        if (session.getAttribute("GetAllDeTaiReviewed") != null) {
+            session.removeAttribute("GetAllDeTaiReviewed");
 
     %>
     <body>
@@ -157,7 +156,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <s:property value="status"/>
+                                             <s:property value="status"/>        
                                         </td>
                                     </tr>
                                 </s:iterator>

@@ -33,6 +33,7 @@ public class DetaiCongtyNguoihuongdan {
     private String emailNHD;
     private String dienThoaiNHD;
     private String chucVuNHD;
+    private String status;
 
     public DetaiCongtyNguoihuongdan() {
     }
@@ -215,7 +216,12 @@ public class DetaiCongtyNguoihuongdan {
         this.chucVuNHD = chucVuNHD;
     }
 
+    public String getStatus() {
+        return status;
+    }
 
-    
+    public void setStatus(String status) {
+        this.status = status;
+    }
     
 }

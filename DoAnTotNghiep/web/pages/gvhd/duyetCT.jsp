@@ -1,6 +1,6 @@
 <%-- 
-    Document   : detaicongty
-    Created on : Mar 13, 2018, 9:30:07 AM
+    Document   : duyetCT
+    Created on : Apr 17, 2018, 6:43:46 PM
     Author     : sonnc
 --%>
 
@@ -20,16 +20,16 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("getAllCongTy") == null) {
+        <%            if (session.getAttribute("GetAllCongTyReview") == null) {
         %>
-        <s:action name="getAllCongTy" executeResult="true"></s:action>
+        <s:action name="GetAllCongTyReview" executeResult="true"></s:action>
         <%
             }
         %>
     </head>
     <%
-        if (session.getAttribute("getAllCongTy") != null) {
-            session.removeAttribute("getAllCongTy");
+        if (session.getAttribute("GetAllCongTyReview") != null) {
+            session.removeAttribute("GetAllCongTyReview");
     %>
     <body>
         <div id="wrapper">
@@ -41,7 +41,7 @@
                         <div class="col-lg-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
-                                <p style="margin: 0px">DANH SÁCH CÔNG TY</p>
+                                <p style="margin: 0px">DUYỆT CÔNG TY</p>
                             </div>
                             <div>
                                 <div class="row">
@@ -66,7 +66,7 @@
                                     <td><strong> Địa chỉ </strong></td>
                                     <td><strong> Email </strong></td>
                                     <td><strong> Điện thoại</strong></td>
-                                    <td><strong> Trạng thái </strong></td>
+                                    <td><strong> Hành động </strong></td>
                                 </tr>
                                 <s:iterator value="lstCongTy">
                                     <tr>
@@ -76,7 +76,18 @@
                                         <td><s:property value="diaChi"/></td>
                                         <td><s:property value="email"/></td>
                                         <td><s:property value="dienThoai"/></td>
-                                        <td><s:property value="trangThai"/></td>
+                                        <td>
+                                            <div>
+                                                <a href="AcceptRefuseCongTy?maCongTy=<s:property value="maCongTy"/>&status=false">
+                                                    <button class="btn btn-danger" style="height: 25px; margin-bottom: 5px; font-size: 12px; width: 100%">Từ chối</button>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="AcceptRefuseCongTy?maCongTy=<s:property value="maCongTy"/>&status=true">
+                                                    <button class="btn btn-primary" style="height: 25px; margin-bottom: 5px; font-size: 12px; width: 100%">Đồng ý</button>
+                                                </a>
+                                            </div>        
+                                        </td>
                                     </tr>
                                 </s:iterator>
                             </table>
@@ -100,7 +111,4 @@
     <%        }
     %>
 </html>
-
-
-
 

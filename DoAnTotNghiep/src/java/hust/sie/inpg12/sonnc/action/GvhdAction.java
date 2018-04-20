@@ -9,6 +9,8 @@ import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
 import hust.sie.inpg12.sonnc.controller.GvhdController;
 import hust.sie.inpg12.sonnc.controller.SinhVienController;
+import hust.sie.inpg12.sonnc.entities.CongTy;
+import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.Email;
 import hust.sie.inpg12.sonnc.entities.FileAll;
 import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
@@ -18,7 +20,9 @@ import hust.sie.inpg12.sonnc.entities.SinhVienDangKy;
 import hust.sie.inpg12.sonnc.entities.SinhVienDiem;
 import hust.sie.inpg12.sonnc.entities.SinhVienInfo;
 import hust.sie.inpg12.sonnc.entities.SinhVienThucTap;
+import hust.sie.inpg12.sonnc.other.CongTyvaDaiDienCongTy;
 import hust.sie.inpg12.sonnc.other.DanhSachSinhVien;
+import hust.sie.inpg12.sonnc.other.DetaiCongtyNguoihuongdan;
 import hust.sie.inpg12.sonnc.other.SinhVienDiemThi;
 import hust.sie.inpg12.sonnc.other.SvDtCtNhd;
 import java.io.File;
@@ -53,6 +57,60 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
     private List<SinhVienInfo> lstSVI = new ArrayList<>();
     private List<SinhVienDiemThi> lstSinhVienDiemThi = new ArrayList<>();
     private List<FileAll> lstFileAll = new ArrayList<>();
+    private List<CongTyvaDaiDienCongTy> lstCongTy = new ArrayList<>();
+    private List<DetaiCongtyNguoihuongdan> lstDTCTNHD = new ArrayList<>();
+    private List<Email> lstAllEmailGVHD = new ArrayList<>();
+    private List<Email> lstEmailGVHDRead = new ArrayList<>();
+    private List<Email> lstEmailGVHDUnread = new ArrayList<>();
+    private List<Email> lstEmailGVHDSend = new ArrayList<>();
+
+    public List<Email> getLstAllEmailGVHD() {
+        return lstAllEmailGVHD;
+    }
+
+    public void setLstAllEmailGVHD(List<Email> lstAllEmailGVHD) {
+        this.lstAllEmailGVHD = lstAllEmailGVHD;
+    }
+
+    public List<Email> getLstEmailGVHDRead() {
+        return lstEmailGVHDRead;
+    }
+
+    public void setLstEmailGVHDRead(List<Email> lstEmailGVHDRead) {
+        this.lstEmailGVHDRead = lstEmailGVHDRead;
+    }
+
+    public List<Email> getLstEmailGVHDUnread() {
+        return lstEmailGVHDUnread;
+    }
+
+    public void setLstEmailGVHDUnread(List<Email> lstEmailGVHDUnread) {
+        this.lstEmailGVHDUnread = lstEmailGVHDUnread;
+    }
+
+    public List<Email> getLstEmailGVHDSend() {
+        return lstEmailGVHDSend;
+    }
+
+    public void setLstEmailGVHDSend(List<Email> lstEmailGVHDSend) {
+        this.lstEmailGVHDSend = lstEmailGVHDSend;
+    }
+
+    public List<DetaiCongtyNguoihuongdan> getLstDTCTNHD() {
+        return lstDTCTNHD;
+    }
+
+    public void setLstDTCTNHD(List<DetaiCongtyNguoihuongdan> lstDTCTNHD) {
+        this.lstDTCTNHD = lstDTCTNHD;
+    }
+
+    public List<CongTyvaDaiDienCongTy> getLstCongTy() {
+        return lstCongTy;
+    }
+
+    public void setLstCongTy(List<CongTyvaDaiDienCongTy> lstCongTy) {
+        this.lstCongTy = lstCongTy;
+    }
 
     public File getMyFile() {
         return myFile;
@@ -385,10 +443,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         List<HeSoDiem> lstHeSoDiems = gvhdController.getAllHeSoDiem();
 
         double diemPhanHoi = 0;
-        if (lstEmail.size() >= 6) {
+        if (lstEmail.size() >= 7) {
             diemPhanHoi = 10;
         } else {
-            diemPhanHoi = 1.67 * lstEmail.size();
+            diemPhanHoi = 1.43 * lstEmail.size();
         }
         if (lstSinhVienDiems.size() == 1) {
             SinhVienDiem svd = new SinhVienDiem();
@@ -492,6 +550,218 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
                     + " Mã lài liệu đã xóa là: " + request.getParameter("maTaiLieu") + "");
             return ERROR;
         }
+    }
+
+    public String getAllCongTy() {
+        List<Object[]> results = gvhdController.getAllCongTy();
+        for (Object[] result : results) {
+            CongTyvaDaiDienCongTy ct = new CongTyvaDaiDienCongTy();
+            ct.setMaCongTy((int) result[0]);
+            ct.setLogo((String) result[1]);
+            ct.setTenCongTy((String) result[2]);
+            ct.setDiaChi((String) result[3]);
+            ct.setDienThoai((String) result[4]);
+            ct.setEmail((String) result[5]);
+            ct.setDaiDien((String) result[6]);
+            ct.setMaDaiDien((int) result[7]);
+            if ((int) result[8] == 0) {
+                ct.setTrangThai("Đã từ chối");
+            } else if ((int) result[8] == 1) {
+                ct.setTrangThai("Đã chấp nhận");
+            } else if ((int) result[8] == 2) {
+                ct.setTrangThai("Chờ duyệt");
+            }
+            lstCongTy.add(ct);
+        }
+        session.put("getAllCongTy", "getAllCongTy");
+        return SUCCESS;
+    }
+
+    // Lấy toàn bộ danh sách công ty chưa được duyệt
+    public String GetAllCongTyReview() {
+        List<Object[]> results = gvhdController.GetAllCongTyReview();
+        for (Object[] result : results) {
+            CongTyvaDaiDienCongTy ct = new CongTyvaDaiDienCongTy();
+            ct.setMaCongTy((int) result[0]);
+            ct.setLogo((String) result[1]);
+            ct.setTenCongTy((String) result[2]);
+            ct.setDiaChi((String) result[3]);
+            ct.setDienThoai((String) result[4]);
+            ct.setEmail((String) result[5]);
+            ct.setDaiDien((String) result[6]);
+            ct.setMaDaiDien((int) result[7]);
+            lstCongTy.add(ct);
+        }
+        session.put("GetAllCongTyReview", "GetAllCongTyReview");
+        return SUCCESS;
+    }
+
+    public String AcceptRefuseCongTy() {
+        int maCongTy = Integer.parseInt(request.getParameter("maCongTy"));
+        String status = request.getParameter("status");
+        CongTy ct = gvhdController.getCongTyByID(maCongTy);
+        if (ct.getClass() != null) {
+            if (status.equals("true")) {
+                ct.setTrangThai(1);
+            } else if (status.equals("false")) {
+                ct.setTrangThai(0);
+            }
+            if (gvhdController.AcceptRefuseCongTy(ct)) {
+                session.put("messageAcceptRefuse", "Chấp nhận thành công cho công ty này.");
+            }
+        } else {
+            session.put("messageAcceptRefuse", "Lỗi: Không tìm thấy mã công ty, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
+        }
+        return SUCCESS;
+    }
+
+    public String GetAllCongTyReviewed() {
+        List<Object[]> results = gvhdController.GetAllCongTyReviewed();
+        for (Object[] result : results) {
+            CongTyvaDaiDienCongTy ct = new CongTyvaDaiDienCongTy();
+            ct.setMaCongTy((int) result[0]);
+            ct.setLogo((String) result[1]);
+            ct.setTenCongTy((String) result[2]);
+            ct.setDiaChi((String) result[3]);
+            ct.setDienThoai((String) result[4]);
+            ct.setEmail((String) result[5]);
+            ct.setDaiDien((String) result[6]);
+            ct.setMaDaiDien((int) result[7]);
+            if ((int) result[8] == 0) {
+                ct.setTrangThai("Đã từ chối");
+            } else if ((int) result[8] == 1) {
+                ct.setTrangThai("Đã chấp nhận");
+            }
+            lstCongTy.add(ct);
+        }
+        session.put("GetAllCongTyReviewed", "GetAllCongTyReviewed");
+        return SUCCESS;
+    }
+
+    public String GetAllDeTaiCT() {
+        List<Object[]> results = gvhdController.GetAllDeTaiCT();
+        for (Object[] result : results) {
+            DetaiCongtyNguoihuongdan a = new DetaiCongtyNguoihuongdan();
+            a.setMaCongTy((int) result[3]);
+            a.setMaDeTai((int) result[2]);
+            a.setMaGvhd((int) result[4]);
+            a.setNgayDang((Date) result[12]);
+            a.setNguoiHuongDan((String) result[1]);
+            a.setNoiDung((String) result[6]);
+            a.setSoLuong((int) result[9]);
+            a.setTenCongTy((String) result[0]);
+            a.setTenDeTai((String) result[5]);
+            a.setYeuCauKhac((String) result[14]);
+            a.setYeuCauLapTrinh((String) result[7]);
+            a.setHanDangKy((Date) result[13]);
+            if ((int) result[11] == 2) {
+                a.setStatus("Đang chờ");
+            } else if ((int) result[11] == 1) {
+                a.setStatus("Đã chấp nhận");
+            } else if ((int) result[11] == 0) {
+                a.setStatus("Đã từ chối");
+            }
+            lstDTCTNHD.add(a);
+        }
+        session.put("GetAllDeTaiCT", "GetAllDeTaiCT");
+        return SUCCESS;
+    }
+
+    // đề tài chưa được duyệt
+    public String GetAllDeTaiReview() {
+        List<Object[]> results = gvhdController.GetAllDeTaiReview();
+        for (Object[] result : results) {
+            DetaiCongtyNguoihuongdan a = new DetaiCongtyNguoihuongdan();
+            a.setMaCongTy((int) result[3]);
+            a.setMaDeTai((int) result[2]);
+            a.setMaGvhd((int) result[4]);
+            a.setNgayDang((Date) result[12]);
+            a.setNguoiHuongDan((String) result[1]);
+            a.setNoiDung((String) result[6]);
+            a.setSoLuong((int) result[9]);
+            a.setTenCongTy((String) result[0]);
+            a.setTenDeTai((String) result[5]);
+            a.setYeuCauKhac((String) result[14]);
+            a.setYeuCauLapTrinh((String) result[7]);
+            a.setHanDangKy((Date) result[13]);
+            lstDTCTNHD.add(a);
+        }
+        session.put("GetAllDeTaiReview", "GetAllDeTaiReview");
+        return SUCCESS;
+
+    }
+
+    public String AcceptRefuseDeTai() {
+        int maDeTai = Integer.parseInt(request.getParameter("maDeTai"));
+        String status = request.getParameter("status");
+        DeTai dt = gvhdController.getDeTaiByID(maDeTai);
+        if (dt.getClass() != null) {
+            if (status.equals("true")) {
+                dt.setTrangThai(1);
+            } else if (status.equals("false")) {
+                dt.setTrangThai(0);
+            }
+            if (gvhdController.AcceptRefuseDeTai(dt)) {
+                session.put("messageAcceptRefuseDTCT", "Chấp nhận thành công cho đề tài này.");
+            }
+        } else {
+            session.put("messageAcceptRefuseDTCT", "Lỗi: Không tìm thấy mã đề tài, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
+        }
+        return SUCCESS;
+    }
+
+    public String GetAllDeTaiReviewed() {
+        List<Object[]> results = gvhdController.GetAllDeTaiReviewed();
+        for (Object[] result : results) {
+            DetaiCongtyNguoihuongdan a = new DetaiCongtyNguoihuongdan();
+            a.setMaCongTy((int) result[3]);
+            a.setMaDeTai((int) result[2]);
+            a.setMaGvhd((int) result[4]);
+            a.setNgayDang((Date) result[12]);
+            a.setNguoiHuongDan((String) result[1]);
+            a.setNoiDung((String) result[6]);
+            a.setSoLuong((int) result[9]);
+            a.setTenCongTy((String) result[0]);
+            a.setTenDeTai((String) result[5]);
+            a.setYeuCauKhac((String) result[14]);
+            a.setYeuCauLapTrinh((String) result[7]);
+            a.setHanDangKy((Date) result[13]);
+            if ((int) result[11] == 1) {
+                a.setStatus("Đã chấp nhận");
+            } else if ((int) result[11] == 0) {
+                a.setStatus("Đã từ chối");
+            }
+            lstDTCTNHD.add(a);
+        }
+        session.put("GetAllDeTaiReviewed", "GetAllDeTaiReviewed");
+        return SUCCESS;
+    }
+    
+    public String getAllEmailGVHD() {
+        lstAllEmailGVHD = gvhdController.getAllEmailGVHD((String) session.get("email"));
+        lstEmailGVHDRead = gvhdController.getAllEmailGVHDRead((String) session.get("email"));
+        lstEmailGVHDUnread = gvhdController.getAllEmailGVHDUnread((String) session.get("email"));
+        lstEmailGVHDSend = gvhdController.getAllEmailGVHDSend((String) session.get("email"));
+        session.put("getAllEmailGVHD", "getAllEmailGVHD");
+        return SUCCESS;
+    }
+
+    public String sendEmailGVHD() {
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        Email email = new Email();
+        email.setNguoiGui((String) session.get("email"));
+        email.setNguoiNhan(request.getParameter("nguoiNhan"));
+        email.setNoiDung(request.getParameter("noiDung"));
+        email.setTieuDe(request.getParameter("tieuDe"));
+        email.setTrangThai(Boolean.FALSE);
+        email.setThoiGian(sqlDate);
+        if (gvhdController.sendEmailGVHD(email)) {
+            session.put("emailMessage", "Bạn đã gửi Email trong hệ thống thành công !");
+        } else {
+            session.put("emailMessage", "Đã có lỗi khi thực hiện hành động gửi Email này. Nếu tình trạng này tiếp tục xảy ra, vui lòng liên hệ với quản trị viên.!");
+        }
+        return SUCCESS;
     }
 
     @Override

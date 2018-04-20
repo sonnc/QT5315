@@ -77,7 +77,7 @@
                                     <div class="col-xs-12 col-md-6"><input type="submit" value="Đăng ký" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
                                     <div class="col-xs-12 col-md-6">
                                         <div>Quên mật khẩu? <a href="<%=request.getContextPath()%>/forgotpassword.jsp">Khôi phục</a></div>
-                                        <div>Trở về <a href="<%=request.getContextPath()%>/home.jsp">Trang chủ</a></div>
+                                        <div>Trở về <a href="<%=request.getContextPath()%>/login.jsp">Trang chủ</a></div>
                                     </div>
                                 </div>
                             </form>

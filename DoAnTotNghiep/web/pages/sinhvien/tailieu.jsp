@@ -33,7 +33,7 @@
                 }).then(function (isConfirm) {
                     if (isConfirm) {
                         swal({
-                            title: 'ĐANG SỬ LÝ',
+                            title: 'ĐANG XỬ LÝ',
                             text: 'Bạn đã xác nhận đăng tài liệu, xin vui lòng đợi phản hồi từ hệ thống!',
                             icon: 'success'
                         }).then(function () {
@@ -143,6 +143,18 @@
                                     session.removeAttribute("fileMessage");
                                 }
                             %>
+                            <%                                if (session.getAttribute("messageTaiLieuSinhVien") != null) {
+                            %>
+                            <script type="text/javascript">
+                                function mess() {
+                                    swal("Thông báo", "<%=session.getAttribute("messageTaiLieuSinhVien")%>", "info");
+                                }
+                                ;
+                            </script>
+                            <%
+                                    session.removeAttribute("messageTaiLieuSinhVien");
+                                }
+                            %>
                             <div class="alert alert-warning">
                                 <form role="form" id="formValidate" action="UploadFileSinhVien" method="post" enctype = "multipart/form-data"> 
                                     <input  style="margin-bottom: 15px;" class="form-control" name="tenFile" placeholder="Tên tài liệu"/>
@@ -200,7 +212,7 @@
                                                             }).then(function (isConfirm) {
                                                                 if (isConfirm) {
                                                                     swal({
-                                                                        title: 'ĐANG SỬ LÝ',
+                                                                        title: 'ĐANG XỬ LÝ',
                                                                         text: 'Bạn đã xác nhận Xóa tài liệu, xin vui lòng đợi phản hồi từ hệ thống!',
                                                                         icon: 'success'
                                                                     }).then(function () {
@@ -248,11 +260,11 @@
                                                             }).then(function (isConfirm) {
                                                                 if (isConfirm) {
                                                                     swal({
-                                                                        title: 'ĐANG SỬ LÝ',
+                                                                        title: 'ĐANG XỬ LÝ',
                                                                         text: 'Bạn đã xác nhận Xóa tài liệu, xin vui lòng đợi phản hồi từ hệ thống!',
                                                                         icon: 'success'
                                                                     }).then(function () {
-                                                                        form.click();
+                                                                        window.location.href = document.getElementById('tagA<s:property value="id"/>').href;
                                                                     });
                                                                 } else {
                                                                     swal("HỦY BỎ", "Bạn đã hủy bỏ việc xóa bỏ tài liệu.", "error");

@@ -63,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-md-6"><input type="submit" value="Đổi mật khẩu" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
                                     <div class="col-xs-12 col-md-6">
-                                        <div>Trở về <a href="<%=session.getAttribute("httpURL")%>home.jsp">Trang chủ</a>
+                                        <div>Trở về <a href="<%=session.getAttribute("httpURL")%>login.jsp">Trang chủ</a>
                                         </div>
                                     </div>
                                 </div>

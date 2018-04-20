@@ -131,7 +131,7 @@
             <result name="success">/pages/gvhd/diemthi.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-                <action name="chamDiem" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="chamDiem">
+        <action name="chamDiem" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="chamDiem">
             <result name="success" type="redirectAction" >
                 <param name="actionName">dsv</param>
             </result>
@@ -161,6 +161,60 @@
         <action name="deleteFile">
             <result>/pages/gvhd/file.jsp</result>
         </action>
+        <action name="getAllCongTy" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllCongTy">
+            <result name="success">/pages/gvhd/danhsachcongty.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="GetAllCongTyReview" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="GetAllCongTyReview">
+            <result name="success">/pages/gvhd/duyetCT.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="AcceptRefuseCongTy" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="AcceptRefuseCongTy">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">arct</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="arct">
+            <result>/pages/gvhd/duyetCT.jsp</result>
+        </action>
+        <action name="GetAllCongTyReviewed" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="GetAllCongTyReviewed">
+            <result name="success">/pages/gvhd/duyetCTED.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="GetAllDeTaiCT" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="GetAllDeTaiCT">
+            <result name="success">/pages/gvhd/detaicongty.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="GetAllDeTaiReview" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="GetAllDeTaiReview">
+            <result name="success">/pages/gvhd/duyetDTCT.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="GetAllDeTaiReviewed" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="GetAllDeTaiReviewed">
+            <result name="success">/pages/gvhd/duyetDTCTED.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="AcceptRefuseDeTai" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="AcceptRefuseDeTai">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">ardt</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="ardt">
+            <result>/pages/gvhd/duyetDTCT.jsp</result>
+        </action>
+        <action name="getAllEmailGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllEmailGVHD">
+            <result name="success">/pages/gvhd/email.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="sendEmailGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="sendEmailGVHD">
+            <result name="success" type="">/pages/gvhd/email.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        
+        
+        
+        
         
         <!--        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
             <result name="success">test.jsp</result>

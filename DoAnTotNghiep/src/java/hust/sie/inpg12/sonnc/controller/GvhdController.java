@@ -9,7 +9,9 @@ import hust.sie.inpg12.sonnc.entities.CongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.Email;
 import hust.sie.inpg12.sonnc.entities.FileAll;
+import hust.sie.inpg12.sonnc.entities.GiangVienPhuTrach;
 import hust.sie.inpg12.sonnc.entities.HeSoDiem;
+import hust.sie.inpg12.sonnc.entities.QuyTrinh;
 import hust.sie.inpg12.sonnc.entities.SinhVienDangKy;
 import hust.sie.inpg12.sonnc.entities.SinhVienDiem;
 import hust.sie.inpg12.sonnc.entities.SinhVienThucTap;
@@ -645,7 +647,6 @@ public class GvhdController {
         return results;
     }
 
-    
     public List getAllEmailGVHD(String email) {
         List<Email> lstEmails = new ArrayList<>();
         try {
@@ -744,4 +745,83 @@ public class GvhdController {
         }
         return r;
     }
+
+    public List getLichTrinhForGVHD() {
+        List<QuyTrinh> lstQuyTrinhs = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM QuyTrinh ORDER BY id DESC");
+            lstQuyTrinhs = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstQuyTrinhs;
+    }
+
+    public boolean SaveLichTrinh(QuyTrinh qt) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(qt);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public boolean DeleteLichTrinh(int id) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createSQLQuery("DELETE FROM Quy_Trinh WHERE id =:id");
+            q.setParameter("id", id);
+            q.executeUpdate();
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public boolean SaveThongTinCaNhan(GiangVienPhuTrach gvpt) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(gvpt);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
 }

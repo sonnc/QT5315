@@ -16,16 +16,16 @@
         <script src="./pages/libs/calendar/moment.min.js"></script>
         <script src="./pages/libs/calendar/jquery.min.js"></script>
         <script src="./pages/libs/calendar/fullcalendar.min.js"></script>
-        <%            if (session.getAttribute("getLichTrinhForSV") == null) {
+        <%            if (session.getAttribute("getLichTrinhForGVHD") == null) {
         %>
-        <s:action name="getLichTrinhForSV" executeResult="true"/>
+        <s:action name="getLichTrinhForGVHD" executeResult="true"/>
         <%
             }
         %>
     </head>
     <%
-        if (session.getAttribute("getLichTrinhForSV") != null) {
-            session.removeAttribute("getLichTrinhForSV");
+        if (session.getAttribute("getLichTrinhForGVHD") != null) {
+            session.removeAttribute("getLichTrinhForGVHD");
 
     %>
     <body>
@@ -50,7 +50,6 @@
                                                 center: 'title',
                                                 right: 'month,basicWeek,basicDay'
                                             },
-                                            defaultDate: '2018-03-12',
                                             navLinks: true, // can click day/week names to navigate views
                                             editable: true,
                                             eventLimit: true, // allow "more" link when too many events
@@ -66,33 +65,60 @@
 
                                 </script>
                                 <div id="calendar"></div>
-                                <div>Dưới đây là mọi thông tin của quy trình thực tập <strong>20181</strong>
-                                    . Hãy thực hiện đúng theo quy trình và thời hạn của mỗi nhiệm vụ. </div>
-                                <!--                                <table border="1">
-                                                                    <tr>
-                                                                        <th>ID</th>
-                                                                        <th>Tên quy trình</th>
-                                                                        <th>Nội dung</th>
-                                                                        <th>Ngày đăng</th>
-                                                                        <th>Hạn cuối</th>
-                                                                        <th>Mã quy trình</th>
-                                                                    </tr>
-                                <%                                        for (int i = 0; i < 10; i++) {
-                                %>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Nộp bản báo cáo bản cứng</td>
-                                    <td>Tất cả sinh viên thực tập đợt 20181 phải nộp lại các báo cáo bản cứng cho quản ngành</td>
-                                    <td>2018-03-19</td>
-                                    <td>2018-03-25</td>
-                                    <td>20181</td>
-                                </tr>
-                                <%
-                                    }
-                                %>
+                                <div style="margin: 50px 0 50px 0" class="alert alert-success">
+                                    <p>ĐĂNG LỊCH TRÌNH</p>
+                                    <form class="contactForm" id="from" role="form" id="formValidate" action="SaveLichTrinh" method="post"> 
+                                        <div class="form-group">
+                                            <input name="tieuDe" class="form-control" id="name" placeholder="Tiêu đề: ... "  required="true">
+                                            <div class="validation"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" name="ngayBatDau" id="subject" placeholder="Ngày bắt đầu: (mm/dd/yyyy) .... " type="text" required="true">
+                                            <div class="validation"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control" name="ngayKetThuc" id="subject" placeholder="Ngày kết thúc: (mm/dd/yyyy) .... " type="text" required="true">
+                                            <div class="validation"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="noiDung" rows="5"  placeholder="Nội dung: ..."  required="true"></textarea>
+                                            <div class="validation"></div>
+                                        </div>
+                                        <div class="text-center"><button type="submit" class="btn btn-theme btn-block btn-md">Đăng lịch trình</button></div>
 
-                            </table>-->
-
+                                    </form>
+                                </div>
+                                <div style="margin: 50px 0 50px 0" class="alert alert-info">
+                                    <p>DANH SÁCH LỊCH TRÌNH</p>
+                                    <table border="1">
+                                        <tr>
+                                        <style>
+                                            #theTH{
+                                                text-align: center;
+                                            }
+                                            #theTD{
+                                                padding: 5px;
+                                            }
+                                        </style>
+                                        <th id="theTH">Tên quy trình</th>
+                                        <th id="theTH">Nội dung</th>
+                                        <th id="theTH">Ngày đăng</th>
+                                        <th id="theTH">Hạn cuối</th>
+                                        <th id="theTH">Hành động</th>
+                                        </tr>
+                                        <s:iterator value="lstQuyTrinh">
+                                            <tr>
+                                                <td id="theTD"><s:property value="tieuDe"/></td>
+                                                <td id="theTD"><s:property value="noiDung"/></td>
+                                                <td id="theTD"><s:property value="ngayBatDau"/></td>
+                                                <td id="theTD"><s:property value="ngayKetThuc"/></td>
+                                                <td id="theTD">
+                                                    <a  id="idLichTrinh<s:property value="id"/>" href="DeleteLichTrinh?id=<s:property value="id"/>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                        </s:iterator>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>
@@ -102,7 +128,7 @@
         </div>   
         <%@include file="../../mains/footer.jsp" %>
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-        <%@include file="../../mains/jsForCalendar.jsp" %>
+            <%@include file="../../mains/jsForCalendar.jsp" %>
     </body>
     <%
         }

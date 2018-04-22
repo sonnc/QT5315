@@ -211,6 +211,32 @@
             <result name="success" type="">/pages/gvhd/email.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="SaveLichTrinh" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="SaveLichTrinh">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">savelt</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="savelt">
+            <result>/pages/gvhd/lichtrinh.jsp</result>
+        </action>
+        <action name="getLichTrinhForGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getLichTrinhForGVHD">
+            <result name="success" type="">/pages/gvhd/lichtrinh.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="DeleteLichTrinh" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="DeleteLichTrinh">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">deletelt</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="deletelt">
+            <result>/pages/gvhd/lichtrinh.jsp</result>
+        </action>
+        <action name="SaveThongTinCaNhanGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="SaveThongTinCaNhanGVHD">
+            <result name="success" type="">/pages/gvhd/dangkythongtin.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
         
         

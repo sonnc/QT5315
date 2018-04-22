@@ -14,7 +14,9 @@ import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.Email;
 import hust.sie.inpg12.sonnc.entities.FileAll;
 import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
+import hust.sie.inpg12.sonnc.entities.GiangVienPhuTrach;
 import hust.sie.inpg12.sonnc.entities.HeSoDiem;
+import hust.sie.inpg12.sonnc.entities.QuyTrinh;
 import hust.sie.inpg12.sonnc.entities.SinhVien;
 import hust.sie.inpg12.sonnc.entities.SinhVienDangKy;
 import hust.sie.inpg12.sonnc.entities.SinhVienDiem;
@@ -26,6 +28,7 @@ import hust.sie.inpg12.sonnc.other.DetaiCongtyNguoihuongdan;
 import hust.sie.inpg12.sonnc.other.SinhVienDiemThi;
 import hust.sie.inpg12.sonnc.other.SvDtCtNhd;
 import java.io.File;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +43,10 @@ import org.apache.struts2.interceptor.SessionAware;
 
 /**
  *
- * @author sonnc
+ * @author sonnc THAY ĐỔI TÊN: GIẢNG VIÊN PHỤ TRÁCH THÀNH GIẢNG VIÊN HƯỚNG DẪN
+ * (TRONG DATABASE VÀ JAVA, TRÊN GUI VẪN GIỮ NGUYÊN) THAY ĐỔI TÊN: GIẢNG VIÊN
+ * HƯỚNG DẪN THÀNH NGƯỜI HƯỚNG DẪN (TRONG DATABASE VÀ JAVA, TRÊN GUI VẪN GIỮ
+ * NGUYÊN)
  */
 public class GvhdAction extends ActionSupport implements SessionAware, ServletRequestAware {
 
@@ -63,9 +69,27 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
     private List<Email> lstEmailGVHDRead = new ArrayList<>();
     private List<Email> lstEmailGVHDUnread = new ArrayList<>();
     private List<Email> lstEmailGVHDSend = new ArrayList<>();
+    private List<QuyTrinh> lstQuyTrinh = new ArrayList<>();
+    private GiangVienPhuTrach gvhd = new GiangVienPhuTrach();
+
+    public GiangVienPhuTrach getGvhd() {
+        return gvhd;
+    }
+
+    public void setGvhd(GiangVienPhuTrach gvhd) {
+        this.gvhd = gvhd;
+    }
 
     public List<Email> getLstAllEmailGVHD() {
         return lstAllEmailGVHD;
+    }
+
+    public List<QuyTrinh> getLstQuyTrinh() {
+        return lstQuyTrinh;
+    }
+
+    public void setLstQuyTrinh(List<QuyTrinh> lstQuyTrinh) {
+        this.lstQuyTrinh = lstQuyTrinh;
     }
 
     public void setLstAllEmailGVHD(List<Email> lstAllEmailGVHD) {
@@ -736,7 +760,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         session.put("GetAllDeTaiReviewed", "GetAllDeTaiReviewed");
         return SUCCESS;
     }
-    
+
     public String getAllEmailGVHD() {
         lstAllEmailGVHD = gvhdController.getAllEmailGVHD((String) session.get("email"));
         lstEmailGVHDRead = gvhdController.getAllEmailGVHDRead((String) session.get("email"));
@@ -760,6 +784,84 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             session.put("emailMessage", "Bạn đã gửi Email trong hệ thống thành công !");
         } else {
             session.put("emailMessage", "Đã có lỗi khi thực hiện hành động gửi Email này. Nếu tình trạng này tiếp tục xảy ra, vui lòng liên hệ với quản trị viên.!");
+        }
+        return SUCCESS;
+    }
+
+    public String getLichTrinhForGVHD() {
+        lstQuyTrinh = gvhdController.getLichTrinhForGVHD();
+        String lichTrinh = "[";
+        String nd = null;
+        for (int i = 0; i < lstQuyTrinh.size(); i++) {
+            if (i + 1 == lstQuyTrinh.size()) {
+                nd = "{title:'" + lstQuyTrinh.get(i).getTieuDe() + "',content:'" + lstQuyTrinh.get(i).getNoiDung() + "',"
+                        + "start:'" + lstQuyTrinh.get(i).getNgayBatDau() + "',end:'" + lstQuyTrinh.get(i).getNgayKetThuc() + "'}";
+            }
+            if (i + 1 < lstQuyTrinh.size()) {
+                nd = "{title:'" + lstQuyTrinh.get(i).getTieuDe() + "',content:'" + lstQuyTrinh.get(i).getNoiDung() + "',"
+                        + "start:'" + lstQuyTrinh.get(i).getNgayBatDau() + "',end:'" + lstQuyTrinh.get(i).getNgayKetThuc() + "'},";
+            }
+            lichTrinh = lichTrinh + nd;
+        }
+        lichTrinh = lichTrinh + "]";
+        session.put("getLichTrinhForGVHD", "not null");
+        session.put("getLichTrinh", lichTrinh);
+        return SUCCESS;
+    }
+
+    public String SaveLichTrinh() {
+        String startDate = request.getParameter("ngayBatDau");
+        String endDate = request.getParameter("ngayKetThuc");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+            Date startDateConvert = df.parse(startDate);
+            Date endDateConvert = df.parse(endDate);
+            QuyTrinh quyTrinh = new QuyTrinh();
+            quyTrinh.setNgayBatDau(startDateConvert);
+            quyTrinh.setNgayKetThuc(endDateConvert);
+            quyTrinh.setNoiDung(request.getParameter("noiDung"));
+            quyTrinh.setTieuDe(request.getParameter("tieuDe"));
+            if (gvhdController.SaveLichTrinh(quyTrinh)) {
+                session.put("messageLichTrinh", "Lưu thành công lịch trình vào hệ thống!");
+            } else {
+                session.put("messageLichTrinh", "Đã có lỗi xảy ra khi lưu lịch trình vào hệ thống, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return SUCCESS;
+    }
+
+    public String DeleteLichTrinh() {
+        int id = Integer.parseInt(request.getParameter("id"));
+        if (gvhdController.DeleteLichTrinh(id)) {
+            session.put("messageLichTrinh", "Xóa lịch trình thành công!");
+        } else {
+            session.put("messageLichTrinh", "Đã có lỗi xảy ra khi xóa, vui lòng kiểm tra lại.");
+        }
+        return SUCCESS;
+    }
+
+    public String SaveThongTinCaNhanGVHD() {
+        String avatar = null;
+        try {
+            path = request.getSession().getServletContext().getRealPath("/").concat("data/avatar/gvhd/");
+            File fileToCreate = new File(path, this.myFileFileName);
+            FileUtils.copyFile(this.myFile, fileToCreate);
+            avatar = "data/tailieu/gvhd/" + myFileFileName;
+            System.out.println(avatar);
+        } catch (Exception e) {
+            e.printStackTrace();
+            addActionError(e.getMessage());
+            session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
+        }
+        GiangVienPhuTrach gvhd = new GiangVienPhuTrach();
+        gvhd = this.gvhd;
+        gvhd.setAvatar(avatar);
+        if (gvhdController.SaveThongTinCaNhan(gvhd)) {
+            session.put("saveThongTinCaNhanGVHD", "Đăng ký thông tin cá nhân thành công.");
+        } else {
+            session.put("saveThongTinCaNhanGVHD", "Đã có lỗi xảy ra, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
         }
         return SUCCESS;
     }

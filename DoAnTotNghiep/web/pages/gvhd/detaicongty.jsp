@@ -138,7 +138,6 @@
                                                                         <p><strong>Công ty:</strong> <s:property value="tenCongTy"/></p>
                                                                         <p><strong>Đề tài:</strong> <s:property value="tenDeTai"/></p>
                                                                         <p><strong>Nội dung:</strong> <s:property value="noiDung"/></p>
-                                                                        <s:if test="yeuCaulapTrinh"></s:if>
                                                                         <p><strong>Yêu cầu lập trình:</strong> <s:property value="yeuCaulapTrinh" escapeHtml="false"/></p>
                                                                         <p><strong>Yêu cầu khác:</strong> <s:property value="yeuCauKhac"/></p>
                                                                         <p><strong>Số lượng:</strong> <s:property value="soLuong"/></p>

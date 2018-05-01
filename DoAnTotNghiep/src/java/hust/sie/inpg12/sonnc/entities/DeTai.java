@@ -14,7 +14,7 @@ public class DeTai{
 
      private Integer maDeTai;
      private CongTy congTy;
-     private GiangVienHuongDan giangVienHuongDan;
+     private NguoiHuongDan giangVienHuongDan;
      private int maCongTy;
      private int maGvhd;
      private String tenDeTai;
@@ -33,7 +33,7 @@ public class DeTai{
     }
 
 	
-    public DeTai(CongTy congTy, GiangVienHuongDan giangVienHuongDan, String tenDeTai, String noiDung, String yeuCauLapTrinh,String yeuCauKhac, int soLuong, int trangThai, Date ngayDang, Date hanDangKy) {
+    public DeTai(CongTy congTy, NguoiHuongDan giangVienHuongDan, String tenDeTai, String noiDung, String yeuCauLapTrinh,String yeuCauKhac, int soLuong, int trangThai, Date ngayDang, Date hanDangKy) {
         this.congTy = congTy;
         this.giangVienHuongDan = giangVienHuongDan;
         this.tenDeTai = tenDeTai;
@@ -45,7 +45,7 @@ public class DeTai{
         this.hanDangKy = hanDangKy;
         this.yeuCauKhac = yeuCauKhac;
     }
-    public DeTai(CongTy congTy, GiangVienHuongDan giangVienHuongDan, int maCongTy, int maGvhd, String tenDeTai, String noiDung, String yeuCauLapTrinh, String yeuCauKhac, String nguoiDang, int soLuong, Integer soLuongCon, int trangThai, Date ngayDang, Date hanDangKy) {
+    public DeTai(CongTy congTy, NguoiHuongDan giangVienHuongDan, int maCongTy, int maGvhd, String tenDeTai, String noiDung, String yeuCauLapTrinh, String yeuCauKhac, String nguoiDang, int soLuong, Integer soLuongCon, int trangThai, Date ngayDang, Date hanDangKy) {
        this.congTy = congTy;
        this.giangVienHuongDan = giangVienHuongDan;
        this.maCongTy = maCongTy;
@@ -76,11 +76,11 @@ public class DeTai{
     public void setCongTy(CongTy congTy) {
         this.congTy = congTy;
     }
-    public GiangVienHuongDan getGiangVienHuongDan() {
+    public NguoiHuongDan getGiangVienHuongDan() {
         return this.giangVienHuongDan;
     }
     
-    public void setGiangVienHuongDan(GiangVienHuongDan giangVienHuongDan) {
+    public void setGiangVienHuongDan(NguoiHuongDan giangVienHuongDan) {
         this.giangVienHuongDan = giangVienHuongDan;
     }
 

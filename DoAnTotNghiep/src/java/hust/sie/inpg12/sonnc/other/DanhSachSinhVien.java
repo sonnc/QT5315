@@ -5,6 +5,8 @@
  */
 package hust.sie.inpg12.sonnc.other;
 
+import java.util.Date;
+
 /**
  *
  * @author sonnc
@@ -17,7 +19,45 @@ public class DanhSachSinhVien {
     private String khoaVien;
     private int dotThucTap;
     private String trangThai;
+    private String tenDeTai;
+    private int maDeTai;
+    private Date startDate;
+    private Date endDate;
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    
+
+    public String getTenDeTai() {
+        return tenDeTai;
+    }
+
+    public void setTenDeTai(String tenDeTai) {
+        this.tenDeTai = tenDeTai;
+    }
+
+    public int getMaDeTai() {
+        return maDeTai;
+    }
+
+    public void setMaDeTai(int maDeTai) {
+        this.maDeTai = maDeTai;
+    }
+    
     public int getMssv() {
         return mssv;
     }

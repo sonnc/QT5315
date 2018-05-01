@@ -1,54 +1,53 @@
-<?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Mar 25, 2018 2:40:18 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="hust.sie.inpg12.sonnc.entities.CongTy" table="cong_ty" catalog="doantotnghiep" optimistic-lock="version">
-        <id name="maCongTy" type="java.lang.Integer">
-            <column name="ma_cong_ty" />
-            <generator class="identity" />
-        </id>
-        <property name="maDaiDien" type="java.lang.Integer">
-            <column name="ma_dai_dien" not-null="true" />
-        </property>
-        <property name="tenCongTy" type="string">
-            <column name="ten_cong_ty" length="500" not-null="true" />
-        </property>
-        <property name="diaChi" type="string">
-            <column name="dia_chi" length="500" not-null="true" />
-        </property>
-        <property name="dienThoai" type="string">
-            <column name="dien_thoai" length="15" not-null="true" />
-        </property>
-        <property name="email" type="string">
-            <column name="email" not-null="true" />
-        </property>
-        <property name="website" type="string">
-            <column name="website" not-null="true" />
-        </property>
-        <property name="linhVucHoatDong" type="string">
-            <column name="linh_vuc_hoat_dong" length="65535" />
-        </property>
-        <property name="moTa" type="string">
-            <column name="mo_ta" length="65535" />
-        </property>
-        <property name="logo" type="string">
-            <column name="logo" length="500" />
-        </property>
-        <property name="trangThai" type="java.lang.Integer">
-            <column name="trang_thai" />
-        </property>
-        <set name="deTais" table="de_tai" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ma_cong_ty" not-null="true" />
-            </key>
-            <one-to-many class="hust.sie.inpg12.sonnc.entities.DeTai" />
-        </set>
-        <set name="giangVienHuongDans" table="giang_vien_huong_dan" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ma_cong_ty" not-null="true" />
-            </key>
-            <one-to-many class="hust.sie.inpg12.sonnc.entities.GiangVienHuongDan" />
-        </set>
-    </class>
+  <class catalog="doantotnghiep" name="hust.sie.inpg12.sonnc.entities.CongTy" optimistic-lock="version" table="cong_ty">
+    <id name="maCongTy" type="java.lang.Integer">
+      <column name="ma_cong_ty"/>
+      <generator class="identity"/>
+    </id>
+    <property name="maDaiDien" type="java.lang.Integer">
+      <column name="ma_dai_dien" not-null="true"/>
+    </property>
+    <property name="tenCongTy" type="string">
+      <column length="500" name="ten_cong_ty" not-null="true"/>
+    </property>
+    <property name="diaChi" type="string">
+      <column length="500" name="dia_chi" not-null="true"/>
+    </property>
+    <property name="dienThoai" type="string">
+      <column length="15" name="dien_thoai" not-null="true"/>
+    </property>
+    <property name="email" type="string">
+      <column name="email" not-null="true"/>
+    </property>
+    <property name="website" type="string">
+      <column name="website" not-null="true"/>
+    </property>
+    <property name="linhVucHoatDong" type="string">
+      <column length="65535" name="linh_vuc_hoat_dong"/>
+    </property>
+    <property name="moTa" type="string">
+      <column length="65535" name="mo_ta"/>
+    </property>
+    <property name="logo" type="string">
+      <column length="500" name="logo"/>
+    </property>
+    <property name="trangThai" type="java.lang.Integer">
+      <column name="trang_thai"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="deTais" table="de_tai">
+      <key>
+        <column name="ma_cong_ty" not-null="true"/>
+      </key>
+      <one-to-many class="hust.sie.inpg12.sonnc.entities.DeTai"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="giangVienHuongDans" table="giang_vien_huong_dan">
+      <key>
+        <column name="ma_cong_ty" not-null="true"/>
+      </key>
+      <one-to-many class="hust.sie.inpg12.sonnc.entities.NguoiHuongDan"/>
+    </set>
+  </class>
 </hibernate-mapping>

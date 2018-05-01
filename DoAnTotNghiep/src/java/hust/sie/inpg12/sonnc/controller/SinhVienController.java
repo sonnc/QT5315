@@ -218,14 +218,14 @@ public class SinhVienController {
      * @since v1 27/03/2018
      * @return list
      */
-    public List<GiangVienHuongDan> getAllGiangVienHuongDan() {
-        List<GiangVienHuongDan> lstGiangVienHuongDan = new ArrayList<>();
+    public List<NguoiHuongDan> getAllGiangVienHuongDan() {
+        List<NguoiHuongDan> lstNguoiHuongDan = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             // 0: chưa được duyệt, 1 chấp nhận, 2 không chấp nhận
-            Query query = session.createQuery("FROM GiangVienHuongDan");
-            lstGiangVienHuongDan = query.list();
+            Query query = session.createQuery("FROM NguoiHuongDan");
+            lstNguoiHuongDan = query.list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -235,7 +235,7 @@ public class SinhVienController {
         } finally {
             session.close();
         }
-        return lstGiangVienHuongDan;
+        return lstNguoiHuongDan;
     }
 
     /**
@@ -256,7 +256,7 @@ public class SinhVienController {
                     + " d.ten_de_tai, d.yeu_cau_khac, d.yeu_cau_lap_trinh, \n"
                     + " d.han_dang_ky, c.logo, c.ten_cong_ty, g.ho_ten\n"
                     + "from de_tai d join cong_ty c on d.ma_cong_ty = c.ma_cong_ty \n"
-                    + "join giang_vien_huong_dan g on d.ma_gvhd = g.ma_gvhd\n"
+                    + "join nguoi_huong_dan g on d.ma_gvhd = g.ma_gvhd\n"
                     + "where d.trang_thai =1").list();
             transaction.commit();
         } catch (Exception e) {
@@ -509,7 +509,7 @@ public class SinhVienController {
                     + " d.ten_de_tai, d.yeu_cau_khac, d.yeu_cau_lap_trinh, \n"
                     + " d.han_dang_ky, c.logo, c.ten_cong_ty, g.ho_ten, g.avatar, g.email, g.dien_thoai, g.chucvu\n"
                     + "from de_tai d join cong_ty c on d.ma_cong_ty = c.ma_cong_ty \n"
-                    + "join giang_vien_huong_dan g on d.ma_gvhd = g.ma_gvhd\n"
+                    + "join nguoi_huong_dan g on d.ma_gvhd = g.ma_gvhd\n"
                     + "where d.trang_thai =1 and ma_de_tai = " + maDeTai + "").list();
             transaction.commit();
         } catch (Exception e) {

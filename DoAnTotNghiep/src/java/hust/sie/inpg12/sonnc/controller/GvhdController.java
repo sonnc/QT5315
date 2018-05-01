@@ -9,7 +9,7 @@ import hust.sie.inpg12.sonnc.entities.CongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.Email;
 import hust.sie.inpg12.sonnc.entities.FileAll;
-import hust.sie.inpg12.sonnc.entities.GiangVienPhuTrach;
+import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
 import hust.sie.inpg12.sonnc.entities.HeSoDiem;
 import hust.sie.inpg12.sonnc.entities.QuyTrinh;
 import hust.sie.inpg12.sonnc.entities.SinhVienDangKy;
@@ -65,7 +65,7 @@ public class GvhdController {
             transaction = session.beginTransaction();
             results = (List<Object[]>) session.createSQLQuery("SELECT a.mssv, a.ho_ten as sinhvienname, b.ten_de_tai, e.ten_cong_ty, c.ho_ten as nguoihuongdanname, d.so_khop, \n"
                     + "d.dot_thuc_tap, d.trang_thai, e.ma_cong_ty, b.ma_de_tai, c.ma_gvhd\n"
-                    + "from sinh_vien a, de_tai b, giang_vien_huong_dan c, sinh_vien_dang_ky d, cong_ty e\n"
+                    + "from sinh_vien a, de_tai b, nguoi_huong_dan c, sinh_vien_dang_ky d, cong_ty e\n"
                     + "where a.mssv = d.mssv\n"
                     + "and d.ma_cong_ty = e.ma_cong_ty\n"
                     + "and d.ma_de_tai = b.ma_de_tai\n"
@@ -89,7 +89,7 @@ public class GvhdController {
             transaction = session.beginTransaction();
             results = (List<Object[]>) session.createSQLQuery("SELECT a.mssv, a.ho_ten as sinhvienname, b.ten_de_tai, e.ten_cong_ty, c.ho_ten as nguoihuongdanname, d.so_khop,  \n"
                     + "                     d.dot_thuc_tap, d.trang_thai, e.ma_cong_ty, b.ma_de_tai, c.ma_gvhd \n"
-                    + "                     from sinh_vien a, de_tai b, giang_vien_huong_dan c, sinh_vien_dang_ky d, cong_ty e \n"
+                    + "                     from sinh_vien a, de_tai b, nguoi_huong_dan c, sinh_vien_dang_ky d, cong_ty e \n"
                     + "                     where a.mssv = d.mssv \n"
                     + "                     and d.ma_cong_ty = e.ma_cong_ty \n"
                     + "                     and d.ma_de_tai = b.ma_de_tai \n"
@@ -116,7 +116,7 @@ public class GvhdController {
             transaction = session.beginTransaction();
             results = (List<Object[]>) session.createSQLQuery("SELECT a.mssv, a.ho_ten as sinhvienname, b.ten_de_tai, e.ten_cong_ty, c.ho_ten as nguoihuongdanname, d.so_khop, \n"
                     + "d.dot_thuc_tap, d.trang_thai, e.ma_cong_ty, b.ma_de_tai, c.ma_gvhd\n"
-                    + "from sinh_vien a, de_tai b, giang_vien_huong_dan c, sinh_vien_dang_ky d, cong_ty e\n"
+                    + "from sinh_vien a, de_tai b, nguoi_huong_dan c, sinh_vien_dang_ky d, cong_ty e\n"
                     + "where a.mssv = d.mssv\n"
                     + "and d.ma_cong_ty = e.ma_cong_ty\n"
                     + "and d.ma_de_tai = b.ma_de_tai\n"
@@ -471,7 +471,7 @@ public class GvhdController {
             Query query = session.createSQLQuery("select  a.ma_cong_ty, a.logo, a.ten_cong_ty, a.dia_chi,\n"
                     + "a.dien_thoai, a.email, b.ho_ten, b.ma_dai_dien, a.trang_thai\n"
                     + "from cong_ty a join dai_dien_cong_ty b on a.ma_dai_dien = b.ma_dai_dien \n"
-                    + "where b.trang_thai = 2 ");
+                    + "where a.trang_thai = 2 ");
             results = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -493,7 +493,7 @@ public class GvhdController {
             Query query = session.createSQLQuery("select  a.ma_cong_ty, a.logo, a.ten_cong_ty, a.dia_chi,\n"
                     + "a.dien_thoai, a.email, b.ho_ten, b.ma_dai_dien, a.trang_thai\n"
                     + "from cong_ty a join dai_dien_cong_ty b on a.ma_dai_dien = b.ma_dai_dien \n"
-                    + "where trang_thai = 0 or trang_thai = 1");
+                    + "where a.trang_thai = 0 or a.trang_thai = 1");
             results = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -551,7 +551,7 @@ public class GvhdController {
             transaction = session.beginTransaction();
             Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
                     + "from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
-                    + "join giang_vien_huong_dan c on a.ma_cong_ty = c.ma_cong_ty");
+                    + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty");
             results = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -573,7 +573,7 @@ public class GvhdController {
             transaction = session.beginTransaction();
             Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
                     + "from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
-                    + "join giang_vien_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
+                    + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
                     + "where b.trang_thai = 2");
             results = query.list();
             transaction.commit();
@@ -632,7 +632,7 @@ public class GvhdController {
             transaction = session.beginTransaction();
             Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
                     + "from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
-                    + "join giang_vien_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
+                    + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
                     + "where b.trang_thai = 1 or b.trang_thai = 0");
             results = query.list();
             transaction.commit();
@@ -805,7 +805,7 @@ public class GvhdController {
         return r;
     }
 
-    public boolean SaveThongTinCaNhan(GiangVienPhuTrach gvpt) {
+    public boolean SaveThongTinCaNhan(GiangVienHuongDan gvpt) {
         boolean r = false;
         try {
             session = HibernateUtil.getSessionFactory().openSession();

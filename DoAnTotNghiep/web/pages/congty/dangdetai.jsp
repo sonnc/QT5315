@@ -1,15 +1,16 @@
 <%-- 
-    Document   : danhsachcongty
-    Created on : Mar 19, 2018, 11:02:48 PM
+    Document   : dangdetai
+    Created on : Apr 30, 2018, 10:52:30 PM
     Author     : sonnc
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Danh sách công ty</title>
+        <title>Danh sách đề tài công ty</title>
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
@@ -19,16 +20,16 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("getAllCongTy") == null) {
+        <%            if (session.getAttribute("GetAllDeTaiByCongTy") == null) {
+
         %>
-        <s:action name="getAllCongTy" executeResult="true"/>
-        <%
-            }
+        <s:action name="GetAllDeTaiByCongTy" executeResult="true"/>
+        <%            }
         %>
     </head>
     <%
-        if (session.getAttribute("getAllCongTy") != null) {
-            session.removeAttribute("getAllCongTy");
+        if (session.getAttribute("GetAllDeTaiByCongTy") != null) {
+            session.removeAttribute("GetAllDeTaiByCongTy");
     %>
     <body>
         <div id="wrapper">
@@ -40,28 +41,26 @@
                         <div class="col-lg-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
-                                <p style="margin: 0px">DANH SÁCH CÔNG TY</p>
+                                <p style="margin: 0px">DANH SÁCH ĐỀ TÀI</p>
                             </div>
-                            <%                                for (int i = 0; i < 5; i++) {
-                            %>
-                            <div class="row" style="margin: 0px">
-                                <div class="col-lg-2">
-                                    <img src="pages/libs/img/index.png" alt="" class="img-responsive" style="height: 100%; width: 100%" />
-                                </div>
-                                <div class="col-lg-10">
-                                    <article style="margin-bottom: 0px; padding-bottom: 0px">
-                                        <div class="post-image" style="margin: 0px">
-                                            <div class="post-heading">
-                                                <p style="margin: 0;"><a href="#"><strong>CÔNG TY HỆ THỐNG THÔNG TIN FPT</strong></a></p>
-                                            </div>
-                                        </div>
-                                        <p style="margin: 0;"><strong>Nội dung:</strong> Ngày 06/02/2018, Hội đồng Trường tổ chức họp phiên thứ 6, nhiệm kỳ 2015-2020 tại Trường ĐHBK Hà Nội với sự tham gia của 15/19 thành viên dưới sự chủ trì của PGS Lê Minh Thắng - Chủ tịch Hội đồng Trường.</p>
-                                    </article>
+                            <div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <a href=""><input class="btn btn-success" value="Đăng đề tài"/></a>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" id="s" style="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
+                                    </div>
                                 </div>
                             </div>
-                            <%
-                                }
-                            %>
+                            <form>
+                                
+                                
+                                
+                            </form>
+                            
+                            
+                            
                             <div id="pagination">
                                 <span class="all">Page 1 of 3</span>
                                 <span class="current">1</span>
@@ -83,4 +82,3 @@
     }
     %>
 </html>
-

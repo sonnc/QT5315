@@ -1,6 +1,6 @@
 <%-- 
-    Document   : danhsachsinhvien
-    Created on : Mar 20, 2018, 11:28:10 PM
+    Document   : chamdiem
+    Created on : Mar 13, 2018, 9:29:00 AM
     Author     : sonnc
 --%>
 
@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Danh sách sinh viên</title>
+        <title>Điểm thi</title>
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
@@ -20,16 +20,16 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("getAllDanhSachSinhVienByCongTy") == null) {
+        <%            if (session.getAttribute("getDanhSachChamDiem") == null) {
 
         %>
-        <s:action name="getAllDanhSachSinhVienByCongTy" executeResult="true"/>
+        <s:action name="getDanhSachChamDiem" executeResult="true"/>
         <%            }
         %>
     </head>
     <%
-        if (session.getAttribute("getAllDanhSachSinhVienByCongTy") != null) {
-            session.removeAttribute("getAllDanhSachSinhVienByCongTy");
+        if (session.getAttribute("getDanhSachChamDiem") != null) {
+            session.removeAttribute("getDanhSachChamDiem");
     %>
     <body>
         <div id="wrapper">
@@ -41,40 +41,41 @@
                         <div class="col-lg-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
-                                <p style="margin: 0px">DANH SÁCH SINH VIÊN THỰC TẬP</p>
+                                <p style="margin: 0px">ĐIỂM THI</p>
                             </div>
+                            <p>DPH: Điểm phản hồi (auto)</p>
+                            <p>DBCQT: Điểm báo cáo quá trình</p>
+                            <p>DBCCK: Điểm báo cáo cuối kỳ</p>
                             <input class="form-control" id="s" style="float: right; width: 50%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
                             <style>
                                 td{padding: 5px}
                             </style>
                             <table border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
-                                <tr style="font-size: 13px; text-align: center">
+                                <tr>
                                     <td><strong> Mã SV </strong></td>
                                     <td><strong> Họ và tên </strong></td>
-                                    <td><strong> Tên đề tài </strong></td>
-                                    <td><strong> Ngày bắt đầu </strong></td>
-                                    <td><strong> Ngày kết thúc </strong></td>
-                                    <td><strong> Trạng thái </strong></td>
-                                    <td><strong> CV </strong></td>
-                                    <td><strong> Đánh giá </strong></td>
+                                    <td><strong> Lớp </strong></td>
+                                    <td><strong> Khóa </strong></td>
+                                    <td><strong> Kỳ TT </strong></td>
+                                    <td><strong> BCQT </strong></td>
+                                    <td><strong> BCCK </strong></td>
+                                    <td><strong> Chấm điểm </strong></td>
                                 </tr>
-                                <s:iterator value="lstDanhSachSinhViens">
-                                    <tr style="font-size: 13px;">
-                                        <td><s:property value="mssv" /></td>
-                                        <td><s:property value="hoTen" /></td>
-                                        <td><s:property value="tenDeTai" /></td>
-                                        <td><s:property value="startDate" /></td>
-                                        <td><s:property value="endDate" /></td>
-                                        <td><s:property value="trangThai" /></td>
-
-                                        <td>
-                                            <div>
-                                                <a href="getThongTinSV?mssv=<s:property value="mssv"/>">
-                                                    <button class="btn btn-info" style="height: 25px; margin-bottom: 5px; font-size: 12px; width: 100%">CV</button>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <s:iterator value="lstDanhSachSinhViens"> 
+                                    <form action="chamDiem" method="post" >
+                                        <tr>
+                                            <td><input name="mssv" value="<s:property value="mssv" />" readonly="true" style="width: 70px;margin-right: -15px;border: none;background: white;"/></td>
+                                            <td><s:property value="hoTen" /></td>
+                                            <td><s:property value="lop" /></td>
+                                            <td><s:property value="khoa" /></td>
+                                            <td><input name="dotThucTap" readonly="true" style="width: 50px;margin-right: -15px;border: none;background: white;" value="<s:property value="dotThucTap" />"/></td>
+                                            <td><input name="bcqt" style="width: 50px"/></td>
+                                            <td><input name="bcck" style="width: 50px"/></td>
+                                            <td>
+                                                <button class="btn btn-info" style="width: 100%; margin-top: 10px">Chấm điểm</button>
+                                            </td>
+                                        </tr>
+                                    </form>
                                 </s:iterator>
                             </table>
                             <div id="pagination">
@@ -97,3 +98,4 @@
     <%        }
     %>
 </html>
+

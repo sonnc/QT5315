@@ -34,7 +34,17 @@ public class DetaiCongtyNguoihuongdan {
     private String dienThoaiNHD;
     private String chucVuNHD;
     private String status;
+    private String diaChiNHD;
 
+    public String getDiaChiNHD() {
+        return diaChiNHD;
+    }
+
+    public void setDiaChiNHD(String diaChiNHD) {
+        this.diaChiNHD = diaChiNHD;
+    }
+    
+    
     public DetaiCongtyNguoihuongdan() {
     }
 

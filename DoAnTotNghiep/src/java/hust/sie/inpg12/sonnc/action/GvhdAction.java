@@ -13,8 +13,8 @@ import hust.sie.inpg12.sonnc.entities.CongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.Email;
 import hust.sie.inpg12.sonnc.entities.FileAll;
+import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
 import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
-import hust.sie.inpg12.sonnc.entities.GiangVienPhuTrach;
 import hust.sie.inpg12.sonnc.entities.HeSoDiem;
 import hust.sie.inpg12.sonnc.entities.QuyTrinh;
 import hust.sie.inpg12.sonnc.entities.SinhVien;
@@ -70,13 +70,13 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
     private List<Email> lstEmailGVHDUnread = new ArrayList<>();
     private List<Email> lstEmailGVHDSend = new ArrayList<>();
     private List<QuyTrinh> lstQuyTrinh = new ArrayList<>();
-    private GiangVienPhuTrach gvhd = new GiangVienPhuTrach();
+    private GiangVienHuongDan gvhd = new GiangVienHuongDan();
 
-    public GiangVienPhuTrach getGvhd() {
+    public GiangVienHuongDan getGvhd() {
         return gvhd;
     }
 
-    public void setGvhd(GiangVienPhuTrach gvhd) {
+    public void setGvhd(GiangVienHuongDan gvhd) {
         this.gvhd = gvhd;
     }
 
@@ -257,7 +257,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
 
     public String getAllDeTaiSV() {
         try {
-            List<Object[]> results = results = gvhdController.getAllDeTaiSV();
+            List<Object[]>  results = gvhdController.getAllDeTaiSV();
             for (Object[] result : results) {
                 SvDtCtNhd d = new SvDtCtNhd();
                 d.setMssv((int) result[0]);
@@ -855,7 +855,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             addActionError(e.getMessage());
             session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
         }
-        GiangVienPhuTrach gvhd = new GiangVienPhuTrach();
+        GiangVienHuongDan gvhd = new GiangVienHuongDan();
         gvhd = this.gvhd;
         gvhd.setAvatar(avatar);
         if (gvhdController.SaveThongTinCaNhan(gvhd)) {

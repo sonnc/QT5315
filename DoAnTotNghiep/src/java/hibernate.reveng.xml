@@ -41,7 +41,7 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="doantotnghiep"/>
-  <table-filter match-name="giang_vien_phu_trach"/>
+  <table-filter match-name="giang_vien_huong_dan"/>
   <table-filter match-name="file_all"/>
   <table-filter match-name="sinh_vien_dang_ky"/>
   <table-filter match-name="logs"/>
@@ -50,7 +50,7 @@ Contributor(s):
   <table-filter match-name="sinh_vien_file"/>
   <table-filter match-name="sinh_vien_diem"/>
   <table-filter match-name="sinh_vien_thuc_tap"/>
-  <table-filter match-name="giang_vien_huong_dan"/>
+  <table-filter match-name="nguoi_huong_dan"/>
   <table-filter match-name="dot_thuc_tap"/>
   <table-filter match-name="sinh_vien"/>
   <table-filter match-name="quy_trinh"/>

@@ -239,7 +239,33 @@
         </action>
         
         
+        <!--
+        ============== PHẦN ACTION DÀNH CHO NGƯỜI HƯỚNG DẪN ====================
+        -->
+       
+        <action name="getAllDanhSachSinhVienByNHD" class="hust.sie.inpg12.sonnc.action.NhdAction" method="getAllDanhSachSinhVienByNHD">
+            <result name="success" type="">/pages/nhd/danhsachsinhvien.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
+        
+        
+        
+         <!--
+        ============== PHẦN ACTION DÀNH CHO ĐẠI DIỆN CÔNG TY ====================
+        -->
+        <action name="GetCongTyByDDCT" class="hust.sie.inpg12.sonnc.action.DdctAction" method="GetCongTyByDDCT">
+            <result name="success" type="">/pages/congty/congty.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllDanhSachSinhVienByCongTy" class="hust.sie.inpg12.sonnc.action.DdctAction" method="getAllDanhSachSinhVienByCongTy">
+            <result name="success" type="">/pages/congty/danhsachsinhvien.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="GetAllDeTaiByCongTy" class="hust.sie.inpg12.sonnc.action.DdctAction" method="GetAllDeTaiByCongTy">
+            <result name="success" type="">/pages/congty/detai.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
         
         <!--        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 25, 2018 2:40:18 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="doantotnghiep" name="hust.sie.inpg12.sonnc.entities.NguoiHuongDan" optimistic-lock="version" table="nguoi_huong_dan">
+    <id name="maGvhd" type="java.lang.Integer">
+      <column name="ma_gvhd"/>
+      <generator class="identity"/>
+    </id>
+    <property name="maCongTy" type="java.lang.Integer">
+      <column name="ma_cong_ty" not-null="true"/>
+    </property>
+    <property name="email" type="string">
+      <column name="email" not-null="true"/>
+    </property>
+    <property name="hoTen" type="string">
+      <column name="ho_ten" not-null="true"/>
+    </property>
+    <property name="chucvu" type="string">
+      <column name="chucvu"/>
+    </property>
+    <property name="dienThoai" type="string">
+      <column length="15" name="dien_thoai"/>
+    </property>
+    <property name="avatar" type="string">
+      <column name="avatar"/>
+    </property>
+    <property name="diaChi" type="string">
+      <column length="500" name="dia_chi"/>
+    </property>
+    <property name="linhVucHoatDong" type="string">
+      <column length="65535" name="linh_vuc_hoat_dong"/>
+    </property>
+    <property name="duAn" type="string">
+      <column length="65535" name="du_an"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="deTais" table="de_tai">
+      <key>
+        <column name="ma_gvhd" not-null="true"/>
+      </key>
+      <one-to-many class="hust.sie.inpg12.sonnc.entities.DeTai"/>
+    </set>
+  </class>
+</hibernate-mapping>

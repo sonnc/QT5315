@@ -47,7 +47,6 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
     private List<HeSoDiem> lstHeSoDiem = new ArrayList<>();
     private CongTy congTy = new CongTy();
     private DaiDienCongTy daiDienCongTy = new DaiDienCongTy();
-    private List<GiangVienHuongDan> lstGiangVienHuongDan = new ArrayList<>();
     private List<Email> lstAllEmailSV = new ArrayList<>();
     private List<Email> lstEmailSVRead = new ArrayList<>();
     private List<Email> lstEmailSVUnread = new ArrayList<>();
@@ -115,14 +114,6 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
 
     public void setDaiDienCongTy(DaiDienCongTy daiDienCongTy) {
         this.daiDienCongTy = daiDienCongTy;
-    }
-
-    public List<GiangVienHuongDan> getLstGiangVienHuongDan() {
-        return lstGiangVienHuongDan;
-    }
-
-    public void setLstGiangVienHuongDan(List<GiangVienHuongDan> lstGiangVienHuongDan) {
-        this.lstGiangVienHuongDan = lstGiangVienHuongDan;
     }
 
     public List<HeSoDiem> getLstHeSoDiem() {

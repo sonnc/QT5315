@@ -14,14 +14,29 @@
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
         <script src="./pages/libs/js/sonnc.js"></script>
+          <%    if (session.getAttribute("rule") == null) {
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
+            }
+        %>
         <style>
             .error{
                 color: red;
                 text-orientation: initial;
             }
         </style>
+         <script>
+                setTimeout(function () {
+                    $('body').removeClass('preloading');
+                    $('#preload').delay(1000).fadeOut('fast');
+                }, 1000);
+        </script>
     </head>
-    <body>
+    <body onLoad="mess()" class="preloading">
+        <div id="preload" class="preload-container text-center">
+            <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
+        </div>
         <div id="wrapper">
             <header>
                 <div class="navbar navbar-default navbar-static-top">
@@ -42,7 +57,7 @@
                                 <div class="navbar-collapse collapse ">
                                     <ul class="nav navbar-nav">
                                         <li class="dropdown active">
-                                            <a href="<%=request.getContextPath()%>/home.jsp">Trang chủ</a>
+                                            <a href="logout">ĐĂNG XUẤT</a>
                                         </li>
                                     </ul>
                                 </div>

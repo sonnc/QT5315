@@ -8,8 +8,12 @@ package hust.sie.inpg12.sonnc.action;
 import com.opensymphony.xwork2.ActionSupport;
 import hust.sie.inpg12.sonnc.controller.LoginController;
 import hust.sie.inpg12.sonnc.controller.SinhVienController;
+import hust.sie.inpg12.sonnc.entities.CongTy;
+import hust.sie.inpg12.sonnc.entities.DaiDienCongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
+import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
 import hust.sie.inpg12.sonnc.entities.Login;
+import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
 import hust.sie.inpg12.sonnc.entities.SinhVien;
 import hust.sie.inpg12.sonnc.entities.SinhVienThucTap;
 import java.util.ArrayList;
@@ -61,15 +65,57 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         if (lstLogin.size() == 1) {
             session.put("email", email);
             session.put("rule", lstLogin.get(0).getRule());
+
+            //sinh viên
             if (lstLogin.get(0).getRule() == 0) {
-                int mssv = Integer.parseInt(email.substring(0, 8));    
+                int mssv = Integer.parseInt(email.substring(0, 8));
                 session.put("mssv", mssv);
                 if (sinhVienController.getSinhVien(mssv).size() == 1) {
-               
                     return SUCCESS;
                 } else {
+                    session.put("rule", "99");
                     return "DANGKYTHONGTINSINHVIEN";
                 }
+                // đại diện công ty
+            } else if (lstLogin.get(0).getRule() == 1) {
+                List<DaiDienCongTy> lstDaiDienCongTys = new ArrayList<>();
+                List<CongTy> lstCongTy = new ArrayList<>();
+                lstDaiDienCongTys = loginController.getInfoDaiDienCongTy(email);
+
+                if (lstDaiDienCongTys.size() == 0) {
+                    session.put("rule", "99");
+                    return "DANGKYDAIDIENVACONGTY";
+                }
+                lstCongTy = loginController.getInfoCongTy(lstDaiDienCongTys.get(0).getMaDaiDien());
+                if (lstCongTy.size() == 0) {
+                    session.put("rule", "99");
+                    return "DANGKYCONGTY";
+                } else if (lstCongTy.get(0).getTrangThai() == 2) {
+                    //công ty chờ duyệt
+                    session.put("CongtyStatus", "CÔNG TY: " + lstCongTy.get(0).getTenCongTy().toUpperCase() + " ĐANG TRONG QUÁ TRÌNH CHỜ DUYỆT. ");
+                    return "CONGTYSTATUS";
+                } else if (lstCongTy.get(0).getTrangThai() == 0) {
+                    // công ty bị từ chối
+                    session.put("CongtyStatus", "CÔNG TY: " + lstCongTy.get(0).getTenCongTy().toUpperCase() + " ĐÃ BỊ TỪ CHỐI VÌ KHÔNG THỂ ĐÁP ỨNG YÊU CẦU.");
+                    return "CONGTYSTATUS";
+                }
+                return SUCCESS;
+                //Giảng viên hướng dẫn
+            } else if (lstLogin.get(0).getRule() == 2) {
+                List<GiangVienHuongDan> lstGiangVienHuongDans = loginController.getInfoGiangVienHuongDan(email);
+                if (lstGiangVienHuongDans.size() == 0) {
+                    session.put("rule", "99");
+                    return "DANGKYTHONGTINGIANGVIENHUONGDAN";
+                }
+                return SUCCESS;
+                // Người hướng dẫn
+            } else if (lstLogin.get(0).getRule() == 3) {
+                List<NguoiHuongDan> lstNguoiHuongDans = loginController.getInfoGiangVienHuongDan(email);
+                if (lstNguoiHuongDans.size() == 0) {
+                    session.put("rule", "99");
+                    return "DANGKYTHONGTINNGUOIHUONGDAN";
+                }
+                return SUCCESS;
             }
         } else {
             addFieldError("email", "Tài khoản hoặc mật khẩu không đúng !");
@@ -78,15 +124,34 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         return SUCCESS;
     }
 
-    public String test() {
-
-        list = loginController.getTest();
-        session.put("test", "test");
-
-        if (list.size() == 0) {
-            return ERROR;
+    /**
+     * SV = 0 GVHD = 2 DDCT = 1 NHD = 3 AD = 4
+     */
+    public String registerAcount() {
+        String email = request.getParameter("email");
+        String pass = request.getParameter("password");
+        int role;
+        // email của sinh viên có định dạng @student.hust.edu.vn
+        // email giảng viên hướng dẫn: @hust.edu.vn / soict.hust.edu.vn
+        if (email.contains("@student.hust.edu.vn")) {
+            role = 0;
+        } else if (email.contains("@hust.edu.vn") || email.contains("@soict.hust.edu.vn")) {
+            role = 2;
+        } else {
+            role = 1;
         }
-        return SUCCESS;
+        Login login = new Login();
+        login.setEmail(email);
+        login.setPass(pass);
+        login.setRule(role);
+        if (loginController.SaveRegister(login)) {
+            addFieldError("email", "Đăng ký tài khoản thành công. Vui lòng đăng nhập lại.");
+            session.put("login", login);
+            return SUCCESS;
+        }
+        addFieldError("email", "Đăng ký tài khoản thất bại. Vui lòng kiểm tra lại thông tin.");
+        session.put("login", login);
+        return INPUT;
     }
 
     /**

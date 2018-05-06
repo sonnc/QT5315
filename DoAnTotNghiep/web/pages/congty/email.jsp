@@ -11,32 +11,30 @@
     <head>
         <%@include file="../../mains/head.jsp" %>
         <title>Email</title>
-          <%    if (session.getAttribute("rule") == null) {
+        <%    if (session.getAttribute("rule") == null) {
                 String l = (String) session.getAttribute("httpURL");
                 response.sendRedirect(l + "login.jsp");
                 return;
             }
         %>
-        <%            if (session.getAttribute("getAllEmailSV") == null) {
+        <%            if (session.getAttribute("getAllEmailDDCT") == null) {
         %>
-        <s:action name="getAllEmailSV" executeResult="true" />
+        <s:action name="getAllEmailDDCT" executeResult="true" />
         <%
             }
         %>
         <script>
-            window.onload = function () {
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 0);
-            };
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
         </script>
     </head>
     <%
-        if (session.getAttribute("getAllEmailSV") != null) {
-            session.removeAttribute("getAllEmailSV");
+        if (session.getAttribute("getAllEmailDDCT") != null) {
+            session.removeAttribute("getAllEmailDDCT");
     %>
-    <body onLoad="mess()" class="preloading">
+    <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -54,10 +52,7 @@
                             <%                                if (session.getAttribute("emailMessage") != null) {
                             %>
                             <script type="text/javascript">
-                                function mess() {
-                                    swal("Thông báo", "<%=session.getAttribute("emailMessage")%>", "info");
-                                }
-                                ;
+                                swal("Thông báo", "<%=session.getAttribute("emailMessage")%>", "info");
                             </script>
                             <%
                                     session.removeAttribute("emailMessage");
@@ -148,7 +143,7 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="alert alert-warning" id="sendEmail" style="display: none">
-                                        <form class="contactForm" id="from" role="form" id="formValidate" action="sendEmailSV" method="post" enctype = "multipart/form-data"> 
+                                        <form class="contactForm" id="from" role="form" id="formValidate" action="sendEmailDDCT" method="post" enctype = "multipart/form-data"> 
                                             <div class="form-group">
                                                 <input name="nguoiNhan" class="form-control" id="name" placeholder="Người nhận: " type="email" required="true">
                                                 <div class="validation"></div>
@@ -167,7 +162,7 @@
                                     </div>
 
                                     <div id="allEmail"  style="display: none">
-                                        <s:iterator value="lstAllEmailSV">
+                                        <s:iterator value="lstAllEmail">
                                             <div >
                                                 <strong><p style="margin: 0px"><s:property value="tieuDe"/></p></strong>
                                                 <p style="font-size: 13px;margin-left: 20px; margin-top: 0px; margin-bottom: 0px"><span>Gửi từ: <s:property value="nguoiGui"/> - <s:property value="thoiGian"/></span></p>
@@ -176,7 +171,7 @@
                                         </s:iterator>
                                     </div>
                                     <div id="readEmail"  style="display: none">
-                                        <s:iterator value="lstEmailSVRead">
+                                        <s:iterator value="lstEmailRead">
                                             <div >
                                                 <strong><p style="margin: 0px"><s:property value="tieuDe"/></p></strong>
                                                 <p style="font-size: 13px;margin-left: 20px; margin-top: 0px; margin-bottom: 0px"><span>Gửi từ: <s:property value="nguoiGui"/> - <s:property value="thoiGian"/></span></p>
@@ -185,7 +180,7 @@
                                         </s:iterator>
                                     </div>
                                     <div id="unreadEmail"  style="display: none">
-                                        <s:iterator value="lstEmailSVUnread">
+                                        <s:iterator value="lstEmailUnread">
                                             <div >
                                                 <strong><p style="margin: 0px"><s:property value="tieuDe"/></p></strong>
                                                 <p style="font-size: 13px;margin-left: 20px; margin-top: 0px; margin-bottom: 0px"><span>Gửi từ: <s:property value="nguoiGui"/> - <s:property value="thoiGian"/></span></p>
@@ -194,7 +189,7 @@
                                         </s:iterator>
                                     </div>
                                     <div id="emailSend"  style="display: none">
-                                        <s:iterator value="lstEmailSVSend">
+                                        <s:iterator value="lstEmailSend">
                                             <div >
                                                 <strong><p style="margin: 0px"><s:property value="tieuDe"/></p></strong>
                                                 <p style="font-size: 13px;margin-left: 20px; margin-top: 0px; margin-bottom: 0px"><span>Gửi từ: <s:property value="nguoiGui"/> - <s:property value="thoiGian"/></span></p>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : register
-    Created on : Mar 12, 2018, 1:56:49 PM
+    Document   : trangthaicongty
+    Created on : May 5, 2018, 2:40:11 PM
     Author     : sonnc
 --%>
 
@@ -9,21 +9,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="mains/head.jsp" %>
-        <title>Đăng ký</title>
-        <script src="./pages/libs/js/validate.js"></script>
-        <script src="./pages/libs/js/jquery.min.js"></script>
-        <script src="./pages/libs/js/sonnc.js"></script>
-        <style>
-            .error {
-                color: red;
-                text-orientation: initial;
-            }
-            .errorMessage{
-                color: red;
-                text-orientation: initial;
-            }
-        </style> 
+        <%@include file="../../mains/head.jsp" %>
+        <title>Đăng nhập</title>
     </head>
     <body>
         <div id="wrapper">
@@ -37,32 +24,17 @@
                     </div>
                 </div>
             </section>
-            <section id="content">
+            <section id="content" style="height: 450px">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-                            <form role="form" action="registerAcount" method="post" id="formValidate" class="register-form"  >
-                                <h2>ĐĂNG KÝ <small>tài khoản.</small></h2>
-                                   <hr class="colorgraph">
-                                <div class="form-group">
-                                    <s:textfield type="email" name="email" cssClass="form-control input-lg" placeholder="Tài khoản" tabindex="4" required="true"></s:textfield>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" id="password" name="password" class="form-control input-lg" id="exampleInputPassword1" placeholder="Mật khẩu" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" id="repassword" name="repassword" class="form-control input-lg" id="exampleInputPassword1" placeholder="Nhập lại mật khẩu" required>
-                                    </div>
-
-                                    <hr class="colorgraph">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-6"><input type="submit" value="Đăng ký" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-                                        <div class="col-xs-12 col-md-6">
-                                            <div>Quên mật khẩu? <a href="<%=request.getContextPath()%>/forgotpassword.jsp">Khôi phục</a></div>
-                                        <div>Trở về <a href="<%=request.getContextPath()%>/login.jsp">LOGIN</a></div>
-                                    </div>
-                                </div>
-                            </form>
+                            <hr class="colorgraph">
+                            <p style="color: red; font-size: 17px;"><%=session.getAttribute("CongtyStatus")%></p>
+                            <%
+                            session.removeAttribute("email");
+                            %>
+                            <hr class="colorgraph">
+                            <a href="logout">TRANG CHỦ</a>
                         </div>
                     </div>
                 </div>
@@ -94,7 +66,9 @@
             </footer>
         </div>
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-            <%@include file="mains/js.jsp" %>
+        <!-- javascript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <%@include file="../../mains/js.jsp" %>
     </body>
 </html>
-

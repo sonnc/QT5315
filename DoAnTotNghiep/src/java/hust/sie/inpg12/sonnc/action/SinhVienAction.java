@@ -50,6 +50,16 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
     private List<Email> lstAllEmailSV = new ArrayList<>();
     private List<Email> lstEmailSVRead = new ArrayList<>();
     private List<Email> lstEmailSVUnread = new ArrayList<>();
+    private List<DotThucTap> lstDotThucTap = new ArrayList<>();
+
+    public List<DotThucTap> getLstDotThucTap() {
+        return lstDotThucTap;
+    }
+
+    public void setLstDotThucTap(List<DotThucTap> lstDotThucTap) {
+        this.lstDotThucTap = lstDotThucTap;
+    }
+
     private List<Email> lstEmailSVSend = new ArrayList<>();
 
     public List<Email> getLstEmailSVSend() {
@@ -225,10 +235,10 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
             java.sql.Date ngaySinh = new java.sql.Date(dateString.getTime());
             String avatar = null;
             try {
-                path = request.getSession().getServletContext().getRealPath("/").concat("data/avatar/images/");
+                path = request.getSession().getServletContext().getRealPath("/").concat("file/image/avatar/");
                 File fileToCreate = new File(path, this.myFileFileName);
                 FileUtils.copyFile(this.myFile, fileToCreate);
-                avatar = "data/avatar/images/" + myFileFileName;
+                avatar = "file/image/avatar/" + myFileFileName;
                 System.out.println(avatar);
                 System.out.println(path);
             } catch (Exception e) {
@@ -240,6 +250,8 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
             sinhVien.setNgaySinh(ngaySinh);
             sinhVienInfo.setMssv((int) session.get("mssv"));
             if (sinhVienController.saveSinhVienInfo(sinhVien, sinhVienInfo)) {
+                session.put("messageRegister", "Đăng ký thành công");
+                session.put("rule", 0);
                 return SUCCESS;
             }
         } catch (Exception e) {
@@ -296,6 +308,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         }
         return ERROR;
     }
+
     public String getSinhVienThongTinByList() {
         // kiểm tra lại thông tin của sinhVienInfo.
         // giá trị trả về là null, 
@@ -308,6 +321,42 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
             e.printStackTrace();
         }
         return ERROR;
+    }
+
+    public String GetListKyThucTap() {
+        lstDotThucTap = sinhVienController.getListKyThucTap();
+        session.put("GetListKyThucTap", "GetListKyThucTap");
+        return SUCCESS;
+    }
+
+    public String DangKyKyThucTap() {
+        int maDotThucTap = Integer.parseInt(request.getParameter("dotThucTap"));
+        int mssv = (int) session.get("mssv");
+        List<DotThucTap> lstDotThucTap = sinhVienController.getDotThucTap(maDotThucTap);
+        if (lstDotThucTap.size() == 0) {
+            session.put("messageDangKyKyThucTap", "Không tồn tại đợt thực tập này, xin vui lòng kiểm tra lại hoặc liên hệ với quản trị viên");
+            return SUCCESS;
+        } else {
+            Date date = new Date();
+            int x = (int) (lstDotThucTap.get(0).getThoiGianKetThuc().getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
+            if (x < 0) {
+                session.put("messageDangKyKyThucTap", "Đã hết hạn đăng ký thực tập đợt " + maDotThucTap + ", Vui lòng chờ đến đợt thực tập tiếp theo.");
+                return SUCCESS;
+            } else {
+                SinhVienThucTap sv = new SinhVienThucTap();
+                sv.setDotThucTap(maDotThucTap);
+                sv.setMssv(mssv);
+                sv.setTrangThai(true);
+                if (sinhVienController.DangKyThucTap(sv)) {
+                    session.put("messageDangKyKyThucTap", "Bạn đã đăng ký thành công kỳ thực tập: " + maDotThucTap + ". Vui lòng quay trở lại danh sách đề tài để đăng ký đề tài.");
+                } else {
+                    session.put("messageDangKyKyThucTap", "Đã có lỗi xảy ra khi đăng ký kỳ thực tập: " + maDotThucTap + "");
+                }
+
+            }
+        }
+
+        return SUCCESS;
     }
 
     /**
@@ -331,84 +380,73 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         List<SinhVienDangKy> lstSVDK = new ArrayList<>();
         List<SoKhop> lstSoKhopSV = new ArrayList<>();
         List<SoKhop> lstSoKhopDT = new ArrayList<>();
-        List<DotThucTap> lstDotThucTap = new ArrayList<>();
+        List<SinhVienThucTap> lstSVTT = new ArrayList<>();
         String strSKSV = null;
         String strSKDT = null;
         try {
             int maDeTai = Integer.parseInt(request.getParameter("maDeTai"));
-            int maDotThucTap = Integer.parseInt(request.getParameter("dotThucTap"));
             lstSVDK = sinhVienController.getListDeTaiMotSVDK((int) session.get("mssv"));
-            lstDotThucTap = sinhVienController.getDotThucTap(maDotThucTap);
-            if (lstDotThucTap.size() == 0) {
-                session.put("messageDangKyDeTai", "Không tồn tại đợt thực tập này, xin vui lòng kiểm tra lại hoặc liên hệ với quản trị viên");
-                return SUCCESS;
+            lstSVTT = sinhVienController.GetDotThucTapSV((int) session.get("mssv"));
+            if (lstSVTT.size() == 0) {
+                return "DANGKYKYTHUCTAP";
             } else {
-                Date date = new Date();
-                int x = (int) (lstDotThucTap.get(0).getThoiGianKetThuc().getTime() - date.getTime()) / (1000 * 60 * 60 * 24);
-                if (x < 0) {
-                    session.put("messageDangKyDeTai", "Đã hết hạn đăng ký thực tập đợt " + maDotThucTap + ", Vui lòng chờ đến đợt thực tập tiếp theo.");
+                // lấy thông tin đợt thực tập ở đây và kiểm tra xem có bị quá hạn đăng ký thực tập hay không?\
+                if (lstSVDK.size() < 3) {
+                    // thuc hien dang ky de tai
+                    // xem lại chỗ này, phải kiểm tra hết dt mà sv đăng ký trong lstSVDK rồi mới tính đến có cho đk đê tài không.
+                    // Kiểm tra bằng cách thêm một biến kiểm tra trùng đê tài
+                    boolean checkTrungDeTai = false;
+                    for (int i = 0; i < lstSVDK.size(); i++) {
+                        // thông báo trùng đề tài
+                        if (lstSVDK.get(i).getMaDeTai() == maDeTai) {
+                            session.put("messageDangKyDeTai", "Bạn đã đăng ký đề tài này, xin vui lòng đăng ký đề tài khác.");
+                            checkTrungDeTai = true;
+                            break;
+                        }
+                    }
+
+                    if (checkTrungDeTai == false) {
+                        lstSVI = sinhVienController.getSinhVienInfo((int) session.get("mssv"));
+                        deTai = sinhVienController.getDeTaiByID(maDeTai);
+                        strSKSV = lstSVI.get(0).getKyNangLt();
+                        strSKDT = deTai.getYeuCauLapTrinh();
+                        double phanTramSoKhop = 0;// x là phần trăm so khớp của một đối tượng ví dụ java băng cách lấy sv/dt
+                        int count = 0;
+
+                        // thực hiện so khớp
+                        lstSoKhopSV = getDeTaiSoKhop(strSKSV);
+                        lstSoKhopDT = getDeTaiSoKhop(strSKDT);
+                        for (int i = 0; i < lstSoKhopDT.size(); i++) {
+                            for (int j = 0; j < lstSoKhopSV.size(); j++) {
+                                if (lstSoKhopDT.get(i).getKyNang().contains(lstSoKhopSV.get(j).getKyNang())) {
+                                    phanTramSoKhop = phanTramSoKhop + ((lstSoKhopSV.get(j).getPhanTram()) / (lstSoKhopDT.get(i).getPhanTram()));
+                                }
+                            }
+                            count++;
+                        }
+                        // thực hiện đăng ký đề tài
+                        SinhVienDangKy svdk = new SinhVienDangKy();
+                        svdk.setMaCongTy(deTai.getMaCongTy());
+                        svdk.setMaDeTai(deTai.getMaDeTai());
+                        svdk.setMssv((int) session.get("mssv"));
+                        svdk.setTrangThai(2);
+                        svdk.setSoKhop((phanTramSoKhop / count) * 100);
+                        java.util.Date utilDate = new java.util.Date();
+                        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+                        svdk.setNgayDangKy(sqlDate);
+                        svdk.setDotThucTap(lstSVTT.get(0).getDotThucTap());
+                        if (sinhVienController.saveDeTaiSinhVienDangKy(svdk)) {
+                            // đăng ký thành công
+                            session.put("messageDangKyDeTai", "Bạn đã đăng ký thành công đề tài: " + deTai.getTenDeTai() + ". Xin chờ giảng viên phê duyệt.");
+                        } else {
+                            session.put("messageDangKyDeTai", "Có lỗi xảy ra khi đăng ký đề tài: " + deTai.getTenDeTai() + ". Xin vui lòng xem lại hoặc "
+                                    + "liên hệ với quản trị viên.");
+                        }
+                    }
                     return SUCCESS;
                 } else {
-
-                    // lấy thông tin đợt thực tập ở đây và kiểm tra xem có bị quá hạn đăng ký thực tập hay không?\
-                    if (lstSVDK.size() < 3) {
-                        // thuc hien dang ky de tai
-                        // xem lại chỗ này, phải kiểm tra hết dt mà sv đăng ký trong lstSVDK rồi mới tính đến có cho đk đê tài không.
-                        // Kiểm tra bằng cách thêm một biến kiểm tra trùng đê tài
-                        boolean checkTrungDeTai = false;
-                        for (int i = 0; i < lstSVDK.size(); i++) {
-                            // thông báo trùng đề tài
-                            if (lstSVDK.get(i).getMaDeTai() == maDeTai) {
-                                session.put("messageDangKyDeTai", "Bạn đã đăng ký đề tài này, xin vui lòng đăng ký đề tài khác.");
-                                checkTrungDeTai = true;
-                                break;
-                            }
-                        }
-
-                        if (checkTrungDeTai == false) {
-                            lstSVI = sinhVienController.getSinhVienInfo((int) session.get("mssv"));
-                            deTai = sinhVienController.getDeTaiByID(maDeTai);
-                            strSKSV = lstSVI.get(0).getKyNangLt();
-                            strSKDT = deTai.getYeuCauLapTrinh();
-                            double phanTramSoKhop = 0;// x là phần trăm so khớp của một đối tượng ví dụ java băng cách lấy sv/dt
-                            int count = 0;
-
-                            // thực hiện so khớp
-                            lstSoKhopSV = getDeTaiSoKhop(strSKSV);
-                            lstSoKhopDT = getDeTaiSoKhop(strSKDT);
-                            for (int i = 0; i < lstSoKhopDT.size(); i++) {
-                                for (int j = 0; j < lstSoKhopSV.size(); j++) {
-                                    if (lstSoKhopDT.get(i).getKyNang().contains(lstSoKhopSV.get(j).getKyNang())) {
-                                        phanTramSoKhop = phanTramSoKhop + ((lstSoKhopSV.get(j).getPhanTram()) / (lstSoKhopDT.get(i).getPhanTram()));
-                                    }
-                                }
-                                count++;
-                            }
-                            // thực hiện đăng ký đề tài
-                            SinhVienDangKy svdk = new SinhVienDangKy();
-                            svdk.setMaCongTy(deTai.getMaCongTy());
-                            svdk.setMaDeTai(deTai.getMaDeTai());
-                            svdk.setMssv((int) session.get("mssv"));
-                            svdk.setTrangThai(2);
-                            svdk.setSoKhop((phanTramSoKhop / count) * 100);
-                            java.util.Date utilDate = new java.util.Date();
-                            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-                            svdk.setNgayDangKy(sqlDate);
-                            svdk.setDotThucTap(maDotThucTap);
-
-                            if (sinhVienController.saveDeTaiSinhVienDangKy(svdk)) {
-                                // đăng ký thành công
-                                session.put("messageDangKyDeTai", "Bạn đã đăng ký thành công đề tài: " + deTai.getTenDeTai() + ". Xin chờ giảng viên phê duyệt.");
-                            } else {
-                                session.put("messageDangKyDeTai", "Có lỗi xảy ra khi đăng ký đề tài: " + deTai.getTenDeTai() + ". Xin vui lòng xem lại hoặc "
-                                        + "liên hệ với quản trị viên.");
-                            }
-                        }
-                        return SUCCESS;
-                    } else {
-                        session.put("messageDangKyDeTai", "Bạn đã đăng ký 3 đề tài, bạn không thể đăng ký thêm đề tài nào nữa.");
-                        return SUCCESS;
-                    }
+                    session.put("messageDangKyDeTai", "Bạn đã đăng ký 3 đề tài, bạn không thể đăng ký thêm đề tài nào nữa.");
+                    return SUCCESS;
                 }
             }
         } catch (Exception e) {
@@ -544,6 +582,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
             File fileToCreate = new File(path, this.myFileFileName);
             FileUtils.copyFile(this.myFile, fileToCreate);
             link = "file/sinhvien/" + myFileFileName;
+            System.out.println(path);
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
@@ -716,11 +755,10 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
 //        } catch (Exception e) {
 //        }
 //    }
-    public String test() {
-        sinhVienController.getAllDeTai();
-        return null;
-    }
-
+//    public String test() {
+//        sinhVienController.getAllDeTai();
+//        return null;
+//    }
     @Override
     public void setSession(Map<String, Object> map) {
         this.session = map;

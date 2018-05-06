@@ -41,8 +41,7 @@
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false"><img style="width: 25px; height: 25px" src="./pages/libs/img/avatar.png"></a>
                                 <ul class="dropdown-menu">
                                     <li><a><p style="color: red"><%=session.getAttribute("email").toString()%></p></a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/congty/thongtincanhan.jsp">Thông tin cá nhân</a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>resetpassword.jsp">Đổi mật khẩu</a></li>
+                                  <li><a href="<%=session.getAttribute("httpURL")%>resetpassword.jsp">Đổi mật khẩu</a></li>
                                     <li><a href="logout">Đăng xuất</a></li>
                                 </ul>
                             </li>

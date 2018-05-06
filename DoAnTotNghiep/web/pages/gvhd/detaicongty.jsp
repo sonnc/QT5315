@@ -119,7 +119,7 @@
                                                     <p style="margin: 0 0 0 10px">Đề tài: <a class="btn-open-popup<s:property value="maDeTai"/>"  style="transition: 0.3s;" href="#">
                                                             <s:property value="tenDeTai"/></a> </p>
                                                     <p style="margin: 0 0 0 10px">Công ty: <s:property value="tenCongTy"/></p>
-                                                    <p style="margin: 0 0 0 10px">Số lượng: <s:property value="sloLuong"/></p>
+                                                    <p style="margin: 0 0 0 10px">Số lượng: <s:property value="soLuong"/></p>
                                                     <p style="margin: 0 0 0 10px">Hạn đăng ký: <s:property value="hanDangKy"/></p>
                                                     <!--Phần hiển thị popup-->
                                                     <!--popup content-->

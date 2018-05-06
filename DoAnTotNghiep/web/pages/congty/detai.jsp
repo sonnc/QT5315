@@ -12,8 +12,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Danh sách đề tài công ty</title>
         <%@include file="../../mains/head.jsp" %>
-        <script src="./pages/libs/js/validate.js"></script>
-        <script src="./pages/libs/js/jquery.min.js"></script>
+         <%    if (session.getAttribute("rule") == null) {
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
+            }
+         %>
         <style>
             .error{
                 color: red;
@@ -26,12 +30,22 @@
         <s:action name="GetAllDeTaiByCongTy" executeResult="true"/>
         <%            }
         %>
+  
+        <script>
+                setTimeout(function () {
+                    $('body').removeClass('preloading');
+                    $('#preload').delay(1000).fadeOut('fast');
+                }, 1000);
+        </script>
     </head>
     <%
         if (session.getAttribute("GetAllDeTaiByCongTy") != null) {
             session.removeAttribute("GetAllDeTaiByCongTy");
     %>
-    <body>
+    <body class="preloading">
+        <div id="preload" class="preload-container text-center">
+            <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
+        </div>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>
@@ -39,6 +53,24 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
+                            <%                                if (session.getAttribute("messageDeleteDetai") != null) {
+                            %>
+                            <script type="text/javascript">
+                                    swal("Thông báo", "<%=session.getAttribute("messageDeleteDetai")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("messageDeleteDetai");
+                                }
+                            %>
+                            <%                                if (session.getAttribute("messageSaveDeTai") != null) {
+                            %>
+                            <script type="text/javascript">
+                                    swal("Thông báo", "<%=session.getAttribute("messageSaveDeTai")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("messageSaveDeTai");
+                                }
+                            %>
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
                                 <p style="margin: 0px">DANH SÁCH ĐỀ TÀI</p>
@@ -115,10 +147,10 @@
                                                                                     <input style="height: 45px;" class="form-control" name="deTai.soLuong" placeholder="Số lượng" required="true"/>
                                                                                 </div>
                                                                                 <div class="col-lg-3">
-                                                                                    <input style="height: 45px;" class="form-control" name="deTai.hanDangKy" placeholder="Hạn đăng ký" required="true"/>
+                                                                                    <input style="height: 45px;" class="form-control" name="hanDangKy" placeholder="Hạn đăng ký (dd-mm-yyyy)" required="true"/>
                                                                                 </div>
                                                                                 <div class="col-lg-6">
-                                                                                    <select style="margin-bottom: 15px;height: 45px;" name="sinhVien.gioiTinh" class="form-control" required="required"> 
+                                                                                    <select style="margin-bottom: 15px;height: 45px;" name="deTai.maGvhd" class="form-control" required="required"> 
                                                                                         <option>Chọn người hướng dẫn đề tài</option>
                                                                                         <s:iterator value="lstNguoiHuongDans">
                                                                                             <option value="<s:property value="maGvhd"/>"><s:property value="hoTen"/></option> 
@@ -134,7 +166,35 @@
                                                                             <textarea style="margin-bottom: 15px;height: 50px;" class="form-control" name="deTai.yeuCauKhac" placeholder="Yêu cầu khác"></textarea>
                                                                         </div>
                                                                     </div> 
-                                                                    <input type="submit" class="btn btn-success" value="Đăng ký thông tin"/>
+                                                                    <input type="submit" class="btn btn-success" value="ĐĂNG ĐỀ TÀI"/>
+                                                                    <script>
+                                                                        document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                                                            var form = this;
+                                                                            e.preventDefault();
+                                                                            swal({
+                                                                                title: "ĐĂNG ĐỀ TÀI",
+                                                                                text: "Bạn có muốn đăng đề tài này không?",
+                                                                                icon: "warning",
+                                                                                buttons: [
+                                                                                    'KHÔNG, Hãy hủy bỏ!',
+                                                                                    'CÓ, Tôi chắc chắn!'
+                                                                                ],
+                                                                                dangerMode: true,
+                                                                            }).then(function (isConfirm) {
+                                                                                if (isConfirm) {
+                                                                                    swal({
+                                                                                        title: 'ĐANG XỬ LÝ',
+                                                                                        text: 'Bạn đã đồng ý đăng đề tài, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                                                        icon: 'success'
+                                                                                    }).then(function () {
+                                                                                        form.submit();
+                                                                                    });
+                                                                                } else {
+                                                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ việc đăng đề tài này!", "error");
+                                                                                }
+                                                                            });
+                                                                        });
+                                                                    </script>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -148,20 +208,21 @@
 
                                     </div>
                                     <div class="col-lg-6">
-                                        <input class="form-control" id="s" style="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
+                                        <input class="form-control"  type="text" id="myInput" onkeyup="myFunction()" style ="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm đề tài, người hướng dẫn, trạng thái,..." type="text">
                                     </div>
                                 </div>
                             </div>
                             <style>
-                                td{padding: 5px}
+                                td,th{padding: 5px};
                             </style>
-                            <table border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
+                            <table id="myTable" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                 <tr>
-                                    <td><strong> Mã đề tài </strong></td>
-                                    <td><strong> Tên đề tài </strong></td>
-                                    <td><strong> Người hướng dẫn </strong></td>
-                                    <td><strong> Số lượng </strong></td>
-                                    <td><strong> Trạng thái </strong></td>
+                                    <th><strong> Mã DT </strong></th>
+                                    <th><strong> Tên đề tài </strong></th>
+                                    <th><strong> Người hướng dẫn </strong></th>
+                                    <th><strong> SL </strong></th>
+                                    <th><strong> Trạng thái </strong></th>
+                                    <th><strong> Xóa </strong></th>
                                 </tr>
                                 <s:iterator value="lstDetaiCongtyNguoihuongdan">
                                     <tr>
@@ -170,9 +231,68 @@
                                         <td><s:property value="nguoiHuongDan"/></td>
                                         <td><s:property value="soLuong"/></td>
                                         <td><s:property value="status"/></td>
+                                        <td>
+                                            <a id="tagA<s:property value="maDeTai"/>" href="deleteDeTaiByDDCT?maDeTai=<s:property value="maDeTai"/>"><i class="glyphicon glyphicon-trash"></i></a>
+                                            <script>
+                                                var action = document.getElementById("tagA<s:property value="maDeTai"/>");
+                                                action.addEventListener('click', function (e) {
+                                                    var form = this;
+                                                    e.preventDefault();
+                                                    swal({
+                                                        title: "XÓA TÀI LIỆU",
+                                                        text: "Bạn có chắc chắn muốn xóa đề tài này không? ",
+                                                        icon: "warning",
+                                                        buttons: [
+                                                            'KHÔNG, Hãy hủy bỏ!',
+                                                            'CÓ, Tôi chắc chắn!'
+                                                        ],
+                                                        dangerMode: true,
+                                                    }).then(function (isConfirm) {
+                                                        if (isConfirm) {
+                                                            swal({
+                                                                title: 'ĐANG XỬ LÝ',
+                                                                text: 'Bạn đã xác nhận Xóa đề tài, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                                icon: 'success'
+                                                            }).then(function () {
+                                                                window.location.href = document.getElementById('tagA<s:property value="maDeTai"/>').href;
+                                                            });
+                                                        } else {
+                                                            swal("HỦY BỎ", "Bạn đã hủy bỏ việc xóa đề tài.", "error");
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        </td>
                                     </tr>
                                 </s:iterator>
                             </table>
+                            <script>
+                                function myFunction() {
+                                    // Declare variables 
+                                    var input, filter, table, tr, td, i;
+                                    var td1, td2;
+                                    input = document.getElementById("myInput");
+                                    filter = input.value.toUpperCase();
+                                    table = document.getElementById("myTable");
+                                    tr = table.getElementsByTagName("tr");
+
+                                    // Loop through all table rows, and hide those who don't match the search query
+                                    for (i = 0; i < tr.length; i++) {
+                                        td = tr[i].getElementsByTagName("td")[1];
+                                        td1 = tr[i].getElementsByTagName("td")[2];
+                                        td2 = tr[i].getElementsByTagName("td")[4];
+                                        if (td || td1) {
+                                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td1.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td2.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                                tr[i].style.display = "";
+                                            } else {
+                                                tr[i].style.display = "none";
+                                            }
+                                        }
+                                    }
+                                }
+                            </script>
                             <div id="pagination">
                                 <span class="all">Page 1 of 3</span>
                                 <span class="current">1</span>

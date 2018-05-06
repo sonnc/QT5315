@@ -16,19 +16,36 @@
         <script src="./pages/libs/calendar/moment.min.js"></script>
         <script src="./pages/libs/calendar/jquery.min.js"></script>
         <script src="./pages/libs/calendar/fullcalendar.min.js"></script>
+          <%    if (session.getAttribute("rule") == null) {
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
+            }
+        %>
         <%            if (session.getAttribute("getLichTrinhForSV") == null) {
         %>
         <s:action name="getLichTrinhForSV" executeResult="true"/>
         <%
             }
         %>
+        <script>
+            window.onload = function () {
+                setTimeout(function () {
+                    $('body').removeClass('preloading');
+                    $('#preload').delay(1000).fadeOut('fast');
+                }, 0);
+            };
+        </script>
     </head>
     <%
         if (session.getAttribute("getLichTrinhForSV") != null) {
             session.removeAttribute("getLichTrinhForSV");
 
     %>
-    <body>
+    <body onLoad="mess()" class="preloading">
+        <div id="preload" class="preload-container text-center">
+            <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
+        </div>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>
@@ -101,7 +118,7 @@
         </div>   
         <%@include file="../../mains/footer.jsp" %>
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-        <%@include file="../../mains/jsForCalendar.jsp" %>
+            <%@include file="../../mains/jsForCalendar.jsp" %>
     </body>
     <%
         }

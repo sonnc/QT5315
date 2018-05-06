@@ -69,6 +69,7 @@ public class GvhdController {
                     + "where a.mssv = d.mssv\n"
                     + "and d.ma_cong_ty = e.ma_cong_ty\n"
                     + "and d.ma_de_tai = b.ma_de_tai\n"
+                    + "and b.ma_gvhd = c.ma_gvhd\n"
                     + "and e.ma_cong_ty = c.ma_cong_ty").list();
             transaction.commit();
         } catch (Exception e) {
@@ -95,6 +96,7 @@ public class GvhdController {
                     + "                     and d.ma_de_tai = b.ma_de_tai \n"
                     + "                     and e.ma_cong_ty = c.ma_cong_ty \n"
                     + "                     and d.trang_thai = 2\n"
+                    + "                     and b.ma_gvhd = c.ma_gvhd\n"
                     + "                     group by a.mssv, a.ho_ten , b.ten_de_tai, e.ten_cong_ty, c.ho_ten , d.so_khop,  \n"
                     + "                     d.dot_thuc_tap, d.trang_thai, e.ma_cong_ty, b.ma_de_tai, c.ma_gvhd ").list();
             transaction.commit();
@@ -121,6 +123,7 @@ public class GvhdController {
                     + "and d.ma_cong_ty = e.ma_cong_ty\n"
                     + "and d.ma_de_tai = b.ma_de_tai\n"
                     + "and e.ma_cong_ty = c.ma_cong_ty\n"
+                    + "and b.ma_gvhd = c.ma_gvhd\n"
                     + "and (d.trang_thai = 1 or d.trang_thai = 0)").list();
             transaction.commit();
         } catch (Exception e) {
@@ -551,7 +554,8 @@ public class GvhdController {
             transaction = session.beginTransaction();
             Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
                     + "from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
-                    + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty");
+                    + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
+                    + " where b.ma_gvhd = c.ma_gvhd");
             results = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -572,9 +576,10 @@ public class GvhdController {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
-                    + "from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
-                    + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
-                    + "where b.trang_thai = 2");
+                    + "                    from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
+                    + "                    join nguoi_huong_dan c on b.ma_cong_ty = c.ma_cong_ty\n"
+                    + "                    where b.trang_thai = 2\n"
+                    + "                     and b.ma_gvhd = c.ma_gvhd");
             results = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -633,7 +638,8 @@ public class GvhdController {
             Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
                     + "from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
                     + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
-                    + "where b.trang_thai = 1 or b.trang_thai = 0");
+                    + "where b.trang_thai = 1 or b.trang_thai = 0\n"
+                    + " and b.ma_gvhd = c.ma_gvhd");
             results = query.list();
             transaction.commit();
         } catch (Exception e) {

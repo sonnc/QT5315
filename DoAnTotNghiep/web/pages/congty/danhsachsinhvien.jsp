@@ -43,20 +43,20 @@
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
                                 <p style="margin: 0px">DANH SÁCH SINH VIÊN THỰC TẬP</p>
                             </div>
-                            <input class="form-control" id="s" style="float: right; width: 50%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
+                            <input class="form-control" id="myInput" onkeyup="myFunction()" style="float: right; width: 50%; margin-bottom: 15px" placeholder="Tìm kiếm tên sinh viên.." type="text">
                             <style>
-                                td{padding: 5px}
+                                td,th{padding: 5px}
                             </style>
-                            <table border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
+                            <table id="myTable" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                 <tr style="font-size: 13px; text-align: center">
-                                    <td><strong> Mã SV </strong></td>
-                                    <td><strong> Họ và tên </strong></td>
-                                    <td><strong> Tên đề tài </strong></td>
-                                    <td><strong> Ngày bắt đầu </strong></td>
-                                    <td><strong> Ngày kết thúc </strong></td>
-                                    <td><strong> Trạng thái </strong></td>
-                                    <td><strong> CV </strong></td>
-                                    <td><strong> Đánh giá </strong></td>
+                                    <th><strong> Mã SV </strong></th>
+                                    <th><strong> Họ và tên </strong></th>
+                                    <th><strong> Tên đề tài </strong></th>
+                                    <th><strong> Ngày bắt đầu </strong></th>
+                                    <th><strong> Ngày kết thúc </strong></th>
+                                    <th><strong> Trạng thái </strong></th>
+                                    <th><strong> CV </strong></th>
+                                    <th><strong> Đánh giá </strong></th>
                                 </tr>
                                 <s:iterator value="lstDanhSachSinhViens">
                                     <tr style="font-size: 13px;">
@@ -77,6 +77,28 @@
                                     </tr>
                                 </s:iterator>
                             </table>
+                            <script>
+                                function myFunction() {
+                                    // Declare variables 
+                                    var input, filter, table, tr, td, i;
+                                    input = document.getElementById("myInput");
+                                    filter = input.value.toUpperCase();
+                                    table = document.getElementById("myTable");
+                                    tr = table.getElementsByTagName("tr");
+
+                                    // Loop through all table rows, and hide those who don't match the search query
+                                    for (i = 0; i < tr.length; i++) {
+                                        td = tr[i].getElementsByTagName("td")[1];
+                                        if (td || td1) {
+                                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                                tr[i].style.display = "";
+                                            } else {
+                                                tr[i].style.display = "none";
+                                            }
+                                        }
+                                    }
+                                }
+                            </script>
                             <div id="pagination">
                                 <span class="all">Page 1 of 3</span>
                                 <span class="current">1</span>

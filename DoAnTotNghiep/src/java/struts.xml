@@ -4,16 +4,27 @@
 
 <struts>
     <!-- Configuration for the default package. -->
-    <package name="default" extends="struts-default">
+    <package name="default" extends="struts-default"> 
+        <action name="registerAcount" class="hust.sie.inpg12.sonnc.action.LoginAction" method="registerAcount">
+            <result name="success">login.jsp</result>
+            <result name="input" >register.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         <action name="loginAction" class="hust.sie.inpg12.sonnc.action.LoginAction" method="login">
             <result name="success" type="redirect">home.jsp</result>
             <result name="input">login.jsp</result>
             <result name="DANGKYTHONGTINSINHVIEN">/pages/sinhvien/dangkythongtin.jsp</result>
+            <result name="DANGKYDAIDIENVACONGTY">/pages/congty/dangky.jsp</result>
+            <result name="DANGKYCONGTY">/pages/congty/dangkycongty.jsp</result>
+            <result name="DANGKYTHONGTINGIANGVIENHUONGDAN">/pages/gvhd/dangkythongtin.jsp</result>
+            <result name="DANGKYTHONGTINNGUOIHUONGDAN">/pages/nhd/dangkythongtin.jsp</result>
+            <result name="CONGTYSTATUS">/pages/congty/trangthaicongty.jsp</result>
         </action>
         <action name="logout" class="hust.sie.inpg12.sonnc.action.LoginAction" method="logout">
             <result name="success" type="redirect">login.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+       
         <action name="sinhVienDangKyThongTin" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="SinhVienDangKyThongTin">
             <result name="success" type="redirect">home.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
@@ -33,6 +44,7 @@
         </action>
         <action name="dangkydetai" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="setDangKyDeTai">
             <result name="success" type="redirect">/pages/sinhvien/detai.jsp</result>
+            <result name="DANGKYKYTHUCTAP" type="redirect">/pages/sinhvien/dangkykythuctap.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         <action name="getAllCongTyforSV" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getAllCongTyforSV">
@@ -88,8 +100,20 @@
             <result name="success" type="">/pages/sinhvien/email.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="GetListKyThucTap" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="GetListKyThucTap">
+            <result name="success" type="">/pages/sinhvien/dangkykythuctap.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
-        
+        <action name="DangKyKyThucTap" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="DangKyKyThucTap">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">dkktt</param>     
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="dkktt">
+            <result>/pages/sinhvien/dangkykythuctap.jsp</result>
+        </action>
         
         
         
@@ -234,7 +258,7 @@
             <result>/pages/gvhd/lichtrinh.jsp</result>
         </action>
         <action name="SaveThongTinCaNhanGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="SaveThongTinCaNhanGVHD">
-            <result name="success" type="">/pages/gvhd/dangkythongtin.jsp</result>
+            <result name="success" type="redirect">home.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         
@@ -251,9 +275,33 @@
         
         
         
-         <!--
+        <!--
         ============== PHẦN ACTION DÀNH CHO ĐẠI DIỆN CÔNG TY ====================
         -->
+        <action name="saveCongtyAndDaidien" class="hust.sie.inpg12.sonnc.action.DdctAction" method="saveCongtyAndDaidien">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">saveCongtyAndDaidien</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="saveCongtyAndDaidien">
+            <result>/pages/congty/trangthaicongty.jsp</result>
+        </action>
+        
+        <action name="getInfoCongTyByDDCT" class="hust.sie.inpg12.sonnc.action.DdctAction" method="getInfoCongTyByDDCT">
+            <result name="success">/pages/congty/capnhatcongty.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="updateCongTyByDDCT" class="hust.sie.inpg12.sonnc.action.DdctAction" method="updateCongTyByDDCT">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">updateCTDDCT</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="updateCTDDCT">
+            <result>/pages/congty/capnhatcongty.jsp</result>
+        </action>
+        
         <action name="GetCongTyByDDCT" class="hust.sie.inpg12.sonnc.action.DdctAction" method="GetCongTyByDDCT">
             <result name="success" type="">/pages/congty/congty.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
@@ -266,7 +314,47 @@
             <result name="success" type="">/pages/congty/detai.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="dangDeTaiByCongTy" class="hust.sie.inpg12.sonnc.action.DdctAction" method="dangDeTaiByCongTy">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">dangDeTaiByDDCT</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="dangDeTaiByDDCT">
+            <result>/pages/congty/detai.jsp</result>
+        </action>
         
+        <action name="GetAllNguoiHuongDanByCongTy" class="hust.sie.inpg12.sonnc.action.DdctAction" method="GetAllNguoiHuongDanByCongTy">
+            <result name="success" type="">/pages/congty/nhanvien.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="AddAcountNguoiHuongDan" class="hust.sie.inpg12.sonnc.action.DdctAction" method="AddAcountNguoiHuongDan">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">AddAcountNHD</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="AddAcountNHD">
+            <result>/pages/congty/nhanvien.jsp</result>
+        </action>
+        
+        <action name="getAllEmailDDCT" class="hust.sie.inpg12.sonnc.action.DdctAction" method="getAllEmailDDCT">
+            <result name="success">/pages/congty/email.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="sendEmailDDCT" class="hust.sie.inpg12.sonnc.action.DdctAction" method="sendEmailDDCT">
+            <result name="success" type="">/pages/congty/email.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="deleteDeTaiByDDCT" class="hust.sie.inpg12.sonnc.action.DdctAction" method="deleteDeTaiByDDCT">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">delDeTaiByDDCT</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="delDeTaiByDDCT">
+            <result>/pages/congty/detai.jsp</result>
+        </action>
         
         <!--        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
             <result name="success">test.jsp</result>

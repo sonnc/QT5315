@@ -6,7 +6,11 @@
 package hust.sie.inpg12.sonnc.controller;
 
 import hust.sie.inpg12.sonnc.entities.CongTy;
+import hust.sie.inpg12.sonnc.entities.DaiDienCongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
+import hust.sie.inpg12.sonnc.entities.Email;
+import hust.sie.inpg12.sonnc.entities.Login;
+import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
 import hust.sie.inpg12.sonnc.entities.SinhVienThucTap;
 import hust.sie.inpg12.sonnc.model.HibernateUtil;
 import java.util.ArrayList;
@@ -26,6 +30,117 @@ public class DdctController {
 
     public DdctController() {
         session = HibernateUtil.getSessionFactory().openSession();
+    }
+
+    public DeTai getInfoDeTaiByDDCT(int ms) {
+        DeTai dt = new DeTai();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            dt = (DeTai) session.get(DeTai.class, ms);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return dt;
+    }
+
+    public boolean updateDeleteDeTaiByDDCT(DeTai dt) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.update(dt);
+            r = true;
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public CongTy getInfoCongTyByDDCT(int msct) {
+        CongTy ct = new CongTy();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            ct = (CongTy) session.get(CongTy.class, msct);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return ct;
+    }
+
+    public int saveDaiDienCongTy(DaiDienCongTy ddct) {
+        int madaidien = 0;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            madaidien = (int) session.save(ddct);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return madaidien;
+    }
+
+    public boolean updateCongty(CongTy ct) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.update(ct);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public boolean saveCongty(CongTy ct) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(ct);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
     }
 
     public List GetCongTy(String email) {
@@ -86,13 +201,14 @@ public class DdctController {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Query q = session.createSQLQuery("SELECT a.*, e.ho_ten, e.email, e.dien_thoai, e.chucvu, e.avatar, e.dia_chi  FROM de_tai a\n"
-                    + "join nguoi_huong_dan e on a.ma_gvhd = e.ma_gvhd\n"
-                    + "where a.ma_cong_ty = \n"
-                    + "(\n"
-                    + "select d.ma_cong_ty from cong_ty d join dai_dien_cong_ty c on c.ma_dai_dien = d.ma_dai_dien\n"
-                    + "where c.email =:email\n"
-                    + ")"
-                    + "order by a.ma_de_tai desc");
+                    + "                    join nguoi_huong_dan e on a.ma_gvhd = e.ma_gvhd\n"
+                    + "                    where a.ma_cong_ty = \n"
+                    + "                    (\n"
+                    + "                    select d.ma_cong_ty from cong_ty d join dai_dien_cong_ty c on c.ma_dai_dien = d.ma_dai_dien\n"
+                    + "                    where c.email =:email\n"
+                    + "                    )\n"
+                    + "                    and a.trang_thai <> 3\n"
+                    + "                    order by a.ma_de_tai desc");
             q.setParameter("email", email);
             results = q.list();
             transaction.commit();
@@ -107,41 +223,38 @@ public class DdctController {
         return results;
     }
 
-    public List GetAllNguoiHuongDanByCongTy(String email) {
-        List<Object[]> results = new ArrayList<>();
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            Query q = session.createSQLQuery("select a.* from nguoi_huong_dan a join cong_ty b on a.ma_cong_ty = b.ma_cong_ty\n"
-                    + "join dai_dien_cong_ty c on b.ma_dai_dien = c.ma_dai_dien\n"
-                    + "where c.email =:email");
-            q.setParameter("email", email);
-            results = q.list();
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return results;
-    }
-
+//    public List GetAllNguoiHuongDanByCongTy(String email) {
+//        List<Object[]> results = new ArrayList<>();
+//        try {
+//            session = HibernateUtil.getSessionFactory().openSession();
+//            transaction = session.beginTransaction();
+//            Query q = session.createSQLQuery("select a.* from nguoi_huong_dan a join cong_ty b on a.ma_cong_ty = b.ma_cong_ty\n"
+//                    + "join dai_dien_cong_ty c on b.ma_dai_dien = c.ma_dai_dien\n"
+//                    + "where c.email =:email");
+//            q.setParameter("email", email);
+//            results = q.list();
+//            transaction.commit();
+//        } catch (Exception e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//        return results;
+//    }
     public int GetMaCongTy(String email) {
-        List<Object[]> results = new ArrayList<>();
         int maCongTy = 0;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query q = session.createSQLQuery("select b.ma_cong_ty from dai_dien_cong_ty a join cong_ty b on a.ma_dai_dien = b.ma_dai_dien\n"
+            Query q = session.createSQLQuery("select b.ma_cong_ty, b.ten_cong_ty from dai_dien_cong_ty a join cong_ty b on a.ma_dai_dien = b.ma_dai_dien\n"
                     + "where a.email =:email");
             q.setParameter("email", email);
-            results = q.list();
-
+            List<Object[]> results = q.list();
             for (Object[] result : results) {
-                maCongTy = (int) result[0];
+                maCongTy = ((Integer) result[0]);
             }
             transaction.commit();
         } catch (Exception e) {
@@ -153,5 +266,163 @@ public class DdctController {
             session.close();
         }
         return maCongTy;
+    }
+
+    public boolean SaveDeTai(DeTai deTai) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(deTai);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public List GetAllNguoiHuongDanByCongTy(int maCongTy) {
+        List<NguoiHuongDan> lstNguoiHuongDans = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM NguoiHuongDan WHERE maCongTy =:maCongTy");
+            q.setParameter("maCongTy", maCongTy);
+            lstNguoiHuongDans = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstNguoiHuongDans;
+    }
+
+    public boolean AddAcountNguoiHuongDan(NguoiHuongDan nhd, Login login) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(login);
+            session.save(nhd);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public List getAllEmail(String email) {
+        List<Email> lstEmails = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM Email WHERE nguoiGui =:email OR nguoiNhan =:email  ORDER BY id DESC");
+            q.setParameter("email", email);
+            lstEmails = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstEmails;
+    }
+
+    public List getAllEmailRead(String email) {
+        List<Email> lstEmails = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM Email WHERE nguoiNhan =:email and trangThai = TRUE  ORDER BY id DESC");
+            q.setParameter("email", email);
+            lstEmails = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstEmails;
+    }
+
+    public List getAllEmailUnread(String email) {
+        List<Email> lstEmails = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM Email WHERE nguoiNhan =:email and trangThai = FALSE  ORDER BY id DESC");
+            q.setParameter("email", email);
+            lstEmails = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstEmails;
+    }
+
+    public List getAllEmailSend(String email) {
+        List<Email> lstEmails = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM Email WHERE nguoiGui =:email ORDER BY id DESC");
+            q.setParameter("email", email);
+            lstEmails = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstEmails;
+    }
+
+    public boolean sendEmail(Email email) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(email);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
     }
 }

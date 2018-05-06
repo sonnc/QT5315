@@ -25,7 +25,7 @@
             }
         </style> 
         <%            if (session.getAttribute("email") != null) {
-                response.sendRedirect(session.getAttribute("httpURL")+"home.jsp");
+                response.sendRedirect(session.getAttribute("httpURL") + "home.jsp");
             }
         %>
     </head>
@@ -69,7 +69,7 @@
                                         <div class="col-xs-12 col-md-6"><input type="submit" value="Đăng nhập" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
                                         <div class="col-xs-12 col-md-6">
                                             <div>Quên mật khẩu? <a href="<%=session.getAttribute("httpURL")%>forgotpassword.jsp">Khôi phục</a></div>
-                                        <div>Trở về <a href="home.jsp">Trang chủ</a></div>
+                                        <div>Chưa có tài khoản? <a href="<%=session.getAttribute("httpURL")%>register.jsp">ĐĂNG KÝ</a> ngay.</div>
                                     </div>
                                 </div>
                             </form>

@@ -112,6 +112,7 @@ public class SinhVienController {
         }
         return sv;
     }
+
     public SinhVienInfo getSinhVienInfoByClass(int mssv) {
         SinhVienInfo svi = new SinhVienInfo();
         try {
@@ -666,4 +667,62 @@ public class SinhVienController {
         return r;
     }
 
+    public List getListKyThucTap() {
+        List<DotThucTap> lstDotThucTap = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM DotThucTap");
+            lstDotThucTap = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstDotThucTap;
+    }
+
+    public boolean DangKyThucTap(SinhVienThucTap sv) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(sv);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public List GetDotThucTapSV(int mssv) {
+        List<SinhVienThucTap> lstSVTT = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM SinhVienThucTap where mssv =:mssv and trangThai = TRUE");
+            q.setParameter("mssv", mssv);
+            q.getFirstResult();
+            lstSVTT = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstSVTT;
+    }
 }

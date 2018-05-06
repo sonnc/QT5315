@@ -15,8 +15,8 @@
     người hướng dẫn = 3
     admin = 4
     -->
-    <%
-        if (Integer.parseInt(session.getAttribute("rule").toString()) == 0) {
+
+    <% if (Integer.parseInt(session.getAttribute("rule").toString()) == 0) {
     %>
     <%@include file="/mains/sinhVienHeader.jsp" %>
     <%
@@ -32,6 +32,10 @@
     %>
     <%@include  file="/mains/nhdHeader.jsp"%>
     <%
-        };
+    } else if (Integer.parseInt(session.getAttribute("rule").toString()) == 99) {
+    %>
+    <%@include  file="/mains/headerForRule99.jsp"%>
+    <%
+        }
     %>
 </div>

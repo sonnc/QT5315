@@ -42,6 +42,7 @@ public class LoginController {
     public List<Login> login(String email, String pass) {
         List<Login> lstLogin = new ArrayList<>();
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Query query = session.createQuery("FROM Login WHERE email =:email and pass =:pass");
             query.setParameter("email", email);
@@ -59,21 +60,14 @@ public class LoginController {
         return lstLogin;
     }
 
-    public List<DeTai> getTest() {
-        List<DeTai> list = new ArrayList<>();
+    public List getInfoDaiDienCongTy(String email ) {
+        List<DaiDienCongTy> lst = new ArrayList<>();
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Criteria criteria = session.createCriteria(DeTai.class, "dt");
-            criteria.createAlias("dt.congTy", "ct");
-            criteria.createAlias("dt.giangVienHuongDan", "gvhd");
-            criteria.createAlias("dt.giangVienHuongDan.login", "login.email");
-            list = criteria.list();
-//            Query query1 = session.createQuery("FROM DeTai d join d.congTy  ");
-//            list = query1.list();
-//            for (int i = 0; i < list.size(); i++) {
-//                System.out.println(list.get(i).getGiangVienHuongDan().getHoTen());
-//                System.out.println(list.get(i).getNoiDung());
-//            }
+            Query query = session.createQuery("FROM DaiDienCongTy WHERE email =:email");
+            query.setParameter("email", email);
+            lst = query.list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -83,7 +77,112 @@ public class LoginController {
         } finally {
             session.close();
         }
-        return list;
+        return lst;
     }
 
+    public List getInfoGiangVienHuongDan(String email) {
+        List<GiangVienHuongDan> lst = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM GiangVienHuongDan WHERE email =:email");
+            query.setParameter("email", email);
+            lst = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lst;
+    }
+    
+    public List getInfoNguoiHuongDan(String email) {
+        List<NguoiHuongDan> lst = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM NguoiHuongDan WHERE email =:email");
+            query.setParameter("email", email);
+            lst = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lst;
+    }
+
+    public List getInfoCongTy(int maDaiDien) {
+        List<CongTy> lst = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM CongTy WHERE maDaiDien =:maDaiDien");
+            query.setParameter("maDaiDien", maDaiDien);
+            lst = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lst;
+    }
+
+    public boolean SaveRegister(Login login) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(login);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+//    public List<DeTai> getTest() {
+//        List<DeTai> list = new ArrayList<>();
+//        try {
+//            transaction = session.beginTransaction();
+//            Criteria criteria = session.createCriteria(DeTai.class, "dt");
+//            criteria.createAlias("dt.congTy", "ct");
+//            criteria.createAlias("dt.giangVienHuongDan", "gvhd");
+//            criteria.createAlias("dt.giangVienHuongDan.login", "login.email");
+//            list = criteria.list();
+////            Query query1 = session.createQuery("FROM DeTai d join d.congTy  ");
+////            list = query1.list();
+////            for (int i = 0; i < list.size(); i++) {
+////                System.out.println(list.get(i).getGiangVienHuongDan().getHoTen());
+////                System.out.println(list.get(i).getNoiDung());
+////            }
+//            transaction.commit();
+//        } catch (Exception e) {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            session.close();
+//        }
+//        return list;
+//    }
 }

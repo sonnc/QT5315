@@ -42,7 +42,7 @@
                                 <div class="navbar-collapse collapse ">
                                     <ul class="nav navbar-nav">
                                         <li class="dropdown active">
-                                            <a href="<%=request.getContextPath()%>/home.jsp">Trang chủ</a>
+                                            <a href="logout">Đăng xuất</a>
                                         </li>
                                     </ul>
                                 </div>

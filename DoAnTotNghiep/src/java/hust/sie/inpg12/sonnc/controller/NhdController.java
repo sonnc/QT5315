@@ -76,7 +76,7 @@ public class NhdController {
         return results;
     }
 
-    public SinhVienFile GetBaoCaoSV(int loaiFile, int mssv, int dotThucTap) {
+    public List GetBaoCaoSV(int loaiFile, int mssv, int dotThucTap) {
         List<SinhVienFile> lstSinhVienFile = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -95,6 +95,6 @@ public class NhdController {
         } finally {
             session.close();
         }
-        return results;
+        return lstSinhVienFile;
     }
 }

@@ -32,7 +32,7 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/danhsachsinhvien.jsp">Danh sách sinh viên</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/detaisinhvien.jsp">Đề tài sinh viên</a> </li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/baocao.jsp">Báo cáo sinh viên</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/baocao.jsp">Báo cáo - Đánh giá</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/diemthi.jsp">Điểm thi</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/file.jsp">File</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/lichtrinh.jsp">Lịch trình</a></li>
@@ -43,16 +43,14 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/danhsachcongty.jsp">Danh sách công ty</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/detaicongty.jsp">Đề tài công ty</a> </li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/detaicongty.jsp">Đánh giá (chưa làm)</a> </li>
                                 </ul>
                             </li>
-                            <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/email.jsp">Thông báo</a></li>
                             <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/email.jsp">Email</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false"><img style="width: 25px; height: 25px" src="./pages/libs/img/avatar.png"></a>
                                 <ul class="dropdown-menu">
                                     <li><a><p style="color: red"><%=session.getAttribute("email").toString()%></p></a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/thongtincanhan.jsp">Thông tin cá nhân</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/capnhatthongtin.jsp">Cập nhật thông tin</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>resetpassword.jsp">Đổi mật khẩu</a></li>
                                     <li><a href="logout">Đăng xuất</a></li>
                                 </ul>

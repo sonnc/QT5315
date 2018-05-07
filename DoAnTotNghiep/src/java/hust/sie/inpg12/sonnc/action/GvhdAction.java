@@ -878,6 +878,44 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         return SUCCESS;
     }
 
+    public String getInfoGVHD() {
+        int maGVHD = gvhdController.getMaGVHDId((String) session.get("email"));
+        if (maGVHD != 0) {
+            gvhd = gvhdController.getInfoGVHD(maGVHD);
+        } else {
+            session.put("messageUpdate", "Đã có lỗi xảy ra hoặc không tìm thấy giảng viên.");
+        }
+        session.put("getInfoGVHD", "getInfoGVHD");
+        return SUCCESS;
+    }
+
+    public String updateThongTinCaNhanGVHD() {
+        String avatar = null;
+        try {
+            path = request.getSession().getServletContext().getRealPath("/").concat("file/image/avatar/");
+            File fileToCreate = new File(path, this.myFileFileName);
+            FileUtils.copyFile(this.myFile, fileToCreate);
+            avatar = "file/image/avatar/" + myFileFileName;
+            System.out.println(avatar);
+        } catch (Exception e) {
+            e.printStackTrace();
+            addActionError(e.getMessage());
+            session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
+        }
+        GiangVienHuongDan gvhd = new GiangVienHuongDan();
+        gvhd = this.gvhd;
+        gvhd.setAvatar(avatar);
+        if (gvhdController.SaveThongTinCaNhan(gvhd)) {
+            session.put("rule", 2);
+            session.put("messageRegister", "Đăng ký thông tin cá nhân thành công.");
+        } else {
+            session.put("messageRegister", "Đã có lỗi xảy ra, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
+            return ERROR;
+        }
+        return SUCCESS;
+    }
+    
+    
     public String GetAllBaoCaoQTCK() {
         List<Object[]> results = gvhdController.GetAllBaoCaoQTCK();
         for (Object[] result : results) {
@@ -888,27 +926,31 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             a.setKhoa((int) result[3]);
             a.setKyThucTap((int) result[4]);
             if ((String) result[5] == null) {
-               a.setBcqt("javascript:void(0)");
-               a.setTenBCQT("Không có");
+                a.setBcqt("javascript:void(0)");
+                a.setTenBCQT("Không có");
             } else {
                 a.setBcqt((String) result[5]);
                 a.setTenBCQT("Tải xuống");
             }
             if ((String) result[6] == null) {
-               a.setBcck("javascript:void(0)");
-               a.setTenBCCK("Không có");
+                a.setBcck("javascript:void(0)");
+                a.setTenBCCK("Không có");
             } else {
                 a.setBcck((String) result[6]);
                 a.setTenBCCK("Tải xuống");
             }
-            System.out.println((String) result[5]);
-            System.out.println((String) result[6]);
+            if ((String) result[7] == null) {
+                a.setDanhGia("javascript:void(0)");
+                a.setTenDanhGia("Không có");
+            } else {
+                a.setDanhGia((String) result[7]);
+                a.setTenDanhGia("Tải xuống");
+            }
             lstBaoCaoSinhVien.add(a);
         }
         session.put("GetAllBaoCaoQTCK", "GetAllBaoCaoQTCK");
         return SUCCESS;
     }
- 
 
     @Override
     public void setSession(Map<String, Object> map) {

@@ -289,6 +289,10 @@
             <result name="success" type="">/pages/gvhd/baocao.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="getInfoGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getInfoGVHD">
+            <result name="success" type="">/pages/gvhd/capnhatthongtin.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         <!--
         ============== PHẦN ACTION DÀNH CHO NGƯỜI HƯỚNG DẪN ====================
         -->

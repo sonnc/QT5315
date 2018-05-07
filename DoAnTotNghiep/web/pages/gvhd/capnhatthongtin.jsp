@@ -26,6 +26,12 @@
                 text-orientation: initial;
             }
         </style>
+        <%    if (session.getAttribute("getInfoGVHD") == null) {
+        %>
+        <s:action name="getInfoGVHD" executeResult="true"/>
+        <%
+            }
+        %>
         <script>
             setTimeout(function () {
                 $('body').removeClass('preloading');
@@ -33,6 +39,11 @@
             }, 1000);
         </script>
     </head>
+    <%
+        if (session.getAttribute("getInfoGVHD") != null) {
+            session.removeAttribute("getInfoGVHD");
+    %>
+
     <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
@@ -44,43 +55,32 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <%                                if (session.getAttribute("messageRegister") != null) {
+                            <%                                if (session.getAttribute("messageUpdateInfo") != null) {
                             %>
                             <script type="text/javascript">
-                                swal("Thông báo", "<%=session.getAttribute("messageRegister")%>", "info");
+                                swal("Thông báo", "<%=session.getAttribute("messageUpdateInfo")%>", "info");
                             </script>
                             <%
-                                    session.removeAttribute("messageRegister");
+                                    session.removeAttribute("messageUpdateInfo");
                                 }
                             %>
-                            <form role="form" id="formValidate" action="SaveThongTinCaNhanGVHD" method="post" enctype = "multipart/form-data"> 
+                            <form role="form" id="formValidate" action="updateThongTinCaNhanGVHD" method="post" enctype = "multipart/form-data"> 
                                 <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                     <p style="margin: 0px">THÔNG TIN CÁ NHÂN</p>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-8">
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="gvhd.hoTen" placeholder="Họ và tên" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="gvhd.khoaVien" placeholder="Khoa viện" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="gvhd.boMon" placeholder="Bộ môn" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control"name="gvhd.email" readonly="true" value="<%=session.getAttribute("email")%>"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="gvhd.dienThoai" placeholder="Điện thoại" required="true"/>
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="gvhd.diaChi" placeholder="Địa chỉ" required="true"/>
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" value="%{gvhd.hoTen}" name="gvhd.hoTen" readonly="true" placeholder="Họ và tên" required="true"/>
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" value="%{gvhd.khoaVien}" name="gvhd.khoaVien" readonly="true"  placeholder="Khoa viện" required="true"/>
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" value="%{gvhd.boMon}" name="gvhd.boMon" readonly="true"  placeholder="Bộ môn" required="true"/>
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="gvhd.email" readonly="true" value="<%=session.getAttribute("email")%>"/>
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control"  value="%{gvhd.dienThoai}" name="gvhd.dienThoai" placeholder="Điện thoại" required="true"/>
+                                        <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" value="%{gvhd.diaChi}" name="gvhd.diaChi" placeholder="Địa chỉ" required="true"/>
                                     </div>
                                     <div class="col-lg-4">
                                         <p>Ảnh đại diện</p>
-                                        <img id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
-                                        <s:textfield  name="myFile" type="file" accept="image/*" onchange="loadFile(event)" required="required"/>
-                                        <script>
-                                            var loadFile = function (event) {
-                                                var reader = new FileReader();
-                                                reader.onload = function () {
-                                                    var output = document.getElementById('output');
-                                                    output.src = reader.result;
-                                                };
-                                                reader.readAsDataURL(event.target.files[0]);
-                                            };
-                                        </script>
+                                        <img src="<s:url  value="%{gvhd.avatar}"/>" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
                                     </div>
                                 </div> 
                                 <div class="row">
@@ -91,48 +91,48 @@
                                     </style>
                                     <div class="col-lg-12">
                                         <label>Công trình nghiên cứu</label>
-                                        <textarea name="gvhd.congTrinhNghienCuu" required style="height: 100px; margin-bottom: 30px" class="form-control"></textarea>
-                                        <div class="clear"></div>
-                                        <label>Sách xuất bản</label>
-                                        <textarea name="gvhd.sachXuatBan" required style="height: 100px; margin-bottom: 30px" class="form-control"></textarea>
-                                        <label>Các môn giảng dạy</label>
-                                        <textarea name="gvhd.monGiangDay" required style="height:100px; margin-bottom: 30px" class="form-control" ></textarea>
-                                        <label>Nội dung khác</label>
-                                        <textarea name="gvhd.khac" required style="height:100px; margin-bottom: 30px" class="form-control"></textarea>
+                                        <s:textarea  value="%{gvhd.congTrinhNghienCuu}"  name="gvhd.congTrinhNghienCuu" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control"></s:textarea>
+                                            <div class="clear"></div>
+                                            <label>Sách xuất bản</label>
+                                        <s:textarea value="%{gvhd.sachXuatBan}" name="gvhd.sachXuatBan" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control"></s:textarea>
+                                            <label>Các môn giảng dạy</label>
+                                        <s:textarea value="%{gvhd.monGiangDay}" name="gvhd.monGiangDay" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
+                                            <label>Nội dung khác</label>
+                                        <s:textarea value="%{gvhd.khac}" name="gvhd.khac" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control"></s:textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <script>
-                                    document.querySelector('#formValidate').addEventListener('submit', function (e) {
-                                        var form = this;
-                                        e.preventDefault();
-                                        swal({
-                                            title: "CẬP NHẬT THÔNG TIN",
-                                            text: "Bạn có chắc chắn muốn cập nhật thông tin cá nhân không?",
-                                            icon: "warning",
-                                            buttons: [
-                                                'KHÔNG, Hãy hủy bỏ!',
-                                                'CÓ, Tôi chắc chắn!'
-                                            ],
-                                            dangerMode: true,
-                                        }).then(function (isConfirm) {
-                                            if (isConfirm) {
-                                                swal({
-                                                    title: 'ĐANG XỬ LÝ',
-                                                    text: 'Bạn đã xác nhận cập nhật thông tin các nhân, xin vui lòng đợi phản hồi từ hệ thống!',
-                                                    icon: 'success'
-                                                }).then(function () {
-                                                    form.submit();
-                                                });
-                                            } else {
-                                                swal("HỦY BỎ", "Bạn đã hủy bỏ việc cập nhật thông tin cá nhân.", "error");
-                                            }
+                                    <script>
+                                        document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                            var form = this;
+                                            e.preventDefault();
+                                            swal({
+                                                title: "CẬP NHẬT THÔNG TIN",
+                                                text: "Bạn có chắc chắn muốn cập nhật thông tin cá nhân không?",
+                                                icon: "warning",
+                                                buttons: [
+                                                    'KHÔNG, Hãy hủy bỏ!',
+                                                    'CÓ, Tôi chắc chắn!'
+                                                ],
+                                                dangerMode: true,
+                                            }).then(function (isConfirm) {
+                                                if (isConfirm) {
+                                                    swal({
+                                                        title: 'ĐANG XỬ LÝ',
+                                                        text: 'Bạn đã xác nhận cập nhật thông tin các nhân, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                        icon: 'success'
+                                                    }).then(function () {
+                                                        form.submit();
+                                                    });
+                                                } else {
+                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ việc cập nhật thông tin cá nhân.", "error");
+                                                }
+                                            });
                                         });
-                                    });
-                                </script>
-                                <button style="float: right;" class="btn btn-success">ĐĂNG KÝ THÔNG TIN</button>
-                            </form>
-                            <div class="clear"></div>
-                        </div>
+                                    </script>
+                                    <button style="float: right;" class="btn btn-success">CẬP NHẬT THÔNG TIN CÁ NHÂN</button>
+                                </form>
+                                <div class="clear"></div>
+                            </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>
                     </div>
                 </div>
@@ -142,5 +142,8 @@
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
             <%@include file="../../mains/js.jsp" %>
     </body>
+    <%
+    }
+    %>
 </html>
 

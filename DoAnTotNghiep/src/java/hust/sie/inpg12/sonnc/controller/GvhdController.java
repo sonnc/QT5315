@@ -831,6 +831,48 @@ public class GvhdController {
         return r;
     }
 
+    public int getMaGVHDId(String email) {
+        List<GiangVienHuongDan> lst = new ArrayList<>();
+        int m = 0;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM GiangVienHuongDan where email =:email");
+            q.setParameter("email", email);
+            lst = q.list();
+            if (lst.size() != 0) {
+                m = lst.get(0).getMaGvpt();
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return m;
+    }
+
+    public GiangVienHuongDan getInfoGVHD(int ma) {
+        GiangVienHuongDan gvhd = new GiangVienHuongDan();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            gvhd = (GiangVienHuongDan) session.get(GiangVienHuongDan.class, ma);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return gvhd;
+    }
+
     public List<Object[]> GetAllBaoCaoQTCK() {
         List<Object[]> results = new ArrayList<>();
         try {
@@ -846,8 +888,13 @@ public class GvhdController {
                     + "select b.link\n"
                     + "from sinh_vien_thuc_tap a join sinh_vien_file b on a.mssv = b.mssv\n"
                     + "where b.loai_file = 2\n"
-                    + ") as baocaocuoiky\n"
-                    + "from sinh_vien a join sinh_vien_thuc_tap c on a.mssv = c.mssv");
+                    + ") as baocaocuoiky,\n"
+                    + "(\n"
+                    + "select b.link\n"
+                    + "from sinh_vien_thuc_tap a join sinh_vien_file b on a.mssv = b.mssv\n"
+                    + "where b.loai_file = 3\n"
+                    + ") as danhgia\n"
+                    + "from sinh_vien a join sinh_vien_thuc_tap c on a.mssv = c.mssv;");
             results = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -861,5 +908,4 @@ public class GvhdController {
         return results;
     }
 
-   
 }

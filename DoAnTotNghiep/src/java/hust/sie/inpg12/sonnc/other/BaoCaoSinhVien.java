@@ -19,6 +19,24 @@ public class BaoCaoSinhVien {
     private String bcck;
     private String tenBCQT;
     private String tenBCCK;
+    private String danhGia;
+    private String tenDanhGia;
+
+    public String getTenDanhGia() {
+        return tenDanhGia;
+    }
+
+    public void setTenDanhGia(String tenDanhGia) {
+        this.tenDanhGia = tenDanhGia;
+    }
+
+    public String getDanhGia() {
+        return danhGia;
+    }
+
+    public void setDanhGia(String danhGia) {
+        this.danhGia = danhGia;
+    }
 
     public String getTenBCQT() {
         return tenBCQT;

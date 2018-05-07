@@ -22,6 +22,7 @@ import hust.sie.inpg12.sonnc.entities.SinhVienDangKy;
 import hust.sie.inpg12.sonnc.entities.SinhVienDiem;
 import hust.sie.inpg12.sonnc.entities.SinhVienInfo;
 import hust.sie.inpg12.sonnc.entities.SinhVienThucTap;
+import hust.sie.inpg12.sonnc.other.BaoCaoSinhVien;
 import hust.sie.inpg12.sonnc.other.CongTyvaDaiDienCongTy;
 import hust.sie.inpg12.sonnc.other.DanhSachSinhVien;
 import hust.sie.inpg12.sonnc.other.DetaiCongtyNguoihuongdan;
@@ -70,7 +71,16 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
     private List<Email> lstEmailGVHDUnread = new ArrayList<>();
     private List<Email> lstEmailGVHDSend = new ArrayList<>();
     private List<QuyTrinh> lstQuyTrinh = new ArrayList<>();
+    private List<BaoCaoSinhVien> lstBaoCaoSinhVien = new ArrayList<>();
     private GiangVienHuongDan gvhd = new GiangVienHuongDan();
+
+    public List<BaoCaoSinhVien> getLstBaoCaoSinhVien() {
+        return lstBaoCaoSinhVien;
+    }
+
+    public void setLstBaoCaoSinhVien(List<BaoCaoSinhVien> lstBaoCaoSinhVien) {
+        this.lstBaoCaoSinhVien = lstBaoCaoSinhVien;
+    }
 
     public GiangVienHuongDan getGvhd() {
         return gvhd;
@@ -257,7 +267,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
 
     public String getAllDeTaiSV() {
         try {
-            List<Object[]>  results = gvhdController.getAllDeTaiSV();
+            List<Object[]> results = gvhdController.getAllDeTaiSV();
             for (Object[] result : results) {
                 SvDtCtNhd d = new SvDtCtNhd();
                 d.setMssv((int) result[0]);
@@ -537,10 +547,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             java.sql.Date ngayThang = new java.sql.Date(date.getTime());
             String link = null;
             try {
-                path = request.getSession().getServletContext().getRealPath("/").concat("data/tailieu/gvhd/");
+                path = request.getSession().getServletContext().getRealPath("/").concat("file/gvhd/");
                 File fileToCreate = new File(path, this.myFileFileName);
                 FileUtils.copyFile(this.myFile, fileToCreate);
-                link = "data/tailieu/gvhd/" + myFileFileName;
+                link = "file/gvhd/" + myFileFileName;
                 System.out.println(link);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -845,10 +855,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
     public String SaveThongTinCaNhanGVHD() {
         String avatar = null;
         try {
-            path = request.getSession().getServletContext().getRealPath("/").concat("data/avatar/gvhd/");
+            path = request.getSession().getServletContext().getRealPath("/").concat("file/image/avatar/");
             File fileToCreate = new File(path, this.myFileFileName);
             FileUtils.copyFile(this.myFile, fileToCreate);
-            avatar = "data/tailieu/gvhd/" + myFileFileName;
+            avatar = "file/image/avatar/" + myFileFileName;
             System.out.println(avatar);
         } catch (Exception e) {
             e.printStackTrace();
@@ -859,12 +869,46 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         gvhd = this.gvhd;
         gvhd.setAvatar(avatar);
         if (gvhdController.SaveThongTinCaNhan(gvhd)) {
-            session.put("saveThongTinCaNhanGVHD", "Đăng ký thông tin cá nhân thành công.");
+            session.put("rule", 2);
+            session.put("messageRegister", "Đăng ký thông tin cá nhân thành công.");
         } else {
-            session.put("saveThongTinCaNhanGVHD", "Đã có lỗi xảy ra, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
+            session.put("messageRegister", "Đã có lỗi xảy ra, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
+            return ERROR;
         }
         return SUCCESS;
     }
+
+    public String GetAllBaoCaoQTCK() {
+        List<Object[]> results = gvhdController.GetAllBaoCaoQTCK();
+        for (Object[] result : results) {
+            BaoCaoSinhVien a = new BaoCaoSinhVien();
+            a.setMssv((int) result[0]);
+            a.setHoTen((String) result[1]);
+            a.setLop((String) result[2]);
+            a.setKhoa((int) result[3]);
+            a.setKyThucTap((int) result[4]);
+            if ((String) result[5] == null) {
+               a.setBcqt("javascript:void(0)");
+               a.setTenBCQT("Không có");
+            } else {
+                a.setBcqt((String) result[5]);
+                a.setTenBCQT("Tải xuống");
+            }
+            if ((String) result[6] == null) {
+               a.setBcck("javascript:void(0)");
+               a.setTenBCCK("Không có");
+            } else {
+                a.setBcck((String) result[6]);
+                a.setTenBCCK("Tải xuống");
+            }
+            System.out.println((String) result[5]);
+            System.out.println((String) result[6]);
+            lstBaoCaoSinhVien.add(a);
+        }
+        session.put("GetAllBaoCaoQTCK", "GetAllBaoCaoQTCK");
+        return SUCCESS;
+    }
+ 
 
     @Override
     public void setSession(Map<String, Object> map) {

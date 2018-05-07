@@ -33,7 +33,7 @@
                 }, 1000);
         </script>
     </head>
-    <body onLoad="mess()" class="preloading">
+    <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -71,6 +71,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
+                            <%                                if (session.getAttribute("messageRegister") != null) {
+                        %>
+                        <script type="text/javascript">
+                            swal("Thông báo", "<%=session.getAttribute("messageRegister")%>", "info");
+                        </script>
+                        <%
+                                session.removeAttribute("messageRegister");
+                            }
+                        %>
                             <form role="form" id="formValidate" action="sinhVienDangKyThongTin" method="post" enctype = "multipart/form-data"> 
                                 <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">

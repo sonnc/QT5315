@@ -43,7 +43,7 @@
         if (session.getAttribute("getAllCongTyforSV") != null) {
             session.removeAttribute("getAllCongTyforSV");
     %>
-    <body onLoad="mess()" class="preloading">
+    <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -112,6 +112,7 @@
                                                 <div class="post-heading">
                                                     <p style="margin: 0;"><a class="btn-open-popup<s:property value="maCongTy"/>"  style="transition: 0.3s;" href="#"><strong><s:property value="tenCongTy"/></strong></a></p>
                                                     <!--popup content-->
+                                                    <div class="preloading">
                                                     <div id="to-popup<s:property value="maCongTy"/>" style="background: #F9F9F9; color: #333333; display: none; width: 60%; height: 90%; overflow: auto;
                                                          position: fixed; top: 5%; z-index: 90; left: 50%; margin-left: -31%; padding: 15px;">
                                                         <span id="btn-close<s:property value="maCongTy"/>" style="transition:0.2s; display: block; width: 40px; height: 40px; position: absolute; top: 0; right: 0; cursor: pointer;">
@@ -141,6 +142,7 @@
 
                                                         </div><!--end #popup-content-->
                                                     </div> <!--to-popup end-->
+                                                </div>
                                                 </div>
                                             </div>
                                             <p class="max-lines" style="margin: 0; font-size: 13px"><strong>Mô tả công ty: </strong><s:property value="moTa"/> </p>

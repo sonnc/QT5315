@@ -8,6 +8,7 @@ package hust.sie.inpg12.sonnc.action;
 import com.opensymphony.xwork2.ActionSupport;
 import hust.sie.inpg12.sonnc.controller.SinhVienController;
 import hust.sie.inpg12.sonnc.entities.*;
+import hust.sie.inpg12.sonnc.other.DeTaiSVDK;
 import hust.sie.inpg12.sonnc.other.DetaiCongtyNguoihuongdan;
 import hust.sie.inpg12.sonnc.other.SoKhop;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +53,24 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
     private List<Email> lstEmailSVRead = new ArrayList<>();
     private List<Email> lstEmailSVUnread = new ArrayList<>();
     private List<DotThucTap> lstDotThucTap = new ArrayList<>();
+    private List<SinhVienDangKy> lstSinhVienDangKys = new ArrayList<>();
+    private List<DeTaiSVDK> lstSVDKs = new ArrayList<>();
+
+    public List<DeTaiSVDK> getLstSVDKs() {
+        return lstSVDKs;
+    }
+
+    public void setLstSVDKs(List<DeTaiSVDK> lstSVDKs) {
+        this.lstSVDKs = lstSVDKs;
+    }
+
+    public List<SinhVienDangKy> getLstSinhVienDangKys() {
+        return lstSinhVienDangKys;
+    }
+
+    public void setLstSinhVienDangKys(List<SinhVienDangKy> lstSinhVienDangKys) {
+        this.lstSinhVienDangKys = lstSinhVienDangKys;
+    }
 
     public List<DotThucTap> getLstDotThucTap() {
         return lstDotThucTap;
@@ -257,6 +277,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         } catch (Exception e) {
             e.printStackTrace();
         }
+        session.put("messageRegister", "Đăng ký không thành công. Đã có lỗi xảy ra.");
         return ERROR;
     }
 
@@ -269,24 +290,16 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
      */
     public String SinhVienCapNhatThongTin() {
         try {
-
-            //Phải lấy thêm trường dữ liệu thông tin cúa sinh viên 
-            // sau đó mới bắt đầu xem trường nào cần thay đổi, 
-            // trường nào cần giữ lại thông tin
-            String date = request.getParameter("ngaySinh");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-            java.util.Date dateString = sdf.parse(date);
-            java.sql.Date ngaySinh = new java.sql.Date(dateString.getTime());
-            sinhVien.setMssv((int) session.get("mssv"));
-            sinhVien.setNgaySinh(ngaySinh);
             sinhVienInfo.setMssv((int) session.get("mssv"));
-            if (sinhVienController.saveSinhVienInfo(sinhVien, sinhVienInfo)) {
-                return SUCCESS;
+            if (sinhVienController.updateSinhVienThongTin(sinhVienInfo)) {
+                session.put("messageUpdateInfoSV", "Cập nhật thông tin thành công.");
+            } else {
+                session.put("messageUpdateInfoSV", "Cập nhật thông tin thất bại. Vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ERROR;
+        return SUCCESS;
     }
 
     /**
@@ -359,6 +372,23 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         return SUCCESS;
     }
 
+    public String GetAllDangKyDeTai() {
+        List<SinhVienThucTap> lstSVTT = new ArrayList<>();
+        List<SinhVienDangKy> lstSVDK = new ArrayList<>();
+        lstSVTT = sinhVienController.GetDotThucTapSV((int) session.get("mssv"));
+        if (lstSVTT.size() == 0) {
+            return "DANGKYKYTHUCTAP";
+        } else {
+            lstSVDK = sinhVienController.getListDeTaiMotSVDK((int) session.get("mssv"), 0);
+            if (lstSVDK.size() == 0) {
+                session.put("messageGetAllDangKyDeTai", "Bạn chưa đăng ký đề tài nào.");
+            } else {
+                lstSinhVienDangKys = sinhVienController.getListDeTaiMotSVDK((int) session.get("mssv"), lstSVTT.get(0).getDotThucTap());
+            }
+        }
+        return SUCCESS;
+    }
+
     /**
      * Phương thức đăng ký đề tài thông tin sinh viên So khớp thông tin gồm có 2
      * phần trình độ và thông tin so khớp: Trình độ gồm có 5 bậc: khongbiet =
@@ -385,11 +415,12 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         String strSKDT = null;
         try {
             int maDeTai = Integer.parseInt(request.getParameter("maDeTai"));
-            lstSVDK = sinhVienController.getListDeTaiMotSVDK((int) session.get("mssv"));
+
             lstSVTT = sinhVienController.GetDotThucTapSV((int) session.get("mssv"));
             if (lstSVTT.size() == 0) {
                 return "DANGKYKYTHUCTAP";
             } else {
+                lstSVDK = sinhVienController.getListDeTaiMotSVDK((int) session.get("mssv"), lstSVTT.get(0).getDotThucTap());
                 // lấy thông tin đợt thực tập ở đây và kiểm tra xem có bị quá hạn đăng ký thực tập hay không?\
                 if (lstSVDK.size() < 3) {
                     // thuc hien dang ky de tai
@@ -430,7 +461,8 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
                         svdk.setMaDeTai(deTai.getMaDeTai());
                         svdk.setMssv((int) session.get("mssv"));
                         svdk.setTrangThai(2);
-                        svdk.setSoKhop((phanTramSoKhop / count) * 100);
+                        DecimalFormat f = new DecimalFormat("##.00");
+                        svdk.setSoKhop(Double.parseDouble(f.format((double) ((phanTramSoKhop / count) * 100))));
                         java.util.Date utilDate = new java.util.Date();
                         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
                         svdk.setNgayDangKy(sqlDate);
@@ -552,10 +584,52 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
      * Phương thức lấy toàn bộ danh sách đề tài sinh viên đã đăng ký
      *
      */
-//    public String getAllDeTaiSVDK(){
-//    
-//    
-//    }
+    public String getAllDeTaiSVDK() {
+        try {
+            List<SinhVienThucTap> lstSVTT = sinhVienController.GetDotThucTapSV((int) session.get("mssv"));
+            if (lstSVTT.size() == 0) {
+                return "DANGKYKYTHUCTAP";
+            } else {
+                List<Object[]> results = sinhVienController.getAllDeTaiDKBySV((int) session.get("mssv"), lstSVTT.get(0).getDotThucTap());
+                for (Object[] result : results) {
+                    DeTaiSVDK d = new DeTaiSVDK();
+                    d.setMaDeTai((int) result[0]);
+                    d.setMaCongTy((int) result[1]);
+                    d.setMaGvhd((int) result[2]);
+                    d.setNgayDang((Date) result[3]);
+                    d.setNguoiDang((String) result[4]);
+                    d.setNoiDung((String) result[5]);
+                    d.setTenDeTai((String) result[6]);
+                    d.setYeuCauKhac((String) result[7]);
+                    d.setYeuCauLapTrinh((String) result[8]);
+                    d.setHanDangKy((Date) result[9]);
+                    d.setLogo((String) result[10]);
+                    d.setTenCongTy((String) result[11]);
+                    d.setNguoiHuongDan((String) result[12]);
+                    d.setNgayDangKy((Date) result[13]);
+                    d.setSoKhop((double) result[14]);
+                    if ((int) result[15] == 0) {
+                        d.setTrangThai("TỪ CHỐI");
+                    } else if ((int) result[15] == 1) {
+                        d.setTrangThai("CHẤP NHẬN");
+                    } else if ((int) result[15] == 2) {
+                        d.setTrangThai("CHỜ DUYỆT");
+                    }
+                    lstSVDKs.add(d);
+                }
+                if (results.size() == 0) {
+                    session.put("messagegetAllDeTaiSVDK", "Bạn chưa đăng ký đề tài nào.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ERROR;
+        }
+        session.put("getAllDeTaiSVDK", "getAllDeTaiSVDK");
+        return SUCCESS;
+
+    }
+
     /**
      * Phương thức này cho phép lấy toàn bộ thông tin về file của sinh viên
      *

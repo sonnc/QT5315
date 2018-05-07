@@ -73,7 +73,7 @@
                                             events: <%=session.getAttribute("getLichTrinh")%>,
                                             eventClick: function (event) {
                                                 if (event.content) {
-                                                    alert(event.content);
+                                                    swal("THÔNG TIN", event.content, "info");
                                                 }
                                             }
                                         });

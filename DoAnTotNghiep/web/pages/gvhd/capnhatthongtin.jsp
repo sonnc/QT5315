@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Đăng ký thông tin</title>
+        <title>Cập nhật thông tin</title>
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
@@ -38,34 +38,7 @@
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
         <div id="wrapper">
-            <header>
-                <div class="navbar navbar-default navbar-static-top">
-                    <div class="container">
-                        <div class="row" style="margin: 0 0 0 0;">
-                            <div class="col-lg-6">
-                                <div class="navbar-header">
-                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                    </button>
-
-                                </div>
-                              <a class="navbar-brand" href="<%=request.getContextPath()%>/home.jsp"><img src="./pages/libs/img/logoEn.png" alt="" style="width: 100%; height: 100%"/></a>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="navbar-collapse collapse ">
-                                    <ul class="nav navbar-nav">
-                                        <li class="dropdown active">
-                                            <a href="logout">Đăng xuất</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>
             <section id="content">
                 <div class="container">

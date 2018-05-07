@@ -32,8 +32,8 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/danhsachsinhvien.jsp">Danh sách sinh viên</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/detaisinhvien.jsp">Đề tài sinh viên</a> </li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/baocao.jsp">Báo cáo sinh viên</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/diemthi.jsp">Điểm thi</a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/diemthi.jsp">Báo cáo(chưa làm)</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/file.jsp">File</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/lichtrinh.jsp">Lịch trình</a></li>
                                 </ul>
@@ -46,6 +46,7 @@
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/detaicongty.jsp">Đánh giá (chưa làm)</a> </li>
                                 </ul>
                             </li>
+                            <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/email.jsp">Thông báo</a></li>
                             <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/email.jsp">Email</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false"><img style="width: 25px; height: 25px" src="./pages/libs/img/avatar.png"></a>

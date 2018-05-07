@@ -27,9 +27,19 @@
        
         <action name="sinhVienDangKyThongTin" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="SinhVienDangKyThongTin">
             <result name="success" type="redirect">home.jsp</result>
-            <result name="error" type="redirect">404.jsp</result>
+            <result name="error" type="redirect">/pages/sinhvien/dangkythongtin.jsp</result>
             <result name="input">/pages/sinhvien/dangkythongtin.jsp</result>
         </action>
+        <action name="SinhVienCapNhatThongTin" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="SinhVienCapNhatThongTin">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">updateSVI</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="updateSVI">
+            <result>/pages/sinhvien/capnhatthongtin.jsp</result>
+        </action>
+        
         <action name="getAllDeTai" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getAllDeTai">
             <result name="success">/pages/sinhvien/detai.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
@@ -114,7 +124,10 @@
         <action name="dkktt">
             <result>/pages/sinhvien/dangkykythuctap.jsp</result>
         </action>
-        
+        <action name="getAllDeTaiSVDK" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getAllDeTaiSVDK">
+            <result name="success" type="">/pages/sinhvien/detaidangky.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
         
         
@@ -173,9 +186,15 @@
             <result name="error" type="redirect">404.jsp</result>
         </action>
         <action name="UploadFileGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="UploadFileGVHD">
-            <result name="success">/pages/gvhd/file.jsp</result>
+            <result name="success" type="redirectAction" >
+                <param name="actionName">uploadFileGVHD</param>
+            </result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="uploadFileGVHD">
+            <result>/pages/gvhd/file.jsp</result>
+        </action>
+        
         <action name="deleteTaiLieuGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="deleteTaiLieuGVHD">
             <result name="success" type="redirectAction" >
                 <param name="actionName">deleteFile</param>
@@ -258,11 +277,18 @@
             <result>/pages/gvhd/lichtrinh.jsp</result>
         </action>
         <action name="SaveThongTinCaNhanGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="SaveThongTinCaNhanGVHD">
-            <result name="success" type="redirect">home.jsp</result>
+            <result name="success" type="redirectAction" >
+                <param name="actionName">saveInfoGVHD</param>
+            </result>
+            <result name="error">/pages/gvhd/dangkythongtin.jsp</result>
+        </action>
+        <action name="saveInfoGVHD">
+            <result type="redirect" >/home.jsp</result>
+        </action>
+        <action name="GetAllBaoCaoQTCK" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="GetAllBaoCaoQTCK">
+            <result name="success" type="">/pages/gvhd/baocao.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-        
-        
         <!--
         ============== PHẦN ACTION DÀNH CHO NGƯỜI HƯỚNG DẪN ====================
         -->

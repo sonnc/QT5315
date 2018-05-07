@@ -34,7 +34,7 @@
         if (session.getAttribute("getAllDeTai") != null) {
             session.removeAttribute("getAllDeTai");
     %>
-    <body onLoad="mess()" class="preloading">
+    <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -44,7 +44,6 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-
                         <div class="col-lg-8">
                             <%                                if (session.getAttribute("messageDangKyDeTai") != null) {
                             %>

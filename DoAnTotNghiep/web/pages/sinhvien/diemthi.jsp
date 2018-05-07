@@ -76,8 +76,6 @@
                                         <p>Điểm BC Quá Trình: <strong style="color: red"><s:property value="diemBcqt"/></strong></p>
                                         <p>Điểm Quá Trình: <strong style="color: red"><s:property value="diemQuaTrinh"/></strong></p>
                                         <p>Điểm Cuối kỳ: <strong style="color: red"><s:property value="diemCuoiKy"/></strong></p>
-                                        <p>Tổng trung bình: <strong style="color: red">null</strong></p>
-                                        <p>Xếp loại: <strong style="color: red">null</strong></p>
                                     </strong>
                                 </s:iterator>
                             </div>
@@ -92,21 +90,6 @@
                                     </ul>
                                 </s:iterator>
                             </div>
-                        </div>
-
-                        <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
-                             padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
-                            <p style="margin: 0px">THỰC TẬP</p>
-                        </div>
-                        <div>
-                            <p>Công ty cồ phần bkav</p>
-                            <p>Đề tài: IoT - Phát triển hệ thống nhà thông minh tại Việt Nam</p>
-                        </div>
-                        <div id="pagination">
-                            <span class="all">Page 1 of 3</span>
-                            <span class="current">1</span>
-                            <a href="#" class="inactive">2</a>
-                            <a href="#" class="inactive">3</a>
                         </div>
                         <div class="clear"></div>
                     </div>

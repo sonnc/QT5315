@@ -10,8 +10,9 @@
 <html>
     <head>
         <title>Hệ thống đăng ký thực tập trực tuyến - HUST</title>
-        <%@include file="mains/head.jsp" %>
-    
+
+        <%@include file="mains/head.jsp" %> 
+        <script src="./pages/libs/js/jquery.min.js"></script>
     </head>
     <body>
         <div id="wrapper">
@@ -21,6 +22,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
+                            <%                                if (session.getAttribute("messageRegister") != null) {
+                            %>
+                            <script type="text/javascript">
+                                swal("Thông báo", "<%=session.getAttribute("messageRegister")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("messageRegister");
+                                }
+                            %>
                             <%                                for (int i = 0; i < 5; i++) {
                             %>
                             <div class="row" style="margin: 0px">

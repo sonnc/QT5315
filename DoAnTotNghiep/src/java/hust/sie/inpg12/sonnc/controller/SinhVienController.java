@@ -165,12 +165,11 @@ public class SinhVienController {
      * @since v1 - 26.03.18
      * @author SonNC
      */
-    public boolean updateSinhVienThongTin(SinhVien sv, SinhVienInfo svi) {
+    public boolean updateSinhVienThongTin( SinhVienInfo svi) {
         boolean r = false;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.update(sv);
             session.update(svi);
             transaction.commit();
             r = true;
@@ -251,7 +250,6 @@ public class SinhVienController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-
             results = (List<Object[]>) session.createSQLQuery("select d.ma_de_tai, d.ma_cong_ty, d.ma_gvhd, d.ngay_dang,\n"
                     + "d.nguoi_dang, d.noi_dung,d.so_luong, d.so_luong_con,\n"
                     + " d.ten_de_tai, d.yeu_cau_khac, d.yeu_cau_lap_trinh, \n"
@@ -289,13 +287,14 @@ public class SinhVienController {
         return dt;
     }
 
-    public List getListDeTaiMotSVDK(int mssv) {
+    public List getListDeTaiMotSVDK(int mssv, int dotThucTap) {
         List<SinhVienDangKy> lstDeTaiMotSinhVienDangKy = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query q = session.createQuery("FROM SinhVienDangKy WHERE mssv =:ms");
+            Query q = session.createQuery("FROM SinhVienDangKy WHERE mssv =:ms and dotThucTap =:dotThucTap");
             q.setParameter("ms", mssv);
+            q.setParameter("dotThucTap", dotThucTap);
             lstDeTaiMotSinhVienDangKy = q.list();
             transaction.commit();
         } catch (Exception e) {
@@ -724,5 +723,33 @@ public class SinhVienController {
             session.close();
         }
         return lstSVTT;
+    }
+
+    public List<Object[]> getAllDeTaiDKBySV(int mssv, int dotThucTap) {
+        List<Object[]> results = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createSQLQuery("select d.ma_de_tai, d.ma_cong_ty, d.ma_gvhd, d.ngay_dang,\n"
+                    + "d.nguoi_dang, d.noi_dung, d.ten_de_tai, d.yeu_cau_khac, d.yeu_cau_lap_trinh, \n"
+                    + "d.han_dang_ky, c.logo, c.ten_cong_ty, g.ho_ten, e.ngay_dang_ky, e.so_khop, e.trang_thai\n"
+                    + "from de_tai d join cong_ty c on d.ma_cong_ty = c.ma_cong_ty \n"
+                    + "join nguoi_huong_dan g on d.ma_gvhd = g.ma_gvhd\n"
+                    + "join sinh_vien_dang_ky e on e.ma_cong_ty = c.ma_cong_ty \n"
+                    + "where e.dot_thuc_tap =:dotThucTap and e.mssv =:mssv \n"
+                    + "and e.ma_de_tai = d.ma_de_tai");
+            query.setParameter("dotThucTap", dotThucTap);
+            query.setParameter("mssv", mssv);           
+            results = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
     }
 }

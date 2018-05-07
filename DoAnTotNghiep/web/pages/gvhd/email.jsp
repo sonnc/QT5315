@@ -11,19 +11,33 @@
     <head>
         <%@include file="../../mains/head.jsp" %>
         <title>Email</title>
+           <%    if (session.getAttribute("rule") == null) {
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
+            }
+        %>
         <%            if (session.getAttribute("getAllEmailGVHD") == null) {
         %>
         <s:action name="getAllEmailGVHD" executeResult="true" />
         <%
             }
         %>
-   
+    <script>
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
+        </script>
     </head>
     <%
         if (session.getAttribute("getAllEmailGVHD") != null) {
             session.removeAttribute("getAllEmailGVHD");
     %>
-    <body onLoad="mess()">
+    <body class="preloading">
+        <div id="preload" class="preload-container text-center">
+            <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
+        </div>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>

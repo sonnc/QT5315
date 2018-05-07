@@ -16,19 +16,34 @@
         <script src="./pages/libs/calendar/moment.min.js"></script>
         <script src="./pages/libs/calendar/jquery.min.js"></script>
         <script src="./pages/libs/calendar/fullcalendar.min.js"></script>
+        <%    if (session.getAttribute("rule") == null) {
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
+            }
+        %>
         <%            if (session.getAttribute("getLichTrinhForGVHD") == null) {
         %>
         <s:action name="getLichTrinhForGVHD" executeResult="true"/>
         <%
             }
         %>
+        <script>
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
+        </script>
     </head>
     <%
         if (session.getAttribute("getLichTrinhForGVHD") != null) {
             session.removeAttribute("getLichTrinhForGVHD");
 
     %>
-    <body>
+    <body class="preloading">
+        <div id="preload" class="preload-container text-center">
+            <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
+        </div>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>
@@ -36,6 +51,16 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
+                            
+                             <%                                if (session.getAttribute("messageLichTrinh") != null) {
+                            %>
+                            <script type="text/javascript">
+                                    swal("Thông báo", "<%=session.getAttribute("messageLichTrinh")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("messageLichTrinh");
+                                }
+                            %>
                             <div>
                                 <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
@@ -56,7 +81,7 @@
                                             events: <%=session.getAttribute("getLichTrinh")%>,
                                             eventClick: function (event) {
                                                 if (event.content) {
-                                                    alert(event.content);
+                                                    swal("THÔNG TIN", event.content, "info");
                                                 }
                                             }
                                         });
@@ -66,8 +91,8 @@
                                 </script>
                                 <div id="calendar"></div>
                                 <div style="margin: 50px 0 50px 0" class="alert alert-success">
-                                    <p>ĐĂNG LỊCH TRÌNH</p>
-                                    <form class="contactForm" id="from" role="form" id="formValidate" action="SaveLichTrinh" method="post"> 
+                                    <p style="text-align: center; font-size: 20px; margin: 5px 0 5px 0">ĐĂNG LỊCH TRÌNH</p>
+                                    <form class="contactForm" id="formValidate" role="form" id="formValidate" action="SaveLichTrinh" method="post"> 
                                         <div class="form-group">
                                             <input name="tieuDe" class="form-control" id="name" placeholder="Tiêu đề: ... "  required="true">
                                             <div class="validation"></div>
@@ -84,12 +109,39 @@
                                             <textarea class="form-control" name="noiDung" rows="5"  placeholder="Nội dung: ..."  required="true"></textarea>
                                             <div class="validation"></div>
                                         </div>
+                                        <script>
+                                            document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                                var form = this;
+                                                e.preventDefault();
+                                                swal({
+                                                    title: "ĐĂNG TÀI LIỆU",
+                                                    text: "Bạn có chắc chắn muốn đăng lịch trình này lên hệ thống không?",
+                                                    icon: "warning",
+                                                    buttons: [
+                                                        'KHÔNG, Hãy hủy bỏ!',
+                                                        'CÓ, Tôi chắc chắn!'
+                                                    ],
+                                                    dangerMode: true,
+                                                }).then(function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        swal({
+                                                            title: 'ĐANG XỬ LÝ',
+                                                            text: 'Bạn đã xác nhận đăng lịch trình, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                            icon: 'success'
+                                                        }).then(function () {
+                                                            form.submit();
+                                                        });
+                                                    } else {
+                                                        swal("HỦY BỎ", "Bạn đã hủy bỏ đăng lịch trình !", "error");
+                                                    }
+                                                });
+                                            });
+                                        </script>
                                         <div class="text-center"><button type="submit" class="btn btn-theme btn-block btn-md">Đăng lịch trình</button></div>
-
                                     </form>
                                 </div>
                                 <div style="margin: 50px 0 50px 0" class="alert alert-info">
-                                    <p>DANH SÁCH LỊCH TRÌNH</p>
+                                     <p style="text-align: center; font-size: 20px; margin: 5px 0 5px 0">DANH SÁCH LỊCH TRÌNH</p>
                                     <table border="1">
                                         <tr>
                                         <style>
@@ -114,6 +166,35 @@
                                                 <td id="theTD"><s:property value="ngayKetThuc"/></td>
                                                 <td id="theTD">
                                                     <a  id="idLichTrinh<s:property value="id"/>" href="DeleteLichTrinh?id=<s:property value="id"/>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                    <script>
+                                                        var action = document.getElementById("idLichTrinh<s:property value="id"/>");
+                                                        action.addEventListener('click', function (e) {
+                                                            var form = this;
+                                                            e.preventDefault();
+                                                            swal({
+                                                                title: "XÓA TÀI LIỆU",
+                                                                text: "Bạn có chắc chắn muốn xóa bỏ lịch trình <s:property value="tieuDe"/>?",
+                                                                icon: "warning",
+                                                                buttons: [
+                                                                    'KHÔNG, Hãy hủy bỏ!',
+                                                                    'CÓ, Tôi chắc chắn!'
+                                                                ],
+                                                                dangerMode: true,
+                                                            }).then(function (isConfirm) {
+                                                                if (isConfirm) {
+                                                                    swal({
+                                                                        title: 'ĐANG XỬ LÝ',
+                                                                        text: 'Bạn đã xác nhận xóa lịch trình, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                                        icon: 'success'
+                                                                    }).then(function () {
+                                                                        window.location.href = document.getElementById('idLichTrinh<s:property value="id"/>').href;
+                                                                    });
+                                                                } else {
+                                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ việc xóa lịch trình", "error");
+                                                                }
+                                                            });
+                                                        });
+                                                    </script>
                                                 </td>
                                             </tr>
                                         </s:iterator>

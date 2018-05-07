@@ -14,7 +14,7 @@
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
         <script src="./pages/libs/js/sonnc.js"></script>
-          <%    if (session.getAttribute("rule") == null) {
+        <%    if (session.getAttribute("rule") == null) {
                 String l = (String) session.getAttribute("httpURL");
                 response.sendRedirect(l + "login.jsp");
                 return;
@@ -33,12 +33,10 @@
             }
         %>
         <script>
-           window.onload = function () {
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 0);
-            };
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
         </script>
     </head>
     <%
@@ -46,7 +44,7 @@
             session.removeAttribute("getSinhVienThongTinByClass");
     %>
 
-    <body onLoad="mess()" class="preloading">
+    <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -56,8 +54,16 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8">
+                        <%                                if (session.getAttribute("messageUpdateInfoSV") != null) {
+                        %>
+                        <script type="text/javascript">
+                            swal("Thông báo", "<%=session.getAttribute("messageUpdateInfoSV")%>", "info");
+                        </script>
+                        <%
+                                session.removeAttribute("messageUpdateInfoSV");
+                            }
+                        %>
                         <form role="form" id="formValidate" action="SinhVienCapNhatThongTin" method="post" enctype = "multipart/form-data"> 
-
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                 <p style="margin: 0px">THÔNG TIN CÁ NHÂN</p>
@@ -65,41 +71,23 @@
                             <div class="row">    
                                 <%--   <s:iterator value="sinhVien"> --%>
                                 <div class="col-lg-4">
-                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.hoTen" value="%{sinhVien.hoTen}" placeholder="Họ và tên" required="true"/>
-                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.lop" value="%{sinhVien.lop}" placeholder="Lớp" required="true"/>
-                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.khoa"  value="%{sinhVien.khoa}" placeholder="Khóa" required="true"/>
-                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.khoaVien"  value="%{sinhVien.khoaVien}" placeholder="Khoa/ Viện" required="true"/>
-                                    <select style="margin-bottom: 15px;height: 45px;" name="sinhVien.gioiTinh"  value="%{sinhVien.gioiTinh}" class="form-control" required="required"> 
-                                        <option>Giới tính</option>
-                                        <option value="True">Nam</option>
-                                        <option value="False">Nữ</option>
-                                    </select>
+                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.hoTen" readonly="true" value="%{sinhVien.hoTen}" placeholder="Họ và tên" required="true"/>
+                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.lop" readonly="true" value="%{sinhVien.lop}" placeholder="Lớp" required="true"/>
+                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.khoa" readonly="true"  value="%{sinhVien.khoa}" placeholder="Khóa" required="true"/>
+                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.khoaVien" readonly="true"  value="%{sinhVien.khoaVien}" placeholder="Khoa/ Viện" required="true"/>
+
                                 </div>
                                 <div class="col-lg-4">
-                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.ngaySinh"  value="%{sinhVien.ngaySinh}" placeholder="Ngày sinh" required="true" />
-                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.diaChi"  value="%{sinhVien.diaChi}" placeholder="Địa chỉ" required="true" />
-                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.dienThoai"  value="%{sinhVien.dienThoai}" placeholder="Điện thoại" required="true" />
-                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.email"  value="%{sinhVien.email}" readonly="true" placeholder="Email" required="true" />
-                                    <select style="margin-bottom: 15px;height: 45px;" name="sinhVien.laptop"  value="%{sinhVien.laptop}" class="form-control" required="true"> 
-                                        <option value="Null">LapTop</option>
-                                        <option value="True">Có</option>
-                                        <option value="False">Không</option>
-                                    </select>
+                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.ngaySinh"  readonly="true" value="%{sinhVien.ngaySinh}" placeholder="Ngày sinh" />
+                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.diaChi"  readonly="true" value="%{sinhVien.diaChi}" placeholder="Địa chỉ" required="true" />
+                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.dienThoai"  readonly="true" value="%{sinhVien.dienThoai}" placeholder="Điện thoại" required="true" />
+                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.email"  readonly="true" value="%{sinhVien.email}" placeholder="Email" required="true" />
+
                                 </div>
                                 <div class="col-lg-4">
                                     <p>Ảnh đại diện</p>
                                     <img src="%{sinhVien.avatar}" id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
-                                    <s:textfield  name="myFile" type="file" accept="image/*" onchange="loadFile(event)" required="required"/>
-                                    <script>
-                                        var loadFile = function (event) {
-                                            var reader = new FileReader();
-                                            reader.onload = function () {
-                                                var output = document.getElementById('output');
-                                                output.src = reader.result;
-                                            };
-                                            reader.readAsDataURL(event.target.files[0]);
-                                        };
-                                    </script>
+
                                 </div>
                                 <%--  </s:iterator> --%>
                             </div> 
@@ -122,7 +110,7 @@
                                     <label>Ngoại ngữ</label>
                                     <s:textarea name="sinhVienInfo.ngoaiNgu"  value="%{sinhVienInfo.ngoaiNgu}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control"></s:textarea>
                                         <label>Kỹ năng lập trình</label>
-                                    <s:textarea name="sinhVienInfo.kyNangLt"  value="%{sinhVienInfo.kyNangLt}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
+                                    <s:textarea readonly="true" name="sinhVienInfo.kyNangLt"  value="%{sinhVienInfo.kyNangLt}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                         <label>Kỹ năng mềm/ kỹ năng khác</label>
                                     <s:textarea name="sinhVienInfo.kyNangKhac"  value="%{sinhVienInfo.kyNangKhac}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                         <label>Mục tiêu</label>
@@ -139,7 +127,35 @@
                                     <s:textarea name="sinhVienInfo.duAn" value="%{sinhVienInfo.duAn}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
                                     </div>
                                 </div>
-                            <s:submit value="gửi"></s:submit>
+                                <script>
+                                    document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                        var form = this;
+                                        e.preventDefault();
+                                        swal({
+                                            title: "CẬP NHẬT THÔNG TIN",
+                                            text: "Bạn có chắc chắn muốn cập nhật thông tin cá nhân không?",
+                                            icon: "warning",
+                                            buttons: [
+                                                'KHÔNG, Hãy hủy bỏ!',
+                                                'CÓ, Tôi chắc chắn!'
+                                            ],
+                                            dangerMode: true,
+                                        }).then(function (isConfirm) {
+                                            if (isConfirm) {
+                                                swal({
+                                                    title: 'ĐANG XỬ LÝ',
+                                                    text: 'Bạn đã xác nhận cập nhật thông tin các nhân, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                    icon: 'success'
+                                                }).then(function () {
+                                                    form.submit();
+                                                });
+                                            } else {
+                                                swal("HỦY BỎ", "Bạn đã hủy bỏ việc cập nhật thông tin cá nhân.", "error");
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <button style="float: right;" class="btn btn-success">CẬP NHẬT THÔNG TIN</button>
                             </form>
                             <div class="clear"></div>
                         </div>

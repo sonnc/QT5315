@@ -13,6 +13,12 @@
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
+        <%    if (session.getAttribute("rule") == null) {
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
+            }
+        %>
         <style>
             .error{
                 color: red;
@@ -25,12 +31,21 @@
         <s:action name="getAllFileGVHD" executeResult="true"/>
         <%            }
         %>
+        <script>
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
+        </script>
     </head>
     <%
         if (session.getAttribute("getAllFileGVHD") != null) {
             session.removeAttribute("getAllFileGVHD");
     %>
-    <body>
+    <body class="preloading">
+        <div id="preload" class="preload-container text-center">
+            <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
+        </div>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>
@@ -45,10 +60,7 @@
                             <%                                if (session.getAttribute("fileMessage") != null) {
                             %>
                             <script type="text/javascript">
-                                function mess() {
                                     swal("Thông báo", "<%=session.getAttribute("fileMessage")%>", "info");
-                                }
-                                ;
                             </script>
                             <%
                                     session.removeAttribute("fileMessage");
@@ -68,6 +80,34 @@
                                             <s:textfield name="myFile" type="file" accept="file/*" required="required"/>
                                         </div>
                                         <div class="col-lg-4" >
+                                            <script>
+                                                document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                                    var form = this;
+                                                    e.preventDefault();
+                                                    swal({
+                                                        title: "ĐĂNG TÀI LIỆU",
+                                                        text: "Bạn có chắc chắn muốn đăng tài liệu này lên hệ thống không?",
+                                                        icon: "warning",
+                                                        buttons: [
+                                                            'KHÔNG, Hãy hủy bỏ!',
+                                                            'CÓ, Tôi chắc chắn!'
+                                                        ],
+                                                        dangerMode: true,
+                                                    }).then(function (isConfirm) {
+                                                        if (isConfirm) {
+                                                            swal({
+                                                                title: 'ĐANG XỬ LÝ',
+                                                                text: 'Bạn đã xác nhận đăng tài liệu, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                                icon: 'success'
+                                                            }).then(function () {
+                                                                form.submit();
+                                                            });
+                                                        } else {
+                                                            swal("HỦY BỎ", "Bạn đã hủy bỏ đăng tài liệu !", "error");
+                                                        }
+                                                    });
+                                                });
+                                            </script>
                                             <button style="float: right;" class="btn btn-success">Đăng tài liệu</button>
                                         </div>
                                     </div>

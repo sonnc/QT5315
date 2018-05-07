@@ -14,24 +14,33 @@
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
+          <%    if (session.getAttribute("rule") == null) {
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
             }
-        </style>
+        %>
         <%            if (session.getAttribute("getAllCongTy") == null) {
         %>
         <s:action name="getAllCongTy" executeResult="true"></s:action>
         <%
             }
         %>
+        <script>
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
+        </script>
     </head>
     <%
         if (session.getAttribute("getAllCongTy") != null) {
             session.removeAttribute("getAllCongTy");
     %>
-    <body>
+   <body class="preloading">
+        <div id="preload" class="preload-container text-center">
+            <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
+        </div>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>

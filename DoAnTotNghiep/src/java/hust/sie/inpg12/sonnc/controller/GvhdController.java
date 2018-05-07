@@ -555,7 +555,8 @@ public class GvhdController {
             Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
                     + "from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
                     + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
-                    + " where b.ma_gvhd = c.ma_gvhd");
+                    + " where b.ma_gvhd = c.ma_gvhd\n"
+                    + "and b.trang_thai <> 3");
             results = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -830,4 +831,35 @@ public class GvhdController {
         return r;
     }
 
+    public List<Object[]> GetAllBaoCaoQTCK() {
+        List<Object[]> results = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createSQLQuery("select a.mssv, a.ho_ten, a.lop, a.khoa, c.dot_thuc_tap, \n"
+                    + "(  \n"
+                    + "select b.link as link\n"
+                    + "from sinh_vien_thuc_tap a join sinh_vien_file b on a.mssv = b.mssv\n"
+                    + "where b.loai_file = 1\n"
+                    + ")as baocaoquatrinh,\n"
+                    + "(  \n"
+                    + "select b.link\n"
+                    + "from sinh_vien_thuc_tap a join sinh_vien_file b on a.mssv = b.mssv\n"
+                    + "where b.loai_file = 2\n"
+                    + ") as baocaocuoiky\n"
+                    + "from sinh_vien a join sinh_vien_thuc_tap c on a.mssv = c.mssv");
+            results = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+
+   
 }

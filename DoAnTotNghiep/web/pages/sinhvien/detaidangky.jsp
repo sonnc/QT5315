@@ -9,9 +9,32 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
-    <%@include file="../../mains/head.jsp" %>
-  \
-    <body onLoad="mess()" class="preloading">
+    <head>
+        <%@include file="../../mains/head.jsp" %>
+        <%    if (session.getAttribute("rule") == null) {
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
+            }
+        %>
+        <%    if (session.getAttribute("getAllDeTaiSVDK") == null) {
+        %>
+        <s:action name="getAllDeTaiSVDK" executeResult="true"/>
+        <%
+            }
+        %>
+        <script>
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
+        </script>
+    </head>
+    <%
+        if (session.getAttribute("getAllDeTaiSVDK") != null) {
+            session.removeAttribute("getAllDeTaiSVDK");
+    %>
+    <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -21,48 +44,69 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8">
-                        <p>THÔNG TIN ĐỂ TÀI ĐĂNG KÝ</p>
-                        <!--                            vòng lặp bắt đầu từ đây-->
-                        <div class="row" style="margin: 0px">
-                            <div class="col-lg-2">
-                                <img src="pages/libs/img/index.png" alt="" class="img-responsive" style="height: 100%; width: 100%" />
-                            </div>
-                            <div class="col-lg-9">
-                                <article style="margin-bottom: 0px; padding-bottom: 0px">
-                                    <div class="post-image" style="margin: 0px">
-                                        <div class="post-heading">
-                                            <p style="margin: 0;"><a href="#"><strong>IoT - hệ thống điều khiển nhà thông minh thế hệ mới</strong></a></p>
+                        <%                                if (session.getAttribute("messagegetAllDeTaiSVDK") != null) {
+                        %>
+                        <script type="text/javascript">
+                            swal("Thông báo", "<%=session.getAttribute("messagegetAllDeTaiSVDK")%>", "info");
+                        </script>
+                        <%
+                            }
+                            session.removeAttribute("messagegetAllDeTaiSVDK");
+                        %>
+
+                        <s:iterator value="lstSVDKs">
+                            <div class="row" style="margin: 0px">
+                                <div class="col-lg-2">
+                                    <img src="<s:property value="logo"/>" alt="" class="img-responsive" style="height: 100%; width: 100%" />
+                                </div>
+                                <div class="col-lg-8">
+                                    <article style="margin-bottom: 0px; padding-bottom: 0px">
+                                        <div class="post-image" style="margin: 0px">
+                                            <div class="post-heading">
+                                                <p style="margin: 0;"><a href="<%session.getAttribute("URL");%>getDeTaiInfo?maDeTai=<s:property value="maDeTai"/>"><strong><s:property value="tenDeTai"/></strong></a></p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <p style="margin: 0;"><strong>Nội dung:</strong> Ngày 06/02/2018, Hội đồng Trường tổ chức họp phiên thứ 6, nhiệm kỳ 2015-2020 tại Trường ĐHBK Hà Nội với sự tham gia của 15/19 thành viên dưới sự chủ trì của PGS Lê Minh Thắng - Chủ tịch Hội đồng Trường.</p>
-                                    <p style="margin: 0;"><strong>Yêu cầu:</strong> Ngày 06/02/2018, Hội đồng Trường tổ chức họp phiên thứ 6, nhiệm kỳ 2015-2020 tại Trường ĐHBK Hà Nội với sự tham gia của 15/19 thành viên dưới sự chủ trì của PGS Lê Minh Thắng - Chủ tịch Hội đồng Trường.</p>
-                                    <div >
-                                        <ul class="meta-post">
-                                            <li><i class="fa fa-user"></i><a href="#"> Admin</a></li>
-                                            <li><i class="fa fa-comments"></i><a href="#">Ngày đăng: 2018-03-16</a></li>
-                                            <li><i class="fa fa-comments"></i><a href="#">Hạn đăng ký: 2018-04-16</a></li>
-                                        </ul>
-                                        <p>Trạng thái: thành công/ từ chối</p>
-                                        <a style="margin-bottom: 10px" href="#" class="readmore pull-right">Xem chi tiết <i class="fa fa-angle-right"></i></a>
-                                    </div>
-                                </article>
+                                        <style>
+                                            .max-lines {
+                                                text-overflow: ellipsis;
+                                                word-wrap: break-word;
+                                                overflow: hidden;
+                                                max-height: 3.6em;
+                                                line-height: 1.8em;
+                                            }
+                                        </style>
+                                        <p style="margin: 0;"><strong>Công ty: </strong><s:property value="tenCongTy"/></p>
+                                        <p class="max-lines" style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung"/></p>
+                                        <p class="max-lines" style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh"/></p>
+                                        <p class="max-lines" style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac"/></p>
+                                        <div style="margin-bottom: 20px">
+                                            <ul class="meta-post">
+                                                <li style="padding-right: 0px"><i class="fa fa-calendar"></i><a>Ngày đăng: <s:property value="ngayDang"/></a></li>
+                                                <li style="padding-right: 0px"><i class="fa fa-calendar-o"></i><a>Hạn đăng ký: <s:property value="hanDangKy"/></a></li>
+                                                <li style="padding-right: 0px"><i class="fa fa-users"></i><a>Số lượng: <s:property value="soLuong"/></a></li>
+                                            </ul>
+                                        </div>
+                                    </article>
+                                </div> 
+                                <div class="col-lg-2">
+                                     <a class="btn btn-info"><s:property value="trangThai"/></a>
+                                     <p>So khớp: <s:property value="soKhop"/></p>
+                                     <p>Ngày đăng ký: <s:property value="ngayDangKy"/></p>
+                                </div>
                             </div>
-                            <div class="col-lg-1">
-                                <p><strong>0/20</strong></p>
-                                <button class="btn btn-info">Đăng ký</button>
-                            </div>
-                        </div>
-                        <!--Kết thúc vòng lặp-->
+                        </s:iterator>
                         <div class="clear"></div>
                     </div>
                     <%@include file="../../mains/RightSidebar.jsp" %>
                 </div>
             </div>
         </section>
-    </div>   
-    <%@include file="../../mains/footer.jsp" %>
-    <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-        <%@include file="../../mains/js.jsp" %>
-</body>
+        <%@include file="../../mains/footer.jsp" %>
+        <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+            <%@include file="../../mains/js.jsp" %>
+    </body>
+    <%
+    }
+    %>
 </html>
 

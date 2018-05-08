@@ -12,10 +12,10 @@
         <%@include file="../../mains/head.jsp" %>
         <title>Danh sách công ty</title>
         <%    if (session.getAttribute("rule") == null) {
-              String l = (String) session.getAttribute("httpURL");
-              response.sendRedirect(l + "login.jsp");
-              return;
-          }
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
+            }
         %>
         <%            if (session.getAttribute("getAllCongTyforSV") == null) {
         %>
@@ -24,10 +24,10 @@
             }
         %>
         <script>
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 1000);
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
         </script>
         <style>
             .max-lines {
@@ -112,37 +112,36 @@
                                                 <div class="post-heading">
                                                     <p style="margin: 0;"><a class="btn-open-popup<s:property value="maCongTy"/>"  style="transition: 0.3s;" href="#"><strong><s:property value="tenCongTy"/></strong></a></p>
                                                     <!--popup content-->
-                                                    <div class="preloading">
-                                                    <div id="to-popup<s:property value="maCongTy"/>" style="background: #F9F9F9; color: #333333; display: none; width: 60%; height: 90%; overflow: auto;
-                                                         position: fixed; top: 5%; z-index: 90; left: 50%; margin-left: -31%; padding: 15px;">
-                                                        <span id="btn-close<s:property value="maCongTy"/>" style="transition:0.2s; display: block; width: 40px; height: 40px; position: absolute; top: 0; right: 0; cursor: pointer;">
-                                                            <i class="glyphicon glyphicon-remove-sign" style="font-size: 30px; padding: 5px; color: red"></i>
-                                                        </span>
-                                                        <div id="popup-content<s:property value="maCongTy"/>" style="width: 100%; height: 100%; min-height: 400px; min-width: 500px;">
-                                                            <div class="container" style="width: 100%; min-height: 400px; background: #fff; border-radius: 3px;box-shadow: 0 0 1px #ccc; margin-top: 20px;">
-                                                                <div class="row" style="margin-top:15px ">
-                                                                    <div class="col-lg-2">
-                                                                        <img style="height: 100px; width: 100px; margin: 0px" src="<s:property value="logo"/>"/>
-                                                                    </div>
-                                                                    <div class="col-lg-10">
-                                                                        <p style="margin: 0; font-size: 13px"><strong>Tên công ty: </strong><s:property value="tenCongTy"/> </p>
-                                                                        <p style="margin: 0; font-size: 13px"><strong>Mô tả công ty: </strong><s:property value="moTa"/> </p>
-                                                                        <p style="margin: 0; font-size: 13px"><strong>Lĩnh vực hoạt động: </strong><s:property value="linhVucHoatDong"/></p>
-                                                                        <ul class="meta-post" style="font-size: 13px">
-                                                                            <li style="padding-right: 0px"><i class="fa fa-location-arrow"></i><strong>Địa chỉ: </strong><s:property value="diaChi"/></li>
-                                                                            <li style="padding-right: 0px"><i class="fa fa-phone"></i><strong>Điện thoại: </strong><s:property value="dienThoai"/></li>
-                                                                        </ul>
-                                                                        <ul class="meta-post" style="font-size: 13px">
-                                                                            <li style="padding-right: 0px"><i class="fa fa-fax"></i><strong>Email: </strong><s:property value="email"/></li>
-                                                                            <li style="padding-right: 0px"><i class="fa fa-users"></i><strong>Website: </strong><s:property value="website"/></li>
-                                                                        </ul>
+                                                        <div id="to-popup<s:property value="maCongTy"/>" style="background: #F9F9F9; color: #333333; display: none; width: 60%; height: 90%; overflow: auto;
+                                                             position: fixed; top: 5%; z-index: 90; left: 50%; margin-left: -31%; padding: 15px;">
+                                                            <span id="btn-close<s:property value="maCongTy"/>" style="transition:0.2s; display: block; width: 40px; height: 40px; position: absolute; top: 0; right: 0; cursor: pointer;">
+                                                                <i class="glyphicon glyphicon-remove-sign" style="font-size: 30px; padding: 5px; color: red"></i>
+                                                            </span>
+                                                            <div id="popup-content<s:property value="maCongTy"/>" style="width: 100%; height: 100%; min-height: 400px; min-width: 500px;">
+                                                                <div class="container" style="width: 100%; min-height: 400px; background: #fff; border-radius: 3px;box-shadow: 0 0 1px #ccc; margin-top: 20px;">
+                                                                    <div class="row" style="margin-top:15px ">
+                                                                        <div class="col-lg-2">
+                                                                            <img style="height: 100px; width: 100px; margin: 0px" src="<s:property value="logo"/>"/>
+                                                                        </div>
+                                                                        <div class="col-lg-10">
+                                                                            <p style="margin: 0; font-size: 13px"><strong>Tên công ty: </strong><s:property value="tenCongTy"/> </p>
+                                                                            <p style="margin: 0; font-size: 13px"><strong>Mô tả công ty: </strong><s:property value="moTa" escapeHtml="false"/> </p>
+                                                                            <p style="margin: 0; font-size: 13px"><strong>Lĩnh vực hoạt động: </strong><s:property value="linhVucHoatDong" escapeHtml="false"/></p>
+                                                                            <ul class="meta-post" style="font-size: 13px">
+                                                                                <li style="padding-right: 0px"><i class="fa fa-location-arrow"></i><strong>Địa chỉ: </strong><s:property value="diaChi"/></li>
+                                                                                <li style="padding-right: 0px"><i class="fa fa-phone"></i><strong>Điện thoại: </strong><s:property value="dienThoai"/></li>
+                                                                            </ul>
+                                                                            <ul class="meta-post" style="font-size: 13px">
+                                                                                <li style="padding-right: 0px"><i class="fa fa-fax"></i><strong>Email: </strong><s:property value="email"/></li>
+                                                                                <li style="padding-right: 0px"><i class="fa fa-users"></i><strong>Website: </strong><s:property value="website"/></li>
+                                                                            </ul>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-
-                                                        </div><!--end #popup-content-->
-                                                    </div> <!--to-popup end-->
-                                                </div>
+                                                            </div><!--end #popup-content-->
+                                                        </div> <!--to-popup end-->
+                                                       <!--<div id="background-popup<s:property value="maCongTy"/>" style="z-index: 85; position: fixed; height: 100%; width: 100%; background: rgb(0, 0, 0) none repeat scroll 0% 0%; top: 0px; left: 0px; opacity: 0.8;"></div>-->
+                                                   
                                                 </div>
                                             </div>
                                             <p class="max-lines" style="margin: 0; font-size: 13px"><strong>Mô tả công ty: </strong><s:property value="moTa"/> </p>

@@ -14,11 +14,11 @@
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
         <script src="./pages/libs/js/sonnc.js"></script>
-          <%    if (session.getAttribute("rule") == null) {
-                String l = (String) session.getAttribute("httpURL");
-                response.sendRedirect(l + "login.jsp");
-                return;
-            }
+        <%    if (session.getAttribute("rule") == null) {
+              String l = (String) session.getAttribute("httpURL");
+              response.sendRedirect(l + "login.jsp");
+              return;
+          }
         %>
         <style>
             .error{
@@ -26,11 +26,11 @@
                 text-orientation: initial;
             }
         </style>
-         <script>
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 1000);
+        <script>
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
         </script>
     </head>
     <body class="preloading">
@@ -72,14 +72,14 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <%                                if (session.getAttribute("messageRegister") != null) {
-                        %>
-                        <script type="text/javascript">
-                            swal("Thông báo", "<%=session.getAttribute("messageRegister")%>", "info");
-                        </script>
-                        <%
-                                session.removeAttribute("messageRegister");
-                            }
-                        %>
+                            %>
+                            <script type="text/javascript">
+                                swal("Thông báo", "<%=session.getAttribute("messageRegister")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("messageRegister");
+                                }
+                            %>
                             <form role="form" id="formValidate" action="sinhVienDangKyThongTin" method="post" enctype = "multipart/form-data"> 
                                 <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
@@ -138,35 +138,73 @@
                                         Trình độ bao gồm các mức sau:<strong>thanhthao - Thành thạo; tot - Tốt; kha - Khá; biet - Biết; khongbiet - Không biết</strong></p>
                                 </div>
 
+                                <style>
+                                    textarea{
+                                        resize: none;
+                                    }
+                                </style>
                                 <div class="row">
-                                    <style>
-                                        textarea{
-                                            resize: none;
-                                        }
-                                    </style>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <label>Ngoại ngữ</label>
-                                        <textarea name="sinhVienInfo.ngoaiNgu" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Các chứng chỉ Tiếng anh, Tiếng pháp, Tiếng nhật,...."></textarea>
-                                        <div class="clear"></div>
+                                        <s:textarea name="sinhVienInfo.ngoaiNgu"   required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control"/>
+                                    </div>
+                                    <div class="col-lg-12">
                                         <label>Kỹ năng lập trình</label>
-                                        <textarea name="sinhVienInfo.kyNangLt" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng lập trình nào? Hãy viết tất cả các kỹ năng mà bạn có theo hướng dẫn ở trên."></textarea>
+                                        <s:textarea readonly="true" name="sinhVienInfo.kyNangLt"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
+                                    </div>
+                                    <div class="col-lg-12">
                                         <label>Kỹ năng mềm/ kỹ năng khác</label>
-                                        <textarea name="sinhVienInfo.kyNangKhac" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có các kỹ năng mềm nào? Kỹ năng, tình nguyện, văn phòng,..."></textarea>
+                                        <s:textarea name="sinhVienInfo.kyNangKhac"  required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" />
+                                    </div>
+                                    <div class="col-lg-12">
                                         <label>Mục tiêu</label>
-                                        <textarea name="sinhVienInfo.mucTieu" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Mục tiêu của bạn trước - trong - sau khi được thực tập tại doanh nghiệp?"></textarea>
+                                        <s:textarea name="sinhVienInfo.mucTieu"  required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" />
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <label>Hoạt động</label>
-                                        <textarea name="sinhVienInfo.hoatDong" required style="height:100px; margin-bottom: 30px" class="form-control" placeholder="Bạn tham gia các hoạt động nào? Hãy kể ra các hoạt động của bạn."></textarea>
-                                        <label>Giải thưởng</label>
-                                        <textarea name="sinhVienInfo.giaiThuong" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những giải thưởng nào? Học tập, học bổng, nghiên cứu,...?"></textarea>
-                                        <label>Sở thích</label>
-                                        <textarea name="sinhVienInfo.soThich" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn có những ở thích gì? Hãy kể ra một vài sở thích tiêu biểu?"></textarea>
-                                        <label>Dự án</label>
-                                        <textarea name="sinhVienInfo.duAn" required style="height: 100px; margin-bottom: 30px" class="form-control" placeholder="Bạn đã tham gia các dự án nào? Tên dự án, vị trí, vai trò, sản phẩm,...."></textarea>
+                                        <s:textarea name="sinhVienInfo.hoatDong" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control"/>
                                     </div>
-
-                                </div>
+                                    <div class="col-lg-12">
+                                        <label>Giải thưởng</label>
+                                        <s:textarea name="sinhVienInfo.giaiThuong"   required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>Sở thích</label>
+                                        <s:textarea name="sinhVienInfo.soThich"   required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label>Dự án</label>
+                                        <s:textarea name="sinhVienInfo.duAn"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
+                                    </div>
+                                    <script>
+                                        document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                            var form = this;
+                                            e.preventDefault();
+                                            swal({
+                                                title: "ĐĂNG KÝ THÔNG TIN",
+                                                text: "Bạn có chắc chắn muốn ĐĂNG KÝ thông tin cá nhân không?",
+                                                icon: "warning",
+                                                buttons: [
+                                                    'KHÔNG, Hãy hủy bỏ!',
+                                                    'CÓ, Tôi chắc chắn!'
+                                                ],
+                                                dangerMode: true,
+                                            }).then(function (isConfirm) {
+                                                if (isConfirm) {
+                                                    swal({
+                                                        title: 'ĐANG XỬ LÝ',
+                                                        text: 'Bạn đã xác nhận ĐĂNG KÝ thông tin các nhân, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                        icon: 'success'
+                                                    }).then(function () {
+                                                        form.submit();
+                                                    });
+                                                } else {
+                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ việc ĐĂNG KÝ thông tin cá nhân.", "error");
+                                                }
+                                            });
+                                        });
+                                    </script>       
+                                </div> 
                                 <input type="submit" class="btn btn-success" value="Đăng ký thông tin"/>
                             </form>
                             <div class="clear"></div>

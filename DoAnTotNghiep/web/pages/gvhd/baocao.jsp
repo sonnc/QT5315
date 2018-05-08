@@ -71,6 +71,7 @@
                                     <th><strong> Kỳ TT </strong></th>
                                     <th><strong> BCQT </strong></th>
                                     <th><strong> BCCK </strong></th>
+                                    <th><strong> Đánh giá </strong></th>
                                 </tr>
                                 <s:iterator value="lstBaoCaoSinhVien"> 
                                     <tr>
@@ -81,6 +82,7 @@
                                         <td><s:property value="kyThucTap" /></td>
                                         <td><a href="<s:property value="bcqt" />"><s:property value="tenBCQT" /></a></td>
                                         <td><a href="<s:property value="bcck" />"><s:property value="tenBCCK" /></a></td>
+                                        <td><a href="<s:property value="danhGia" />"><s:property value="tenDanhGia" /></a></td>
                                     </tr>
                                 </s:iterator>
                             </table>

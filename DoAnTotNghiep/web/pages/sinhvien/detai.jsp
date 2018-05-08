@@ -77,9 +77,9 @@
                                                 }
                                             </style>
                                             <p style="margin: 0;"><strong>Công ty: </strong><s:property value="tenCongTy"/></p>
-                                            <p class="max-lines" style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung"/></p>
-                                            <p class="max-lines" style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh"/></p>
-                                            <p class="max-lines" style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac"/></p>
+                                            <p class="max-lines" style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung" escapeHtml="false"/></p>
+                                            <p class="max-lines" style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh" escapeHtml="false"/></p>
+                                            <p class="max-lines" style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac" escapeHtml="false"/></p>
                                             <div style="margin-bottom: 20px">
                                                 <ul class="meta-post">
                                                     <li style="padding-right: 0px"><i class="fa fa-calendar"></i><a>Ngày đăng: <s:property value="ngayDang"/></a></li>

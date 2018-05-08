@@ -60,7 +60,7 @@ public class LoginController {
         return lstLogin;
     }
 
-    public List getInfoDaiDienCongTy(String email ) {
+    public List getInfoDaiDienCongTy(String email) {
         List<DaiDienCongTy> lst = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -99,7 +99,7 @@ public class LoginController {
         }
         return lst;
     }
-    
+
     public List getInfoNguoiHuongDan(String email) {
         List<NguoiHuongDan> lst = new ArrayList<>();
         try {
@@ -157,6 +157,45 @@ public class LoginController {
             session.close();
         }
         return r;
+    }
+
+    public List GetAllThongBao() {
+        List<ThongBao> lst = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM ThongBao A ORDER BY A.id DESC");
+            lst = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lst;
+    }
+    
+    public List GetDetailThongBao(int id) {
+        List<ThongBao> lst = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM ThongBao A WHERE A.id =:id");
+            query.setParameter("id", id);
+            lst = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lst;
     }
 
 //    public List<DeTai> getTest() {

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : home
-    Created on : Feb 26, 2018, 9:42:24 AM
+    Document   : detail
+    Created on : May 7, 2018, 9:56:47 PM
     Author     : sonnc
 --%>
 
@@ -18,12 +18,6 @@
                 return;
             }
         %>
-        <%            if (session.getAttribute("GetAllThongBao") == null) {
-
-        %>
-        <s:action name="GetAllThongBao" executeResult="true"/>
-        <%            }
-        %>
         <script>
             setTimeout(function () {
                 $('body').removeClass('preloading');
@@ -31,10 +25,6 @@
             }, 1000);
         </script>
     </head>
-    <%
-        if (session.getAttribute("GetAllThongBao") != null) {
-            session.removeAttribute("GetAllThongBao");
-    %>
     <body>
         <div id="wrapper">
             <%@include file="mains/mainHeader.jsp" %>
@@ -43,15 +33,6 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <%                                if (session.getAttribute("messageRegister") != null) {
-                            %>
-                            <script type="text/javascript">
-                                swal("Thông báo", "<%=session.getAttribute("messageRegister")%>", "info");
-                            </script>
-                            <%
-                                    session.removeAttribute("messageRegister");
-                                }
-                            %>
                             <s:iterator value="lstThongBao">
                                 <div class="row" style="margin: 0px">
                                     <div class="col-lg-2">
@@ -61,14 +42,11 @@
                                         <article style="margin-bottom: 0px; padding-bottom: 0px">
                                             <div class="post-image">
                                                 <div class="post-heading">
-                                                    <h4 style="margin-bottom: -10px"><a href="detail?id=<s:property value="id"/>"><s:property value="tieuDe"/></a></h4>
+                                                    <h4><a href="detail?id=<s:property value="id"/>"><s:property value="tieuDe"/></a></h4>
                                                 </div>
                                             </div>
-                                            <p style="text-overflow: ellipsis;word-wrap: break-word;overflow: hidden;max-height: 5.6em;line-height: 1.8em; margin-bottom: 0px">
-                                                <s:property value="noiDung"/>
-                                            </p>
-                                            <p><strong>. . .</strong></p>
-                                            <div class="bottom-article" style="padding: 0px; margin-top: 0px; float: right; margin-bottom: 20px; border-bottom-color: red">
+                                            <p><s:property value="noiDung" escapeHtml="false"/></p>
+                                            <div class="bottom-article" style="padding: 0px; margin-top: 0px">
                                                 <ul class="meta-post">
                                                     <li><i class="fa fa-calendar"></i><a href="javascript:void(0)"><s:property value="ngayThang"/></a></li>
                                                     <li><i class="fa fa-user"></i><a href="javascript:void(0)"><s:property value="nguoiDang"/></a></li>
@@ -78,15 +56,8 @@
                                     </div>
                                 </div>
                             </s:iterator>
-                            
+
                             <div style="margin-top: 25px"></div>
-                            <div class="clear"></div>
-                            <div id="pagination">
-                                <span class="all">Page 1 of 3</span>
-                                <span class="current">1</span>
-                                <a href="#" class="inactive">2</a>
-                                <a href="#" class="inactive">3</a>
-                            </div>
                             <div class="clear"></div>
                         </div>
                         <%@include file="mains/RightSidebar.jsp" %>
@@ -98,7 +69,5 @@
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
             <%@include file="mains/js.jsp" %>
     </body>
-    <%
-        }
-    %>
 </html>
+

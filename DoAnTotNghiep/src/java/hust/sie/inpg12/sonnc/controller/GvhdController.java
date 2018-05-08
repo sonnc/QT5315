@@ -636,11 +636,11 @@ public class GvhdController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
-                    + "from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
-                    + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
+            Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.* \n"
+                    + "from de_tai b join cong_ty a on a.ma_cong_ty = b.ma_cong_ty\n"
+                    + "join nguoi_huong_dan c on b.ma_gvhd = c.ma_gvhd\n"
                     + "where b.trang_thai = 1 or b.trang_thai = 0\n"
-                    + " and b.ma_gvhd = c.ma_gvhd");
+                    + "and a.ma_cong_ty = c.ma_cong_ty");
             results = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -818,6 +818,25 @@ public class GvhdController {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(gvpt);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public boolean updateThongTinCaNhan(GiangVienHuongDan gvpt) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.update(gvpt);
             transaction.commit();
             r = true;
         } catch (Exception e) {

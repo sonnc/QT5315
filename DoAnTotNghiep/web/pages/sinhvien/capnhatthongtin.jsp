@@ -106,26 +106,37 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <label>Ngoại ngữ</label>
-                                    <s:textarea name="sinhVienInfo.ngoaiNgu"  value="%{sinhVienInfo.ngoaiNgu}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control"></s:textarea>
-                                        <label>Kỹ năng lập trình</label>
-                                    <s:textarea readonly="true" name="sinhVienInfo.kyNangLt"  value="%{sinhVienInfo.kyNangLt}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
-                                        <label>Kỹ năng mềm/ kỹ năng khác</label>
-                                    <s:textarea name="sinhVienInfo.kyNangKhac"  value="%{sinhVienInfo.kyNangKhac}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
-                                        <label>Mục tiêu</label>
-                                    <s:textarea name="sinhVienInfo.mucTieu"  value="%{sinhVienInfo.mucTieu}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label>Hoạt động</label>
-                                    <s:textarea name="sinhVienInfo.hoatDong"  value="%{sinhVienInfo.hoatDong}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
-                                        <label>Giải thưởng</label>
-                                    <s:textarea name="sinhVienInfo.giaiThuong"  value="%{sinhVienInfo.giaiThuong}"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
-                                        <label>Sở thích</label>
-                                    <s:textarea name="sinhVienInfo.soThich"  value="%{sinhVienInfo.soThich}"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
-                                        <label>Dự án</label>
-                                    <s:textarea name="sinhVienInfo.duAn" value="%{sinhVienInfo.duAn}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" ></s:textarea>
-                                    </div>
+                                    <s:textarea name="sinhVienInfo.ngoaiNgu"  value="%{sinhVienInfo.ngoaiNgu}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control"/>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Kỹ năng lập trình</label>
+                                    <s:textarea readonly="true" name="sinhVienInfo.kyNangLt"  value="%{sinhVienInfo.kyNangLt}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Kỹ năng mềm/ kỹ năng khác</label>
+                                    <s:textarea name="sinhVienInfo.kyNangKhac"  value="%{sinhVienInfo.kyNangKhac}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" />
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Mục tiêu</label>
+                                    <s:textarea name="sinhVienInfo.mucTieu"  value="%{sinhVienInfo.mucTieu}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" />
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Hoạt động</label>
+                                    <s:textarea name="sinhVienInfo.hoatDong"  value="%{sinhVienInfo.hoatDong}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control"/>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Giải thưởng</label>
+                                    <s:textarea name="sinhVienInfo.giaiThuong"  value="%{sinhVienInfo.giaiThuong}"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Sở thích</label>
+                                    <s:textarea name="sinhVienInfo.soThich"  value="%{sinhVienInfo.soThich}"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Dự án</label>
+                                    <s:textarea name="sinhVienInfo.duAn" value="%{sinhVienInfo.duAn}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
                                 </div>
                                 <script>
                                     document.querySelector('#formValidate').addEventListener('submit', function (e) {
@@ -154,22 +165,24 @@
                                             }
                                         });
                                     });
-                                </script>
-                                <button style="float: right;" class="btn btn-success">CẬP NHẬT THÔNG TIN</button>
-                            </form>
-                            <div class="clear"></div>
-                        </div>
+                                </script>       
+                            </div> 
+                            <button style="float: right;" class="btn btn-success">CẬP NHẬT THÔNG TIN</button>
+                        </form>
+
+                        <div class="clear"></div>
+
+                    </div>  
                     <%@include file="../../mains/RightSidebar.jsp" %>
                 </div>
             </div>
         </section>
-    </div>   
-    <%@include file="../../mains/footer.jsp" %>
-    <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
-        <%@include file="../../mains/js.jsp" %>
-</body>
-<%    }
-%>
+        <%@include file="../../mains/footer.jsp" %>
+        <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+            <%@include file="../../mains/js.jsp" %>
+    </body>
+    <%    }
+    %>
 </html>
 
 

@@ -171,12 +171,12 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <a href="AcceptRefuseDeTai?maDeTai=<s:property value="maDeTai"/>&status=true">
+                                                <a href="AcceptRefuseDeTai?maDeTai=<s:property value="maDeTai"/>&status=false">
                                                     <button class="btn btn-danger" style="height: 25px; margin-bottom: 5px; font-size: 12px; width: 100%">Từ chối</button>
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="AcceptRefuseDeTai?maDeTai=<s:property value="maDeTai"/>&status=false">
+                                                <a href="AcceptRefuseDeTai?maDeTai=<s:property value="maDeTai"/>&status=true">
                                                     <button class="btn btn-primary" style="height: 25px; margin-bottom: 5px; font-size: 12px; width: 100%">Chấp nhận</button>
                                                 </a>
                                             </div>        

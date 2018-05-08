@@ -62,9 +62,9 @@
                                             </div>
                                         </div>
                                         <p style="margin: 0;"><strong>Công ty: </strong><a href="chiTietCongTy?maCongTy=<s:property value="maCongTy"/>"><s:property value="tenCongTy"/></a></p>
-                                        <p style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung"/></p>
+                                        <p style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung" escapeHtml="false"/></p>
                                         <p style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh"/></p>
-                                        <p style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac"/></p>
+                                        <p style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac" escapeHtml="false"/></p>
                                         <p style="margin: 0;"><strong>Ngày đăng: </strong><s:property value="ngayDang"/></p>
                                         <p style="margin: 0;"><strong>Hạn đăng ký: </strong><s:property value="hanDangKy"/></p>
                                         <p style="margin: 0;"><strong>Số lượng: </strong><s:property value="soLuong"/></p>

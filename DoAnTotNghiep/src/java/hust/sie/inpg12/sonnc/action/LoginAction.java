@@ -16,6 +16,7 @@ import hust.sie.inpg12.sonnc.entities.Login;
 import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
 import hust.sie.inpg12.sonnc.entities.SinhVien;
 import hust.sie.inpg12.sonnc.entities.SinhVienThucTap;
+import hust.sie.inpg12.sonnc.entities.ThongBao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,15 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
     private HttpServletRequest request;
     private Map<String, Object> session;
     List<DeTai> list = new ArrayList<>();
+    private List<ThongBao> lstThongBao = new ArrayList<>();
+
+    public List<ThongBao> getLstThongBao() {
+        return lstThongBao;
+    }
+
+    public void setLstThongBao(List<ThongBao> lstThongBao) {
+        this.lstThongBao = lstThongBao;
+    }
 
     public List<DeTai> getList() {
         return list;
@@ -160,6 +170,19 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
      */
     public String logout() {
         session.clear();
+        return SUCCESS;
+    }
+
+    public String GetAllThongBao() {
+        lstThongBao = loginController.GetAllThongBao();
+        session.put("GetAllThongBao", "GetAllThongBao");
+        return SUCCESS;
+    }
+
+    public String GetDetailThongBao() {
+        int id = Integer.parseInt(request.getParameter("id"));
+        lstThongBao = loginController.GetDetailThongBao(id);
+        session.put("GetDetailThongBao", "GetDetailThongBao");
         return SUCCESS;
     }
 

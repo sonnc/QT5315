@@ -33,6 +33,7 @@
 <link href="./pages/libs/css/cubeportfolio.min.css" rel="stylesheet" />
 <link href="./pages/libs/css/style.css" rel="stylesheet" />
 <link href="./pages/libs/css/load.css" rel="stylesheet" />
+
 <!-- Theme skin -->
 <link id="t-colors" href="./pages/libs/skins/default.css" rel="stylesheet" />
 
@@ -41,3 +42,13 @@
 <link href="./pages/libs/img/logoEn.png" rel="shortcut icon" type="image/x-icon" />
 <script src="./pages/libs/js/sweetalert.min.js"></script>
 <script src="./pages/libs/js/jquery.min.js"></script>
+<script src="./pages/libs/js/editer.js"></script> 
+<script type="text/javascript">
+    bkLib.onDomLoaded(function () {
+        nicEditors.allTextAreas();
+        $('.nicEdit-panelContain').parent().width('100%');
+        $('.nicEdit-panelContain').parent().next().width('100%');
+        $('.nicEdit-main').width('100%');
+        $('.nicEdit-main').height('100px');
+    });
+</script>

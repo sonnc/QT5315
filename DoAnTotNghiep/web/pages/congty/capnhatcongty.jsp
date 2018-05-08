@@ -88,7 +88,7 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <label>Mô tả công ty</label>
-                                        <s:textarea value="%{ct.moTa}" name="ct.moTa" required="true" cssStyle="height: 200px; margin-bottom: 30px" cssClass="form-control" placeholder="Hãy mô tả công ty của bạn,....."></s:textarea>
+                                        <s:textarea value="%{ct.moTa}" id="area" name="ct.moTa" required="true" cssStyle="height: 200px; margin-bottom: 30px" cssClass="form-control" placeholder="Hãy mô tả công ty của bạn,....."></s:textarea>
                                             <label>Lĩnh vực hoạt động</label>
                                         <s:textarea value="%{ct.linhVucHoatDong}" name="ct.linhVucHoatDong" required="true" cssStyle="height: 200px; margin-bottom: 30px" cssClass="form-control" placeholder="Các lĩnh vực hoạt động của công ty bạn là gì,...."></s:textarea>
                                         </div>

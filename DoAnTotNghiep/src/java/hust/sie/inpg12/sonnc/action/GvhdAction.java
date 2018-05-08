@@ -890,32 +890,23 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
     }
 
     public String updateThongTinCaNhanGVHD() {
-        String avatar = null;
-        try {
-            path = request.getSession().getServletContext().getRealPath("/").concat("file/image/avatar/");
-            File fileToCreate = new File(path, this.myFileFileName);
-            FileUtils.copyFile(this.myFile, fileToCreate);
-            avatar = "file/image/avatar/" + myFileFileName;
-            System.out.println(avatar);
-        } catch (Exception e) {
-            e.printStackTrace();
-            addActionError(e.getMessage());
-            session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
-        }
+        int maGVHD = gvhdController.getMaGVHDId((String) session.get("email"));
         GiangVienHuongDan gvhd = new GiangVienHuongDan();
-        gvhd = this.gvhd;
-        gvhd.setAvatar(avatar);
-        if (gvhdController.SaveThongTinCaNhan(gvhd)) {
-            session.put("rule", 2);
-            session.put("messageRegister", "Đăng ký thông tin cá nhân thành công.");
+        gvhd = gvhdController.getInfoGVHD(maGVHD);
+        gvhd.setCongTrinhNghienCuu(this.gvhd.getCongTrinhNghienCuu());
+        gvhd.setDiaChi(this.gvhd.getDiaChi());
+        gvhd.setDienThoai(this.gvhd.getDienThoai());
+        gvhd.setKhac(this.gvhd.getKhac());
+        gvhd.setMonGiangDay(this.gvhd.getMonGiangDay());
+        gvhd.setSachXuatBan(this.gvhd.getSachXuatBan());
+        if (gvhdController.updateThongTinCaNhan(gvhd)) {
+            session.put("messageUpdateInfo", "Cập nhật thông tin cá nhân thành công.");
         } else {
-            session.put("messageRegister", "Đã có lỗi xảy ra, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
-            return ERROR;
+            session.put("messageUpdateInfo", "Đã có lỗi xảy ra, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
         }
         return SUCCESS;
     }
-    
-    
+
     public String GetAllBaoCaoQTCK() {
         List<Object[]> results = gvhdController.GetAllBaoCaoQTCK();
         for (Object[] result : results) {

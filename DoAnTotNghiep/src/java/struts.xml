@@ -285,6 +285,14 @@
         <action name="saveInfoGVHD">
             <result type="redirect" >/home.jsp</result>
         </action>
+        <action name="updateThongTinCaNhanGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="updateThongTinCaNhanGVHD">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">updateInfoGVHD</param>
+            </result>
+        </action>
+        <action name="updateInfoGVHD">
+            <result>/pages/gvhd/capnhatthongtin.jsp</result>
+        </action>
         <action name="GetAllBaoCaoQTCK" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="GetAllBaoCaoQTCK">
             <result name="success" type="">/pages/gvhd/baocao.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
@@ -385,6 +393,19 @@
         <action name="delDeTaiByDDCT">
             <result>/pages/congty/detai.jsp</result>
         </action>
+        
+        <!--
+        ================================================
+        -->
+         <action name="GetAllThongBao" class="hust.sie.inpg12.sonnc.action.LoginAction" method="GetAllThongBao">
+            <result name="success" >/home.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+         <action name="detail" class="hust.sie.inpg12.sonnc.action.LoginAction" method="GetDetailThongBao">
+            <result name="success" >/detail.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        
         
         <!--        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
             <result name="success">test.jsp</result>

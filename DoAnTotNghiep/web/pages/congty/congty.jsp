@@ -74,8 +74,8 @@
                                         <p><strong>Điện thoại:</strong> <s:property value="dienThoai"/></p>
                                         <p><strong>Email:</strong> <s:property value="email"/></p>
                                         <p><strong>Website:</strong> <s:property value="website"/></p>
-                                        <p class="max-lines"><strong>Lĩnh vực hoạt động:</strong> <s:property value="linhVucHoatDong"/></p>
-                                        <p><strong>Mô tả:</strong> <s:property value="moTa"/></p>
+                                        <p><strong>Lĩnh vực hoạt động:</strong> <s:property value="linhVucHoatDong" escapeHtml="false"/></p>
+                                        <p><strong>Mô tả:</strong> <s:property value="moTa" escapeHtml="false"/></p>
                                     </div>
                                 </div>
                             </s:iterator>

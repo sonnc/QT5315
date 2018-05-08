@@ -12,12 +12,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Danh sách đề tài công ty</title>
         <%@include file="../../mains/head.jsp" %>
-         <%    if (session.getAttribute("rule") == null) {
+        <%    if (session.getAttribute("rule") == null) {
                 String l = (String) session.getAttribute("httpURL");
                 response.sendRedirect(l + "login.jsp");
                 return;
             }
-         %>
+        %>
         <style>
             .error{
                 color: red;
@@ -30,12 +30,12 @@
         <s:action name="GetAllDeTaiByCongTy" executeResult="true"/>
         <%            }
         %>
-  
+
         <script>
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 1000);
+            setTimeout(function () {
+                $('body').removeClass('preloading');
+                $('#preload').delay(1000).fadeOut('fast');
+            }, 1000);
         </script>
     </head>
     <%
@@ -56,7 +56,7 @@
                             <%                                if (session.getAttribute("messageDeleteDetai") != null) {
                             %>
                             <script type="text/javascript">
-                                    swal("Thông báo", "<%=session.getAttribute("messageDeleteDetai")%>", "info");
+                                swal("Thông báo", "<%=session.getAttribute("messageDeleteDetai")%>", "info");
                             </script>
                             <%
                                     session.removeAttribute("messageDeleteDetai");
@@ -65,7 +65,7 @@
                             <%                                if (session.getAttribute("messageSaveDeTai") != null) {
                             %>
                             <script type="text/javascript">
-                                    swal("Thông báo", "<%=session.getAttribute("messageSaveDeTai")%>", "info");
+                                swal("Thông báo", "<%=session.getAttribute("messageSaveDeTai")%>", "info");
                             </script>
                             <%
                                     session.removeAttribute("messageSaveDeTai");
@@ -159,11 +159,12 @@
                                                                                     </select>  
                                                                                 </div>
                                                                             </div>
-                                                                            <textarea style="margin-bottom: 15px;height: 150px;" class="form-control" name="deTai.noiDung" placeholder="Nội dung"></textarea>
+                                                                            <textarea style="margin-bottom: 15px; width: 100%;"  class="form-control" name="deTai.noiDung" placeholder="Nội dung"></textarea>
+                                                                      
                                                                             <p><strong>Định dạng của yêu cầu lập trình: [tên_ngôn_ngữ-trình_đô]. Ví dụ: [java-tot][c++-tot][mysql-tot]</strong></p>
                                                                             <p>Các trình độ bao gồm: Thành thao - thanhthao , Tốt - tot , Khá - kha , Biết - biet , Không biết - khongbiet</p>
                                                                             <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="deTai.yeuCauLapTrinh" placeholder="Yêu cầu lập trình"/>
-                                                                            <textarea style="margin-bottom: 15px;height: 50px;" class="form-control" name="deTai.yeuCauKhac" placeholder="Yêu cầu khác"></textarea>
+                                                                            <textarea style="margin-bottom: 15px;" class="form-control" name="deTai.yeuCauKhac" placeholder="Yêu cầu khác"></textarea>
                                                                         </div>
                                                                     </div> 
                                                                     <input type="submit" class="btn btn-success" value="ĐĂNG ĐỀ TÀI"/>

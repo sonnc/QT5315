@@ -33,7 +33,7 @@
         <div id="wrapper">
             <!-- end header -->
             <section id="inner-headline">
-                <div class="container">
+                <div class="container" >
                     <div class="row">
                         <div class="col-lg-12">
                             <h3 style="text-align: center; color: red">HỆ THỐNG ĐĂNG KÝ THỰC TẬP DOANH NGHIỆP TRỰC TUYẾN</h3>
@@ -54,7 +54,7 @@
                                     <div class="form-group">
                                     <s:textfield type="password" name="password" cssClass="form-control input-lg" placeholder="Mật khẩu" required="true"></s:textfield>
                                     </div>
-
+                                    <img src="pages/libs/img/Picture1.jpg">
                                     <div class="row">
                                         <div class="col-xs-4 col-sm-3 col-md-3">
                                             <span class="button-checkbox">

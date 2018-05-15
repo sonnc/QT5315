@@ -111,8 +111,6 @@
                                         <option value="1">Báo cáo quá trình</option>
                                         <option value="2">Báo cáo cuối kỳ</option>
                                         <option value="3">Báo cáo tuần</option>
-                                        <option value="4">Tài liệu học tập</option>
-                                        <option value="5">Tài liệu khác</option>
                                     </select>
                                     <div class="row">
                                         <div class="col-lg-8"> 

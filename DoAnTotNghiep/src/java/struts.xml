@@ -309,6 +309,18 @@
             <result name="success" type="">/pages/nhd/danhsachsinhvien.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="getAllDSSV" class="hust.sie.inpg12.sonnc.action.NhdAction" method="getAllDanhSachSinhVienByNHD">
+            <result name="success" type="">/pages/nhd/danhgia.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getInfoNHD" class="hust.sie.inpg12.sonnc.action.NhdAction" method="getInfoNHD">
+            <result name="success" type="">/pages/nhd/capnhatthongtin.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="updateInfoNHD" class="hust.sie.inpg12.sonnc.action.NhdAction" method="updateInfoNHD">
+            <result name="success" type="">/pages/nhd/capnhatthongtin.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
         
         

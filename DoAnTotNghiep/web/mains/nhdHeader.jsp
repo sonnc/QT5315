@@ -31,10 +31,15 @@
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Sinh viên<i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/danhsachsinhvien.jsp">Danh sách sinh viên</a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/diemthi.jsp">Điểm thi</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/danhgia.jsp">Đánh giá</a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/file.jsp">File</a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/lichtrinh.jsp">Lịch trình</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/danhgia.jsp">Chấm công</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Công ty<i class="fa fa-angle-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/danhsachsinhvien.jsp">Thông tin</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/diemthi.jsp">Đề tài</a></li>
                                 </ul>
                             </li>
                             <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/email.jsp">Email</a></li>

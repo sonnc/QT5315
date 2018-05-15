@@ -32,12 +32,12 @@ public class NhdController {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Query query = session.createSQLQuery("select a.mssv, a.ho_ten, a.lop, a.khoa_vien, d.ten_de_tai, c.trang_thai, d.ma_de_tai,\n"
-                    + "c.thoi_gian_bat_dau, c.thoi_gian_ket_thuc\n"
-                    + "from sinh_vien a join sinh_vien_thuc_tap c on a.mssv = c.mssv\n"
-                    + "join de_tai d on c.ma_de_tai = d.ma_de_tai\n"
-                    + "join nguoi_huong_dan b on d.ma_gvhd = b.ma_gvhd\n"
-                    + "where b.email =:email \n"
-                    + " order by c.trang_thai");
+                    + "                    c.thoi_gian_bat_dau, c.thoi_gian_ket_thuc\n"
+                    + "                    from sinh_vien a join sinh_vien_thuc_tap c on a.mssv = c.mssv\n"
+                    + "                    join de_tai d on c.ma_de_tai = d.ma_de_tai\n"
+                    + "                    join nguoi_huong_dan b on d.ma_gvhd = b.ma_gvhd\n"
+                    + "                    where b.email =:email\n"
+                    + "                     order by a.mssv");
             query.setParameter("email", email);
             results = query.list();
             transaction.commit();
@@ -96,5 +96,171 @@ public class NhdController {
             session.close();
         }
         return lstSinhVienFile;
+    }
+
+    public int getMaNHD(String email) {
+        int getMaNHD = 0;
+        List<NguoiHuongDan> lstNHD = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM NguoiHuongDan WHERE email =:email");
+            query.setParameter("email", email);
+            query.getFirstResult();
+            lstNHD = query.list();
+            getMaNHD = lstNHD.get(0).getMaGvhd();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return getMaNHD;
+
+    }
+
+    public int getMaCongTy(String email) {
+        int getMaCongTy = 0;
+        List<NguoiHuongDan> lstNguoiHuongDan = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM NguoiHuongDan WHERE email =:email");
+            query.setParameter("email", email);
+            query.getFirstResult();
+            lstNguoiHuongDan = query.list();
+            getMaCongTy = lstNguoiHuongDan.get(0).getMaCongTy();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return getMaCongTy;
+    }
+
+    public List getAllDeTaiNHD(int maCongTy, int maNHD) {
+        List<DeTai> lstDeTai = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM DeTai WHERE maCongTy =:macongty and maGvhd =:maNHD");
+            query.setParameter("macongty", maCongTy);
+            query.setParameter("maNHD", maNHD);
+            query.getFirstResult();
+            lstDeTai = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstDeTai;
+    }
+
+    public List getAllDeTai(int manguoihuongdan) {
+        List<DeTai> lstDeTai = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM DeTai WHERE maGvhd =:manguoihuongdan");
+            query.setParameter("manguoihuongdan", manguoihuongdan);
+            query.getFirstResult();
+            lstDeTai = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstDeTai;
+    }
+
+    public boolean saveFileSV(SinhVienFile svf) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(svf);
+            transaction.commit();
+            r = false;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    // 
+    public boolean updateInFo(NguoiHuongDan nhd) {
+
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.update(nhd);
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public CongTy getInfoCongTy(int maCongTy) {
+        CongTy ct = new CongTy();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            ct = (CongTy) session.get(CongTy.class, maCongTy);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return ct;
+    }
+
+    public NguoiHuongDan getInfoNHD(int maNHD) {
+        NguoiHuongDan nhd = new NguoiHuongDan();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            nhd = (NguoiHuongDan) session.get(NguoiHuongDan.class, maNHD);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return nhd;
     }
 }

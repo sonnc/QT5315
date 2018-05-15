@@ -120,7 +120,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
                 return SUCCESS;
                 // Người hướng dẫn
             } else if (lstLogin.get(0).getRule() == 3) {
-                List<NguoiHuongDan> lstNguoiHuongDans = loginController.getInfoGiangVienHuongDan(email);
+                List<NguoiHuongDan> lstNguoiHuongDans = loginController.getInfoNguoiHuongDan(email);
                 if (lstNguoiHuongDans.size() == 0) {
                     session.put("rule", "99");
                     return "DANGKYTHONGTINNGUOIHUONGDAN";

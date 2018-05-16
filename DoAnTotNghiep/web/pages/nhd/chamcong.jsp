@@ -1,6 +1,6 @@
 <%-- 
-    Document   : chamcong
-    Created on : May 15, 2018, 6:01:09 PM
+    Document   : danhgia
+    Created on : May 15, 2018, 5:04:29 AM
     Author     : sonnc
 --%>
 
@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Đánh giá sinh viên</title>
+        <title>Chấm công sinh viên</title>
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
@@ -20,17 +20,16 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("getAllDSSV") == null) {
+        <%            if (session.getAttribute("getAllDSSVChamCong") == null) {
 
         %>
-        <s:action name="getAllDSSV" executeResult="true"/>
+        <s:action name="getAllDSSVChamCong" executeResult="true"/>
         <%            }
         %>
     </head>
     <%
-        if (session.getAttribute("getAllDSSV") != null) {
-            session.removeAttribute("getAllDSSV");
-            session.removeAttribute("getAllDanhSachSinhVienByNHD");
+        if (session.getAttribute("getAllDSSVChamCong") != null) {
+            session.removeAttribute("getAllDSSVChamCong");
     %>
     <body>
         <div id="wrapper">
@@ -42,17 +41,16 @@
                         <div class="col-lg-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
-                                <p style="margin: 0px">ĐÁNH GIÁ SINH VIÊN THỰC TẬP</p>
+                                <p style="margin: 0px">CHẤM CÔNG SINH VIÊN THỰC TẬP</p>
                             </div>
                             <input class="form-control" id="s" style="float: right; width: 50%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
                             <style>
                                 td{padding: 5px}
                             </style>
-                            <form>
+                            <form role="form" id="formValidate" action="UploadFileChamCong" method="post" enctype = "multipart/form-data"> 
                                 <div class="row" style="padding: 15px"> 
-
                                     <div class="col-lg-12"  style="border: 2px solid #46b8da; padding: 10px">
-                                        <p style="margin: 0px; color: red;margin-left: 10px; padding: 5px">GỬI FILE ĐÁNH GIÁ</p>
+                                        <p style="margin: 0px; color: red;margin-left: 10px; padding: 5px">GỬI FILE CHẤM CÔNG</p>
                                         <div class="col-lg-4">
                                             <select style="margin-bottom: 15px" name="mssv" class="form-control" required="true"> 
                                                 <option value="">Chọn sinh viên</option>
@@ -60,7 +58,6 @@
                                                     <option value="<s:property value="mssv" />"><s:property value="mssv"/> - <s:property value="hoTen" /></option>
                                                 </s:iterator>
                                             </select>
-
                                         </div>
                                         <div class="col-lg-8" >
                                             <s:textfield  name="myFile" type="file" accept="file/*" required="required"/>  
@@ -92,13 +89,13 @@
                                     </table>
                                 </div>
                                 <div class="col-lg-4">
-                                    <p>D/S ĐÃ GỬI ĐÁNH GIÁ</p>
+                                    <p>D/S ĐÃ GỬI CHẤM CÔNG</p>
                                     <table border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                         <tr style="font-size: 13px; text-align: center">
                                             <td><strong> Mã SV </strong></td>
                                             <td><strong> Họ và tên </strong></td>
                                         </tr>
-                                        <s:iterator value="lstDanhSachSinhViens">
+                                        <s:iterator value="lstDSSVChamCong">
                                             <tr style="font-size: 13px;">
                                                 <td><s:property value="mssv" /></td>
                                                 <td><s:property value="hoTen" /></td>

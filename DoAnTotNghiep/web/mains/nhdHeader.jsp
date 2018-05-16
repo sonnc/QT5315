@@ -32,14 +32,14 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/danhsachsinhvien.jsp">Danh sách sinh viên</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/danhgia.jsp">Đánh giá</a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/danhgia.jsp">Chấm công</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/chamcong.jsp">Chấm công</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Công ty<i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/danhsachsinhvien.jsp">Thông tin</a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/diemthi.jsp">Đề tài</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/congty.jsp">Thông tin công ty</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/detai.jsp">Đề tài quản lý</a></li>
                                 </ul>
                             </li>
                             <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/email.jsp">Email</a></li>
@@ -47,7 +47,7 @@
                                 <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false"><img style="width: 25px; height: 25px" src="./pages/libs/img/avatar.png"></a>
                                 <ul class="dropdown-menu">
                                     <li><a><p style="color: red"><%=session.getAttribute("email").toString()%></p></a></li>
-                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/thongtincanhan.jsp">Thông tin cá nhân</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/nhd/capnhatthongtin.jsp">Cập nhật thông tin</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>resetpassword.jsp">Đổi mật khẩu</a></li>
                                     <li><a href="logout">Đăng xuất</a></li>
                                 </ul>

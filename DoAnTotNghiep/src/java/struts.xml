@@ -309,8 +309,12 @@
             <result name="success" type="">/pages/nhd/danhsachsinhvien.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-        <action name="getAllDSSV" class="hust.sie.inpg12.sonnc.action.NhdAction" method="getAllDanhSachSinhVienByNHD">
+        <action name="getAllDSSVDanhGia" class="hust.sie.inpg12.sonnc.action.NhdAction" method="getAllDSSVDanhGia">
             <result name="success" type="">/pages/nhd/danhgia.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllDSSVChamCong" class="hust.sie.inpg12.sonnc.action.NhdAction" method="getAllDSSVChamCong">
+            <result name="success" type="">/pages/nhd/chamcong.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         <action name="getInfoNHD" class="hust.sie.inpg12.sonnc.action.NhdAction" method="getInfoNHD">
@@ -319,6 +323,18 @@
         </action>
         <action name="updateInfoNHD" class="hust.sie.inpg12.sonnc.action.NhdAction" method="updateInfoNHD">
             <result name="success" type="">/pages/nhd/capnhatthongtin.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="UploadFileDanhGia" class="hust.sie.inpg12.sonnc.action.NhdAction" method="UploadFileDanhGia">
+            <result name="success" type="">/pages/nhd/danhgia.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="UploadFileChamCong" class="hust.sie.inpg12.sonnc.action.NhdAction" method="UploadFileChamCong">
+            <result name="success" type="">/pages/nhd/danhgia.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="GetCongTyByNHD" class="hust.sie.inpg12.sonnc.action.NhdAction" method="GetCongTyByNHD">
+            <result name="success" type="">/pages/nhd/congty.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         

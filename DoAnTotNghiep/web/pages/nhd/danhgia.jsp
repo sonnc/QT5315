@@ -20,17 +20,16 @@
                 text-orientation: initial;
             }
         </style>
-        <%            if (session.getAttribute("getAllDSSV") == null) {
+        <%            if (session.getAttribute("getAllDSSVDanhGia") == null) {
 
         %>
-        <s:action name="getAllDSSV" executeResult="true"/>
+        <s:action name="getAllDSSVDanhGia" executeResult="true"/>
         <%            }
         %>
     </head>
     <%
-        if (session.getAttribute("getAllDSSV") != null) {
-            session.removeAttribute("getAllDSSV");
-            session.removeAttribute("getAllDanhSachSinhVienByNHD");
+        if (session.getAttribute("getAllDSSVDanhGia") != null) {
+            session.removeAttribute("getAllDSSVDanhGia");
     %>
     <body>
         <div id="wrapper">
@@ -48,9 +47,8 @@
                             <style>
                                 td{padding: 5px}
                             </style>
-                            <form>
+                            <form role="form" id="formValidate" action="UploadFileDanhGia" method="post" enctype = "multipart/form-data"> 
                                 <div class="row" style="padding: 15px"> 
-
                                     <div class="col-lg-12"  style="border: 2px solid #46b8da; padding: 10px">
                                         <p style="margin: 0px; color: red;margin-left: 10px; padding: 5px">GỬI FILE ĐÁNH GIÁ</p>
                                         <div class="col-lg-4">
@@ -60,7 +58,6 @@
                                                     <option value="<s:property value="mssv" />"><s:property value="mssv"/> - <s:property value="hoTen" /></option>
                                                 </s:iterator>
                                             </select>
-
                                         </div>
                                         <div class="col-lg-8" >
                                             <s:textfield  name="myFile" type="file" accept="file/*" required="required"/>  
@@ -98,7 +95,7 @@
                                             <td><strong> Mã SV </strong></td>
                                             <td><strong> Họ và tên </strong></td>
                                         </tr>
-                                        <s:iterator value="lstDanhSachSinhViens">
+                                        <s:iterator value="lstDSSVDanhGia">
                                             <tr style="font-size: 13px;">
                                                 <td><s:property value="mssv" /></td>
                                                 <td><s:property value="hoTen" /></td>

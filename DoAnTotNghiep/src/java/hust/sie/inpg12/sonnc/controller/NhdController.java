@@ -52,6 +52,56 @@ public class NhdController {
         return results;
     }
 
+    public List getAllDSSVDanhGia(String email) {
+        List<Object[]> results = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createSQLQuery("select a.mssv, a.ho_ten from sinh_vien a join sinh_vien_file b on a.mssv = b.mssv\n"
+                    + "join sinh_vien_thuc_tap c on a.mssv = c.mssv \n"
+                    + "join de_tai d on c.ma_de_tai = d.ma_de_tai\n"
+                    + "join nguoi_huong_dan e on d.ma_gvhd = e.ma_gvhd\n"
+                    + "where c.trang_thai = true and b.loai_file = 3\n"
+                    + "and e.email =:email");
+            query.setParameter("email", email);
+            results = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+
+    public List getAllDSSVChamCong(String email) {
+        List<Object[]> results = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createSQLQuery("select a.mssv, a.ho_ten from sinh_vien a join sinh_vien_file b on a.mssv = b.mssv\n"
+                    + "join sinh_vien_thuc_tap c on a.mssv = c.mssv \n"
+                    + "join de_tai d on c.ma_de_tai = d.ma_de_tai\n"
+                    + "join nguoi_huong_dan e on d.ma_gvhd = e.ma_gvhd\n"
+                    + "where c.trang_thai = true and b.loai_file = 4\n"
+                    + "and e.email =:email");
+            query.setParameter("email", email);
+            results = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+
     public List ChamDiem(String email) {
         List<Object[]> results = new ArrayList<>();
         try {
@@ -228,12 +278,20 @@ public class NhdController {
         return r;
     }
 
-    public CongTy getInfoCongTy(int maCongTy) {
-        CongTy ct = new CongTy();
+    public List GetCongTy(String email) {
+        List<Object[]> results = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            ct = (CongTy) session.get(CongTy.class, maCongTy);
+            Query q = session.createSQLQuery("select a.ma_cong_ty, a.ten_cong_ty, a.dia_chi, a.dien_thoai, a.email, a.website, a.linh_vuc_hoat_dong,\n"
+                    + "a.mo_ta, a.logo, a.trang_thai, b.ma_dai_dien, b.ho_ten, b.chuc_vu, \n"
+                    + "b.dia_chi as dia_chi_dd, b.dien_thoai as dien_thoai_dd, b.email as email_dd, b.avatar\n"
+                    + "from cong_ty a join dai_dien_cong_ty b on a.ma_dai_dien = b.ma_dai_dien\n"
+                    + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
+                    + "where c.email =:email");
+            q.setParameter("email", email);
+            q.getFirstResult();
+            results = q.list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -243,7 +301,7 @@ public class NhdController {
         } finally {
             session.close();
         }
-        return ct;
+        return results;
     }
 
     public NguoiHuongDan getInfoNHD(int maNHD) {

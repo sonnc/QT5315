@@ -12,6 +12,8 @@ import hust.sie.inpg12.sonnc.controller.NhdController;
 import hust.sie.inpg12.sonnc.entities.CongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
+import hust.sie.inpg12.sonnc.entities.SinhVienFile;
+import hust.sie.inpg12.sonnc.other.CongTyvaDaiDienCongTy;
 import hust.sie.inpg12.sonnc.other.DanhSachSinhVien;
 import java.io.File;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -36,9 +39,36 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
     private NhdController nhdController;
     private NguoiHuongDan nhd;
     private List<DanhSachSinhVien> lstDanhSachSinhViens = new ArrayList<>();
+    private List<DanhSachSinhVien> lstDSSVDanhGia = new ArrayList<>();
+    private List<DanhSachSinhVien> lstDSSVChamCong = new ArrayList<>();
     private List<DeTai> lstAllDeTai = new ArrayList<>();
     private List<DeTai> lstAllDeTaiNHD = new ArrayList<>();
     private CongTy congTy;
+    private List<CongTyvaDaiDienCongTy> lstCongTyvaDaiDienCongTys = new ArrayList<>();
+
+    public List<CongTyvaDaiDienCongTy> getLstCongTyvaDaiDienCongTys() {
+        return lstCongTyvaDaiDienCongTys;
+    }
+
+    public void setLstCongTyvaDaiDienCongTys(List<CongTyvaDaiDienCongTy> lstCongTyvaDaiDienCongTys) {
+        this.lstCongTyvaDaiDienCongTys = lstCongTyvaDaiDienCongTys;
+    }
+
+    public List<DanhSachSinhVien> getLstDSSVDanhGia() {
+        return lstDSSVDanhGia;
+    }
+
+    public void setLstDSSVDanhGia(List<DanhSachSinhVien> lstDSSVDanhGia) {
+        this.lstDSSVDanhGia = lstDSSVDanhGia;
+    }
+
+    public List<DanhSachSinhVien> getLstDSSVChamCong() {
+        return lstDSSVChamCong;
+    }
+
+    public void setLstDSSVChamCong(List<DanhSachSinhVien> lstDSSVChamCong) {
+        this.lstDSSVChamCong = lstDSSVChamCong;
+    }
 
     public NguoiHuongDan getNhd() {
         return nhd;
@@ -142,9 +172,87 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
             return ERROR;
         }
         session.put("getAllDanhSachSinhVienByNHD", "getAllDanhSachSinhVienByNHD");
-        session.put("getAllDSSV", "getAllDSSV");
         return SUCCESS;
+    }
 
+    public String getAllDSSVDanhGia() {
+        try {
+            String email = (String) session.get("email");
+            List<Object[]> results = nhdController.getAllDanhSachSinhVienByNHD(email);
+            for (Object[] result : results) {
+                DanhSachSinhVien d = new DanhSachSinhVien();
+                d.setMssv((int) result[0]);
+                d.setHoTen((String) result[1]);
+                d.setLop((String) result[2]);
+                d.setKhoaVien((String) result[3]);
+                d.setTenDeTai((String) result[4]);
+                if ((boolean) result[5]) {
+                    d.setTrangThai("Hoạt động");
+                } else {
+                    d.setTrangThai("Đã đóng");
+                }
+                d.setMaDeTai((int) result[6]);
+                d.setStartDate((Date) result[7]);
+                d.setEndDate((Date) result[8]);
+                lstDanhSachSinhViens.add(d);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            String email = (String) session.get("email");
+            List<Object[]> results = nhdController.getAllDSSVDanhGia(email);
+            for (Object[] result : results) {
+                DanhSachSinhVien d = new DanhSachSinhVien();
+                d.setMssv((int) result[0]);
+                d.setHoTen((String) result[1]);
+                lstDSSVDanhGia.add(d);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        session.put("getAllDSSVDanhGia", "getAllDSSVDanhGia");
+        return SUCCESS;
+    }
+
+    public String getAllDSSVChamCong() {
+        try {
+            String email = (String) session.get("email");
+            List<Object[]> results = nhdController.getAllDanhSachSinhVienByNHD(email);
+            for (Object[] result : results) {
+                DanhSachSinhVien d = new DanhSachSinhVien();
+                d.setMssv((int) result[0]);
+                d.setHoTen((String) result[1]);
+                d.setLop((String) result[2]);
+                d.setKhoaVien((String) result[3]);
+                d.setTenDeTai((String) result[4]);
+                if ((boolean) result[5]) {
+                    d.setTrangThai("Hoạt động");
+                } else {
+                    d.setTrangThai("Đã đóng");
+                }
+                d.setMaDeTai((int) result[6]);
+                d.setStartDate((Date) result[7]);
+                d.setEndDate((Date) result[8]);
+                lstDanhSachSinhViens.add(d);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            String email = (String) session.get("email");
+            List<Object[]> results = nhdController.getAllDSSVChamCong(email);
+            for (Object[] result : results) {
+                DanhSachSinhVien d = new DanhSachSinhVien();
+                d.setMssv((int) result[0]);
+                d.setHoTen((String) result[1]);
+                lstDSSVChamCong.add(d);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        session.put("getAllDSSVChamCong", "getAllDSSVChamCong");
+        return SUCCESS;
     }
 
     public String getAllDeTaiNHD() {
@@ -162,10 +270,31 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         return SUCCESS;
     }
 
-    public String getInfoCongTy() {
-        int y = nhdController.getMaCongTy((String) session.get("email"));
-        this.congTy = nhdController.getInfoCongTy(y);
-        session.put("getInfoCongTy", "getInfoCongTy");
+    public String GetCongTyByNHD() {
+        String email = (String) session.get("email");
+        List<Object[]> results = nhdController.GetCongTy(email);
+        for (Object[] result : results) {
+            CongTyvaDaiDienCongTy ct = new CongTyvaDaiDienCongTy();
+            ct.setMaCongTy((int) result[0]);
+            ct.setTenCongTy((String) result[1]);
+            ct.setDiaChi((String) result[2]);
+            ct.setDienThoai((String) result[3]);
+            ct.setEmail((String) result[4]);
+            ct.setWebsite((String) result[5]);
+            ct.setLinhVucHoatDong((String) result[6]);
+            ct.setMoTa((String) result[7]);
+            ct.setLogo((String) result[8]);
+            // ct.setTrangThai(result[]);
+            ct.setMaDaiDien((int) result[10]);
+            ct.setDaiDien((String) result[11]);
+            ct.setChucVuDD((String) result[12]);
+            ct.setDiaChiDD((String) result[13]);
+            ct.setDienThoaiDD((String) result[14]);
+            ct.setEmailDD((String) result[15]);
+            ct.setAvatarDD((String) result[16]);
+            lstCongTyvaDaiDienCongTys.add(ct);
+        }
+        session.put("GetCongTyByNHD", "GetCongTyByNHD");
         return SUCCESS;
     }
 
@@ -175,11 +304,68 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         session.put("getInfoNHD", "getInfoNHD");
         return SUCCESS;
     }
-    
-    
 
-    public String saveFileSV() {
-        
+    public String UploadFileDanhGia() {
+        int mssv = Integer.parseInt(request.getParameter("mssv"));
+        String link = null;
+        try {
+            path = request.getSession().getServletContext().getRealPath("/").concat("file/sinhvien/");
+            File fileToCreate = new File(path, this.myFileFileName);
+            FileUtils.copyFile(this.myFile, fileToCreate);
+            link = "file/sinhvien/" + myFileFileName;
+            System.out.println(link);
+            System.out.println(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+            addActionError(e.getMessage());
+        }
+
+        SinhVienFile svf = new SinhVienFile();
+        svf.setLoaiFile(3);
+        svf.setMoTa("ĐÁNH GIÁ SINH VIÊN: " + mssv + "");
+        svf.setMssv(mssv);
+        Date dateUtil = new Date();
+        java.sql.Date dateSql = new java.sql.Date(dateUtil.getTime());
+        svf.setNgayThang(dateSql);
+        svf.setTenFile("ĐÁNH GIÁ SINH VIÊN: " + mssv + "");
+        svf.setLink(link);
+        if (nhdController.saveFileSV(svf)) {
+            session.put("message", "Quý vị đã đánh giá thành công cho sinh viên: " + mssv + ". Xin cảm ơn quý vị.!");
+        } else {
+            session.put("message", "Đã có lỗi xảy ra khi đánh giá cho sinh viên: " + mssv + ". Xin quý vị thử lại sau!");
+        }
+        return SUCCESS;
+    }
+
+    public String UploadFileChamCong() {
+        int mssv = Integer.parseInt(request.getParameter("mssv"));
+        String link = null;
+        try {
+            path = request.getSession().getServletContext().getRealPath("/").concat("file/sinhvien/");
+            File fileToCreate = new File(path, this.myFileFileName);
+            FileUtils.copyFile(this.myFile, fileToCreate);
+            link = "file/sinhvien/" + myFileFileName;
+            System.out.println(link);
+            System.out.println(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+            addActionError(e.getMessage());
+        }
+
+        SinhVienFile svf = new SinhVienFile();
+        svf.setLoaiFile(4);
+        svf.setMoTa("CHẤM CÔNG SINH VIÊN: " + mssv + "");
+        svf.setMssv(mssv);
+        Date dateUtil = new Date();
+        java.sql.Date dateSql = new java.sql.Date(dateUtil.getTime());
+        svf.setNgayThang(dateSql);
+        svf.setTenFile("CHẤM CÔNG SINH VIÊN: " + mssv + "");
+        svf.setLink(link);
+        if (nhdController.saveFileSV(svf)) {
+            session.put("message", "Quý vị đã GỬI FILE CHẤM CÔNG thành công cho sinh viên: " + mssv + ". Xin cảm ơn quý vị.!");
+        } else {
+            session.put("message", "Đã có lỗi xảy ra khi GỬI FILE CHẤM CÔNG cho sinh viên: " + mssv + ". Xin quý vị thử lại sau!");
+        }
         return SUCCESS;
     }
 

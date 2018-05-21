@@ -257,8 +257,7 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
 
     public String getAllDeTaiNHD() {
         int x = nhdController.getMaNHD((String) session.get("email"));
-        int y = nhdController.getMaCongTy((String) session.get("email"));
-        lstAllDeTai = nhdController.getAllDeTaiNHD(y, x);
+        lstAllDeTai = nhdController.getAllDeTaiNHD(x);
         session.put("getAllDeTaiNHD", "getAllDeTaiNHD");
         return SUCCESS;
     }

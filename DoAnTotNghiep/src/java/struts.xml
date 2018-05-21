@@ -337,6 +337,10 @@
             <result name="success" type="">/pages/nhd/congty.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="getAllDeTaiNHD" class="hust.sie.inpg12.sonnc.action.NhdAction" method="getAllDeTaiNHD">
+            <result name="success" type="">/pages/nhd/detai.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
         
         
@@ -425,12 +429,89 @@
         <!--
         ================================================
         -->
-         <action name="GetAllThongBao" class="hust.sie.inpg12.sonnc.action.LoginAction" method="GetAllThongBao">
+        <action name="GetAllThongBao" class="hust.sie.inpg12.sonnc.action.LoginAction" method="GetAllThongBao">
             <result name="success" >/home.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-         <action name="detail" class="hust.sie.inpg12.sonnc.action.LoginAction" method="GetDetailThongBao">
+        <action name="detail" class="hust.sie.inpg12.sonnc.action.LoginAction" method="GetDetailThongBao">
             <result name="success" >/detail.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllSinhVienByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="getAllSinhVienByAdmin">
+            <result name="success" >/admin/sinhvien.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="addLoginSVbyAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="addLoginSVbyAdmin">
+            <result name="success" >/admin/sinhvien.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllGVHDByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="getAllGVHDByAdmin">
+            <result name="success" >/admin/giangvienhuongdan.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="addLoginGVHDbyAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="addLoginGVHDbyAdmin">
+            <result name="success" >/admin/giangvienhuongdan.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllCongTyByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="getAllCongTyByAdmin">
+            <result name="success" >/admin/congty.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+         <action name="deleteCongTyByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="deleteCongTyByAdmin">
+            <result name="success" >/admin/congty.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        
+        <action name="getAllDeTaiByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="getAllDeTaiByAdmin">
+            <result name="success" >/admin/detai.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="deleteDeTaiByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="deleteDeTaiByAdmin">
+            <result name="success" >/admin/detai.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllSVTTByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="getAllSVTTByAdmin">
+            <result name="success" >/admin/qlsv.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllDTSVTTByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="getAllDTSVTTByAdmin">
+            <result name="success" >/admin/dtsv.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllDiemThiSVTTByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="getAllDiemThiSVTTByAdmin">
+            <result name="success" >/admin/qldt.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllThongBaoByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="getAllThongBaoByAdmin">
+            <result name="success" >/admin/qltb.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="SaveThongBaoByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="SaveThongBaoByAdmin">
+            <result name="success" >/admin/qltb.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="SaveThongBaoByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="SaveThongBaoByAdmin">
+            <result name="success" >/admin/qltb.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="viewThongBao" class="hust.sie.inpg12.sonnc.action.AdminAction" method="viewThongBao">
+            <result name="success" >/admin/detailTB.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="deleteThongBao" class="hust.sie.inpg12.sonnc.action.AdminAction" method="deleteThongBao">
+            <result name="success" >/admin/qltb.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="editPoint" class="hust.sie.inpg12.sonnc.action.AdminAction" method="viewDiemThiSVTTByAdmin">
+            <result name="success" >/admin/editpoint.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="editPointByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="editPointByAdmin">
+            <result name="success" >/admin/qldt.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="deletePoint" class="hust.sie.inpg12.sonnc.action.AdminAction" method="deletePoint">
+            <result name="success" >/admin/qldt.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         

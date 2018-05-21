@@ -195,13 +195,12 @@ public class NhdController {
         return getMaCongTy;
     }
 
-    public List getAllDeTaiNHD(int maCongTy, int maNHD) {
+    public List getAllDeTaiNHD(int maNHD) {
         List<DeTai> lstDeTai = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query query = session.createQuery("FROM DeTai WHERE maCongTy =:macongty and maGvhd =:maNHD");
-            query.setParameter("macongty", maCongTy);
+            Query query = session.createQuery("FROM DeTai WHERE maGvhd =:maNHD");
             query.setParameter("maNHD", maNHD);
             query.getFirstResult();
             lstDeTai = query.list();

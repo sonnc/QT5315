@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import hust.sie.inpg12.sonnc.controller.AdminController;
 import hust.sie.inpg12.sonnc.entities.CongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
+import hust.sie.inpg12.sonnc.entities.FileAll;
 import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
 import hust.sie.inpg12.sonnc.entities.HeSoDiem;
 import hust.sie.inpg12.sonnc.entities.Login;
@@ -49,9 +50,18 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
     private List<SvDtCtNhd> lstSvDtCtNhds = new ArrayList<>();
     private List<SinhVienDiemThi> lstSinhVienDiemThi = new ArrayList<>();
     private List<ThongBao> lstThongBaos = new ArrayList<>();
+    private List<FileAll> lstFileAlls = new ArrayList<>();
     private File myFile;
     private String myFileFileName;
     private String path;
+
+    public List<FileAll> getLstFileAlls() {
+        return lstFileAlls;
+    }
+
+    public void setLstFileAlls(List<FileAll> lstFileAlls) {
+        this.lstFileAlls = lstFileAlls;
+    }
 
     public File getMyFile() {
         return myFile;
@@ -152,10 +162,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
                 SinhVien d = new SinhVien();
                 if (result[0] == null) {
                     d.setMssv(Integer.parseInt(((String) result[5]).substring(0, 8)));
-                    d.setHoTen("");
-                    d.setLop("");
+                    d.setHoTen("null");
+                    d.setLop("null");
                     d.setKhoa(999);
-                    d.setKhoaVien("");
+                    d.setKhoaVien("null");
                 } else {
                     d.setMssv((int) result[0]);
                     d.setHoTen((String) result[1]);
@@ -164,6 +174,8 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
                     d.setKhoaVien((String) result[4]);
                 }
                 d.setEmail((String) result[5]);
+                d.setStatus((String) result[6]);
+
                 lstSinhVien.add(d);
             }
         } catch (Exception e) {
@@ -172,7 +184,17 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         }
         session.put("getAllSinhVienByAdmin", "getAllSinhVienByAdmin");
         return SUCCESS;
+    }
 
+    public String COAcountByAdmin() {
+        String status = request.getParameter("status").toUpperCase();
+        String email = request.getParameter("email");
+        if (adminController.COAcountByAdmin(email, status)) {
+            session.put("message", "Thay đổi trạng thái tài khoản thành công.");
+        } else {
+            session.put("message", "Thay đổi trạng thái tài khoản thất bại.");
+        }
+        return SUCCESS;
     }
 
     public String addLoginSVbyAdmin() {
@@ -183,6 +205,7 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         l.setPass(e);
         System.out.println(e);
         l.setRule(0);
+        l.setStatus("OPEN");
         if (adminController.addAcountLogin(l)) {
             session.put("message", "Thêm thành công tài khoản sinh viên.");
         } else {
@@ -197,11 +220,11 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
             for (Object[] result : results) {
                 GiangVienHuongDan d = new GiangVienHuongDan();
                 if (result[0] == null) {
-                    d.setHoTen("");
-                    d.setDiaChi("");
-                    d.setDienThoai("");
-                    d.setKhoaVien("");
-                    d.setBoMon("");
+                    d.setHoTen("null");
+                    d.setDiaChi("null");
+                    d.setDienThoai("null");
+                    d.setKhoaVien("null");
+                    d.setBoMon("null");
                 } else {
                     d.setHoTen((String) result[0]);
                     d.setDiaChi((String) result[1]);
@@ -210,6 +233,7 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
                     d.setBoMon((String) result[5]);
                 }
                 d.setEmail((String) result[2]);
+                d.setStatus((String) result[6]);
                 lstGiangVienHuongDans.add(d);
             }
         } catch (Exception e) {
@@ -227,6 +251,7 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         l.setEmail(e);
         l.setPass("12345678abc");
         l.setRule(2);
+        l.setStatus("OPEN");
         if (adminController.addAcountLogin(l)) {
             session.put("message", "Thêm tài khoản giảng viên hướng dẫn thành công.");
         } else {
@@ -254,7 +279,7 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
             } else if ((int) result[8] == 2) {
                 ct.setTrangThai("Chờ duyệt");
             }
-            ct.setWebsite((String)result[9]);
+            ct.setWebsite((String) result[9]);
             ct.setChucVuDD((String) result[10]);
             lstCongTy.add(ct);
         }
@@ -463,7 +488,6 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
     }
 
     public String SaveThongBaoByAdmin() {
-        session.put("email", "admin@gmail.com");
         String link = null;
         try {
             path = request.getSession().getServletContext().getRealPath("/").concat("file/image/thongbao/");
@@ -489,6 +513,57 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
             session.put("message", "Đăng thông báo lên hệ thống thành công.");
         } else {
             session.put("message", "Đăng thông báo lên hệ thống thất bại.");
+        }
+        return SUCCESS;
+    }
+
+    public String getAllFileByAdmin() {
+        lstFileAlls = adminController.getAllFileByAdmin();
+        session.put("getAllFileByAdmin", "getAllFileByAdmin");
+        return SUCCESS;
+    }
+
+    public String deleteFileByAdmin() {
+        int id = Integer.parseInt(request.getParameter("id"));
+        if (adminController.deleteFileByAdmin(id)) {
+            session.put("message", "Xóa file thành công !");
+        } else {
+            session.put("message", "Xóa file thất bại!");
+        }
+        return SUCCESS;
+    }
+
+    public String UploadFileByAdmin() {
+        FileAll fileAll = new FileAll();
+        try {
+            Date date = new Date();
+            java.sql.Date ngayThang = new java.sql.Date(date.getTime());
+            String link = null;
+            try {
+                path = request.getSession().getServletContext().getRealPath("/").concat("file/admin/");
+                File fileToCreate = new File(path, this.myFileFileName);
+                FileUtils.copyFile(this.myFile, fileToCreate);
+                link = "../file/admin/" + myFileFileName;
+                System.out.println(link);
+            } catch (Exception e) {
+                e.printStackTrace();
+                addActionError(e.getMessage());
+                session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
+            }
+            fileAll.setEmail((String)session.get("email"));
+            fileAll.setLink(link);
+            fileAll.setNgayThang(ngayThang);
+            fileAll.setNoiDung(request.getParameter("noiDung"));
+            fileAll.setTenFile(request.getParameter("tenFile"));
+            fileAll.settype(1);
+            if (adminController.UploadFileByAdmin(fileAll)) {
+                session.put("message", " Tải tài liệu lên hệ thống thành công.");
+            } else {
+                session.put("message", " Tải tài liệu liệu lên hệ thống không thành công, vui lòng kiểm tra lại.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.put("message", "Lỗi không xác định.");
         }
         return SUCCESS;
     }

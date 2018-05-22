@@ -23,12 +23,12 @@
                     <div class="col-md-3 market-update-gd">
                         <div class="market-update-block clr-block-2">
                             <div class="col-md-4 market-update-right">
-                                <i class="fa fa-eye"> </i>
+                                <i class="glyphicon glyphicon-user" style="color: white; font-size: 45px;"> </i>
                             </div>
                             <div class="col-md-8 market-update-left">
-                                <h4>Visitors</h4>
+                                <h4>Tài khoản</h4>
                                 <h3>13,500</h3>
-                                <p>Other hand, we denounce</p>
+                                <p>thành viên đã đăng ký thành công.</p>
                             </div>
                             <div class="clearfix"> </div>
                         </div>
@@ -36,12 +36,12 @@
                     <div class="col-md-3 market-update-gd">
                         <div class="market-update-block clr-block-1">
                             <div class="col-md-4 market-update-right">
-                                <i class="fa fa-users" ></i>
+                             <i class="glyphicon glyphicon-home" style="color: white; font-size: 45px;"> </i>
                             </div>
                             <div class="col-md-8 market-update-left">
-                                <h4>Users</h4>
+                                <h4>Công ty</h4>
                                 <h3>1,250</h3>
-                                <p>Other hand, we denounce</p>
+                                <p>công ty đã đăng ký chương trình.</p>
                             </div>
                             <div class="clearfix"> </div>
                         </div>
@@ -49,25 +49,25 @@
                     <div class="col-md-3 market-update-gd">
                         <div class="market-update-block clr-block-3">
                             <div class="col-md-4 market-update-right">
-                                <i class="fa fa-usd"></i>
+                               <i class="glyphicon glyphicon-list" style="color: white; font-size: 45px;"> </i>
                             </div>
                             <div class="col-md-8 market-update-left">
-                                <h4>Sales</h4>
+                                <h4>Đề tài</h4>
                                 <h3>1,500</h3>
-                                <p>Other hand, we denounce</p>
+                                <p>đề tài được đăng tải trên hệ thống.</p>
                             </div>
                             <div class="clearfix"> </div>
                         </div>
                     </div>
                     <div class="col-md-3 market-update-gd">
-                        <div class="market-update-block clr-block-4">
+                        <div class="market-update-block clr-block-4" style="background: teal; .market-update-block.clr-block-3:hover{background: #8b5c7e}">
                             <div class="col-md-4 market-update-right">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <i class="glyphicon glyphicon-edit" style="color: white; font-size: 45px;"> </i>
                             </div>
                             <div class="col-md-8 market-update-left">
-                                <h4>Orders</h4>
-                                <h3>1,500</h3>
-                                <p>Other hand, we denounce</p>
+                                <h4>Sinh viên</h4>
+                                <h3>4,500</h3>
+                                <p>đã đăng ký thực tập tại doanh nghiệp.</p>
                             </div>
                             <div class="clearfix"> </div>
                         </div>

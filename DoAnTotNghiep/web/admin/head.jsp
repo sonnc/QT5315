@@ -50,4 +50,12 @@
         $('.nicEdit-main').height('100px');
     });
 </script>
+<style>
+    .table td, .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        padding-bottom: 5px!important;
+        padding-top:  5px!important;
+        padding-left:  10px!important;
+        padding-right:  10px!important;
+    }
+</style>
 

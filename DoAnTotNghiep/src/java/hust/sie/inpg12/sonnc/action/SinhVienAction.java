@@ -447,13 +447,23 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
                         // thực hiện so khớp
                         lstSoKhopSV = getDeTaiSoKhop(strSKSV);
                         lstSoKhopDT = getDeTaiSoKhop(strSKDT);
-                        for (int i = 0; i < lstSoKhopDT.size(); i++) {
-                            for (int j = 0; j < lstSoKhopSV.size(); j++) {
-                                if (lstSoKhopDT.get(i).getKyNang().contains(lstSoKhopSV.get(j).getKyNang())) {
-                                    phanTramSoKhop = phanTramSoKhop + ((lstSoKhopSV.get(j).getPhanTram()) / (lstSoKhopDT.get(i).getPhanTram()));
+                        if (lstSoKhopDT.size() == 0) {
+                            phanTramSoKhop = 1;
+                            count = 1;
+                        } else if (lstSoKhopSV.size() == 0) {
+                            phanTramSoKhop = 0;
+                            count = 1;
+                        } else {
+                            for (int i = 0; i < lstSoKhopDT.size(); i++) {
+                                for (int j = 0; j < lstSoKhopSV.size(); j++) {
+                                    System.out.println("sssssssssssssssssss"+lstSoKhopDT.get(i).getKyNang().toLowerCase().toString());
+                                    System.out.println("vvvvvvvvvvvvvvvvvv" +lstSoKhopSV.get(j).getKyNang().toLowerCase().toString());
+                                    if (lstSoKhopDT.get(i).getKyNang().toLowerCase().toString().contains(lstSoKhopSV.get(j).getKyNang().toLowerCase().toString())) {
+                                        phanTramSoKhop = phanTramSoKhop + ((lstSoKhopSV.get(j).getPhanTram()) / (lstSoKhopDT.get(i).getPhanTram()));
+                                    }
                                 }
+                                count++;
                             }
-                            count++;
                         }
                         // thực hiện đăng ký đề tài
                         SinhVienDangKy svdk = new SinhVienDangKy();

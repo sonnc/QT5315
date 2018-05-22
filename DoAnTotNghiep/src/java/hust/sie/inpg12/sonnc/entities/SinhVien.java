@@ -29,6 +29,7 @@ public class SinhVien  implements java.io.Serializable {
      private Set sinhVienDiems = new HashSet(0);
      private Set sinhVienFiles = new HashSet(0);
      private Set sinhVienThucTaps = new HashSet(0);
+     private String status;
 
     public SinhVien() {
     }
@@ -66,6 +67,14 @@ public class SinhVien  implements java.io.Serializable {
    
     public int getMssv() {
         return this.mssv;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
     public void setMssv(int mssv) {

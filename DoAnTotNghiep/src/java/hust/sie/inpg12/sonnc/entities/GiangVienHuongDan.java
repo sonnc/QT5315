@@ -22,6 +22,7 @@ public class GiangVienHuongDan  implements java.io.Serializable {
      private String monGiangDay;
      private String khac;
      private String avatar;
+     private String status;
 
     public GiangVienHuongDan() {
     }
@@ -46,6 +47,14 @@ public class GiangVienHuongDan  implements java.io.Serializable {
        this.monGiangDay = monGiangDay;
        this.khac = khac;
        this.avatar = avatar;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
    
     public Integer getMaGvpt() {

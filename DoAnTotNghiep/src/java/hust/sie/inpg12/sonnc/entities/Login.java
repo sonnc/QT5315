@@ -14,6 +14,7 @@ public class Login  implements java.io.Serializable {
      private String email;
      private String pass;
      private int rule;
+     private String status;
      private Set thongBaos = new HashSet(0);
      private Set sinhViens = new HashSet(0);
      private Set giangVienHuongDans = new HashSet(0);
@@ -46,6 +47,14 @@ public class Login  implements java.io.Serializable {
    
     public String getEmail() {
         return this.email;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
     public void setEmail(String email) {

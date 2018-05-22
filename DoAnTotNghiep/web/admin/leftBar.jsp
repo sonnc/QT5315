@@ -37,7 +37,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<%=session.getAttribute("httpURL")%>admin/file.jsp">
+                    <a href="<%=session.getAttribute("httpURL")%>admin/qlf.jsp">
                         <i class="fa fa-file"></i>
                         <span>QUẢN LÝ FILE</span>
                     </a>

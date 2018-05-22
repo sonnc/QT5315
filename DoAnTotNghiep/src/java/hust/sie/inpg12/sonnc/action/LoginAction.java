@@ -73,59 +73,65 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         lstLogin = loginController.login(email, password);
 
         if (lstLogin.size() == 1) {
-            session.put("email", email);
-            session.put("rule", lstLogin.get(0).getRule());
+            if (lstLogin.get(0).getStatus().equals("LOCKED")) {
+                addFieldError("email", "Tài khoản này đã bị đóng.");
+                return INPUT;
+            } else {
+                session.put("email", email);
+                session.put("rule", lstLogin.get(0).getRule());
+                //sinh viên
+                if (lstLogin.get(0).getRule() == 0) {
+                    int mssv = Integer.parseInt(email.substring(0, 8));
+                    session.put("mssv", mssv);
+                    if (sinhVienController.getSinhVien(mssv).size() == 1) {
+                        return SUCCESS;
+                    } else {
+                        session.put("rule", "99");
+                        return "DANGKYTHONGTINSINHVIEN";
+                    }
+                    // đại diện công ty
+                } else if (lstLogin.get(0).getRule() == 1) {
+                    List<DaiDienCongTy> lstDaiDienCongTys = new ArrayList<>();
+                    List<CongTy> lstCongTy = new ArrayList<>();
+                    lstDaiDienCongTys = loginController.getInfoDaiDienCongTy(email);
 
-            //sinh viên
-            if (lstLogin.get(0).getRule() == 0) {
-                int mssv = Integer.parseInt(email.substring(0, 8));
-                session.put("mssv", mssv);
-                if (sinhVienController.getSinhVien(mssv).size() == 1) {
+                    if (lstDaiDienCongTys.size() == 0) {
+                        session.put("rule", "99");
+                        return "DANGKYDAIDIENVACONGTY";
+                    }
+                    lstCongTy = loginController.getInfoCongTy(lstDaiDienCongTys.get(0).getMaDaiDien());
+                    if (lstCongTy.size() == 0) {
+                        session.put("rule", "99");
+                        return "DANGKYCONGTY";
+                    } else if (lstCongTy.get(0).getTrangThai() == 2) {
+                        //công ty chờ duyệt
+                        session.put("CongtyStatus", "CÔNG TY: " + lstCongTy.get(0).getTenCongTy().toUpperCase() + " ĐANG TRONG QUÁ TRÌNH CHỜ DUYỆT. ");
+                        return "CONGTYSTATUS";
+                    } else if (lstCongTy.get(0).getTrangThai() == 0) {
+                        // công ty bị từ chối
+                        session.put("CongtyStatus", "CÔNG TY: " + lstCongTy.get(0).getTenCongTy().toUpperCase() + " ĐÃ BỊ TỪ CHỐI VÌ KHÔNG THỂ ĐÁP ỨNG YÊU CẦU.");
+                        return "CONGTYSTATUS";
+                    }
                     return SUCCESS;
-                } else {
-                    session.put("rule", "99");
-                    return "DANGKYTHONGTINSINHVIEN";
+                    //Giảng viên hướng dẫn
+                } else if (lstLogin.get(0).getRule() == 2) {
+                    List<GiangVienHuongDan> lstGiangVienHuongDans = loginController.getInfoGiangVienHuongDan(email);
+                    if (lstGiangVienHuongDans.size() == 0) {
+                        session.put("rule", "99");
+                        return "DANGKYTHONGTINGIANGVIENHUONGDAN";
+                    }
+                    return SUCCESS;
+                    // Người hướng dẫn
+                } else if (lstLogin.get(0).getRule() == 3) {
+                    List<NguoiHuongDan> lstNguoiHuongDans = loginController.getInfoNguoiHuongDan(email);
+                    if (lstNguoiHuongDans.size() == 0) {
+                        session.put("rule", "99");
+                        return "DANGKYTHONGTINNGUOIHUONGDAN";
+                    }
+                    return SUCCESS;
+                } else if (lstLogin.get(0).getRule() == 4) {
+                    return "ADMIN";
                 }
-                // đại diện công ty
-            } else if (lstLogin.get(0).getRule() == 1) {
-                List<DaiDienCongTy> lstDaiDienCongTys = new ArrayList<>();
-                List<CongTy> lstCongTy = new ArrayList<>();
-                lstDaiDienCongTys = loginController.getInfoDaiDienCongTy(email);
-
-                if (lstDaiDienCongTys.size() == 0) {
-                    session.put("rule", "99");
-                    return "DANGKYDAIDIENVACONGTY";
-                }
-                lstCongTy = loginController.getInfoCongTy(lstDaiDienCongTys.get(0).getMaDaiDien());
-                if (lstCongTy.size() == 0) {
-                    session.put("rule", "99");
-                    return "DANGKYCONGTY";
-                } else if (lstCongTy.get(0).getTrangThai() == 2) {
-                    //công ty chờ duyệt
-                    session.put("CongtyStatus", "CÔNG TY: " + lstCongTy.get(0).getTenCongTy().toUpperCase() + " ĐANG TRONG QUÁ TRÌNH CHỜ DUYỆT. ");
-                    return "CONGTYSTATUS";
-                } else if (lstCongTy.get(0).getTrangThai() == 0) {
-                    // công ty bị từ chối
-                    session.put("CongtyStatus", "CÔNG TY: " + lstCongTy.get(0).getTenCongTy().toUpperCase() + " ĐÃ BỊ TỪ CHỐI VÌ KHÔNG THỂ ĐÁP ỨNG YÊU CẦU.");
-                    return "CONGTYSTATUS";
-                }
-                return SUCCESS;
-                //Giảng viên hướng dẫn
-            } else if (lstLogin.get(0).getRule() == 2) {
-                List<GiangVienHuongDan> lstGiangVienHuongDans = loginController.getInfoGiangVienHuongDan(email);
-                if (lstGiangVienHuongDans.size() == 0) {
-                    session.put("rule", "99");
-                    return "DANGKYTHONGTINGIANGVIENHUONGDAN";
-                }
-                return SUCCESS;
-                // Người hướng dẫn
-            } else if (lstLogin.get(0).getRule() == 3) {
-                List<NguoiHuongDan> lstNguoiHuongDans = loginController.getInfoNguoiHuongDan(email);
-                if (lstNguoiHuongDans.size() == 0) {
-                    session.put("rule", "99");
-                    return "DANGKYTHONGTINNGUOIHUONGDAN";
-                }
-                return SUCCESS;
             }
         } else {
             addFieldError("email", "Tài khoản hoặc mật khẩu không đúng !");
@@ -144,6 +150,13 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         // email của sinh viên có định dạng @student.hust.edu.vn
         // email giảng viên hướng dẫn: @hust.edu.vn / soict.hust.edu.vn
         if (email.contains("@student.hust.edu.vn")) {
+            String mssv = email.substring(0, 8);
+            try {
+                int x = Integer.parseInt(mssv);
+            } catch (Exception e) {
+                addFieldError("email", "Email sinh viên không hợp lệ.");
+                return INPUT;
+            }
             role = 0;
         } else if (email.contains("@hust.edu.vn") || email.contains("@soict.hust.edu.vn")) {
             role = 2;
@@ -154,6 +167,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         login.setEmail(email);
         login.setPass(pass);
         login.setRule(role);
+        login.setStatus("OPEN");
         if (loginController.SaveRegister(login)) {
             addFieldError("email", "Đăng ký tài khoản thành công. Vui lòng đăng nhập lại.");
             session.put("login", login);

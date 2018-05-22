@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="input-group">
-                                        <input type="text" class="input-sm form-control" placeholder="Search">
+                                        <input  id="myInput" onkeyup="myFunction()" type="text" class="input-sm form-control" placeholder="Search">
                                         <span class="input-group-btn">
                                             <button class="btn btn-sm btn-default" type="button">Tìm kiếm</button>
                                         </span>
@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-striped b-t b-light">
+                                <table  id="myTable" class="table table-striped b-t b-light">
                                     <thead>
                                         <tr>
                                             <th>MSSV</th>
@@ -66,24 +66,63 @@
                                             <th>LỚP</th>
                                             <th>KHOA/ VIỆN</th>
                                             <th>EMAIL</th>
-                                            <th style="width:50px;"></th>
+                                            <th>STATUS</th>
+                                            <th>KHÓA</th>
+                                            <th>MỞ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <s:iterator value="lstSinhVien">
-                                        <tr>
-                                            <td><s:property value="mssv"/></td>
-                                            <td><s:property value="hoTen"/></td>
-                                            <td><s:property value="lop"/></td>
-                                            <td><s:property value="khoaVien"/></td>
-                                            <td><s:property value="email"/></td>
-                                            <td>
-                                                <a href="deleteAcountSVByAdmin?id=<s:property value="mssv"/>" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td><s:property value="mssv"/></td>
+                                                <td><s:property value="hoTen"/></td>
+                                                <td><s:property value="lop"/></td>
+                                                <td><s:property value="khoaVien"/></td>
+                                                <td><s:property value="email"/></td>
+                                                <td><s:property value="status"/></td>
+                                                <td>
+                                                    <a href="COAcountByAdmin?email=<s:property value="email"/>&status=LOCKED" ui-toggle-class=""><i style="color: #F0B300" class="glyphicon glyphicon-lock"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="COAcountByAdmin?email=<s:property value="email"/>&status=OPEN" ui-toggle-class=""><i style="color: #002a80" class="glyphicon glyphicon-eye-open"></i></a>
+                                                </td>
+                                            </tr>
                                         </s:iterator>
                                     </tbody>
                                 </table>
+                                <script>
+                                    function myFunction() {
+                                        // Declare variables 
+                                        var input, filter, table, tr, td, i;
+                                        var td1, td2, td3, td4, td5;
+                                        input = document.getElementById("myInput");
+                                        filter = input.value.toUpperCase();
+                                        table = document.getElementById("myTable");
+                                        tr = table.getElementsByTagName("tr");
+
+                                        // Loop through all table rows, and hide those who don't match the search query
+                                        for (i = 0; i < tr.length; i++) {
+                                            td = tr[i].getElementsByTagName("td")[1];
+                                            td1 = tr[i].getElementsByTagName("td")[2];
+                                            td2 = tr[i].getElementsByTagName("td")[3];
+                                            td3 = tr[i].getElementsByTagName("td")[4];
+                                            td4 = tr[i].getElementsByTagName("td")[5];
+                                            td5 = tr[i].getElementsByTagName("td")[6];
+                                            if (td || td1) {
+                                                if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                        td1.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                        td2.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                        td3.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                        td4.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                        td5.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                                    tr[i].style.display = "";
+                                                } else {
+                                                    tr[i].style.display = "none";
+                                                }
+                                            }
+                                        }
+                                    }
+                                </script>
                             </div>
 
                         </div>

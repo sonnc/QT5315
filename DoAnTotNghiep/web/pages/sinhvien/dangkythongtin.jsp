@@ -98,7 +98,7 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-4">
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="ngaySinh" placeholder="Ngày sinh" required="true" />
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="ngaySinh" placeholder="Ngày sinh: " required="true" />
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.diaChi" placeholder="Địa chỉ" required="true" />
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.dienThoai" placeholder="Điện thoại" required="true" />
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.email" placeholder="Email" value="<%=session.getAttribute("email")%>" readonly="readonly" required="true" />
@@ -132,9 +132,9 @@
                                     <p style="color: red">Hãy cập nhật đầy đủ thông tin mà bạn có để 
                                         làm tăng khả năng được phê duyệt và CV của bạn cũng đảm bảo hơn.</p>
                                     <p style="color: red">Đối với phần: <strong>Kỹ năng lập trình</strong>, các bạn phải thực hiện đúng cú pháp sau.
-                                        Nếu sai, mọi so khớp của các bạn không thành công. <strong>Cú pháp: [abc.xyz]</strong>
+                                        Nếu sai, mọi so khớp của các bạn không thành công. <strong>Cú pháp: [abc-xyz]</strong>
                                         Mỗi một kỹ năng sẽ được bao bọc bởi dấu ngoặc vuông viết liền không dấu. Trong đó: abc là ngôn ngữ, xyz thể hiện trình độ.
-                                        Ví dụ: [java.tot][php.kha]<br/>
+                                        Ví dụ: [java-tot][php-kha]<br/>
                                         Trình độ bao gồm các mức sau:<strong>thanhthao - Thành thạo; tot - Tốt; kha - Khá; biet - Biết; khongbiet - Không biết</strong></p>
                                 </div>
 

@@ -19,6 +19,7 @@
             <result name="DANGKYTHONGTINGIANGVIENHUONGDAN">/pages/gvhd/dangkythongtin.jsp</result>
             <result name="DANGKYTHONGTINNGUOIHUONGDAN">/pages/nhd/dangkythongtin.jsp</result>
             <result name="CONGTYSTATUS">/pages/congty/trangthaicongty.jsp</result>
+            <result name="ADMIN" type="redirect">/admin/home.jsp</result>
         </action>
         <action name="logout" class="hust.sie.inpg12.sonnc.action.LoginAction" method="logout">
             <result name="success" type="redirect">login.jsp</result>
@@ -457,7 +458,7 @@
             <result name="success" >/admin/congty.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-         <action name="deleteCongTyByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="deleteCongTyByAdmin">
+        <action name="deleteCongTyByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="deleteCongTyByAdmin">
             <result name="success" >/admin/congty.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
@@ -514,7 +515,31 @@
             <result name="success" >/admin/qldt.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-        
+        <action name="COAcountByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="COAcountByAdmin">
+            <result name="success" >/admin/sinhvien.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="COAcountGVHDByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="COAcountByAdmin">
+            <result name="success" >/admin/giangvienhuongdan.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="getAllFileByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="getAllFileByAdmin">
+            <result name="success" >/admin/qlf.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="deleteFileByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="deleteFileByAdmin">
+            <result name="success" >/admin/qlf.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="UploadFileByAdmin" class="hust.sie.inpg12.sonnc.action.AdminAction" method="UploadFileByAdmin">
+            <result name="success" type="redirectAction" >
+                <param name="actionName">ufa</param>
+            </result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
+        <action name="ufa">
+            <result>/admin/qlf.jsp</result>
+        </action>
         
         <!--        <action name="test" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="test">
             <result name="success">test.jsp</result>

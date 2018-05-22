@@ -67,22 +67,28 @@
                                             <th>ĐIỆN THOẠI</th>
                                             <th>KHOA VIỆN</th>
                                             <th>BỘ MÔN</th>
-                                            <th style="width:50px;"></th>
+                                            <th>STATUS</th>
+                                            <th>KHÓA</th>
+                                            <th>MỞ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <s:iterator value="lstGiangVienHuongDans">
-                                        <tr>
-                                            <td><s:property value="hoTen"/></td>
-                                            <td><s:property value="diaChi"/></td>
-                                            <td><s:property value="email"/></td>
-                                            <td><s:property value="dienThoai"/></td>
-                                            <td><s:property value="khoaVien"/></td>
-                                            <td><s:property value="boMon"/></td>
-                                            <td>
-                                                <a href="deleteAcountByAdmin?id=<s:property value="mssv"/>" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td><s:property value="hoTen"/></td>
+                                                <td><s:property value="diaChi"/></td>
+                                                <td><s:property value="email"/></td>
+                                                <td><s:property value="dienThoai"/></td>
+                                                <td><s:property value="khoaVien"/></td>
+                                                <td><s:property value="boMon"/></td>
+                                                <td><s:property value="status"/></td>
+                                                <td>
+                                                    <a href="COAcountGVHDByAdmin?email=<s:property value="email"/>&status=LOCKED" ui-toggle-class=""><i style="color: #F0B300" class="glyphicon glyphicon-lock"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="COAcountGVHDByAdmin?email=<s:property value="email"/>&status=OPEN" ui-toggle-class=""><i style="color: #002a80" class="glyphicon glyphicon-eye-open"></i></a>
+                                                </td>
+                                            </tr>
                                         </s:iterator>
                                     </tbody>
                                 </table>

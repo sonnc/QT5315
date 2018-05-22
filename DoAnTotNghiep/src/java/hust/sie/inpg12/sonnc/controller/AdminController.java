@@ -6,6 +6,7 @@
 package hust.sie.inpg12.sonnc.controller;
 
 import hust.sie.inpg12.sonnc.entities.DeTai;
+import hust.sie.inpg12.sonnc.entities.FileAll;
 import hust.sie.inpg12.sonnc.entities.HeSoDiem;
 import hust.sie.inpg12.sonnc.entities.Login;
 import hust.sie.inpg12.sonnc.entities.SinhVienDiem;
@@ -35,7 +36,7 @@ public class AdminController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query q = session.createSQLQuery("select b.mssv, b.ho_ten, b.lop, b.khoa, b.khoa_vien, a.email\n"
+            Query q = session.createSQLQuery("select b.mssv, b.ho_ten, b.lop, b.khoa, b.khoa_vien, a.email, a.status\n"
                     + "from login a left join sinh_vien b on a.email = b.email\n"
                     + "where a.rule = 0 ");
             results = q.list();
@@ -70,13 +71,35 @@ public class AdminController {
         return r;
     }
 
+    public boolean COAcountByAdmin(String email, String status) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("UPDATE Login SET status=:status"
+                    + " WHERE email=:email");
+            q.setParameter("email", email);
+            q.setParameter("status", status);
+            q.executeUpdate();
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
     public boolean deleteAcountSVByAdmin() {
         boolean r = false;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.createQuery("DELETE FROM SinhVienInfo WHERE mssv =:mssv");
-
             transaction.commit();
             r = true;
         } catch (Exception e) {
@@ -95,7 +118,7 @@ public class AdminController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query q = session.createSQLQuery("select b.ho_ten, b.dia_chi, a.email, b.dien_thoai, b.khoa_vien, b.bo_mon \n"
+            Query q = session.createSQLQuery("select b.ho_ten, b.dia_chi, a.email, b.dien_thoai, b.khoa_vien, b.bo_mon, a.status \n"
                     + "from login a left join giang_vien_huong_dan b on a.email = b.email\n"
                     + "where rule = 2");
             results = q.list();
@@ -117,7 +140,7 @@ public class AdminController {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             Query query = session.createSQLQuery("select  a.ma_cong_ty, a.logo, a.ten_cong_ty, a.dia_chi,\n"
-                    + "a.dien_thoai, a.email, b.ho_ten, b.ma_dai_dien, a.trang_thai, a.website\n"
+                    + "a.dien_thoai, a.email, b.ho_ten, b.ma_dai_dien, a.trang_thai, a.website, b.chuc_vu\n"
                     + "from cong_ty a join dai_dien_cong_ty b on a.ma_dai_dien = b.ma_dai_dien \n"
                     + "where a.trang_thai <> 3");
             results = query.list();
@@ -248,12 +271,13 @@ public class AdminController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            results = (List<Object[]>) session.createSQLQuery("SELECT a.mssv, a.ho_ten, a.lop, a.khoa, a.khoa_vien, b.diem_phan_hoi, b.diem_bcqt,\n"
-                    + "b.diem_qua_trinh, b.diem_cuoi_ky, b.dot_thuc_tap, c.trang_thai\n"
+            results = (List<Object[]>) session.createSQLQuery("SELECT a.mssv, a.ho_ten, a.lop, a.khoa, a.khoa_vien, IFNULL(b.diem_phan_hoi, 99.99) as diem_phan_hoi, \n"
+                    + "IFNULL(b.diem_bcqt, 99.99) as diem_bcqt, IFNULL(b.diem_qua_trinh, 99.99) as diem_qua_trinh, \n"
+                    + "IFNULL(b.diem_cuoi_ky, 99.99) as diem_cuoi_ky, b.dot_thuc_tap, c.trang_thai\n"
                     + "FROM sinh_vien a join sinh_vien_diem b on a.mssv = b.mssv\n"
                     + "join sinh_vien_thuc_tap c on a.mssv = c.mssv\n"
                     + "and c.mssv = b.mssv\n"
-                    + "order by b.dot_thuc_tap DESC  ").list();
+                    + "order by b.dot_thuc_tap DESC").list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -430,6 +454,68 @@ public class AdminController {
             q.setParameter("dotThucTap", dotThucTap);
             q.setParameter("mssv", mssv);
             q.executeUpdate();
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+
+    public List getAllFileByAdmin() {
+
+        List<FileAll> lstFileAlls = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM FileAll h ORDER BY h.id DESC");
+            lstFileAlls = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstFileAlls;
+    }
+
+    public boolean deleteFileByAdmin(int id) {
+        boolean check = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery("delete FileAll where id =:id");
+            query.setParameter("id", id);
+            transaction.commit();
+            int result = query.executeUpdate();
+            if (result > 0) {
+                check = true;
+            }
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return check;
+    }
+    
+    public boolean UploadFileByAdmin(FileAll file) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(file);
             transaction.commit();
             r = true;
         } catch (Exception e) {

@@ -14,6 +14,9 @@
         <property name="rule" type="int">
             <column name="rule" not-null="true" />
         </property>
+        <property name="status" type="string">
+            <column name="status" not-null="true" />
+        </property>
 <!--        <set name="thongBaos" table="thong_bao" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="nguoi_dang" not-null="true" />

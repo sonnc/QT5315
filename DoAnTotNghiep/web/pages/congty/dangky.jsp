@@ -91,9 +91,9 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <label>Mô tả công ty</label>
-                                        <textarea name="ct.moTa" required style="height: 200px; margin-bottom: 30px" class="form-control" placeholder="Hãy mô tả công ty của bạn,....."></textarea>
+                                        <textarea name="ct.moTa" style="height: 200px; margin-bottom: 30px" class="form-control" placeholder="Hãy mô tả công ty của bạn,....."></textarea>
                                         <label>Lĩnh vực hoạt động</label>
-                                        <textarea name="ct.linhVucHoatDong" required style="height: 200px; margin-bottom: 30px" class="form-control" placeholder="Các lĩnh vực hoạt động của công ty bạn là gì,...."></textarea>
+                                        <textarea name="ct.linhVucHoatDong" style="height: 200px; margin-bottom: 30px" class="form-control" placeholder="Các lĩnh vực hoạt động của công ty bạn là gì,...."></textarea>
                                     </div>
                                 </div>
                                 <div><input type="submit" value="ĐĂNG KÝ" class="btn btn-primary btn-block btn-lg"></div>

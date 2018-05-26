@@ -270,6 +270,10 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         if (ma != 0) {
             CongTy ct = new CongTy();
             ct = this.ct;
+//            String mota = this.ct.getMoTa().replaceAll("<font size=\"3\" face=\"arial\">","").replaceAll("</font>", "");
+//            String linhvuc = this.ct.getLinhVucHoatDong().replaceAll("<font size=\"3\" face=\"arial\">","").replaceAll("</font>", "");
+//            ct.setMoTa(mota);
+//            ct.setLinhVucHoatDong(linhvuc);
             ct.setLogo(logo);
             ct.setTrangThai(2);
             ct.setMaDaiDien(ma);
@@ -445,6 +449,7 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         l.setEmail(nhd.getEmail());
         l.setPass(nhd.getDienThoai());
         l.setRule(3);
+        l.setStatus("ACTIVE");
         if (ddctController.AddAcountNguoiHuongDan(nhd, l)) {
             session.put("messageAddAcount", "Thêm nhân viên mới thành công");
         } else {

@@ -50,5 +50,10 @@
         $('.nicEdit-panelContain').parent().next().width('100%');
         $('.nicEdit-main').width('100%');
         $('.nicEdit-main').height('100px');
+        $('textarea[type=submit]').bind('click', function () {
+            for (var i = 0; i < nicEditor.nicInstances.length; i++) {
+                nicEditor.nicInstances[i].saveContent();
+            }
+        });
     });
 </script>

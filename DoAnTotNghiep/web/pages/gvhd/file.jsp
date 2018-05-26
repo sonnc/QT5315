@@ -69,8 +69,10 @@
                             <div class="alert alert-warning">
                                 <form role="form" id="formValidate" action="UploadFileGVHD" method="post" enctype = "multipart/form-data"> 
                                     <input  style="margin-bottom: 15px;" class="form-control" name="tenFile" placeholder="Tên tài liệu"/>
+                                    <label>Nội dung</label>
                                     <textarea style="margin-bottom: 15px; height: 100px" class="form-control" name="noiDung" placeholder="Mô tả tài liệu"></textarea>
-                                    <select style="margin-bottom: 15px" name="type" class="form-control" required="true"> 
+                                    
+                                    <select style="margin-bottom: 15px; margin-top: 15px" name="type" class="form-control" required="true"> 
                                         <option value="Null">Chế độ</option>
                                         <option value="1">Công khai</option>
                                         <option value="2">Hạn chế</option>

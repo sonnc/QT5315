@@ -32,8 +32,8 @@
             <!-- user login dropdown start-->
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    <img alt="" src="images/2.png">
-                    <span class="username">John Doe</span>
+                    <img alt="" src="images/">
+                    <span class="username">Sơn Nguyễn</span>
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu extended logout">

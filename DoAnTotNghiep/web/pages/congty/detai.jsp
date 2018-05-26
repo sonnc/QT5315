@@ -151,7 +151,7 @@
                                                                                 </div>
                                                                                 <div class="col-lg-6">
                                                                                     <select style="margin-bottom: 15px;height: 45px;" name="deTai.maGvhd" class="form-control" required="required"> 
-                                                                                        <option>Chọn người hướng dẫn đề tài</option>
+                                                                                        <option value="">Chọn người hướng dẫn đề tài</option>
                                                                                         <s:iterator value="lstNguoiHuongDans">
                                                                                             <option value="<s:property value="maGvhd"/>"><s:property value="hoTen"/></option> 
                                                                                         </s:iterator>
@@ -159,11 +159,13 @@
                                                                                     </select>  
                                                                                 </div>
                                                                             </div>
+                                                                            <label>Nội dung</label>
                                                                             <textarea style="margin-bottom: 15px; width: 100%;"  class="form-control" name="deTai.noiDung" placeholder="Nội dung"></textarea>
                                                                       
                                                                             <p><strong>Định dạng của yêu cầu lập trình: [tên_ngôn_ngữ-trình_đô]. Ví dụ: [java-tot][c++-tot][mysql-tot]</strong></p>
                                                                             <p>Các trình độ bao gồm: Thành thao - thanhthao , Tốt - tot , Khá - kha , Biết - biet , Không biết - khongbiet</p>
                                                                             <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="deTai.yeuCauLapTrinh" placeholder="Yêu cầu lập trình"/>
+                                                                            <label>Các yêu cầu khác</label>
                                                                             <textarea style="margin-bottom: 15px;" class="form-control" name="deTai.yeuCauKhac" placeholder="Yêu cầu khác"></textarea>
                                                                         </div>
                                                                     </div> 

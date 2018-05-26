@@ -125,7 +125,7 @@
                             </div>
                             <%-- up load file --%>
                             <div class="row" >
-                                <div class="col-lg-6 " >
+<!--                                <div class="col-lg-6 " >
                                     <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                          padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                         <p style="margin: 0px">TÀI LIỆU CHUNG/ HỌC TẬP</p>
@@ -172,11 +172,11 @@
                                             </div>
                                         </s:iterator>
                                     </div>
-                                </div>
-                                <div class="col-lg-6 ">
+                                </div>-->
+                                <div class="col-lg-12 ">
                                     <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                          padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
-                                        <p style="margin: 0px">TÀI LIỆU QUAN TRỌNG/ BÁO CÁO</p>
+                                        <p style="margin: 0px">TÀI LIỆU/ BÁO CÁO</p>
                                     </div>
                                     <div class="alert alert-danger">
                                         <s:iterator value="lstSinhVienFileBC">

@@ -79,12 +79,12 @@
                                                 <td><s:property value="lop"/></td>
                                                 <td><s:property value="khoaVien"/></td>
                                                 <td><s:property value="email"/></td>
-                                                <td><s:property value="status"/></td>
+                                                <td><s:property value="status" escapeHtml="false"/></td>
                                                 <td>
                                                     <a href="COAcountByAdmin?email=<s:property value="email"/>&status=LOCKED" ui-toggle-class=""><i style="color: #F0B300" class="glyphicon glyphicon-lock"></i></a>
                                                 </td>
                                                 <td>
-                                                    <a href="COAcountByAdmin?email=<s:property value="email"/>&status=OPEN" ui-toggle-class=""><i style="color: #002a80" class="glyphicon glyphicon-eye-open"></i></a>
+                                                    <a href="COAcountByAdmin?email=<s:property value="email"/>&status=ACTIVE" ui-toggle-class=""><i style="color: #002a80" class="glyphicon glyphicon-eye-open"></i></a>
                                                 </td>
                                             </tr>
                                         </s:iterator>
@@ -102,12 +102,12 @@
 
                                         // Loop through all table rows, and hide those who don't match the search query
                                         for (i = 0; i < tr.length; i++) {
-                                            td = tr[i].getElementsByTagName("td")[1];
-                                            td1 = tr[i].getElementsByTagName("td")[2];
-                                            td2 = tr[i].getElementsByTagName("td")[3];
-                                            td3 = tr[i].getElementsByTagName("td")[4];
-                                            td4 = tr[i].getElementsByTagName("td")[5];
-                                            td5 = tr[i].getElementsByTagName("td")[6];
+                                            td = tr[i].getElementsByTagName("td")[0];
+                                            td1 = tr[i].getElementsByTagName("td")[1];
+                                            td2 = tr[i].getElementsByTagName("td")[2];
+                                            td3 = tr[i].getElementsByTagName("td")[3];
+                                            td4 = tr[i].getElementsByTagName("td")[4];
+                                            td5 = tr[i].getElementsByTagName("td")[5];
                                             if (td || td1) {
                                                 if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                         td1.innerHTML.toUpperCase().indexOf(filter) > -1 ||

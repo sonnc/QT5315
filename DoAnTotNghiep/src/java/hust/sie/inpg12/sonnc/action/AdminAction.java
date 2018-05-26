@@ -22,6 +22,7 @@ import hust.sie.inpg12.sonnc.other.CongTyvaDaiDienCongTy;
 import hust.sie.inpg12.sonnc.other.DanhSachSinhVien;
 import hust.sie.inpg12.sonnc.other.SinhVienDiemThi;
 import hust.sie.inpg12.sonnc.other.SvDtCtNhd;
+import hust.sie.inpg12.sonnc.other.nhd;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -51,9 +52,18 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
     private List<SinhVienDiemThi> lstSinhVienDiemThi = new ArrayList<>();
     private List<ThongBao> lstThongBaos = new ArrayList<>();
     private List<FileAll> lstFileAlls = new ArrayList<>();
+    private List<nhd> lstNguoiHuongDans = new ArrayList<>();
     private File myFile;
     private String myFileFileName;
     private String path;
+
+    public List<nhd> getLstNguoiHuongDans() {
+        return lstNguoiHuongDans;
+    }
+
+    public void setLstNguoiHuongDans(List<nhd> lstNguoiHuongDans) {
+        this.lstNguoiHuongDans = lstNguoiHuongDans;
+    }
 
     public List<FileAll> getLstFileAlls() {
         return lstFileAlls;
@@ -174,7 +184,12 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
                     d.setKhoaVien((String) result[4]);
                 }
                 d.setEmail((String) result[5]);
-                d.setStatus((String) result[6]);
+                if (result[6].toString().equals("ACTIVE")) {
+                    d.setStatus("<p style=\"color: blue\">ACTIVE</p>");
+                } else {
+                     d.setStatus("<p style=\"color: red\">CLOSED</p>");
+                }
+               // d.setStatus((String) result[6]);
 
                 lstSinhVien.add(d);
             }
@@ -205,7 +220,7 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         l.setPass(e);
         System.out.println(e);
         l.setRule(0);
-        l.setStatus("OPEN");
+        l.setStatus("ACTIVE");
         if (adminController.addAcountLogin(l)) {
             session.put("message", "Thêm thành công tài khoản sinh viên.");
         } else {
@@ -245,13 +260,35 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
 
     }
 
+    public String getAllNHDByAdmin() {
+        try {
+            List<Object[]> results = adminController.getAllNHDByAdmin();
+            for (Object[] result : results) {
+                nhd d = new nhd();
+                d.setHoTen((String) result[0]);
+                d.setDienThoai((String) result[1]);
+                d.setEmail((String) result[2]);
+                d.setChucVu((String) result[3]);
+                d.setTenCongTy((String) result[4]);
+                d.setStatus((String) result[5]);
+                lstNguoiHuongDans.add(d);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ERROR;
+        }
+        session.put("getAllNHDByAdmin", "getAllNHDByAdmin");
+        return SUCCESS;
+
+    }
+
     public String addLoginGVHDbyAdmin() {
         Login l = new Login();
         String e = request.getParameter("email");
         l.setEmail(e);
         l.setPass("12345678abc");
         l.setRule(2);
-        l.setStatus("OPEN");
+        l.setStatus("ACTIVE");
         if (adminController.addAcountLogin(l)) {
             session.put("message", "Thêm tài khoản giảng viên hướng dẫn thành công.");
         } else {
@@ -550,7 +587,7 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
                 addActionError(e.getMessage());
                 session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
             }
-            fileAll.setEmail((String)session.get("email"));
+            fileAll.setEmail((String) session.get("email"));
             fileAll.setLink(link);
             fileAll.setNgayThang(ngayThang);
             fileAll.setNoiDung(request.getParameter("noiDung"));

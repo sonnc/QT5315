@@ -134,6 +134,28 @@ public class AdminController {
         return results;
     }
 
+    public List getAllNHDByAdmin() {
+        List<Object[]> results = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createSQLQuery("select b.ho_ten, b.dien_thoai, b.email, b.chucvu, c.ten_cong_ty, a.status\n"
+                    + "from login a join nguoi_huong_dan b on a.email = b.email\n"
+                    + "join cong_ty c on b.ma_cong_ty = c.ma_cong_ty\n"
+                    + "where c.trang_thai <> 3 and a.rule = 3");
+            results = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+
     public List<Object[]> getAllCongTy() {
         List<Object[]> results = new ArrayList<>();
         try {
@@ -509,7 +531,7 @@ public class AdminController {
         }
         return check;
     }
-    
+
     public boolean UploadFileByAdmin(FileAll file) {
         boolean r = false;
         try {

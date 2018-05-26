@@ -86,7 +86,7 @@
                                                     <a href="COAcountGVHDByAdmin?email=<s:property value="email"/>&status=LOCKED" ui-toggle-class=""><i style="color: #F0B300" class="glyphicon glyphicon-lock"></i></a>
                                                 </td>
                                                 <td>
-                                                    <a href="COAcountGVHDByAdmin?email=<s:property value="email"/>&status=OPEN" ui-toggle-class=""><i style="color: #002a80" class="glyphicon glyphicon-eye-open"></i></a>
+                                                    <a href="COAcountGVHDByAdmin?email=<s:property value="email"/>&status=ACTIVE" ui-toggle-class=""><i style="color: #002a80" class="glyphicon glyphicon-eye-open"></i></a>
                                                 </td>
                                             </tr>
                                         </s:iterator>

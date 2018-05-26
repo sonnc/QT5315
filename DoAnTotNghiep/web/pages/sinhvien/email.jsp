@@ -24,12 +24,10 @@
             }
         %>
         <script>
-            window.onload = function () {
                 setTimeout(function () {
                     $('body').removeClass('preloading');
                     $('#preload').delay(1000).fadeOut('fast');
-                }, 0);
-            };
+                }, 1000);
         </script>
     </head>
     <%

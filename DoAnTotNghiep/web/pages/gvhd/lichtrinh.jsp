@@ -106,7 +106,8 @@
                                             <div class="validation"></div>
                                         </div>
                                         <div class="form-group">
-                                            <textarea class="form-control" name="noiDung" rows="5"  placeholder="Nội dung: ..."  required="true"></textarea>
+                                            <label>Nội dung</label>
+                                            <s:textarea cssClass="form-control" name="noiDung" rows="5"></s:textarea>
                                             <div class="validation"></div>
                                         </div>
                                         <script>

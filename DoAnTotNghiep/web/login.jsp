@@ -36,7 +36,7 @@
                 <div class="container" >
                     <div class="row">
                         <div class="col-lg-12" >
-                            <h2 style="text-align: center; color: #C4151C">HỆ THỐNG ĐĂNG KÝ VÀ QUẢN LÝ THỰC TẬP DOANH NGHIỆP</h2>
+                            <h3 style="text-align: center; color: red">HỆ THỐNG ĐĂNG KÝ VÀ QUẢN LÝ THỰC TẬP DOANH NGHIỆP</h3>
                         </div>
                     </div>
                 </div>

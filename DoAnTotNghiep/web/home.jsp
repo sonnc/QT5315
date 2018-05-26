@@ -64,9 +64,11 @@
                                                     <h4 style="margin-bottom: -10px"><a href="detail?id=<s:property value="id"/>"><s:property value="tieuDe"/></a></h4>
                                                 </div>
                                             </div>
-                                            <p style="text-overflow: ellipsis;word-wrap: break-word;overflow: hidden;max-height: 5.6em;line-height: 1.8em; margin-bottom: 0px">
-                                                <s:property value="noiDung"/>
-                                            </p>
+                                            <div style="text-overflow: ellipsis;word-wrap: break-word;
+                                               overflow: hidden;max-height: 6.6em;line-height: 1.8em; margin-bottom: 0px;
+                                               font-family:Open Sans, Arial, sans-serif;font-size:14px;font-weight:300;line-height:1.6em;color:#656565;">
+                                                <s:property value="noiDung" escapeHtml="false"/>
+                                            </div>
                                             <p><strong>. . .</strong></p>
                                             <div class="bottom-article" style="padding: 0px; margin-top: 0px; float: right; margin-bottom: 20px; border-bottom-color: red">
                                                 <ul class="meta-post">

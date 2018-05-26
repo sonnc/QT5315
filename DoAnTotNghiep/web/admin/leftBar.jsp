@@ -19,9 +19,9 @@
                     <ul class="sub">
                         <li><a href="<%=session.getAttribute("httpURL")%>admin/sinhvien.jsp">Sinh viên</a></li>
                         <li><a href="<%=session.getAttribute("httpURL")%>admin/giangvienhuongdan.jsp">Giảng viên hướng dẫn</a></li>
-                        <li><a href="grids.html">Đại diện công ty</a></li>
-                        <li><a href="grids.html">Người hướng dẫn</a></li>
-                        <li><a href="grids.html">Admin</a></li>
+                        <li><a href="<%=session.getAttribute("httpURL")%>admin/daidiencongty.jsp">Đại diện công ty</a></li>
+                        <li><a href="<%=session.getAttribute("httpURL")%>admin/nguoihuongdan.jsp">Người hướng dẫn</a></li>
+                        <li><a href="<%=session.getAttribute("httpURL")%>admin/acountadmin.jsp">Admin</a></li>
                     </ul>
                 </li>
                 <li>

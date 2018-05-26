@@ -162,7 +162,10 @@
                                                                             </script>
                                                                         </div>
                                                                     </div>
+                                                                    <label>Lĩnh vực hoạt động</label>
                                                                     <textarea style="margin-bottom: 15px;height: 150px;" class="form-control" name="nhd.linhVucHoatDong" placeholder="Lĩnh vực hoạt động"></textarea>
+                                                                    <div style="margin-top: 25px"></div>
+                                                                    <label>Dự án</label>
                                                                     <textarea style="margin-bottom: 15px;height: 150px;" class="form-control" name="nhd.duAn" placeholder="Các dự án"></textarea>
                                                                 </div>
                                                             </div> 
@@ -230,7 +233,7 @@
                                     </tr>
                                 </s:iterator>
                             </table>
-                             <script>
+                            <script>
                                 function myFunction() {
                                     // Declare variables 
                                     var input, filter, table, tr, td, i;
@@ -250,7 +253,7 @@
                                             if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td1.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td2.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-                                                        td3.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                                    td3.innerHTML.toUpperCase().indexOf(filter) > -1) {
                                                 tr[i].style.display = "";
                                             } else {
                                                 tr[i].style.display = "none";

@@ -167,7 +167,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         login.setEmail(email);
         login.setPass(pass);
         login.setRule(role);
-        login.setStatus("OPEN");
+        login.setStatus("ACTIVE");
         if (loginController.SaveRegister(login)) {
             addFieldError("email", "Đăng ký tài khoản thành công. Vui lòng đăng nhập lại.");
             session.put("login", login);

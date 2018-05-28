@@ -13,7 +13,7 @@
         <%    if (session.getAttribute("rule") == null) {
                 String l = (String) session.getAttribute("httpURL");
                 response.sendRedirect(l + "login.jsp");
-                return;
+
             }
         %>
         <link href="./pages/libs/css/sweetalert.css" rel="stylesheet" />
@@ -23,12 +23,6 @@
         <%
             }
         %>
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
     </head>
     <%
         if (session.getAttribute("getAllDeTai") != null) {
@@ -44,7 +38,7 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <%                                if (session.getAttribute("messageDangKyDeTai") != null) {
                             %>
                             <script type="text/javascript">
@@ -57,10 +51,10 @@
 
                             <s:iterator value="lstDeTai">
                                 <div class="row" style="margin: 0px">
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 col-md-2">
                                         <img src="<s:property value="logo"/>" alt="" class="img-responsive" style="height: 100%; width: 100%" />
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-8 col-md-8">
                                         <article style="margin-bottom: 0px; padding-bottom: 0px">
                                             <div class="post-image" style="margin: 0px">
                                                 <div class="post-heading">
@@ -72,14 +66,14 @@
                                                     text-overflow: ellipsis;
                                                     word-wrap: break-word;
                                                     overflow: hidden;
-                                                    max-height: 3.6em;
+                                                    max-height: 5.6em;
                                                     line-height: 1.8em;
                                                 }
                                             </style>
                                             <p style="margin: 0;"><strong>Công ty: </strong><s:property value="tenCongTy"/></p>
-                                            <p class="max-lines" style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung" escapeHtml="false"/></p>
-                                            <p class="max-lines" style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh" escapeHtml="false"/></p>
-                                            <p class="max-lines" style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac" escapeHtml="false"/></p>
+                                            <div class="max-lines" style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung" escapeHtml="false"/></div>
+                                            <div class="max-lines" style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh" escapeHtml="false"/></div>
+                                            <div class="max-lines" style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac" escapeHtml="false"/></div>
                                             <div style="margin-bottom: 20px">
                                                 <ul class="meta-post">
                                                     <li style="padding-right: 0px"><i class="fa fa-calendar"></i><a>Ngày đăng: <s:property value="ngayDang"/></a></li>
@@ -89,7 +83,7 @@
                                             </div>
                                         </article>
                                     </div> 
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 col-md-2">
                                         <p><strong style="color: blue"><s:property value="soLuongCon"/></strong>/<strong style="color: red"><s:property value="soLuong"/></strong></p>
                                         <a class="btn btn-info" id="tagA<s:property value="maDeTai"/>" href="dangkydetai?maDeTai=<s:property value="maDeTai"/>"> ĐĂNG KÝ</a>
                                         <script>

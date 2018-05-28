@@ -15,29 +15,18 @@
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
         <%    if (session.getAttribute("rule") == null) {
-             String l = (String) session.getAttribute("httpURL");
-             response.sendRedirect(l + "login.jsp");
-             return;
-         }
-        %>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
             }
-        </style>
+        %>
+
         <%            if (session.getAttribute("GetAllBaoCaoQTCK") == null) {
 
         %>
         <s:action name="GetAllBaoCaoQTCK" executeResult="true"/>
         <%            }
         %>
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
     </head>
     <%
         if (session.getAttribute("GetAllBaoCaoQTCK") != null) {
@@ -62,7 +51,7 @@
                             <style>
                                 td,th{padding: 5px}
                             </style>
-                            <table id="myTable" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
+                            <table id="results" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                 <tr>
                                     <th><strong> Mã SV </strong></th>
                                     <th><strong> Họ và tên </strong></th>
@@ -86,14 +75,14 @@
                                     </tr>
                                 </s:iterator>
                             </table>
-                             <script>
+                            <script>
                                 function myFunction() {
                                     // Declare variables 
                                     var input, filter, table, tr, td, i;
                                     var td1, td2, td3, td4;
                                     input = document.getElementById("myInput");
                                     filter = input.value.toUpperCase();
-                                    table = document.getElementById("myTable");
+                                    table = document.getElementById("results");
                                     tr = table.getElementsByTagName("tr");
 
                                     // Loop through all table rows, and hide those who don't match the search query
@@ -107,8 +96,8 @@
                                             if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td1.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td2.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-                                                        td3.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-                                                        td4.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                                    td3.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td4.innerHTML.toUpperCase().indexOf(filter) > -1) {
                                                 tr[i].style.display = "";
                                             } else {
                                                 tr[i].style.display = "none";
@@ -117,12 +106,13 @@
                                     }
                                 }
                             </script>
-                            <div id="pagination">
-                                <span class="all">Page 1 of 3</span>
-                                <span class="current">1</span>
-                                <a href="#" class="inactive">2</a>
-                                <a href="#" class="inactive">3</a>
-                            </div>
+                            <div id="pageNavPosition" style="float: right"></div>
+                            <script type="text/javascript">
+                                var pager = new Pager('results', 6);
+                                pager.init();
+                                pager.showPageNav('pager', 'pageNavPosition');
+                                pager.showPage(1);
+                            </script>
                             <div class="clear"></div>
                         </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>

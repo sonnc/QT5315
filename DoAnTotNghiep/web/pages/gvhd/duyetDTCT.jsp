@@ -20,24 +20,14 @@
                 return;
             }
         %>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
-            }
-        </style>
+      
         <%            if (session.getAttribute("GetAllDeTaiReview") == null) {
         %>
         <s:action name="GetAllDeTaiReview" executeResult="true"/>
         <%
             }
         %>
-         <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
+       
     </head>
     <%
         if (session.getAttribute("GetAllDeTaiReview") != null) {

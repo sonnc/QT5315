@@ -11,24 +11,19 @@
 <html>
     <head>
         <%@include file="../../mains/head.jsp" %>
-        <%    if (session.getAttribute("rule") == null) {
-                String l = (String) session.getAttribute("httpURL");
-                response.sendRedirect(l + "login.jsp");
-                return;
-            }
-        %>
+     <%    if (session.getAttribute("rule") == null) {
+            String l = (String) session.getAttribute("httpURL");
+            response.sendRedirect(l + "login.jsp");
+
+        }
+    %>
         <%    if (session.getAttribute("getAllDeTaiSVDK") == null) {
         %>
         <s:action name="getAllDeTaiSVDK" executeResult="true"/>
         <%
             }
         %>
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
+      
     </head>
     <%
         if (session.getAttribute("getAllDeTaiSVDK") != null) {
@@ -43,7 +38,7 @@
         <section id="content">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 col-md-8">
                         <%                                if (session.getAttribute("messagegetAllDeTaiSVDK") != null) {
                         %>
                         <script type="text/javascript">
@@ -56,10 +51,10 @@
 
                         <s:iterator value="lstSVDKs">
                             <div class="row" style="margin: 0px">
-                                <div class="col-lg-2">
+                                <div class="col-lg-2 col-md-2">
                                     <img src="<s:property value="logo"/>" alt="" class="img-responsive" style="height: 100%; width: 100%" />
                                 </div>
-                                <div class="col-lg-8">
+                                <div class="col-lg-8 col-md-8">
                                     <article style="margin-bottom: 0px; padding-bottom: 0px">
                                         <div class="post-image" style="margin: 0px">
                                             <div class="post-heading">
@@ -88,7 +83,7 @@
                                         </div>
                                     </article>
                                 </div> 
-                                <div class="col-lg-2">
+                                <div class="col-lg-2 col-md-2">
                                      <a class="btn btn-info"><s:property value="trangThai"/></a>
                                      <p>So khớp: <s:property value="soKhop"/></p>
                                      <p>Ngày đăng ký: <s:property value="ngayDangKy"/></p>

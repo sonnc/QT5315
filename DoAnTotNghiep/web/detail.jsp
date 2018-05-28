@@ -32,13 +32,13 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <s:iterator value="lstThongBao">
                                 <div class="row" style="margin: 0px">
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2 col-md-2">
                                         <img src="<s:property value="photoLink"/>" alt="" class="img-responsive" style="height: 100%; width: 100%" />
                                     </div>
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-10 col-md-10">
                                         <article style="margin-bottom: 0px; padding-bottom: 0px">
                                             <div class="post-image">
                                                 <div class="post-heading">

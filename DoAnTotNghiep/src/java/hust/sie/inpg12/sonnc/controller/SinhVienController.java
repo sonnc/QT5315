@@ -724,6 +724,26 @@ public class SinhVienController {
         }
         return lstSVTT;
     }
+    public List CheckDotThucTapSV(int mssv) {
+        List<SinhVienThucTap> lstSVTT = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM SinhVienThucTap where mssv =:mssv");
+            q.setParameter("mssv", mssv);
+            q.getFirstResult();
+            lstSVTT = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lstSVTT;
+    }
 
     public List<Object[]> getAllDeTaiDKBySV(int mssv, int dotThucTap) {
         List<Object[]> results = new ArrayList<>();

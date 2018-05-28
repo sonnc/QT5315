@@ -5,8 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
-<div class="col-lg-4">
+<div class="col-lg-4 col-md-4">
     <aside class="right-sidebar">
         <div class="widget">
             <form role="form">
@@ -15,55 +16,47 @@
                 </div>
             </form>
         </div>
-        <div class="widget">
+        <div class="widget" >
             <h5 class="widgetheading">CÔNG TY</h5>
             <ul class="recent">
                 <marquee onmouseover="this.stop()" onmouseout="this.start()" scrollamount="2" direction="up" width="100%" align="center">
-                    <li style="margin: 0px;">
-                        <div class="row" style="margin: 0px;">
-                            <div class="col-lg-3">
-                                <img src="pages/libs/img/dummies/blog/65x65/thumb1.jpg" class="pull-left" alt="" style="height: 100%; width: 100%"/>
+                    <s:iterator value="%{#session.lstCongTys}">
+                        <li style="margin: 0px;">
+                            <div class="row" style="margin: 0px;">
+                                <div class="col-lg-3 col-md-3">
+                                    <img src="<s:property value="logo"/>" class="pull-left" alt="" style="height: 100%; width: 100%"/>
+                                </div>
+                                <div class="col-lg-9 col-md-9">
+                                    <h6><a href="chiTietCongTy?maCongTy=<s:property value="maCongTy"/>"><s:property value="tenCongTy"/></a></h6>
+                                    <p><s:property value="diaChi"/></p>
+                                </div>
                             </div>
-                            <div class="col-lg-9">
-                                <h6><a href="#">Công ty Hệ thống thông tin FPT</a></h6>
-                                <p>Địa chỉ: Keangnam - Hà Nội</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li style="margin: 0px ;">
-                        <div class="row" style="margin: 0px ;">
-                            <div class="col-lg-3">
-                                <img src="pages/libs/img/dummies/blog/65x65/thumb1.jpg" class="pull-left" alt="" style="height: 100%; width: 100%"/>
-                            </div>
-                            <div class="col-lg-9">
-                                <h6><a href="#">Công ty Hệ thống thông tin FPT</a></h6>
-                                <p>Địa chỉ: Keangnam - Hà Nội</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li style="margin: 0px ;">
-                        <div class="row" style="margin: 0px ;">
-                            <div class="col-lg-3">
-                                <img src="pages/libs/img/dummies/blog/65x65/thumb1.jpg" class="pull-left" alt="" style="height: 100%; width: 100%"/>
-                            </div>
-                            <div class="col-lg-9">
-                                <h6><a href="#">Công ty Hệ thống thông tin FPT</a></h6>
-                                <p>Địa chỉ: Keangnam - Hà Nội</p>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    </s:iterator>
                 </marquee>
             </ul>
         </div>
-        <div class="widget">
+        <div class="widget" >
             <h5 class="widgetheading">TÀI LIỆU</h5>
-            <ul class="cat">
-                <li><i class="fa fa-angle-right"></i><a href="#">File đăng ký thực tập</a><span> (20)</span></li>
-                <li><i class="fa fa-angle-right"></i><a href="#">Biểu mẫu đánh giá</a><span> (11)</span></li>
-                <li><i class="fa fa-angle-right"></i><a href="#">CV</a><span> (9)</span></li>
-                <li><i class="fa fa-angle-right"></i><a href="#">Biểu mẫu đăng ký</a><span> (12)</span></li>
-                <li><i class="fa fa-angle-right"></i><a href="#">Báo cáo mẫu</a><span> (18)</span></li>
-            </ul>
+            <style>
+                #scroll_box {
+                    height: 250px;
+                    display: auto;
+                    margin: 1em 0;
+                }
+            </style>
+            <div id="scroll_box" style="overflow:auto;">
+                <ul class="cat">
+                    <s:iterator value="%{#session.lstFileAll}">
+                        <li><i class="fa fa-angle-right"></i>
+                            <a style="color: maroon" href="<s:property value="link"/>">
+                                <s:property value="tenFile"/>
+                            </a><br/>
+                            <span><s:property value="ngayThang"/></span>
+                        </li>
+                    </s:iterator>
+                </ul>
+            </div>
         </div>
 
         <div class="widget">

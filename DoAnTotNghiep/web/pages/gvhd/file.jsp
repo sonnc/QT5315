@@ -19,24 +19,14 @@
                 return;
             }
         %>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
-            }
-        </style>
+    
         <%            if (session.getAttribute("getAllFileGVHD") == null) {
 
         %>
         <s:action name="getAllFileGVHD" executeResult="true"/>
         <%            }
         %>
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
+      
     </head>
     <%
         if (session.getAttribute("getAllFileGVHD") != null) {

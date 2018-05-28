@@ -12,23 +12,18 @@
         <%@include file="../../mains/head.jsp" %>
         <title>Danh sách công ty</title>
         <%    if (session.getAttribute("rule") == null) {
-                String l = (String) session.getAttribute("httpURL");
-                response.sendRedirect(l + "login.jsp");
-                return;
-            }
-        %>
+            String l = (String) session.getAttribute("httpURL");
+            response.sendRedirect(l + "login.jsp");
+
+        }
+    %>
         <%            if (session.getAttribute("getAllCongTyforSV") == null) {
         %>
         <s:action name="getAllCongTyforSV" executeResult="true"/>
         <%
             }
         %>
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
+     
         <style>
             .max-lines {
                 text-overflow: ellipsis;
@@ -53,14 +48,14 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8  col-md-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
                                 <p style="margin: 0px">DANH SÁCH CÔNG TY</p>
                             </div>
                             <s:iterator value="lstCongTyforSV">
                                 <div class="row" style="margin: 0px">
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-2  col-md-2">
                                         <img src="<s:property value="logo"/>" alt="" class="img-responsive" style="height: 100%; width: 100%" />
                                     </div>
                                     <script>
@@ -106,7 +101,7 @@
                                             }
                                         });
                                     </script>
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-10  col-md-10">
                                         <article style="margin-bottom: 0px; padding-bottom: 0px">
                                             <div class="post-image" style="margin: 0px">
                                                 <div class="post-heading">
@@ -120,10 +115,10 @@
                                                         <div id="popup-content<s:property value="maCongTy"/>" style="width: 100%; height: 100%; min-height: 400px; min-width: 500px;">
                                                             <div class="container" style="width: 100%; min-height: 400px; background: #fff; border-radius: 3px;box-shadow: 0 0 1px #ccc; margin-top: 20px;">
                                                                 <div class="row" style="margin-top:15px ">
-                                                                    <div class="col-lg-2">
+                                                                    <div class="col-lg-2  col-md-2">
                                                                         <img style="height: 100px; width: 100px; margin: 0px" src="<s:property value="logo"/>"/>
                                                                     </div>
-                                                                    <div class="col-lg-10">
+                                                                    <div class="col-lg-10 col-md-10">
                                                                         <p style="margin: 0; font-size: 13px"><strong>Tên công ty: </strong><s:property value="tenCongTy"/> </p>
                                                                         <p style="margin: 0; font-size: 13px"><strong>Mô tả công ty: </strong><s:property value="moTa" escapeHtml="false"/> </p>
                                                                         <p style="margin: 0; font-size: 13px"><strong>Lĩnh vực hoạt động: </strong><s:property value="linhVucHoatDong" escapeHtml="false"/></p>

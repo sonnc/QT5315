@@ -15,24 +15,22 @@
         <script src="./pages/libs/js/jquery.min.js"></script>
         <script src="./pages/libs/js/sonnc.js"></script>
         <%    if (session.getAttribute("rule") == null) {
-              String l = (String) session.getAttribute("httpURL");
-              response.sendRedirect(l + "login.jsp");
-              return;
-          }
-        %>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+
             }
-        </style>
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
+        %>
+        <%            if (session.getAttribute("GetAllThongBao") == null) {
+
+        %>
+        <s:action name="GetAllThongBao"/>
+        <%            }
+        %>
     </head>
+    <%
+        if (session.getAttribute("GetAllThongBao") != null) {
+            session.removeAttribute("GetAllThongBao");
+    %>
     <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
@@ -42,7 +40,7 @@
                 <div class="navbar navbar-default navbar-static-top">
                     <div class="container">
                         <div class="row" style="margin: 0 0 0 0;">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6  col-md-6">
                                 <div class="navbar-header">
                                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                         <span class="icon-bar"></span>
@@ -53,7 +51,7 @@
                                 </div>
                                 <a class="navbar-brand" href="<%=request.getContextPath()%>/home.jsp"><img src="./pages/libs/img/logoEn.png" alt="" style="width: 100%; height: 100%"/></a>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 col-md-6">
                                 <div class="navbar-collapse collapse ">
                                     <ul class="nav navbar-nav">
                                         <li class="dropdown active">
@@ -70,7 +68,7 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <%                                if (session.getAttribute("messageRegister") != null) {
                             %>
                             <script type="text/javascript">
@@ -86,7 +84,7 @@
                                     <p style="margin: 0px">THÔNG TIN CÁ NHÂN</p>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4  col-md-4">
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.hoTen" placeholder="Họ và tên" required="true"/>
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.lop" placeholder="Lớp" required="true"/>
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.khoa" placeholder="Khóa" required="true"/>
@@ -97,8 +95,8 @@
                                             <option value="false">Nữ</option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-4">
-                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="ngaySinh" placeholder="Ngày sinh: " required="true" />
+                                    <div class="col-lg-4 col-md-4">
+                                        <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="ngaySinh" placeholder="Ngày sinh: mm-dd-yyyy " required="true" />
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.diaChi" placeholder="Địa chỉ" required="true" />
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.dienThoai" placeholder="Điện thoại" required="true" />
                                         <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="sinhVien.email" placeholder="Email" value="<%=session.getAttribute("email")%>" readonly="readonly" required="true" />
@@ -108,7 +106,7 @@
                                             <option value="False">Không</option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 col-md-4">
                                         <p>Ảnh đại diện</p>
                                         <img id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
                                         <s:textfield  name="myFile" type="file" accept="image/*" onchange="loadFile(event)" required="required"/>
@@ -144,35 +142,35 @@
                                     }
                                 </style>
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 col-md-12">
                                         <label>Ngoại ngữ</label>
                                         <s:textarea name="sinhVienInfo.ngoaiNgu"   required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control"/>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12  col-md-12">
                                         <label>Kỹ năng lập trình</label>
                                         <s:textarea readonly="true" name="sinhVienInfo.kyNangLt"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12  col-md-12">
                                         <label>Kỹ năng mềm/ kỹ năng khác</label>
                                         <s:textarea name="sinhVienInfo.kyNangKhac"  required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" />
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 col-md-12">
                                         <label>Mục tiêu</label>
                                         <s:textarea name="sinhVienInfo.mucTieu"  required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" />
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 col-md-12">
                                         <label>Hoạt động</label>
                                         <s:textarea name="sinhVienInfo.hoatDong" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control"/>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 col-md-12">
                                         <label>Giải thưởng</label>
                                         <s:textarea name="sinhVienInfo.giaiThuong"   required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 col-md-12">
                                         <label>Sở thích</label>
                                         <s:textarea name="sinhVienInfo.soThich"   required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12 col-md-12">
                                         <label>Dự án</label>
                                         <s:textarea name="sinhVienInfo.duAn"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
                                     </div>
@@ -218,5 +216,8 @@
         <a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
             <%@include file="../../mains/js.jsp" %>
     </body>
+    <%
+    }
+    %>
 </html>
 

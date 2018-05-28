@@ -16,33 +16,26 @@
         <script src="./pages/libs/calendar/moment.min.js"></script>
         <script src="./pages/libs/calendar/jquery.min.js"></script>
         <script src="./pages/libs/calendar/fullcalendar.min.js"></script>
-          <%    if (session.getAttribute("rule") == null) {
-                String l = (String) session.getAttribute("httpURL");
-                response.sendRedirect(l + "login.jsp");
-                return;
-            }
-        %>
+        <%    if (session.getAttribute("rule") == null) {
+            String l = (String) session.getAttribute("httpURL");
+            response.sendRedirect(l + "login.jsp");
+
+        }
+    %>
         <%            if (session.getAttribute("getLichTrinhForSV") == null) {
         %>
         <s:action name="getLichTrinhForSV" executeResult="true"/>
         <%
             }
         %>
-        <script>
-            window.onload = function () {
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 0);
-            };
-        </script>
+    
     </head>
     <%
         if (session.getAttribute("getLichTrinhForSV") != null) {
             session.removeAttribute("getLichTrinhForSV");
 
     %>
-    <body onLoad="mess()" class="preloading">
+    <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -52,7 +45,7 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <div>
                                 <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">

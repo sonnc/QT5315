@@ -20,24 +20,14 @@
                 return;
             }
         %>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
-            }
-        </style>
+       
         <%            if (session.getAttribute("GetAllCongTyReviewed") == null) {
         %>
         <s:action name="GetAllCongTyReviewed" executeResult="true"></s:action>
         <%
             }
         %>
-         <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
+       
     </head>
     <%
         if (session.getAttribute("GetAllCongTyReviewed") != null) {

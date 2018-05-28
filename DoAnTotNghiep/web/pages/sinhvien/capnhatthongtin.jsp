@@ -14,30 +14,20 @@
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
         <script src="./pages/libs/js/sonnc.js"></script>
-        <%    if (session.getAttribute("rule") == null) {
-                String l = (String) session.getAttribute("httpURL");
-                response.sendRedirect(l + "login.jsp");
-                return;
-            }
-        %>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
-            }
-        </style>
+         <%    if (session.getAttribute("rule") == null) {
+            String l = (String) session.getAttribute("httpURL");
+            response.sendRedirect(l + "login.jsp");
+
+        }
+    %>
+      
         <%    if (session.getAttribute("getSinhVienThongTinByClass") == null) {
         %>
         <s:action name="getSinhVienThongTinByClass" executeResult="true"/>
         <%
             }
         %>
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
+     
     </head>
     <%
         if (session.getAttribute("getSinhVienThongTinByClass") != null) {
@@ -53,7 +43,7 @@
         <section id="content">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 col-md-8">
                         <%                                if (session.getAttribute("messageUpdateInfoSV") != null) {
                         %>
                         <script type="text/javascript">
@@ -70,23 +60,23 @@
                             </div>
                             <div class="row">    
                                 <%--   <s:iterator value="sinhVien"> --%>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 col-md-4 ">
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.hoTen" readonly="true" value="%{sinhVien.hoTen}" placeholder="Họ và tên" required="true"/>
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.lop" readonly="true" value="%{sinhVien.lop}" placeholder="Lớp" required="true"/>
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.khoa" readonly="true"  value="%{sinhVien.khoa}" placeholder="Khóa" required="true"/>
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.khoaVien" readonly="true"  value="%{sinhVien.khoaVien}" placeholder="Khoa/ Viện" required="true"/>
 
                                 </div>
-                                <div class="col-lg-4">
-                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.ngaySinh"  readonly="true" value="%{sinhVien.ngaySinh}" placeholder="Ngày sinh" />
+                                <div class="col-lg-4 col-md-4">
+                                    <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.ngaySinh"  readonly="true" value="%{sinhVien.ngaySinh}" placeholder="Ngày sinh"/>
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.diaChi"  readonly="true" value="%{sinhVien.diaChi}" placeholder="Địa chỉ" required="true" />
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.dienThoai"  readonly="true" value="%{sinhVien.dienThoai}" placeholder="Điện thoại" required="true" />
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="sinhVien.email"  readonly="true" value="%{sinhVien.email}" placeholder="Email" required="true" />
 
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 col-md-4">
                                     <p>Ảnh đại diện</p>
-                                    <img src="%{sinhVien.avatar}" id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
+                                    <img src="<s:url value="%{sinhVien.avatar}"/>" id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
 
                                 </div>
                                 <%--  </s:iterator> --%>
@@ -106,35 +96,35 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12  col-md-12">
                                     <label>Ngoại ngữ</label>
                                     <s:textarea name="sinhVienInfo.ngoaiNgu"  value="%{sinhVienInfo.ngoaiNgu}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control"/>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12">
                                     <label>Kỹ năng lập trình</label>
                                     <s:textarea readonly="true" name="sinhVienInfo.kyNangLt"  value="%{sinhVienInfo.kyNangLt}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12">
                                     <label>Kỹ năng mềm/ kỹ năng khác</label>
                                     <s:textarea name="sinhVienInfo.kyNangKhac"  value="%{sinhVienInfo.kyNangKhac}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" />
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12  col-md-12">
                                     <label>Mục tiêu</label>
                                     <s:textarea name="sinhVienInfo.mucTieu"  value="%{sinhVienInfo.mucTieu}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control" />
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12">
                                     <label>Hoạt động</label>
                                     <s:textarea name="sinhVienInfo.hoatDong"  value="%{sinhVienInfo.hoatDong}" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control"/>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12">
                                     <label>Giải thưởng</label>
                                     <s:textarea name="sinhVienInfo.giaiThuong"  value="%{sinhVienInfo.giaiThuong}"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12">
                                     <label>Sở thích</label>
                                     <s:textarea name="sinhVienInfo.soThich"  value="%{sinhVienInfo.soThich}"  required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12">
                                     <label>Dự án</label>
                                     <s:textarea name="sinhVienInfo.duAn" value="%{sinhVienInfo.duAn}" required="true" cssStyle="height: 100px; margin-bottom: 30px" cssClass="form-control" />
                                 </div>

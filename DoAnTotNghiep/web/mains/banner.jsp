@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <section id="featured" class="bg">
     <!-- start slider -->
@@ -14,38 +15,15 @@
                 <!-- Slider -->
                 <div id="main-slider" class="main-slider flexslider">
                     <ul class="slides">
-                        <li>
-                            <img src="pages/libs/img/banner/b1.png" alt="" />
-                            <div class="flex-caption">
-                                <h3>Viện đào tạo Quốc Tế</h3>
-                                <p>Viện đào tạo Quốc tế - Trường Đại học Khoa Hà Nội được thành lập vào năm 2003, hiện nay....</p>
-                                <a href="#" class="btn btn-theme">Xem thêm</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="pages/libs/img/banner/b2.jpg" alt="" />
-                            <div class="flex-caption">
-                                <h3>Viện đào tạo Quốc Tế</h3>
-                                <p>Viện đào tạo Quốc tế - Trường Đại học Khoa Hà Nội được thành lập vào năm 2003, hiện nay....</p>
-                                <a href="#" class="btn btn-theme">Xem thêm</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="pages/libs/img/banner/b3.png" alt="" />
-                            <div class="flex-caption">
-                                <h3>Viện đào tạo Quốc Tế</h3>
-                                <p>Viện đào tạo Quốc tế - Trường Đại học Khoa Hà Nội được thành lập vào năm 2003, hiện nay....</p>
-                                <a href="#" class="btn btn-theme">Xem thêm</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="pages/libs/img/banner/b4.jpg" alt="" />
-                            <div class="flex-caption">
-                                <h3>Viện đào tạo Quốc Tế</h3>
-                                <p>Viện đào tạo Quốc tế - Trường Đại học Khoa Hà Nội được thành lập vào năm 2003, hiện nay....</p>
-                                <a href="#" class="btn btn-theme">Xem thêm</a>
-                            </div>
-                        </li>
+                        <s:iterator value="%{#session.lstBanner}">
+                            <li>
+                                <img style="max-height: 415px; height: auto; width: 100%" src="<s:property value="photoLink"/>" alt="" />
+                                <div class="flex-caption">
+                                    <h3 style="font-size: 16px"><s:property value="tieuDe"/></h3>
+                                    <a href="detail?id=<s:property value="id"/>" class="btn btn-theme">Xem thêm</a>
+                                </div>
+                            </li>
+                        </s:iterator>
                     </ul>
                 </div>
                 <!-- end slider -->

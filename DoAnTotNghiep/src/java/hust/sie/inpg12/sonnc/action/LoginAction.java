@@ -11,6 +11,7 @@ import hust.sie.inpg12.sonnc.controller.SinhVienController;
 import hust.sie.inpg12.sonnc.entities.CongTy;
 import hust.sie.inpg12.sonnc.entities.DaiDienCongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
+import hust.sie.inpg12.sonnc.entities.FileAll;
 import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
 import hust.sie.inpg12.sonnc.entities.Login;
 import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
@@ -34,8 +35,43 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
     private SinhVienController sinhVienController;
     private HttpServletRequest request;
     private Map<String, Object> session;
-    List<DeTai> list = new ArrayList<>();
+    private List<DeTai> list = new ArrayList<>();
     private List<ThongBao> lstThongBao = new ArrayList<>();
+    private List<ThongBao> lstBanner = new ArrayList<>();
+    private List<FileAll> lstFileAll = new ArrayList<>();
+    private List<CongTy> lstCongTys = new ArrayList<>();
+
+    public List<ThongBao> getLstBanner() {
+        return lstBanner;
+    }
+
+    public void setLstBanner(List<ThongBao> lstBanner) {
+        this.lstBanner = lstBanner;
+    }
+
+    public List<CongTy> getLstCongTys() {
+        return lstCongTys;
+    }
+
+    public void setLstCongTys(List<CongTy> lstCongTys) {
+        this.lstCongTys = lstCongTys;
+    }
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
+
+    public List<FileAll> getLstFileAll() {
+        return lstFileAll;
+    }
+
+    public void setLstFileAll(List<FileAll> lstFileAll) {
+        this.lstFileAll = lstFileAll;
+    }
 
     public List<ThongBao> getLstThongBao() {
         return lstThongBao;
@@ -188,8 +224,14 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
     }
 
     public String GetAllThongBao() {
-        lstThongBao = loginController.GetAllThongBao();
+        lstThongBao = loginController.GetAllThongBao(0);
+        lstBanner = loginController.GetAllThongBao(1);
+        lstFileAll = loginController.getAllFile();
+        lstCongTys = loginController.getAllCongTy();
         session.put("GetAllThongBao", "GetAllThongBao");
+        session.put("lstBanner", lstBanner);
+        session.put("lstFileAll", lstFileAll);
+        session.put("lstCongTys", lstCongTys);
         return SUCCESS;
     }
 

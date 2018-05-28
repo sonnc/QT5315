@@ -346,6 +346,17 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         int maDotThucTap = Integer.parseInt(request.getParameter("dotThucTap"));
         int mssv = (int) session.get("mssv");
         List<DotThucTap> lstDotThucTap = sinhVienController.getDotThucTap(maDotThucTap);
+        List<SinhVienThucTap> lstSVTT = new ArrayList<>();
+        lstSVTT = sinhVienController.CheckDotThucTapSV((int) session.get("mssv"));
+
+        if (lstSVTT.size() >= 1) {
+            for (int i = 0; i < lstSVTT.size(); i++) {
+                if (lstSVTT.get(i).getDotThucTap() == maDotThucTap) {
+                    session.put("messageDangKyKyThucTap", "Bạn đã thực tập kỳ " + maDotThucTap + " trước đó. Vui lòng đăng ký kỳ thực tập khác.");
+                    return SUCCESS;
+                }
+            }
+        }
         if (lstDotThucTap.size() == 0) {
             session.put("messageDangKyKyThucTap", "Không tồn tại đợt thực tập này, xin vui lòng kiểm tra lại hoặc liên hệ với quản trị viên");
             return SUCCESS;
@@ -456,8 +467,6 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
                         } else {
                             for (int i = 0; i < lstSoKhopDT.size(); i++) {
                                 for (int j = 0; j < lstSoKhopSV.size(); j++) {
-                                    System.out.println("sssssssssssssssssss"+lstSoKhopDT.get(i).getKyNang().toLowerCase().toString());
-                                    System.out.println("vvvvvvvvvvvvvvvvvv" +lstSoKhopSV.get(j).getKyNang().toLowerCase().toString());
                                     if (lstSoKhopDT.get(i).getKyNang().toLowerCase().toString().contains(lstSoKhopSV.get(j).getKyNang().toLowerCase().toString())) {
                                         phanTramSoKhop = phanTramSoKhop + ((lstSoKhopSV.get(j).getPhanTram()) / (lstSoKhopDT.get(i).getPhanTram()));
                                     }

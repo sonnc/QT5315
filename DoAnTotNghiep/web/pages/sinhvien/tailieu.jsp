@@ -12,12 +12,12 @@
 
         <%@include file="../../mains/head.jsp" %>
         <title>Tài liệu</title> 
-        <%    if (session.getAttribute("rule") == null) {
-                String l = (String) session.getAttribute("httpURL");
-                response.sendRedirect(l + "login.jsp");
-                return;
-            }
-        %>
+       <%    if (session.getAttribute("rule") == null) {
+            String l = (String) session.getAttribute("httpURL");
+            response.sendRedirect(l + "login.jsp");
+
+        }
+    %>
         <%            if (session.getAttribute("getTaiLieuSinhVien") == null) {
         %>
         <s:action name="getTaiLieuSinhVien" executeResult="true" />
@@ -53,12 +53,7 @@
             });
         </script>
 
-        <script>
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 1000);
-        </script>
+     
     </head>
 
     <%
@@ -75,7 +70,7 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                 <p style="margin: 0px">QUẢN LÝ TÀI LIỆU</p>
@@ -104,7 +99,9 @@
                             <div class="alert alert-warning">
                                 <form role="form" id="formValidate" action="UploadFileSinhVien" method="post" enctype = "multipart/form-data"> 
                                     <input  style="margin-bottom: 15px;" class="form-control" name="tenFile" placeholder="Tên tài liệu"/>
+                                    <label>Nội dung</label>
                                     <textarea style="margin-bottom: 15px; height: 100px" class="form-control" name="moTa" placeholder="Mô tả tài liệu"></textarea>
+                                   <br/>
                                     <select style="margin-bottom: 15px" name="loaiFile" class="form-control" required="true"> 
                                         <option value="Null">Loại tài liệu</option>
                                         <option value="0">CV</option>
@@ -113,10 +110,10 @@
                                         <option value="3">Báo cáo tuần</option>
                                     </select>
                                     <div class="row">
-                                        <div class="col-lg-8"> 
+                                        <div class="col-lg-8 col-md-8"> 
                                             <s:textfield  name="myFile" type="file" accept="file/*" onchange="loadFile(event)" required="required"/>
                                         </div>
-                                        <div class="col-lg-4" >
+                                        <div class="col-lg-4 col-md-4" >
                                             <button style="float: right;" class="btn btn-success">Đăng tài liệu</button>
                                         </div>
                                     </div>
@@ -173,7 +170,7 @@
                                         </s:iterator>
                                     </div>
                                 </div>-->
-                                <div class="col-lg-12 ">
+                                <div class="col-lg-12 col-md-12">
                                     <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                          padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                         <p style="margin: 0px">TÀI LIỆU/ BÁO CÁO</p>
@@ -181,12 +178,18 @@
                                     <div class="alert alert-danger">
                                         <s:iterator value="lstSinhVienFileBC">
                                             <div class="row" style="margin-bottom: 0px">
-                                                <div class="col-lg-9">
+                                                <div class="col-lg-8 col-md-8">
                                                     <p><s:property value="tenFile"/></p>
                                                 </div>
-                                                <div class="col-lg-3"> 
-                                                    <a href="<s:property value="link"/>"><i class="glyphicon glyphicon-download-alt"></i></a>
-                                                    <a id="tagA<s:property value="id"/>" href="deleteTaiLieuSinhVien?maTaiLieu=<s:property value="id"/>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                <div class="col-lg-4 col-md-4"> 
+                                                    <div class="row" style="margin-bottom: 0px">
+                                                        <div class=" col-lg-6 col-md-6">
+                                                            <a href="<s:property value="link"/>"><i class="glyphicon glyphicon-download-alt"></i></a>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6">
+                                                            <a id="tagA<s:property value="id"/>" href="deleteTaiLieuSinhVien?maTaiLieu=<s:property value="id"/>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                        </div>
+                                                    </div>
                                                     <script>
                                                         var action = document.getElementById("tagA<s:property value="id"/>");
                                                         action.addEventListener('click', function (e) {

@@ -468,6 +468,8 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         return SUCCESS;
     }
 
+   
+
     public String chamDiem() {
         int mssv = Integer.parseInt(request.getParameter("mssv"));
         int dotThucTap = Integer.parseInt(request.getParameter("dotThucTap"));
@@ -493,7 +495,11 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             svd.setId(lstSinhVienDiems.get(0).getId());
             svd.setMssv(mssv);
             if (gvhdController.chamDiem(svd)) {
-                session.put("messageDiemThi", "Chấm điểm thành công.!");
+                if (gvhdController.CloseThucTapSinhVien(mssv, dotThucTap)) {
+                    session.put("messageDiemThi", "Chấm điểm thành công.!");
+                } else {
+                    session.put("messageDiemThi", "Chấm điểm thành công nhưng đóng kỳ thực tập của sinh viên thất bại;");
+                }
             } else {
                 session.put("messageDiemThi", "Chấm điểm thất bại. Đã có lỗi xảy ra.");
             }
@@ -515,15 +521,15 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
                 d.setKhoa((int) result[3]);
                 d.setKhoaVien((String) result[4]);
                 d.setDotThucTap((int) result[5]);
-                if ((boolean) result[6]) {
-                    d.setTrangThai("Hoạt động");
+                if ((boolean) result[6] == true) {
+                    d.setTrangThai("<p style=" + "blue" + ">ACTIVE</p>");
                 } else {
-                    d.setTrangThai("Đã đóng");
+                    d.setTrangThai("<p style=" + "RED" + ">CLOSED</p>");
                 }
-                d.setDiemBCQT((double) result[7]);
-                d.setDiemBCCK((double) result[8]);
-                d.setDiemPhanHoi((double) result[9]);
-                d.setDiemQuaTrinh((double) result[10]);
+                d.setDiemBCQT((double) result[8]);
+                d.setDiemBCCK((double) result[10]);
+                d.setDiemPhanHoi((double) result[7]);
+                d.setDiemQuaTrinh((double) result[9]);
                 lstSinhVienDiemThi.add(d);
             }
         } catch (Exception e) {
@@ -686,6 +692,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             a.setTenCongTy((String) result[0]);
             a.setTenDeTai((String) result[5]);
             a.setYeuCauKhac((String) result[14]);
+            a.setLogo((String) result[15]);
             a.setYeuCauLapTrinh((String) result[7]);
             a.setHanDangKy((Date) result[13]);
             if ((int) result[11] == 2) {
@@ -716,6 +723,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             a.setTenCongTy((String) result[0]);
             a.setTenDeTai((String) result[5]);
             a.setYeuCauKhac((String) result[14]);
+            a.setLogo((String) result[15]);
             a.setYeuCauLapTrinh((String) result[7]);
             a.setHanDangKy((Date) result[13]);
             lstDTCTNHD.add(a);
@@ -758,6 +766,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             a.setTenCongTy((String) result[0]);
             a.setTenDeTai((String) result[5]);
             a.setYeuCauKhac((String) result[14]);
+            a.setLogo((String) result[15]);
             a.setYeuCauLapTrinh((String) result[7]);
             a.setHanDangKy((Date) result[13]);
             if ((int) result[11] == 1) {

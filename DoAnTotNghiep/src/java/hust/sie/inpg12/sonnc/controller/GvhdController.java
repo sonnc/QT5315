@@ -70,7 +70,7 @@ public class GvhdController {
                     + "and d.ma_cong_ty = e.ma_cong_ty\n"
                     + "and d.ma_de_tai = b.ma_de_tai\n"
                     + "and b.ma_gvhd = c.ma_gvhd\n"
-                    + "and e.ma_cong_ty = c.ma_cong_ty").list();
+                    + "and e.ma_cong_ty = c.ma_cong_ty order by d.dot_thuc_tap desc").list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -98,7 +98,7 @@ public class GvhdController {
                     + "                     and d.trang_thai = 2\n"
                     + "                     and b.ma_gvhd = c.ma_gvhd\n"
                     + "                     group by a.mssv, a.ho_ten , b.ten_de_tai, e.ten_cong_ty, c.ho_ten , d.so_khop,  \n"
-                    + "                     d.dot_thuc_tap, d.trang_thai, e.ma_cong_ty, b.ma_de_tai, c.ma_gvhd ").list();
+                    + "                     d.dot_thuc_tap, d.trang_thai, e.ma_cong_ty, b.ma_de_tai, c.ma_gvhd order by d.dot_thuc_tap desc").list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -124,7 +124,7 @@ public class GvhdController {
                     + "and d.ma_de_tai = b.ma_de_tai\n"
                     + "and e.ma_cong_ty = c.ma_cong_ty\n"
                     + "and b.ma_gvhd = c.ma_gvhd\n"
-                    + "and (d.trang_thai = 1 or d.trang_thai = 0)").list();
+                    + "and (d.trang_thai = 1 or d.trang_thai = 0) order by d.dot_thuc_tap desc").list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -317,6 +317,29 @@ public class GvhdController {
         }
         return r;
     }
+    
+    public boolean CloseThucTapSinhVien(int mssv, int dotThucTap) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("UPDATE SinhVienThucTap SET trangThai=FALSE"
+                    + " WHERE mssv=:mssv and dotThucTap=:dotThucTap");
+            q.setParameter("mssv", mssv);
+            q.setParameter("dotThucTap", dotThucTap);
+            q.executeUpdate();
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
 
     public List getSLPhanHoi(int mssv, int dotThucTap) {
         List<SinhVienDiem> lst = new ArrayList<>();
@@ -364,13 +387,16 @@ public class GvhdController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            results = (List<Object[]>) session.createSQLQuery("select a.mssv, a.ho_ten, a.lop, a.khoa, a.khoa_vien, b.dot_thuc_tap, b.trang_thai,\n"
-                    + "c.diem_bcqt, c.diem_cuoi_ky, c.diem_phan_hoi, c.diem_qua_trinh\n"
-                    + "                   from sinh_vien a, sinh_vien_thuc_tap b, sinh_vien_diem c\n"
-                    + "                   where a.mssv = b.mssv\n"
-                    + "                   and c.mssv = a.mssv\n"
-                    + "                   and c.dot_thuc_tap = b.dot_thuc_tap\n"
-                    + "                   order by b.dot_thuc_tap desc").list();
+            results = (List<Object[]>) session.createSQLQuery("select a.mssv, a.ho_ten, a.lop, a.khoa, a.khoa_vien, b.dot_thuc_tap, b.trang_thai, \n"
+                    + "c.diem_phan_hoi, c.diem_bcqt, c.diem_qua_trinh, c.diem_cuoi_ky\n"
+                    + "from sinh_vien a, sinh_vien_thuc_tap b, sinh_vien_diem c\n"
+                    + "where a.mssv = b.mssv\n"
+                    + "and c.mssv = a.mssv\n"
+                    + "and c.dot_thuc_tap = b.dot_thuc_tap\n"
+                    + "and b.trang_thai = true\n"
+                    + "and (c.diem_bcqt is not null or c.diem_cuoi_ky is not null \n"
+                    + "or c.diem_phan_hoi is not null or c.diem_qua_trinh is not null )\n"
+                    + "order by b.dot_thuc_tap desc").list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -552,7 +578,7 @@ public class GvhdController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
+            Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*, a.logo\n"
                     + "from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
                     + "join nguoi_huong_dan c on a.ma_cong_ty = c.ma_cong_ty\n"
                     + " where b.ma_gvhd = c.ma_gvhd\n"
@@ -576,7 +602,7 @@ public class GvhdController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*\n"
+            Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.*, a.logo\n"
                     + "                    from cong_ty a join de_tai b on a.ma_cong_ty = b.ma_cong_ty\n"
                     + "                    join nguoi_huong_dan c on b.ma_cong_ty = c.ma_cong_ty\n"
                     + "                    where b.trang_thai = 2\n"
@@ -636,7 +662,7 @@ public class GvhdController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.* \n"
+            Query query = session.createSQLQuery("select a.ten_cong_ty, c.ho_ten, b.* , a.logo\n"
                     + "from de_tai b join cong_ty a on a.ma_cong_ty = b.ma_cong_ty\n"
                     + "join nguoi_huong_dan c on b.ma_gvhd = c.ma_gvhd\n"
                     + "where b.trang_thai = 1 or b.trang_thai = 0\n"

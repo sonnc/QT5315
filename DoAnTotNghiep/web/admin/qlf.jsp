@@ -89,7 +89,7 @@
                                                 <td><s:property value="tenFile" /></td>
                                                 <td><s:property value="noiDung" /></td>
                                                 <td><s:property value="ngayThang" /></td>
-                                                <td><a href="<s:property value="link" />"><s:property value="link" /></a></td>
+                                                <td><a href="../<s:property value="link" />"><s:property value="link" /></a></td>
                                                 <td><s:property value="email" /></td>
                                                 <td><a href="deleteFileByAdmin?id=<s:property value="id"/>" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a></td>
                                             </tr>

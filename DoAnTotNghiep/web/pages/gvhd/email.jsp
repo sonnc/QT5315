@@ -23,12 +23,7 @@
         <%
             }
         %>
-    <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
+  
     </head>
     <%
         if (session.getAttribute("getAllEmailGVHD") != null) {

@@ -580,7 +580,7 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
                 path = request.getSession().getServletContext().getRealPath("/").concat("file/admin/");
                 File fileToCreate = new File(path, this.myFileFileName);
                 FileUtils.copyFile(this.myFile, fileToCreate);
-                link = "../file/admin/" + myFileFileName;
+                link = "file/admin/" + myFileFileName;
                 System.out.println(link);
             } catch (Exception e) {
                 e.printStackTrace();

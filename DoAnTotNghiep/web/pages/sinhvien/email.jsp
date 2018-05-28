@@ -11,10 +11,10 @@
     <head>
         <%@include file="../../mains/head.jsp" %>
         <title>Email</title>
-          <%    if (session.getAttribute("rule") == null) {
+        <%    if (session.getAttribute("rule") == null) {
                 String l = (String) session.getAttribute("httpURL");
                 response.sendRedirect(l + "login.jsp");
-                return;
+
             }
         %>
         <%            if (session.getAttribute("getAllEmailSV") == null) {
@@ -23,18 +23,13 @@
         <%
             }
         %>
-        <script>
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 1000);
-        </script>
+
     </head>
     <%
         if (session.getAttribute("getAllEmailSV") != null) {
             session.removeAttribute("getAllEmailSV");
     %>
-    <body onLoad="mess()" class="preloading">
+    <body  class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -44,7 +39,7 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8" >
+                        <div class="col-lg-8 col-md-8" >
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                 <p style="margin: 0px">QUẢN LÝ EMAIL</p>
@@ -135,7 +130,7 @@
                                         }
                                     }
                                 </script>
-                                <div class="col-lg-3">
+                                <div class="col-lg-3 col-md-3">
                                     <div>
                                         <button style="width: 100%;margin: 0px 0px 15px 0px;" class="btn btn-theme" onclick="sendEmail();">Gửi thư</button>
                                         <button style="width: 100%;margin: 0px 0px 15px 0px;" class="btn btn-primary" onclick="allEmail();">Tất cả thư</button>
@@ -144,9 +139,10 @@
                                         <button style="width: 100%;margin: 0px 0px 15px 0px; background-color: indigo; border-color: indigo" class="btn btn-info" onclick="emailSend();">Thư đã gửi</button>
                                     </div>
                                 </div>
-                                <div class="col-lg-9">
+
+                                <div class="col-lg-9 col-md-9">
                                     <div class="alert alert-warning" id="sendEmail" style="display: none">
-                                        <form class="contactForm" id="from" role="form" id="formValidate" action="sendEmailSV" method="post" enctype = "multipart/form-data"> 
+                                        <form class="contactForm" role="form" id="formValidate" action="sendEmailSV" method="post" enctype = "multipart/form-data"> 
                                             <div class="form-group">
                                                 <input name="nguoiNhan" class="form-control" id="name" placeholder="Người nhận: " type="email" required="true">
                                                 <div class="validation"></div>
@@ -156,14 +152,40 @@
                                                 <div class="validation"></div>
                                             </div>
                                             <div class="form-group">
-                                                <textarea class="form-control" name="noiDung" rows="10"  placeholder="Nội dung: ..."  required="true"></textarea>
+                                                <textarea class="form-control" name="noiDung" rows="10"  placeholder="Nội dung: ..."  ></textarea>
                                                 <div class="validation"></div>
                                             </div>
                                             <div class="text-center"><button type="submit" class="btn btn-theme btn-block btn-md">GỬI ĐI</button></div>
-
                                         </form>
                                     </div>
-
+                                    <script>
+                                        document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                            var form = this;
+                                            e.preventDefault();
+                                            swal({
+                                                title: "GỬI THƯ",
+                                                text: "Bạn có chắc chắn muốn gửi thư này không?",
+                                                icon: "warning",
+                                                buttons: [
+                                                    'KHÔNG, Hãy hủy bỏ!',
+                                                    'CÓ, Tôi chắc chắn!'
+                                                ],
+                                                dangerMode: true,
+                                            }).then(function (isConfirm) {
+                                                if (isConfirm) {
+                                                    swal({
+                                                        title: 'ĐANG XỬ LÝ',
+                                                        text: 'Bạn đã xác nhận gửi thư, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                        icon: 'success'
+                                                    }).then(function () {
+                                                        form.submit();
+                                                    });
+                                                } else {
+                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ gửi thư !", "error");
+                                                }
+                                            });
+                                        });
+                                    </script>
                                     <div id="allEmail"  style="display: none">
                                         <s:iterator value="lstAllEmailSV">
                                             <div >

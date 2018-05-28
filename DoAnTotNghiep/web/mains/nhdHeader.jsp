@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <header>
     <div class="navbar navbar-default navbar-static-top">
         <div class="container">

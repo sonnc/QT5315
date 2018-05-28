@@ -316,6 +316,32 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         session.put("GetCongTyByDDCT", "GetCongTyByDDCT");
         return SUCCESS;
     }
+    public String chiTietCongTy() {
+        int maCongTy = Integer.parseInt(request.getParameter("maCongTy"));
+        List<Object[]> results = ddctController.chiTietCongTy(maCongTy);
+        for (Object[] result : results) {
+            CongTyvaDaiDienCongTy ct = new CongTyvaDaiDienCongTy();
+            ct.setMaCongTy((int) result[0]);
+            ct.setTenCongTy((String) result[1]);
+            ct.setDiaChi((String) result[2]);
+            ct.setDienThoai((String) result[3]);
+            ct.setEmail((String) result[4]);
+            ct.setWebsite((String) result[5]);
+            ct.setLinhVucHoatDong((String) result[6]);
+            ct.setMoTa((String) result[7]);
+            ct.setLogo((String) result[8]);
+            // ct.setTrangThai(result[]);
+            ct.setMaDaiDien((int) result[10]);
+            ct.setDaiDien((String) result[11]);
+            ct.setChucVuDD((String) result[12]);
+            ct.setDiaChiDD((String) result[13]);
+            ct.setDienThoaiDD((String) result[14]);
+            ct.setEmailDD((String) result[15]);
+            ct.setAvatarDD((String) result[16]);
+            lstCongTyvaDaiDienCongTys.add(ct);
+        }
+        return SUCCESS;
+    }
 
     public String getAllDanhSachSinhVienByCongTy() {
         try {

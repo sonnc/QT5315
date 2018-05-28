@@ -15,7 +15,7 @@
     người hướng dẫn = 3
     admin = 4
     -->
-
+ 
     <% if (Integer.parseInt(session.getAttribute("rule").toString()) == 0) {
     %>
     <%@include file="/mains/sinhVienHeader.jsp" %>

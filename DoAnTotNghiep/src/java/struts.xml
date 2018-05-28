@@ -127,6 +127,7 @@
         </action>
         <action name="getAllDeTaiSVDK" class="hust.sie.inpg12.sonnc.action.SinhVienAction" method="getAllDeTaiSVDK">
             <result name="success" type="">/pages/sinhvien/detaidangky.jsp</result>
+            <result name="DANGKYKYTHUCTAP">/pages/sinhvien/dangkykythuctap.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         
@@ -179,7 +180,7 @@
             <result>/pages/gvhd/diemthi.jsp</result>
         </action>
         <action name="getAllDiemSV" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllDiemSV">
-            <result name="success">/pages/gvhd/danhsachdiemthi.jsp</result>
+            <result name="success">/pages/gvhd/dsdt.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         <action name="getAllFileGVHD" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="getAllFileGVHD">
@@ -425,6 +426,10 @@
         </action>
         <action name="delDeTaiByDDCT">
             <result>/pages/congty/detai.jsp</result>
+        </action>
+        <action name="chiTietCongTy" class="hust.sie.inpg12.sonnc.action.DdctAction" method="chiTietCongTy">
+            <result name="success">/pages/congty/chitietcongty.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
         </action>
         
         <!--

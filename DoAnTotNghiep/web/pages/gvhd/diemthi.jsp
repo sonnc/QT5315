@@ -14,36 +14,26 @@
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
-           <%    if (session.getAttribute("rule") == null) {
+        <script src="./pages/libs/js/sonnc.js"></script> 
+        <%    if (session.getAttribute("rule") == null) {
                 String l = (String) session.getAttribute("httpURL");
                 response.sendRedirect(l + "login.jsp");
                 return;
             }
         %>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
-            }
-        </style>
         <%            if (session.getAttribute("getDanhSachChamDiem") == null) {
 
         %>
         <s:action name="getDanhSachChamDiem" executeResult="true"/>
         <%            }
         %>
-         <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
+
     </head>
     <%
         if (session.getAttribute("getDanhSachChamDiem") != null) {
             session.removeAttribute("getDanhSachChamDiem");
     %>
- <body class="preloading">
+    <body class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -58,23 +48,31 @@
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
                                 <p style="margin: 0px">ĐIỂM THI</p>
                             </div>
-                            <p>DPH: Điểm phản hồi (auto)</p>
-                            <p>DBCQT: Điểm báo cáo quá trình</p>
-                            <p>DBCCK: Điểm báo cáo cuối kỳ</p>
-                            <input class="form-control" id="s" style="float: right; width: 50%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <a href="<%=session.getAttribute("httpURL")%>pages/gvhd/dsdt.jsp"><button class="btn btn-danger" style="width: 100%;">DANH SÁCH ĐIỂM THI</button></a>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <input id="myInput" onkeyup="myFunction()"  class="form-control" id="s" style="float: right; width: 100%; margin-bottom: 5px" placeholder="Tìm kiếm.." type="text">
+                                </div>
+                            </div>
+
                             <style>
-                                td{padding: 5px}
+                                td,th{padding: 5px}
+                                th{text-align: center}
                             </style>
-                            <table border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
+
+                            <p>DPH: Điểm phản hồi (auto)_ DBCQT: Điểm báo cáo quá trình_ DBCCK: Điểm báo cáo cuối kỳ</p>
+                            <table id="results" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                 <tr>
-                                    <td><strong> Mã SV </strong></td>
-                                    <td><strong> Họ và tên </strong></td>
-                                    <td><strong> Lớp </strong></td>
-                                    <td><strong> Khóa </strong></td>
-                                    <td><strong> Kỳ TT </strong></td>
-                                    <td><strong> BCQT </strong></td>
-                                    <td><strong> BCCK </strong></td>
-                                    <td><strong> Chấm điểm </strong></td>
+                                    <th><strong> Mã SV </strong></th>
+                                    <th><strong> Họ và tên </strong></th>
+                                    <th><strong> Lớp </strong></th>
+                                    <th><strong> Khóa </strong></th>
+                                    <th><strong> Kỳ TT </strong></th>
+                                    <th><strong> BCQT </strong></th>
+                                    <th><strong> BCCK </strong></th>
+                                    <th><strong> Chấm điểm </strong></th>
                                 </tr>
                                 <s:iterator value="lstDanhSachSinhViens"> 
                                     <form action="chamDiem" method="post" >
@@ -84,8 +82,8 @@
                                             <td><s:property value="lop" /></td>
                                             <td><s:property value="khoa" /></td>
                                             <td><input name="dotThucTap" readonly="true" style="width: 50px;margin-right: -15px;border: none;background: white;" value="<s:property value="dotThucTap" />"/></td>
-                                            <td><input name="bcqt" style="width: 50px"/></td>
-                                            <td><input name="bcck" style="width: 50px"/></td>
+                                            <td><input type="number" name="bcqt" required="true" style="width: 50px"/></td>
+                                            <td><input type="number" name="bcck" required="true" style="width: 50px"/></td>
                                             <td>
                                                 <button class="btn btn-info" style="width: 100%; margin-top: 10px">Chấm điểm</button>
                                             </td>
@@ -93,12 +91,45 @@
                                     </form>
                                 </s:iterator>
                             </table>
-                            <div id="pagination">
-                                <span class="all">Page 1 of 3</span>
-                                <span class="current">1</span>
-                                <a href="#" class="inactive">2</a>
-                                <a href="#" class="inactive">3</a>
-                            </div>
+                            <script>
+                                function myFunction() {
+                                    // Declare variables 
+                                    var input, filter, table, tr, td, i;
+                                    var td1, td2, td3, td4;
+                                    input = document.getElementById("myInput");
+                                    filter = input.value.toUpperCase();
+                                    table = document.getElementById("results");
+                                    tr = table.getElementsByTagName("tr");
+
+                                    // Loop through all table rows, and hide those who don't match the search query
+                                    for (i = 0; i < tr.length; i++) {
+                                        td = tr[i].getElementsByTagName("td")[0];
+                                        td1 = tr[i].getElementsByTagName("td")[1];
+                                        td2 = tr[i].getElementsByTagName("td")[2];
+                                        td3 = tr[i].getElementsByTagName("td")[3];
+                                        td4 = tr[i].getElementsByTagName("td")[4];
+                                        if (td || td1 || td2 || td3 || td4 ) {
+                                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td1.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td2.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td3.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td4.innerHTML.toUpperCase().indexOf(filter) > -1 
+                                                    ) {
+                                                tr[i].style.display = "";
+                                            } else {
+                                                tr[i].style.display = "none";
+                                            }
+                                        }
+                                    }
+                                }
+                            </script>
+                            <div id="pageNavPosition" style="float: right"></div>
+                            <script type="text/javascript">
+                                var pager = new Pager('results', 20);
+                                pager.init();
+                                pager.showPageNav('pager', 'pageNavPosition');
+                                pager.showPage(1);
+                            </script>
                             <div class="clear"></div>
                         </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>

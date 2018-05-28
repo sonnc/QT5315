@@ -167,6 +167,30 @@ public class DdctController {
         }
         return results;
     }
+    public List chiTietCongTy(int mct) {
+        List<Object[]> results = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createSQLQuery("select a.ma_cong_ty, a.ten_cong_ty, a.dia_chi, a.dien_thoai, a.email, a.website, a.linh_vuc_hoat_dong,\n"
+                    + "a.mo_ta, a.logo, a.trang_thai, b.ma_dai_dien, b.ho_ten, b.chuc_vu, \n"
+                    + "b.dia_chi as dia_chi_dd, b.dien_thoai as dien_thoai_dd, b.email as email_dd, b.avatar\n"
+                    + "from cong_ty a join dai_dien_cong_ty b on a.ma_dai_dien = b.ma_dai_dien\n"
+                    + "where a.ma_cong_ty =:mct ");
+            q.setParameter("mct", mct);
+            q.getFirstResult();
+            results = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
 
     public List getAllDanhSachSinhVienByCongTy(String email) {
         List<Object[]> results = new ArrayList<>();

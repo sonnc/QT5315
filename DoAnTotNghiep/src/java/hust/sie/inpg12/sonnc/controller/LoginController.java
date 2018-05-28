@@ -159,12 +159,16 @@ public class LoginController {
         return r;
     }
 
-    public List GetAllThongBao() {
+    public List GetAllThongBao(int type) {
         List<ThongBao> lst = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            Query query = session.createQuery("FROM ThongBao A ORDER BY A.id DESC");
+            Query query = session.createQuery("FROM ThongBao A WHERE type =:type ORDER BY A.id DESC");
+            query.setParameter("type", type);
+            if (type == 1) {
+                query.setMaxResults(10);
+            }
             lst = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -177,7 +181,7 @@ public class LoginController {
         }
         return lst;
     }
-    
+
     public List GetDetailThongBao(int id) {
         List<ThongBao> lst = new ArrayList<>();
         try {
@@ -186,6 +190,44 @@ public class LoginController {
             Query query = session.createQuery("FROM ThongBao A WHERE A.id =:id");
             query.setParameter("id", id);
             lst = query.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lst;
+    }
+
+    public List getAllFile() {
+        List<FileAll> lst = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM FileAll");
+            lst = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return lst;
+    }
+
+    public List getAllCongTy() {
+        List<CongTy> lst = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("FROM CongTy");
+            lst = q.list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {

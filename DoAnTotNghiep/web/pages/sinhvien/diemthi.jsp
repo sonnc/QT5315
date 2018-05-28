@@ -11,32 +11,25 @@
     <head>
         <%@include file="../../mains/head.jsp" %>
         <title>Điểm thi</title>
-          <%    if (session.getAttribute("rule") == null) {
-                String l = (String) session.getAttribute("httpURL");
-                response.sendRedirect(l + "login.jsp");
-                return;
-            }
-        %>
+           <%    if (session.getAttribute("rule") == null) {
+            String l = (String) session.getAttribute("httpURL");
+            response.sendRedirect(l + "login.jsp");
+
+        }
+    %>
         <%            if (session.getAttribute("getDiemThiSinhVien") == null) {
         %>
         <s:action name="getDiemThiSinhVien" executeResult="true"/>
         <%
             }
         %>
-        <script>
-            window.onload = function () {
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 0);
-            };
-        </script>
+       
     </head>
     <%
         if (session.getAttribute("getDiemThiSinhVien") != null) {
             session.removeAttribute("getDiemThiSinhVien");
     %>
-    <body onLoad="mess()" class="preloading">
+    <body  class="preloading">
         <div id="preload" class="preload-container text-center">
             <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
         </div>
@@ -45,7 +38,7 @@
         <section id="content">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 col-md-8">
                         <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                              padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                             <p style="margin: 0px">THÔNG TIN SINH VIÊN</p>
@@ -62,7 +55,7 @@
                             <p style="margin: 0px">ĐIỂM THI</p>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 col-md-6">
                                 <%                                        if (session.getAttribute("getDiemThiSinhVienNotFound") != null) {
                                 %>
                                 <p style="color: red">Chưa có điểm thi trong hệ thống!</p>
@@ -72,14 +65,16 @@
                                 %>
                                 <s:iterator value="lstSinhVienDiem">
                                     <strong>
+                                        <p>KỲ THỰC TẬP: <strong style="color: red"><s:property value="dotThucTap"/></strong></p>
                                         <p>Điểm phản hồi: <strong style="color: red"><s:property value="diemPhanHoi"/></strong></p>
                                         <p>Điểm BC Quá Trình: <strong style="color: red"><s:property value="diemBcqt"/></strong></p>
                                         <p>Điểm Quá Trình: <strong style="color: red"><s:property value="diemQuaTrinh"/></strong></p>
                                         <p>Điểm Cuối kỳ: <strong style="color: red"><s:property value="diemCuoiKy"/></strong></p>
                                     </strong>
+                                    <div style="margin-bottom: 10px"></div>
                                 </s:iterator>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 col-md-6">
                                 <p style="color: green">Hệ số điểm: </p> 
                                 <s:iterator value="lstHeSoDiem">
                                     <ul style="color: green">

@@ -11,26 +11,19 @@
     <head>
         <%@include file="../../mains/head.jsp" %>
         <link href="./pages/libs/css/sweetalert.css" rel="stylesheet" />
-        <%    if (session.getAttribute("rule") == null) {
-                String l = (String) session.getAttribute("httpURL");
-                response.sendRedirect(l + "login.jsp");
-                return;
-            }
-        %>
+      <%    if (session.getAttribute("rule") == null) {
+            String l = (String) session.getAttribute("httpURL");
+            response.sendRedirect(l + "login.jsp");
+
+        }
+    %>
         <%            if (session.getAttribute("GetListKyThucTap") == null) {
         %>
         <s:action name="GetListKyThucTap" executeResult="true" />
         <%
             }
         %>
-        <script>
-            window.onload = function () {
-                setTimeout(function () {
-                    $('body').removeClass('preloading');
-                    $('#preload').delay(1000).fadeOut('fast');
-                }, 0);
-            };
-        </script>
+     
     </head>
     <%
         if (session.getAttribute("GetListKyThucTap") != null) {
@@ -46,7 +39,7 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8  col-md-8">
                             <%                                if (session.getAttribute("messageDangKyKyThucTap") != null) {
                             %>
                             <script type="text/javascript">

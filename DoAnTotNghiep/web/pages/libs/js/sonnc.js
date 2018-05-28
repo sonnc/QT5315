@@ -53,6 +53,9 @@ $(document).ready(function () {
             },
             myFile: {
                 required: true
+            },
+            bcqt:{
+                required: true
             }
 
         },
@@ -104,6 +107,9 @@ $(document).ready(function () {
             },
             myFile: {
                 required: "Ảnh thẻ không được để trống !"
+            },
+            bcqt:{
+                required: "Điểm báo cáo quá trình không được để trống!"
             }
 
         }

@@ -206,12 +206,15 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         dt = ddctController.getInfoDeTaiByDDCT(maDeTai);
 
         if (dt.getTrangThai() == 1) {
+            Logs((String)session.get("email"), "Không thể xóa đề tài vì đề tài đã được phê duyệt hoặc có sinh viên đăng ký");
             session.put("messageDeleteDetai", "Không thể xóa đề tài. Đề tài này đã được duyệt hoặc đã có sinh viên đăng ký.");
         } else {
             dt.setTrangThai(3);
             if (ddctController.updateDeleteDeTaiByDDCT(dt)) {
+                Logs((String)session.get("email"), "Xóa thành công đề tài: " + dt.getTenDeTai() + "");
                 session.put("messageDeleteDetai", "Xóa thành công đề tài: " + dt.getTenDeTai() + "");
             } else {
+                 Logs((String)session.get("email"), "Đã có lỗi xảy ra khi xóa đề tài: " + dt.getTenDeTai() + "");
                 session.put("messageDeleteDetai", "Đã có lỗi xảy ra khi xóa đề tài: " + dt.getTenDeTai() + "");
             }
         }
@@ -233,8 +236,10 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         congTy.setLinhVucHoatDong(ct.getLinhVucHoatDong());
         congTy.setMoTa(ct.getMoTa());
         if (ddctController.updateCongty(congTy)) {
+            Logs((String)session.get("email"), "Cập nhật thành công công ty: "+congTy.getTenCongTy()+"");
             session.put("updateCongTy", "Cập nhật thông tin công ty thành công.");
         } else {
+            Logs((String)session.get("email"), "Có lỗi khi cập nhật công ty: "+congTy.getTenCongTy()+"");
             session.put("updateCongTy", "Đã có lỗi xảy ra. Cập nhật thông tin công ty thất bại.");
         }
         return SUCCESS;
@@ -253,6 +258,7 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
+            Logs((String)session.get("email"), "Lỗi khi upload avatar");
         }
         try {
             path = request.getSession().getServletContext().getRealPath("/").concat("file/image/logo/");
@@ -264,6 +270,7 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
+            Logs((String)session.get("email"), "Lỗi khi upload logo");
         }
         DaiDienCongTy dd = new DaiDienCongTy();
         dd = this.ddct;
@@ -280,11 +287,14 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
             ct.setTrangThai(2);
             ct.setMaDaiDien(ma);
             if (ddctController.saveCongty(ct)) {
+                            Logs((String)session.get("email"), "Đăng ký thành công công ty: "+ct.getTenCongTy()+"");
                 session.put("CongtyStatus", "CÔNG TY: " + ct.getTenCongTy() + " ĐANG TRONG QUÁ TRÌNH CHỜ DUYỆT. ");
             } else {
+                            Logs((String)session.get("email"), "Đăng ký không thành công công ty: "+ct.getTenCongTy()+"");
                 session.put("CongtyStatus", "Đăng ký Không thành công Công Ty và Đại diện công ty.");
             }
         } else {
+            Logs((String)session.get("email"), "Đăng ký không thành công đại diện công ty: "+ct.getTenCongTy()+"");
             session.put("CongtyStatus", "ĐĂNG KÝ KHÔNG THÀNH CÔNG ĐẠI DIỆN CÔNG TY");
         }
 
@@ -436,8 +446,10 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
             e.printStackTrace();
         }
         if (ddctController.SaveDeTai(dt)) {
+            Logs((String)session.get("email"), "Đăng đề tài: "+dt.getTenDeTai()+" thành công");
             session.put("messageSaveDeTai", "Đăng đề tài: " + dt.getTenDeTai() + " thành công, xin chờ duyệt.");
         } else {
+            Logs((String)session.get("email"), "Lỗi khi đăng đề tài: "+dt.getTenDeTai()+"");
             session.put("messageSaveDeTai", "Đăng đề tài: " + dt.getTenDeTai() + " thất bại");
         }
         return SUCCESS;
@@ -467,6 +479,7 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
+            Logs((String)session.get("email"), "Lỗi tải avatar người hướng dẫn lên server");
             session.put("fileMessage", "Tải ảnh đại diện lên hệ thống không thành công! ");
         }
         NguoiHuongDan nguoiHuongDan = new NguoiHuongDan();
@@ -479,8 +492,10 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         l.setRule(3);
         l.setStatus("ACTIVE");
         if (ddctController.AddAcountNguoiHuongDan(nhd, l)) {
+            Logs((String)session.get("email"), "Thêm nhân viên: "+nhd.getEmail()+" thành công");
             session.put("messageAddAcount", "Thêm nhân viên mới thành công");
         } else {
+            Logs((String)session.get("email"), "Thêm nhân viên thất bại");
             session.put("messageAddAcount", "Thêm nhân viên mới thất bại");
         }
         session.put("AddAcountNguoiHuongDan", "AddAcountNguoiHuongDan");
@@ -507,8 +522,10 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         email.setTrangThai(Boolean.FALSE);
         email.setThoiGian(sqlDate);
         if (ddctController.sendEmail(email)) {
+            Logs((String)session.get("email"), "Gửi mail trên hệ thống tới: "+request.getParameter("nguoiNhan")+" thành công");
             session.put("emailMessage", "Bạn đã gửi Email trong hệ thống thành công !");
         } else {
+            Logs((String)session.get("email"), "Gửi mail trên hệ thống tới: "+request.getParameter("nguoiNhan")+" thất bại");
             session.put("emailMessage", "Đã có lỗi khi thực hiện hành động gửi Email này. Nếu tình trạng này tiếp tục xảy ra, vui lòng liên hệ với quản trị viên.!");
         }
         return SUCCESS;

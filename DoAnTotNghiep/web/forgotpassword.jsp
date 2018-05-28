@@ -41,35 +41,64 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                            <%                                if (session.getAttribute("message") != null) {
+                            %>
+                            <script type="text/javascript">
+                                swal("Thông báo", "<%=session.getAttribute("message")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("message");
+                                }
+                            %>
                             <form role="form" class="register-form" id="formValidate" action="forgotpasswordAction" method="post">
                                 <h2>Quên mật khẩu <small>đăng nhập vào hệ thống</small></h2>
                                 <hr class="colorgraph">
-                                <script type="text/javascript">
-                                    function getConfirmation() {
-                                        var retVal = confirm("Hệ thống sẽ gửi mã xác thực OTP qua điện thoại và mật khẩu reset qua email đã đăng ký. Nếu có vấn đề, xin liên hệ quản trị viên.");
-                                        if (retVal == true) {
-                                            return true;
-                                        } else {
-                                            return false;
-                                        }
-                                    }
-                                </script>
                                 <div class="form-group">
-                                    <s:textfield type="email" name="email" cssClass="form-control input-lg" placeholder="Tài khoản email" tabindex="4" required="true" onclick="getConfirmation()"></s:textfield>
+                                    <s:textfield type="email" name="email" cssClass="form-control input-lg" placeholder="Tài khoản email" tabindex="4" required="true"></s:textfield>
                                     </div>
                                     <hr class="colorgraph">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-6"><input type="submit" value="Đặt lại mật khẩu" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
                                         <div class="col-xs-12 col-md-6">
-                                        <div>Trở về <a href="<%=session.getAttribute("httpURL")%>login.jsp">Trang chủ</a>
+                                            <div>Trở về <a href="<%=session.getAttribute("httpURL")%>login.jsp">Trang chủ</a>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                                        <script>
+                                document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                    var form = this;
+                                    e.preventDefault();
+                                    swal({
+                                        title: "ĐẶT LẠI MẬT KHẨU",
+                                        text: "Bạn có chắc chắn muốn thay đổi lại mật khẩu không?",
+                                        icon: "warning",
+                                        buttons: [
+                                            'KHÔNG, Hãy hủy bỏ!',
+                                            'CÓ, Tôi chắc chắn!'
+                                        ],
+                                        dangerMode: true,
+                                    }).then(function (isConfirm) {
+                                        if (isConfirm) {
+                                            swal({
+                                                title: 'ĐANG XỬ LÝ',
+                                                text: 'Bạn đã xác nhận, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                icon: 'success'
+                                            }).then(function () {
+                                                form.submit();
+                                            });
+                                        } else {
+                                            swal("HỦY BỎ", "Bạn đã hủy bỏ!", "error");
+                                        }
+                                    });
+                                });
+                            </script>
+                            <div style="margin: 100px"></div>
                         </div>
                     </div>
                 </div>
             </section>
+
             <footer style="padding: 0px">
                 <div id="sub-footer" style="margin: 0px">
                     <div class="container">

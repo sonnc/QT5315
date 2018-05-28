@@ -29,8 +29,8 @@ public class SendEmail {
 
     private final String host = "smtp.gmail.com";
     private final String port = "25";
-    private final String userName = "traibachkhoa95.hust@gmail.com";
-    private final String password = "SonNguyen";
+    private final String userName = "20138374@student.hust.edu.vn";
+    private final String password = "Google@SonNguyenBK22021995";
 
     public boolean doSendEmail(String recipient, String subject, String message) throws IOException, AddressException, MessagingException {
 

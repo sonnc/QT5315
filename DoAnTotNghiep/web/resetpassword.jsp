@@ -14,6 +14,8 @@
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
         <script src="./pages/libs/js/sonnc.js"></script>
+        <%
+        %>
         <style>
             .error {
                 color: red;
@@ -41,33 +43,65 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                            <%                                if (session.getAttribute("message") != null) {
+                            %>
+                            <script type="text/javascript">
+                                swal("Thông báo", "<%=session.getAttribute("message")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("message");
+                                }
+                            %>
                             <form role="form" class="register-form" id="formValidate" action="resetpasswordAction" method="post">
                                 <h2>Đặt lại mật khẩu <small>đăng nhập</small></h2>
                                 <hr class="colorgraph">
-                                <script type="text/javascript">
-                                    
-                                </script>
+
                                 <div class="form-group">
-                                    <s:textfield type="text" name="password" cssClass="form-control input-lg" placeholder="Mật khẩu mới" tabindex="4" required="true"></s:textfield>
-                                </div>
-                                <div class="form-group">
-                                    <s:textfield type="text" name="repassword" cssClass="form-control input-lg" placeholder="Xác thực mật khẩu mới" tabindex="4" required="true"></s:textfield>
-                                </div>
-                                <div class="form-group">
-                                    <s:textfield type="text" name="resetcode" cssClass="form-control input-lg" placeholder="Mã reset mật khẩu" tabindex="4" required="true" ></s:textfield>
-                                </div>
-                                <div class="form-group">
-                                    <s:textfield type="number" name="otpcode" cssClass="form-control input-lg" placeholder="Mã OTP" tabindex="4" required="true"></s:textfield>
-                                </div>
-                                <hr class="colorgraph">
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-6"><input type="submit" value="Đổi mật khẩu" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
-                                    <div class="col-xs-12 col-md-6">
-                                        <div>Trở về <a href="<%=session.getAttribute("httpURL")%>login.jsp">Trang chủ</a>
+                                    <s:textfield type="password" name="passwordold" cssClass="form-control input-lg" placeholder="Mật khẩu cũ" tabindex="4" required="true"></s:textfield>
+                                    </div>
+                                    <div class="form-group">
+                                    <s:textfield type="password" name="password" cssClass="form-control input-lg" placeholder="Mật khẩu mới" tabindex="4" required="true"></s:textfield>
+                                    </div>
+                                    <div class="form-group">
+                                    <s:textfield type="password" name="repassword" cssClass="form-control input-lg" placeholder="Xác thực mật khẩu mới" tabindex="4" required="true"></s:textfield>
+                                    </div>
+                                    <hr class="colorgraph">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6"><input type="submit" value="Đổi mật khẩu" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <div>Trở về <a href="<%=session.getAttribute("httpURL")%>login.jsp">Trang chủ</a>
                                         </div>
                                     </div>
                                 </div>
                             </form>
+                            <script>
+                                document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                    var form = this;
+                                    e.preventDefault();
+                                    swal({
+                                        title: "THAY ĐỔI MẬT KHẨU",
+                                        text: "Bạn có chắc chắn muốn thay đổi mật khẩu không?",
+                                        icon: "warning",
+                                        buttons: [
+                                            'KHÔNG, Hãy hủy bỏ!',
+                                            'CÓ, Tôi chắc chắn!'
+                                        ],
+                                        dangerMode: true,
+                                    }).then(function (isConfirm) {
+                                        if (isConfirm) {
+                                            swal({
+                                                title: 'ĐANG XỬ LÝ',
+                                                text: 'Bạn đã xác nhận, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                icon: 'success'
+                                            }).then(function () {
+                                                form.submit();
+                                            });
+                                        } else {
+                                            swal("HỦY BỎ", "Bạn đã hủy bỏ!", "error");
+                                        }
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>

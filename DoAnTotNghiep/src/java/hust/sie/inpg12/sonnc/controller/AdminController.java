@@ -9,6 +9,7 @@ import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.FileAll;
 import hust.sie.inpg12.sonnc.entities.HeSoDiem;
 import hust.sie.inpg12.sonnc.entities.Login;
+import hust.sie.inpg12.sonnc.entities.Logs;
 import hust.sie.inpg12.sonnc.entities.SinhVienDiem;
 import hust.sie.inpg12.sonnc.entities.ThongBao;
 import hust.sie.inpg12.sonnc.model.HibernateUtil;
@@ -549,5 +550,23 @@ public class AdminController {
             session.close();
         }
         return r;
+        
+    }
+        
+
+    public void logs(Logs logs) {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(logs);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 }

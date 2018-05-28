@@ -19,11 +19,14 @@ import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
 import hust.sie.inpg12.sonnc.entities.SinhVien;
 import hust.sie.inpg12.sonnc.entities.SinhVienThucTap;
 import hust.sie.inpg12.sonnc.entities.ThongBao;
+import hust.sie.inpg12.sonnc.utils.SendEmail;
+import hust.sie.inpg12.sonnc.utils.SendSMS;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -111,6 +114,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         String password = request.getParameter("password");
         lstLogin = loginController.login(email, password);
         if (lstLogin.size() == 1) {
+            Logs(email, "Đăng nhập vào hệ thống");
             if (lstLogin.get(0).getStatus().equals("LOCKED")) {
                 addFieldError("email", "Tài khoản này đã bị đóng.");
                 return INPUT;
@@ -172,11 +176,10 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
                 }
             }
         } else {
-            Logs((String)session.get("email"), "Đăng nhập vào hệ thống không thành công.");
+            Logs((String) session.get("email"), "Đăng nhập vào hệ thống không thành công.");
             addFieldError("email", "Tài khoản hoặc mật khẩu không đúng !");
             return INPUT;
         }
-         Logs((String)session.get("email"), "Đăng nhập vào hệ thống thành công.");
         return SUCCESS;
     }
 
@@ -209,12 +212,12 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         login.setRule(role);
         login.setStatus("ACTIVE");
         if (loginController.SaveRegister(login)) {
-             Logs((String)session.get("email"), "Đăng ký tài khoản thành công.");
+            Logs((String) session.get("email"), "Đăng ký tài khoản thành công.");
             addFieldError("email", "Đăng ký tài khoản thành công. Vui lòng đăng nhập lại.");
             session.put("login", login);
             return SUCCESS;
         }
-         Logs((String)session.get("email"), "Đăng ký tài khoản thất bại");
+        Logs((String) session.get("email"), "Đăng ký tài khoản thất bại");
         addFieldError("email", "Đăng ký tài khoản thất bại. Vui lòng kiểm tra lại thông tin.");
         session.put("login", login);
         return INPUT;
@@ -225,7 +228,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
      * cho mọi đối tượng
      */
     public String logout() {
-         Logs((String)session.get("email"), "Đăng xuất ra khỏi hệ thống");
+        Logs((String) session.get("email"), "Đăng xuất ra khỏi hệ thống");
         session.clear();
         return SUCCESS;
     }
@@ -248,7 +251,81 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         session.put("GetDetailThongBao", "GetDetailThongBao");
         return SUCCESS;
     }
- public void Logs(String email, String noidung) {
+
+//    public String sendEmailChangePass() {
+//
+//    }
+    public String changePassword() {
+        String passwordold = request.getParameter("passwordold");
+        String password = request.getParameter("password");
+        String repassword = request.getParameter("repassword");
+        String email = (String) session.get("email");
+
+        List<Login> lstLogin = new ArrayList();
+        lstLogin = loginController.login(email, passwordold);
+        Logs(email, "Thay đổi mật khẩu");
+        if (lstLogin.size() == 1) {
+            if (lstLogin.get(0).getPass().equals(password)) {
+                session.put("message", "Mật khẩu mới đã được sử dụng trước đó, vui lòng sử dụng mật khẩu khác");
+                return SUCCESS;
+            } else {
+                if (loginController.changePass(email, password)) {
+                    try {
+                        Date d = new Date();
+                        java.sql.Date date = new java.sql.Date(d.getTime());
+                        Time time = new Time(d.getTime());
+                        //send mail
+                        SendEmail sendEmail = new SendEmail();
+                        sendEmail.doSendEmail("" + email + "", "THAY ĐỔI MẬT KHẨU", "Xin chào " + email + ". Bạn đã thay đổi mật khẩu vào lúc " + time + " " + date + "."
+                                + " Nếu bạn không thực hiện hành động này, vui lòng kiểm tra lại và thay đổi mật khẩu.");
+                        //Send SMS
+//                        SendSMS sendSMS = new SendSMS();
+//                        sendSMS.sendSMSCustomer("0898595657", "Xin chao NGUYEN CONG SON. Ban da thay doi mat khau vao luc: " + time + " " + date + ". Send by SonNC");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    session.put("message", "Thay đổi mật khẩu thành công");
+                } else {
+                    session.put("message", "Thay đổi mật khẩu thất bại");
+                }
+
+            }
+        }
+        return SUCCESS;
+    }
+
+    public String forgotpasswordAction() {
+        String email = request.getParameter("email");
+        try {
+            Date d = new Date();
+            java.sql.Date date = new java.sql.Date(d.getTime());
+            Time time = new Time(d.getTime());
+            //send mail
+            String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            Random rnd = new Random();
+            StringBuilder sb = new StringBuilder(8);
+            for (int i = 0; i < 8; i++) {
+                sb.append(AB.charAt(rnd.nextInt(AB.length())));
+            }
+            String pass = sb.toString();
+             if (loginController.changePass(email, pass))  {
+                 SendEmail sendEmail = new SendEmail();
+                 sendEmail.doSendEmail("" + email + "", "THAY ĐỔI MẬT KHẨU",
+                         "HỆ THỐNG ĐĂNG KÝ VÀ QUẢN LÝ THỰC TẬP TẠI DOANH NGHIỆP\n"
+                         + "Xin chào: "+email+"\n"
+                         + "Chúng tôi đã tiếp nhận yêu cầu thay đổi mật khẩu của bạn vào lúc: "+time+" "+date+"\n"
+                         + "Chúng tôi đã thay đổi mật khẩu của bạn thành: "+pass+"\n"
+                         + "Nếu bạn không thực hiện hành động này, xin vui lòng thay đổi lại mật khẩu hoặc liên hệ với quản trị viên hệ thống.\n"
+                         + "Nhóm phát triển hệ thống, trân trọng!");
+            }
+            session.put("message", "Mật khẩu mới đã được gửi qua email: "+email+", xin vui lòng kiểm tra email của bạn.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return SUCCESS;
+    }
+
+    public void Logs(String email, String noidung) {
         Logs logs = new Logs();
         Date d = new Date();
         java.sql.Date date = new java.sql.Date(d.getTime());
@@ -259,6 +336,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         logs.setThoiGian(time);
         loginController.logs(logs);
     }
+
     @Override
     public void setSession(Map<String, Object> map) {
         this.session = map;

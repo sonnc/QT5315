@@ -22,9 +22,9 @@ import java.net.URLEncoder;
  */
 public class SendSMS {
 
-    private final String APIKey = "E6AF949B7BE5F02B57C1495BD1161A";
-    private final String SecretKey = "9675AB5CD6D9598EAFAF6F662B122E";
-    private final String url = "http://api.esms.vn/MainService.svc/xml/SendMultipleMessage_V2/";
+    private final String APIKey = "8D6A4C6EDAB1C14483AD046C7D020A";
+    private final String SecretKey = "63381D4FE8EB34A29412BF2F530DCE";
+    private final String url = "http://api.esms.vn/MainService.svc/xml/SendMultipleMessage_V4/";
 
     public boolean sendSMSCustomer(String phone, String sms) throws UnsupportedEncodingException, IOException {
 

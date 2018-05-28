@@ -15,6 +15,7 @@ import hust.sie.inpg12.sonnc.entities.FileAll;
 import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
 import hust.sie.inpg12.sonnc.entities.HeSoDiem;
 import hust.sie.inpg12.sonnc.entities.Login;
+import hust.sie.inpg12.sonnc.entities.Logs;
 import hust.sie.inpg12.sonnc.entities.SinhVien;
 import hust.sie.inpg12.sonnc.entities.SinhVienDiem;
 import hust.sie.inpg12.sonnc.entities.ThongBao;
@@ -24,6 +25,7 @@ import hust.sie.inpg12.sonnc.other.SinhVienDiemThi;
 import hust.sie.inpg12.sonnc.other.SvDtCtNhd;
 import hust.sie.inpg12.sonnc.other.nhd;
 import java.io.File;
+import java.sql.Time;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -205,8 +207,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         String status = request.getParameter("status").toUpperCase();
         String email = request.getParameter("email");
         if (adminController.COAcountByAdmin(email, status)) {
+            Logs((String)session.get("email"), "Thay đổi trạng thái tài khoản "+email+" sang trang thái "+status+"  thành công");
             session.put("message", "Thay đổi trạng thái tài khoản thành công.");
         } else {
+            Logs((String)session.get("email"), "Thay đổi trạng thái tài khoản "+email+" sang trạng thái "+status+" thất bại");
             session.put("message", "Thay đổi trạng thái tài khoản thất bại.");
         }
         return SUCCESS;
@@ -222,8 +226,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         l.setRule(0);
         l.setStatus("ACTIVE");
         if (adminController.addAcountLogin(l)) {
+            Logs((String)session.get("email"), "Thêm tài khoản sinh viên: "+e+" thành công");
             session.put("message", "Thêm thành công tài khoản sinh viên.");
         } else {
+            Logs((String)session.get("email"), "Thêm tài khoản sinh viên: "+e+" thất bại");
             session.put("message", "Thêm tài khoản sinh viên thất bại.");
         }
         return SUCCESS;
@@ -290,8 +296,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         l.setRule(2);
         l.setStatus("ACTIVE");
         if (adminController.addAcountLogin(l)) {
+            Logs((String)session.get("email"), "Thêm tài khoản giảng viên hướng dẫn: "+e+" thành công");
             session.put("message", "Thêm tài khoản giảng viên hướng dẫn thành công.");
         } else {
+            Logs((String)session.get("email"), "Thêm tài khoản giảng viên hướng dẫn: "+e+" thất bại");
             session.put("message", "Thêm tài khoản giảng viên hướng dẫn thất bại.");
         }
         return SUCCESS;
@@ -327,8 +335,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
     public String deleteCongTyByAdmin() {
         int maCongTy = Integer.parseInt(request.getParameter("maCongTy"));
         if (adminController.deleteCongTyByAdmin(maCongTy)) {
+            Logs((String)session.get("email"), "Xóa công ty thành công với mã công ty là: "+maCongTy+"");
             session.put("message", "Xóa công ty thành công.");
         } else {
+            Logs((String)session.get("email"), "Xóa công ty thất bại với mã công ty là: "+maCongTy+"");
             session.put("message", "Xóa công ty thất bại.");
         }
         return SUCCESS;
@@ -343,8 +353,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
     public String deleteDeTaiByAdmin() {
         int maDeTai = Integer.parseInt(request.getParameter("id"));
         if (adminController.deleteDeTaiByAdmin(maDeTai)) {
+            Logs((String)session.get("email"), "Xóa đề tài với mã là: "+maDeTai+"  thành công");
             session.put("message", "Xóa đề tài thành công.");
         } else {
+            Logs((String)session.get("email"), "Xóa đề tài với mã đề tài là: "+maDeTai+" thất bại");
             session.put("message", "Xóa đề tài thất bại.");
         }
         return SUCCESS;
@@ -453,8 +465,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
                 + lstHeSoDiems.get(0).getDiemBcqt() * diemBCQT) * 10) / 10);
 
         if (adminController.updateDiem(setDiemQuaTrinh, diemBCQT, diemBCCK, kyThucTap, mssv)) {
+            Logs((String)session.get("email"), "Cập nhật điểm thi cho sinh viên: "+mssv+" thành công");
             session.put("message", "Cập nhật điểm thành công!");
         } else {
+            Logs((String)session.get("email"), "Cập nhật điểm thi cho sinh viên: "+mssv+" thất bại");
             session.put("message", "Cập nhật điểm thất bại!");
         }
         return SUCCESS;
@@ -464,8 +478,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         int mssv = Integer.parseInt(request.getParameter("mssv"));
         int kyThucTap = Integer.parseInt(request.getParameter("dotThucTap"));
         if (adminController.deleteDiemThi(mssv, kyThucTap)) {
+            Logs((String)session.get("email"), "Xóa điểm thi của sinh viên: "+mssv+" thành công");
             session.put("message", "Xóa điểm thành công!");
         } else {
+            Logs((String)session.get("email"), "Xóa điểm thi của sinh viên: "+mssv+" thất bại");
             session.put("message", "Xóa điểm thất bại!");
         }
         return SUCCESS;
@@ -505,8 +521,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
     public String deleteThongBao() {
         int x = Integer.parseInt(request.getParameter("id"));
         if (adminController.deleteThongBao(x)) {
+            Logs((String)session.get("email"), "Xóa thông báo thành công");
             session.put("message", "Xóa thông báo thành công.");
         } else {
+            Logs((String)session.get("email"), "Xóa thông báo thất bại");
             session.put("message", "Xóa thông báo thất bại.");
         }
         return SUCCESS;
@@ -535,6 +553,7 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
+            Logs((String)session.get("email"), "Lỗi khi upload ảnh thông báo");
             session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
         }
         ThongBao thongBao = new ThongBao();
@@ -547,8 +566,10 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         thongBao.setNgayThang(sqlDate);
         if (adminController.saveThongBao(thongBao)) {
+            Logs((String)session.get("email"), "Đăng thông báo lên hệ thống thành công");
             session.put("message", "Đăng thông báo lên hệ thống thành công.");
         } else {
+            Logs((String)session.get("email"), "Đăng thông báo lên hệ thống thất bại");
             session.put("message", "Đăng thông báo lên hệ thống thất bại.");
         }
         return SUCCESS;
@@ -585,6 +606,7 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
             } catch (Exception e) {
                 e.printStackTrace();
                 addActionError(e.getMessage());
+                 Logs((String)session.get("email"), "Lỗi đường dẫn khi lưu file trên hệ thống");
                 session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
             }
             fileAll.setEmail((String) session.get("email"));
@@ -594,17 +616,32 @@ public class AdminAction extends ActionSupport implements SessionAware, ServletR
             fileAll.setTenFile(request.getParameter("tenFile"));
             fileAll.settype(1);
             if (adminController.UploadFileByAdmin(fileAll)) {
+                 Logs((String)session.get("email"), "Tải tài liệu lên hệ thống thành công");
                 session.put("message", " Tải tài liệu lên hệ thống thành công.");
             } else {
+                 Logs((String)session.get("email"), "Tải tài liệu lên hệ thống thất bại");
                 session.put("message", " Tải tài liệu liệu lên hệ thống không thành công, vui lòng kiểm tra lại.");
             }
         } catch (Exception e) {
             e.printStackTrace();
+             Logs((String)session.get("email"), "Lỗi không xác định khi upload file trên hệ thống");
             session.put("message", "Lỗi không xác định.");
         }
         return SUCCESS;
     }
 
+    public void Logs(String email, String noidung) {
+        Logs logs = new Logs();
+        Date d = new Date();
+        java.sql.Date date = new java.sql.Date(d.getTime());
+        Time time = new Time(d.getTime());
+        logs.setNgayThang(date);
+        logs.setNguoiDung(email);
+        logs.setNoiDung(noidung);
+        logs.setThoiGian(time);
+        adminController.logs(logs);
+    }
+    
     @Override
     public void setSession(Map<String, Object> map) {
         this.session = map;

@@ -240,6 +240,29 @@ public class LoginController {
         return lst;
     }
     
+    public boolean changePass(String email, String pass) {
+        boolean r = false;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createQuery("UPDATE Login SET pass=:pass"
+                    + " WHERE email=:email");
+            q.setParameter("email", email);
+            q.setParameter("pass", pass);
+            q.executeUpdate();
+            transaction.commit();
+            r = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return r;
+    }
+    
     public void logs(Logs logs) {
         try {
             session = HibernateUtil.getSessionFactory().openSession();

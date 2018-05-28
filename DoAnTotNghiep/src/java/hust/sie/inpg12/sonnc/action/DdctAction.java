@@ -14,11 +14,13 @@ import hust.sie.inpg12.sonnc.entities.DaiDienCongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.Email;
 import hust.sie.inpg12.sonnc.entities.Login;
+import hust.sie.inpg12.sonnc.entities.Logs;
 import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
 import hust.sie.inpg12.sonnc.other.CongTyvaDaiDienCongTy;
 import hust.sie.inpg12.sonnc.other.DanhSachSinhVien;
 import hust.sie.inpg12.sonnc.other.DetaiCongtyNguoihuongdan;
 import java.io.File;
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -512,6 +514,18 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
         return SUCCESS;
     }
 
+    public void Logs(String email, String noidung) {
+        Logs logs = new Logs();
+        Date d = new Date();
+        java.sql.Date date = new java.sql.Date(d.getTime());
+        Time time = new Time(d.getTime());
+        logs.setNgayThang(date);
+        logs.setNguoiDung(email);
+        logs.setNoiDung(noidung);
+        logs.setThoiGian(time);
+        ddctController.logs(logs);
+    }
+    
     @Override
     public void setSession(Map<String, Object> map) {
         this.session = map;
@@ -521,5 +535,6 @@ public class DdctAction extends ActionSupport implements SessionAware, ServletRe
     public void setServletRequest(HttpServletRequest hsr) {
         this.request = hsr;
     }
+    
 
 }

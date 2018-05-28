@@ -52,12 +52,12 @@
                             </div>
                             <div>
                                 <div class="row">
-                                    <div class="col-lg-9 col-md-9">
+                                    <div class="col-lg-6 col-md-6">
                                         <a href="<%session.getAttribute("httpURL");%>pages/gvhd/detaicongty.jsp"><button class="btn btn-info">All</button></a>
                                         <a href="<%session.getAttribute("httpURL");%>pages/gvhd/duyetDTCT.jsp"><button class="btn btn-danger">Chưa duyệt</button></a>
                                         <a href="<%session.getAttribute("httpURL");%>pages/gvhd/duyetDTCTED.jsp"><button class="btn btn-primary">Đã duyệt</button></a>
                                     </div>
-                                    <div class="col-lg-3 col-md-3">
+                                    <div class="col-lg-6 col-md-6">
                                         <input class="form-control" id="myInput" onkeyup="myFunction()" style="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
                                     </div>
                                 </div>
@@ -121,9 +121,9 @@
                                                     <img style="height: 100px; width: 100px; margin: 0px" src="<s:property value="logo"/>"/>
                                                 </div>
                                                 <div class="col-lg-10 col-md-10">
-                                                    <p style="margin: 0 0 0 10px">Đề tài: <a class="btn-open-popup<s:property value="maDeTai"/>"  style="transition: 0.3s;" href="#">
+                                                    <p style="margin: 0 0 0 10px">Đề tài: <a href="getDeTaiInfo?maDeTai=<s:property value="maDeTai"/>" class="btn-open-popup<s:property value="maDeTai"/>"  style="transition: 0.3s;" href="#">
                                                             <s:property value="tenDeTai"/></a> </p>
-                                                    <p style="margin: 0 0 0 10px">Công ty: <s:property value="tenCongTy"/></p>
+                                                    <p style="margin: 0 0 0 10px">Công ty: <a href="chiTietCongTy?maCongTy=<s:property value="maCongTy"/>"><s:property value="tenCongTy"/></a></p>
                                                     <p style="margin: 0 0 0 10px">Số lượng: <s:property value="soLuong"/></p>
                                                     <p style="margin: 0 0 0 10px">Hạn đăng ký: <s:property value="hanDangKy"/></p>
                                                     <!--Phần hiển thị popup-->
@@ -140,8 +140,8 @@
                                                                         <img style="height: 100px; width: 100px; margin: 0px" src="<s:property value="logo"/>"/>
                                                                     </div>
                                                                     <div class="col-lg-10 col-md-10">
-                                                                        <p><strong>Công ty:</strong> <s:property value="tenCongTy"/></p>
-                                                                        <p><strong>Đề tài:</strong> <s:property value="tenDeTai"/></p>
+                                                                        <p><strong>Công ty:</strong> <a href="chiTietCongTy?maCongTy=<s:property value="maCongTy"/>"><s:property value="tenCongTy"/></a></p>
+                                                                        <p><strong>Đề tài:</strong><a href="getDeTaiInfo?maDeTai=<s:property value="maDeTai"/>"> <s:property value="tenDeTai"/></a></p>
                                                                         <p><strong>Nội dung:</strong> <s:property value="noiDung"/></p>
                                                                         <p><strong>Yêu cầu lập trình:</strong> <s:property value="yeuCaulapTrinh" escapeHtml="false"/></p>
                                                                         <p><strong>Yêu cầu khác:</strong> <s:property value="yeuCauKhac"/></p>
@@ -166,7 +166,7 @@
                                     </tr>
                                 </s:iterator>
                             </table>
-                           <script>
+                            <script>
                                 function myFunction() {
                                     // Declare variables 
                                     var input, filter, table, tr, td, i;
@@ -182,7 +182,7 @@
                                         td1 = tr[i].getElementsByTagName("td")[1];
                                         if (td || td1) {
                                             if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-                                                    td1.innerHTML.toUpperCase().indexOf(filter) > -1 
+                                                    td1.innerHTML.toUpperCase().indexOf(filter) > -1
                                                     ) {
                                                 tr[i].style.display = "";
                                             } else {

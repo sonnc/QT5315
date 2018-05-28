@@ -51,16 +51,8 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
-                            <%                                if (session.getAttribute("messageDeleteDetai") != null) {
-                            %>
-                            <script type="text/javascript">
-                                swal("Thông báo", "<%=session.getAttribute("messageDeleteDetai")%>", "info");
-                            </script>
-                            <%
-                                    session.removeAttribute("messageDeleteDetai");
-                                }
-                            %>
+                        <div class="col-lg-8 col-md-8">
+                            
                             <%                                if (session.getAttribute("messageAddAcount") != null) {
                             %>
                             <script type="text/javascript">
@@ -119,7 +111,7 @@
                                     });
                                 </script>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
                                         <a class="btn-open-popup" href=""><input class="btn btn-success" value="Thêm nhân viên"/></a>
                                         <!--Phần hiển thị popup-->
                                         <!--popup content-->
@@ -131,22 +123,50 @@
                                             <div id="popup-content" style="width: 100%; height: 100%; min-height: 400px; min-width: 500px;">
                                                 <div class="container" style="width: 100%; min-height: 400px; background: #fff; border-radius: 3px;box-shadow: 0 0 1px #ccc; margin-top: 20px;">
                                                     <div class="row">
+                                                        <script>
+                                                            document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                                                var form = this;
+                                                                e.preventDefault();
+                                                                swal({
+                                                                    title: "THÊM NHÂN VIÊN MỚI",
+                                                                    text: "Bạn có chắc chắn muốn thêm nhân viên này không?",
+                                                                    icon: "warning",
+                                                                    buttons: [
+                                                                        'KHÔNG, Hãy hủy bỏ!',
+                                                                        'CÓ, Tôi chắc chắn!'
+                                                                    ],
+                                                                    dangerMode: true,
+                                                                }).then(function (isConfirm) {
+                                                                    if (isConfirm) {
+                                                                        swal({
+                                                                            title: 'ĐANG XỬ LÝ',
+                                                                            text: 'Bạn đã xác nhận thêm mới nhân viên, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                                            icon: 'success'
+                                                                        }).then(function () {
+                                                                            form.submit();
+                                                                        });
+                                                                    } else {
+                                                                        swal("HỦY BỎ", "Bạn đã hủy bỏ!", "error");
+                                                                    }
+                                                                });
+                                                            });
+                                                        </script>
                                                         <form role="form" id="formValidate" action="AddAcountNguoiHuongDan" method="post" enctype = "multipart/form-data"> 
                                                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                                                 <p style="margin: 0px">THÊM NHÂN VIÊN MỚI</p>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-lg-12">
+                                                                <div class="col-lg-12 col-md-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-6">
+                                                                        <div class="col-lg-6 col-md-6">
                                                                             <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="nhd.hoTen" placeholder="Họ tên" required="true"/>
                                                                             <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="nhd.chucvu" placeholder="Chức vụ" required="true"/>
                                                                             <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="nhd.dienThoai" placeholder="Điện thoại" required="true"/>
                                                                             <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="nhd.email" placeholder="Email" required="true"/>
                                                                             <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="nhd.diaChi" placeholder="Địa chỉ" required="true"/>
                                                                         </div>
-                                                                        <div class="col-lg-6">
+                                                                        <div class="col-lg-6 col-md-6">
                                                                             <p>Ảnh đại diện</p>
                                                                             <img id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
                                                                             <s:textfield  name="myFile" type="file" accept="image/*" onchange="loadFile(event)" required="required"/>
@@ -207,7 +227,7 @@
                                         <div id="background-popup" style="z-index:85; position: fixed; display:none; height:100%; width:100%; background:#000; top:0px; left:0px;"></div>
                                         <!--kết thúc hiển hị popup-->
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
                                         <input onkeyup="myFunction()" class="form-control" id="myInput" style="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
                                     </div>
                                 </div>
@@ -215,7 +235,7 @@
                             <style>
                                 td, th{padding: 5px}
                             </style>
-                            <table id="myTable" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
+                            <table id="results" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                 <tr>
                                     <th><strong> Mã NV </strong></th>
                                     <th><strong> Họ và tên </strong></th>
@@ -240,7 +260,7 @@
                                     var td1, td2, td3;
                                     input = document.getElementById("myInput");
                                     filter = input.value.toUpperCase();
-                                    table = document.getElementById("myTable");
+                                    table = document.getElementById("results");
                                     tr = table.getElementsByTagName("tr");
 
                                     // Loop through all table rows, and hide those who don't match the search query
@@ -262,12 +282,13 @@
                                     }
                                 }
                             </script>
-                            <div id="pagination">
-                                <span class="all">Page 1 of 3</span>
-                                <span class="current">1</span>
-                                <a href="#" class="inactive">2</a>
-                                <a href="#" class="inactive">3</a>
-                            </div>
+                            <div id="pageNavPosition" style="float: right"></div>
+                            <script type="text/javascript">
+                                var pager = new Pager('results', 15);
+                                pager.init();
+                                pager.showPageNav('pager', 'pageNavPosition');
+                                pager.showPage(1);
+                            </script>
                             <div class="clear"></div>
                         </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>

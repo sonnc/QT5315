@@ -11,6 +11,7 @@ import hust.sie.inpg12.sonnc.entities.Email;
 import hust.sie.inpg12.sonnc.entities.FileAll;
 import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
 import hust.sie.inpg12.sonnc.entities.HeSoDiem;
+import hust.sie.inpg12.sonnc.entities.Logs;
 import hust.sie.inpg12.sonnc.entities.QuyTrinh;
 import hust.sie.inpg12.sonnc.entities.SinhVienDangKy;
 import hust.sie.inpg12.sonnc.entities.SinhVienDiem;
@@ -951,6 +952,21 @@ public class GvhdController {
             session.close();
         }
         return results;
+    }
+    public void logs(Logs logs) {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(logs);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
 }

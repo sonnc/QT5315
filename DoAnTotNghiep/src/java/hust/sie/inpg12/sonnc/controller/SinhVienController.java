@@ -165,7 +165,7 @@ public class SinhVienController {
      * @since v1 - 26.03.18
      * @author SonNC
      */
-    public boolean updateSinhVienThongTin( SinhVienInfo svi) {
+    public boolean updateSinhVienThongTin(SinhVienInfo svi) {
         boolean r = false;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -724,6 +724,7 @@ public class SinhVienController {
         }
         return lstSVTT;
     }
+
     public List CheckDotThucTapSV(int mssv) {
         List<SinhVienThucTap> lstSVTT = new ArrayList<>();
         try {
@@ -759,7 +760,7 @@ public class SinhVienController {
                     + "where e.dot_thuc_tap =:dotThucTap and e.mssv =:mssv \n"
                     + "and e.ma_de_tai = d.ma_de_tai");
             query.setParameter("dotThucTap", dotThucTap);
-            query.setParameter("mssv", mssv);           
+            query.setParameter("mssv", mssv);
             results = query.list();
             transaction.commit();
         } catch (Exception e) {
@@ -771,5 +772,21 @@ public class SinhVienController {
             session.close();
         }
         return results;
+    }
+
+    public void logs(Logs logs) {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(logs);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 }

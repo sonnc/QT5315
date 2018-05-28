@@ -32,25 +32,28 @@
             session.removeAttribute("GetCongTyByNHD");
 
     %>
-    <body>
+    <body class="preloading">
+        <div id="preload" class="preload-container text-center">
+            <span class="glyphicon glyphicon-refresh preload-icon rotating" style="font-size: 120px"></span>
+        </div>
         <div id="wrapper">
             <%@include file="../../mains/mainHeader.jsp" %>
             <%@include file="../../mains/banner.jsp" %>
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                 <p style="margin: 0px">ĐẠI DIỆN CÔNG TY</p>
                             </div>
                             <s:iterator value="lstCongTyvaDaiDienCongTys">
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 col-md-4">
                                         <p>Ảnh đại diện</p>
                                         <img src="<s:property value="avatarDD"/>" id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-8 col-md-8">
                                         <p><strong>Ông (bà):</strong> <s:property value="daiDien"/></p>
                                         <p><strong>Chức vụ:</strong> <s:property value="chucVuDD"/></p>
                                         <p><strong>Địa chỉ:</strong> <s:property value="diaChiDD"/></p>
@@ -64,11 +67,11 @@
                                     <p style="margin: 0px">THÔNG TIN CHI TIẾT</p>
                                 </div>
                                 <div class="row"> 
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 col-md-4">
                                         <p>Logo</p>
                                         <img src="<s:property value="logo"/>" id="output" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-8 col-md-8">
                                         <p><strong>Tên công ty:</strong> <s:property value="tenCongTy"/></p>
                                         <p><strong>Địa chỉ:</strong> <s:property value="diaChi"/></p>
                                         <p><strong>Điện thoại:</strong> <s:property value="dienThoai"/></p>

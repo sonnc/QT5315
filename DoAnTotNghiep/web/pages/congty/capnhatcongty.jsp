@@ -14,12 +14,7 @@
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
-            }
-        </style>
+    
         <%    if (session.getAttribute("rule") == null) {
                 String l = (String) session.getAttribute("httpURL");
                 response.sendRedirect(l + "login.jsp");
@@ -32,12 +27,6 @@
         <%
             }
         %>
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
     </head>
     <%
         if (session.getAttribute("getInfoCongTyByDDCT") != null) {
@@ -53,14 +42,11 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <%                                if (session.getAttribute("updateCongTy") != null) {
                             %>
                             <script type="text/javascript">
-                                function mess() {
                                     swal("Thông báo", "<%=session.getAttribute("updateCongTy")%>", "info");
-                                }
-                                ;
                             </script>
                             <%
                                     session.removeAttribute("updateCongTy");
@@ -72,21 +58,21 @@
                                     <p style="margin: 0px">ĐĂNG KÝ THÔNG TIN CÔNG TY</p>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-8 col-md-8">
                                         <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" value="%{ct.tenCongTy}" name="ct.tenCongTy" placeholder="Tên công ty" required="true" readonly="true"></s:textfield>
                                         <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" value="%{ct.diaChi}" name="ct.diaChi" placeholder="Địa chỉ" required="true" readonly="true"></s:textfield>
                                         <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" value="%{ct.dienThoai}" name="ct.dienThoai" placeholder="Điện thoại" required="true" readonly="true"></s:textfield>
                                         <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" value="%{ct.email}" name="ct.email" placeholder="Email" required="true" readonly="true"></s:textfield>
                                         <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" value="%{ct.website}" name="ct.website" placeholder="Website" required="true" readonly="true"></s:textfield>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 col-md-4">
                                             <p>Logo công ty</p>
                                             <img src="<s:url value="%{ct.logo}"/>" style="height: 120px; width: 120px; border-radius: 100%; margin-bottom: 10px" />
                                     </div>
                                 </div> 
 
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12  col-md-12">
                                         <label>Mô tả công ty</label>
                                         <s:textarea value="%{ct.moTa}" id="area" name="ct.moTa" required="true" cssStyle="height: 200px; margin-bottom: 30px" cssClass="form-control" placeholder="Hãy mô tả công ty của bạn,....."></s:textarea>
                                             <label>Lĩnh vực hoạt động</label>

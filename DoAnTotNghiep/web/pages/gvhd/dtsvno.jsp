@@ -12,8 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Đề tài sinh viên</title>
         <%@include file="../../mains/head.jsp" %>
-        <script src="./pages/libs/js/validate.js"></script>
-        <script src="./pages/libs/js/jquery.min.js"></script>
+        
         <%    if (session.getAttribute("rule") == null) {
              String l = (String) session.getAttribute("httpURL");
              response.sendRedirect(l + "login.jsp");
@@ -48,6 +47,15 @@
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
                                 <p style="margin: 0px">DUYỆT ĐỀ TÀI SINH VIÊN THỰC TẬP</p>
                             </div>
+                            <%                                if (session.getAttribute("messageDuyetDetai") != null) {
+                            %>
+                            <script type="text/javascript">
+                            swal("Thông báo", "<%=session.getAttribute("messageDuyetDetai")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("messageDuyetDetai");
+                                }
+                            %>
                             <div>
                                 <div class="row">
                                     <div class="col-lg-6  col-md-6">
@@ -86,17 +94,46 @@
                                         <td><s:property value="dotThucTap"/></td>
                                         <td>
                                             <div>
-                                                <a href="duyetDeTaiSV?mssv=<s:property value="mssv"/>&maDeTai=<s:property value="maDeTai"/>&dotThucTap=<s:property value="dotThucTap"/>&trangThai=false">
+                                                <a id="tagA<s:property value="mssv"/>" href="duyetDeTaiSV?mssv=<s:property value="mssv"/>&maDeTai=<s:property value="maDeTai"/>&dotThucTap=<s:property value="dotThucTap"/>&trangThai=false">
                                                     <button class="btn btn-danger" style="height: 25px; margin-bottom: 5px; font-size: 12px; width: 100%">Từ chối</button>
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="duyetDeTaiSV?mssv=<s:property value="mssv"/>&maDeTai=<s:property value="maDeTai"/>&dotThucTap=<s:property value="dotThucTap"/>&trangThai=true">
+                                                <a id="tagA<s:property value="mssv"/>" href="duyetDeTaiSV?mssv=<s:property value="mssv"/>&maDeTai=<s:property value="maDeTai"/>&dotThucTap=<s:property value="dotThucTap"/>&trangThai=true">
                                                     <button class="btn btn-primary" style="height: 25px; margin-bottom: 5px; font-size: 12px; width: 100%">Đồng ý</button>
                                                 </a>
                                             </div>        
                                         </td>
                                     </tr>
+                                    <script>
+                                        var action = document.getElementById("tagA<s:property value="mssv"/>");
+                                        action.addEventListener('click', function (e) {
+                                            var form = this;
+                                            e.preventDefault();
+                                            swal({
+                                                title: "DUYỆT ĐỀ TÀI",
+                                                text: "Bạn có chắc chắn đồng ý đề tài này không? ",
+                                                icon: "warning",
+                                                buttons: [
+                                                    'KHÔNG, Hãy hủy bỏ!',
+                                                    'CÓ, Tôi chắc chắn!'
+                                                ],
+                                                dangerMode: true,
+                                            }).then(function (isConfirm) {
+                                                if (isConfirm) {
+                                                    swal({
+                                                        title: 'ĐANG XỬ LÝ',
+                                                        text: 'Bạn đã xác nhận, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                        icon: 'success'
+                                                    }).then(function () {
+                                                        window.location.href = document.getElementById('tagA<s:property value="mssv"/>').href;
+                                                    });
+                                                } else {
+                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ.", "error");
+                                                }
+                                            });
+                                        });
+                                    </script>
                                 </s:iterator>
                             </table>
                             <script>
@@ -125,7 +162,7 @@
                                                     td3.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td4.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td5.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-                                                    td6.innerHTML.toUpperCase().indexOf(filter) > -1 
+                                                    td6.innerHTML.toUpperCase().indexOf(filter) > -1
                                                     ) {
                                                 tr[i].style.display = "";
                                             } else {

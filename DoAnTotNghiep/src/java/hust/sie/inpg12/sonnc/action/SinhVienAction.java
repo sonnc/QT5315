@@ -19,6 +19,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.math.BigInteger;
+import java.sql.Time;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,181 +56,181 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
     private List<DotThucTap> lstDotThucTap = new ArrayList<>();
     private List<SinhVienDangKy> lstSinhVienDangKys = new ArrayList<>();
     private List<DeTaiSVDK> lstSVDKs = new ArrayList<>();
-
+    
     public List<DeTaiSVDK> getLstSVDKs() {
         return lstSVDKs;
     }
-
+    
     public void setLstSVDKs(List<DeTaiSVDK> lstSVDKs) {
         this.lstSVDKs = lstSVDKs;
     }
-
+    
     public List<SinhVienDangKy> getLstSinhVienDangKys() {
         return lstSinhVienDangKys;
     }
-
+    
     public void setLstSinhVienDangKys(List<SinhVienDangKy> lstSinhVienDangKys) {
         this.lstSinhVienDangKys = lstSinhVienDangKys;
     }
-
+    
     public List<DotThucTap> getLstDotThucTap() {
         return lstDotThucTap;
     }
-
+    
     public void setLstDotThucTap(List<DotThucTap> lstDotThucTap) {
         this.lstDotThucTap = lstDotThucTap;
     }
-
+    
     private List<Email> lstEmailSVSend = new ArrayList<>();
-
+    
     public List<Email> getLstEmailSVSend() {
         return lstEmailSVSend;
     }
-
+    
     public void setLstEmailSVSend(List<Email> lstEmailSVSend) {
         this.lstEmailSVSend = lstEmailSVSend;
     }
-
+    
     public List<Email> getLstEmailSVRead() {
         return lstEmailSVRead;
     }
-
+    
     public void setLstEmailSVRead(List<Email> lstEmailSVRead) {
         this.lstEmailSVRead = lstEmailSVRead;
     }
-
+    
     public List<Email> getLstEmailSVUnread() {
         return lstEmailSVUnread;
     }
-
+    
     public void setLstEmailSVUnread(List<Email> lstEmailSVUnread) {
         this.lstEmailSVUnread = lstEmailSVUnread;
     }
-
+    
     public List<Email> getLstAllEmailSV() {
         return lstAllEmailSV;
     }
-
+    
     public void setLstAllEmailSV(List<Email> lstAllEmailSV) {
         this.lstAllEmailSV = lstAllEmailSV;
     }
-
+    
     public List<SinhVienFile> getLstSinhVienFileBC() {
         return lstSinhVienFileBC;
     }
-
+    
     public void setLstSinhVienFileBC(List<SinhVienFile> lstSinhVienFileBC) {
         this.lstSinhVienFileBC = lstSinhVienFileBC;
     }
-
+    
     public List<SinhVienFile> getLstSinhVienFileHT() {
         return lstSinhVienFileHT;
     }
-
+    
     public void setLstSinhVienFileHT(List<SinhVienFile> lstSinhVienFileHT) {
         this.lstSinhVienFileHT = lstSinhVienFileHT;
     }
-
+    
     public CongTy getCongTy() {
         return congTy;
     }
-
+    
     public void setCongTy(CongTy congTy) {
         this.congTy = congTy;
     }
-
+    
     public DaiDienCongTy getDaiDienCongTy() {
         return daiDienCongTy;
     }
-
+    
     public void setDaiDienCongTy(DaiDienCongTy daiDienCongTy) {
         this.daiDienCongTy = daiDienCongTy;
     }
-
+    
     public List<HeSoDiem> getLstHeSoDiem() {
         return lstHeSoDiem;
     }
-
+    
     public void setLstHeSoDiem(List<HeSoDiem> lstHeSoDiem) {
         this.lstHeSoDiem = lstHeSoDiem;
     }
-
+    
     public List<SinhVien> getLstSinhVien() {
         return lstSinhVien;
     }
-
+    
     public void setLstSinhVien(List<SinhVien> lstSinhVien) {
         this.lstSinhVien = lstSinhVien;
     }
-
+    
     public List<CongTy> getLstCongTyforSV() {
         return lstCongTyforSV;
     }
-
+    
     public void setLstCongTyforSV(List<CongTy> lstCongTyforSV) {
         this.lstCongTyforSV = lstCongTyforSV;
     }
-
+    
     public List<SinhVienInfo> getLstSVI() {
         return lstSVI;
     }
-
+    
     public void setLstSVI(List<SinhVienInfo> lstSVI) {
         this.lstSVI = lstSVI;
     }
-
+    
     public List<SinhVienDiem> getLstSinhVienDiem() {
         return lstSinhVienDiem;
     }
-
+    
     public void setLstSinhVienDiem(List<SinhVienDiem> lstSinhVienDiem) {
         this.lstSinhVienDiem = lstSinhVienDiem;
     }
-
+    
     public List<DetaiCongtyNguoihuongdan> getLstDeTai() {
         return lstDeTai;
     }
-
+    
     public void setLstDeTai(List<DetaiCongtyNguoihuongdan> lstDeTai) {
         this.lstDeTai = lstDeTai;
     }
-
+    
     public File getMyFile() {
         return myFile;
     }
-
+    
     public void setMyFile(File myFile) {
         this.myFile = myFile;
     }
-
+    
     public String getMyFileFileName() {
         return myFileFileName;
     }
-
+    
     public void setMyFileFileName(String myFileFileName) {
         this.myFileFileName = myFileFileName;
     }
-
+    
     public HttpServletRequest getRequest() {
         return request;
     }
-
+    
     public void setRequest(HttpServletRequest request) {
         this.request = request;
     }
-
+    
     public SinhVien getSinhVien() {
         return sinhVien;
     }
-
+    
     public void setSinhVien(SinhVien sinhVien) {
         this.sinhVien = sinhVien;
     }
-
+    
     public SinhVienInfo getSinhVienInfo() {
         return sinhVienInfo;
     }
-
+    
     public void setSinhVienInfo(SinhVienInfo sinhVienInfo) {
         this.sinhVienInfo = sinhVienInfo;
     }
@@ -264,6 +265,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
             } catch (Exception e) {
                 e.printStackTrace();
                 addActionError(e.getMessage());
+                Logs((String)session.get("email"), "Upload avatar lên hệ thống không thành công.");
             }
             sinhVien.setAvatar(avatar);
             sinhVien.setMssv((int) session.get("mssv"));
@@ -272,12 +274,14 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
             if (sinhVienController.saveSinhVienInfo(sinhVien, sinhVienInfo)) {
                 session.put("messageRegister", "Đăng ký thành công");
                 session.put("rule", 0);
+                Logs((String)session.get("email"), "Đăng ký tài khoản thành công");
                 return SUCCESS;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         session.put("messageRegister", "Đăng ký không thành công. Đã có lỗi xảy ra.");
+         Logs((String)session.get("email"), "Đăng ký tài khoản thất bại");
         return ERROR;
     }
 
@@ -292,8 +296,10 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         try {
             sinhVienInfo.setMssv((int) session.get("mssv"));
             if (sinhVienController.updateSinhVienThongTin(sinhVienInfo)) {
+                 Logs((String)session.get("email"), "Cập nhật thông tin cá nhân thành công.");
                 session.put("messageUpdateInfoSV", "Cập nhật thông tin thành công.");
             } else {
+                Logs((String)session.get("email"), "Cập nhật thông tin cá nhân thất bại.");
                 session.put("messageUpdateInfoSV", "Cập nhật thông tin thất bại. Vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
             }
         } catch (Exception e) {
@@ -321,7 +327,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         }
         return ERROR;
     }
-
+    
     public String getSinhVienThongTinByList() {
         // kiểm tra lại thông tin của sinhVienInfo.
         // giá trị trả về là null, 
@@ -335,20 +341,20 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         }
         return ERROR;
     }
-
+    
     public String GetListKyThucTap() {
         lstDotThucTap = sinhVienController.getListKyThucTap();
         session.put("GetListKyThucTap", "GetListKyThucTap");
         return SUCCESS;
     }
-
+    
     public String DangKyKyThucTap() {
         int maDotThucTap = Integer.parseInt(request.getParameter("dotThucTap"));
         int mssv = (int) session.get("mssv");
         List<DotThucTap> lstDotThucTap = sinhVienController.getDotThucTap(maDotThucTap);
         List<SinhVienThucTap> lstSVTT = new ArrayList<>();
         lstSVTT = sinhVienController.CheckDotThucTapSV((int) session.get("mssv"));
-
+        Logs((String)session.get("email"), "Đăng ký kỳ thực tập");
         if (lstSVTT.size() >= 1) {
             for (int i = 0; i < lstSVTT.size(); i++) {
                 if (lstSVTT.get(i).getDotThucTap() == maDotThucTap) {
@@ -372,17 +378,19 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
                 sv.setMssv(mssv);
                 sv.setTrangThai(true);
                 if (sinhVienController.DangKyThucTap(sv)) {
+                    Logs((String)session.get("email"), "Đăng ký thành công kỳ thực tập: "+maDotThucTap+"");
                     session.put("messageDangKyKyThucTap", "Bạn đã đăng ký thành công kỳ thực tập: " + maDotThucTap + ". Vui lòng quay trở lại danh sách đề tài để đăng ký đề tài.");
                 } else {
+                    Logs((String)session.get("email"), "Đăng ký không thành công kỳ thực tập: "+maDotThucTap+"");
                     session.put("messageDangKyKyThucTap", "Đã có lỗi xảy ra khi đăng ký kỳ thực tập: " + maDotThucTap + "");
                 }
-
+                
             }
         }
-
+        
         return SUCCESS;
     }
-
+    
     public String GetAllDangKyDeTai() {
         List<SinhVienThucTap> lstSVTT = new ArrayList<>();
         List<SinhVienDangKy> lstSVDK = new ArrayList<>();
@@ -425,8 +433,9 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         String strSKSV = null;
         String strSKDT = null;
         try {
+            Logs((String)session.get("email"), "Đăng ký đề tài thực tập");
             int maDeTai = Integer.parseInt(request.getParameter("maDeTai"));
-
+            
             lstSVTT = sinhVienController.GetDotThucTapSV((int) session.get("mssv"));
             if (lstSVTT.size() == 0) {
                 return "DANGKYKYTHUCTAP";
@@ -446,7 +455,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
                             break;
                         }
                     }
-
+                    
                     if (checkTrungDeTai == false) {
                         lstSVI = sinhVienController.getSinhVienInfo((int) session.get("mssv"));
                         deTai = sinhVienController.getDeTaiByID(maDeTai);
@@ -488,8 +497,10 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
                         svdk.setDotThucTap(lstSVTT.get(0).getDotThucTap());
                         if (sinhVienController.saveDeTaiSinhVienDangKy(svdk)) {
                             // đăng ký thành công
+                            Logs((String)session.get("email"), "Đăng ký thành công đề tài: "+deTai.getTenDeTai()+"");
                             session.put("messageDangKyDeTai", "Bạn đã đăng ký thành công đề tài: " + deTai.getTenDeTai() + ". Xin chờ giảng viên phê duyệt.");
                         } else {
+                            Logs((String)session.get("email"), "Đăng ký không thành công đề tài: "+deTai.getTenDeTai()+"");
                             session.put("messageDangKyDeTai", "Có lỗi xảy ra khi đăng ký đề tài: " + deTai.getTenDeTai() + ". Xin vui lòng xem lại hoặc "
                                     + "liên hệ với quản trị viên.");
                         }
@@ -646,7 +657,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         }
         session.put("getAllDeTaiSVDK", "getAllDeTaiSVDK");
         return SUCCESS;
-
+        
     }
 
     /**
@@ -679,8 +690,8 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
+            Logs((String)session.get("email"), "Lỗi đường dẫn khi upload File: "+request.getParameter("tenFile")+"");
             session.put("fileMessage", "Tải file lên hệ thống không thành công! ");
-            return ERROR;
         }
         sinhVienFile.setMssv((int) session.get("mssv"));
         sinhVienFile.setLoaiFile(Integer.parseInt(request.getParameter("loaiFile")));
@@ -690,8 +701,10 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         sinhVienFile.setNgayThang(sqlDate);
         if (sinhVienController.UploadFileSinhVien(sinhVienFile)) {
             session.put("fileMessage", "Tải file lên hệ thống thành công! ");
+            Logs((String)session.get("email"), "Tải file lên hệ thống, tên file: "+request.getParameter("tenFile")+"");
             return SUCCESS;
         }
+        Logs((String)session.get("email"), "Tải file lên hệ thống không thành công, tên file: "+request.getParameter("tenFile")+"");
         session.put("fileMessage", "Tải file lên hệ thống không thành công! Đã có lỗi xảy ra. Hãy thử lại.");
         return ERROR;
     }
@@ -700,6 +713,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
      * Phuong thức xóa tài liệu của sinh viên
      */
     public String deleteTaiLieuSinhVien() {
+        Logs((String)session.get("email"), "Xóa tài liệu, mã tài liệu: "+request.getParameter("maTaiLieu")+"");
         if (sinhVienController.deleteFileSinhVien(Integer.parseInt(request.getParameter("maTaiLieu")))) {
             session.put("messageTaiLieuSinhVien", "Xóa tài liệu thành công. Mã lài liệu đã xóa là: " + request.getParameter("maTaiLieu") + "");
             return SUCCESS;
@@ -805,7 +819,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         session.put("getLichTrinh", lichTrinh);
         return SUCCESS;
     }
-
+    
     public String getAllEmailSV() {
         lstAllEmailSV = sinhVienController.getAllEmailSV((String) session.get("email"));
         lstEmailSVRead = sinhVienController.getAllEmailSVRead((String) session.get("email"));
@@ -814,8 +828,9 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         session.put("getAllEmailSV", "lstAllEmailSV");
         return SUCCESS;
     }
-
+    
     public String sendEmailSV() {
+        
         java.util.Date utilDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
         Email email = new Email();
@@ -826,11 +841,25 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
         email.setTrangThai(Boolean.FALSE);
         email.setThoiGian(sqlDate);
         if (sinhVienController.sendEmailSV(email)) {
+            Logs((String)session.get("email"), "Gửi mail trên hệ thống tới: "+request.getParameter("nguoiNhan")+" thành công");
             session.put("emailMessage", "Bạn đã gửi Email trong hệ thống thành công !");
         } else {
+            Logs((String)session.get("email"), "Gửi mail trên hệ thống tới: "+request.getParameter("nguoiNhan")+" thất bại");
             session.put("emailMessage", "Đã có lỗi khi thực hiện hành động gửi Email này. Nếu tình trạng này tiếp tục xảy ra, vui lòng liên hệ với quản trị viên.!");
         }
         return SUCCESS;
+    }
+    
+    public void Logs(String email, String noidung) {
+        Logs logs = new Logs();
+        Date d = new Date();
+        java.sql.Date date = new java.sql.Date(d.getTime());
+        Time time = new Time(d.getTime());
+        logs.setNgayThang(date);
+        logs.setNguoiDung(email);
+        logs.setNoiDung(noidung);
+        logs.setThoiGian(time);
+        sinhVienController.logs(logs);
     }
 
 //    public String deleteEmailSV(){
@@ -856,7 +885,7 @@ public class SinhVienAction extends ActionSupport implements SessionAware, Servl
     public void setSession(Map<String, Object> map) {
         this.session = map;
     }
-
+    
     @Override
     public void setServletRequest(HttpServletRequest hsr) {
         this.request = hsr;

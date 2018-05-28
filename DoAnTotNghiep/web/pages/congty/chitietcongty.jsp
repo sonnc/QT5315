@@ -14,6 +14,12 @@
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
         <script src="./pages/libs/js/sonnc.js"></script>
+          <%    if (session.getAttribute("rule") == null) {
+                String l = (String) session.getAttribute("httpURL");
+                response.sendRedirect(l + "login.jsp");
+                return;
+            }
+        %>
     </head>
     <body class="preloading">
         <div id="preload" class="preload-container text-center">

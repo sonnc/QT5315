@@ -20,7 +20,7 @@
                 return;
             }
         %>
-     
+
         <%    if (session.getAttribute("getInfoGVHD") == null) {
         %>
         <s:action name="getInfoGVHD" executeResult="true"/>
@@ -53,6 +53,7 @@
                                     session.removeAttribute("messageUpdateInfo");
                                 }
                             %>
+                            
                             <form role="form" id="formValidate" action="updateThongTinCaNhanGVHD" method="post" enctype = "multipart/form-data"> 
                                 <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                      padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
@@ -90,36 +91,36 @@
                                         <s:textarea value="%{gvhd.khac}" name="gvhd.khac" required="true" cssStyle="height:100px; margin-bottom: 30px" cssClass="form-control"></s:textarea>
                                         </div>
                                     </div>
-                                    <script>
-                                        document.querySelector('#formValidate').addEventListener('submit', function (e) {
-                                            var form = this;
-                                            e.preventDefault();
-                                            swal({
-                                                title: "CẬP NHẬT THÔNG TIN",
-                                                text: "Bạn có chắc chắn muốn cập nhật thông tin cá nhân không?",
-                                                icon: "warning",
-                                                buttons: [
-                                                    'KHÔNG, Hãy hủy bỏ!',
-                                                    'CÓ, Tôi chắc chắn!'
-                                                ],
-                                                dangerMode: true,
-                                            }).then(function (isConfirm) {
-                                                if (isConfirm) {
-                                                    swal({
-                                                        title: 'ĐANG XỬ LÝ',
-                                                        text: 'Bạn đã xác nhận cập nhật thông tin các nhân, xin vui lòng đợi phản hồi từ hệ thống!',
-                                                        icon: 'success'
-                                                    }).then(function () {
-                                                        form.submit();
-                                                    });
-                                                } else {
-                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ việc cập nhật thông tin cá nhân.", "error");
-                                                }
-                                            });
-                                        });
-                                    </script>
                                     <button style="float: right;" class="btn btn-success">CẬP NHẬT THÔNG TIN CÁ NHÂN</button>
                                 </form>
+                                        <script>
+                                document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                    var form = this;
+                                    e.preventDefault();
+                                    swal({
+                                        title: "CẬP NHẬT THÔNG TIN",
+                                        text: "Bạn có chắc chắn muốn cập nhật thông tin cá nhân không?",
+                                        icon: "warning",
+                                        buttons: [
+                                            'KHÔNG, Hãy hủy bỏ!',
+                                            'CÓ, Tôi chắc chắn!'
+                                        ],
+                                        dangerMode: true,
+                                    }).then(function (isConfirm) {
+                                        if (isConfirm) {
+                                            swal({
+                                                title: 'ĐANG XỬ LÝ',
+                                                text: 'Bạn đã xác nhận cập nhật thông tin các nhân, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                icon: 'success'
+                                            }).then(function () {
+                                                form.submit();
+                                            });
+                                        } else {
+                                            swal("HỦY BỎ", "Bạn đã hủy bỏ việc cập nhật thông tin cá nhân.", "error");
+                                        }
+                                    });
+                                });
+                            </script>
                                 <div class="clear"></div>
                             </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>

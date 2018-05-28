@@ -18,7 +18,7 @@
             <section id="inner-headline">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 col-md-12">
                             <h3 style="text-align: center; color: red">HỆ THỐNG ĐĂNG KÝ THỰC TẬP DOANH NGHIỆP TRỰC TUYẾN</h3>
                         </div>
                     </div>
@@ -29,9 +29,18 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                             <hr class="colorgraph">
+                            <%                                if (session.getAttribute("CongtyStatus") != null) {
+                            %>
+                            <script type="text/javascript">
+                                swal("Thông báo", "<%=session.getAttribute("CongtyStatus")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("CongtyStatus");
+                                }
+                            %>
                             <p style="color: red; font-size: 17px;"><%=session.getAttribute("CongtyStatus")%></p>
                             <%
-                            session.removeAttribute("email");
+                                session.removeAttribute("email");
                             %>
                             <hr class="colorgraph">
                             <a href="logout">TRANG CHỦ</a>
@@ -43,7 +52,7 @@
                 <div id="sub-footer" style="margin: 0px">
                     <div class="container">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 col-md-6">
                                 <div class="copyright">
                                     <p>&copy; Phát triển bởi: Nguyễn Công Sơn - INPG12 - SIE - HUST</p>
                                     <div class="credits">
@@ -51,7 +60,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-6 col-md-6">
                                 <ul class="social-network">
                                     <li><a href="#" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a></li>
                                     <li><a href="#" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a></li>

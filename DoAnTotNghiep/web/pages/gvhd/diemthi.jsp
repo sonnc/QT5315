@@ -14,7 +14,6 @@
         <%@include file="../../mains/head.jsp" %>
         <script src="./pages/libs/js/validate.js"></script>
         <script src="./pages/libs/js/jquery.min.js"></script>
-        <script src="./pages/libs/js/sonnc.js"></script> 
         <%    if (session.getAttribute("rule") == null) {
                 String l = (String) session.getAttribute("httpURL");
                 response.sendRedirect(l + "login.jsp");
@@ -48,6 +47,15 @@
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
                                 <p style="margin: 0px">ĐIỂM THI</p>
                             </div>
+                            <%                                if (session.getAttribute("messageDiemThi") != null) {
+                            %>
+                            <script type="text/javascript">
+                                swal("Thông báo", "<%=session.getAttribute("messageDiemThi")%>", "info");
+                            </script>
+                            <%
+                                    session.removeAttribute("messageDiemThi");
+                                }
+                            %>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                     <a href="<%=session.getAttribute("httpURL")%>pages/gvhd/dsdt.jsp"><button class="btn btn-danger" style="width: 100%;">DANH SÁCH ĐIỂM THI</button></a>
@@ -74,8 +82,9 @@
                                     <th><strong> BCCK </strong></th>
                                     <th><strong> Chấm điểm </strong></th>
                                 </tr>
+
                                 <s:iterator value="lstDanhSachSinhViens"> 
-                                    <form action="chamDiem" method="post" >
+                                    <form action="chamDiem" method="post" id="formValidate">
                                         <tr>
                                             <td><input name="mssv" value="<s:property value="mssv" />" readonly="true" style="width: 70px;margin-right: -15px;border: none;background: white;"/></td>
                                             <td><s:property value="hoTen" /></td>
@@ -89,6 +98,34 @@
                                             </td>
                                         </tr>
                                     </form>
+                                    <script>
+                                        document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                            var form = this;
+                                            e.preventDefault();
+                                            swal({
+                                                title: "CHẤM ĐIỂM",
+                                                text: "Bạn có chắc chắn muốn chấm điểm?",
+                                                icon: "warning",
+                                                buttons: [
+                                                    'KHÔNG, Hãy hủy bỏ!',
+                                                    'CÓ, Tôi chắc chắn!'
+                                                ],
+                                                dangerMode: true,
+                                            }).then(function (isConfirm) {
+                                                if (isConfirm) {
+                                                    swal({
+                                                        title: 'ĐANG XỬ LÝ',
+                                                        text: 'Bạn đã xác nhận, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                        icon: 'success'
+                                                    }).then(function () {
+                                                        form.submit();
+                                                    });
+                                                } else {
+                                                    swal("HỦY BỎ", "Bạn đã hủy bỏ!", "error");
+                                                }
+                                            });
+                                        });
+                                    </script>
                                 </s:iterator>
                             </table>
                             <script>
@@ -108,12 +145,12 @@
                                         td2 = tr[i].getElementsByTagName("td")[2];
                                         td3 = tr[i].getElementsByTagName("td")[3];
                                         td4 = tr[i].getElementsByTagName("td")[4];
-                                        if (td || td1 || td2 || td3 || td4 ) {
+                                        if (td || td1 || td2 || td3 || td4) {
                                             if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td1.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td2.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td3.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-                                                    td4.innerHTML.toUpperCase().indexOf(filter) > -1 
+                                                    td4.innerHTML.toUpperCase().indexOf(filter) > -1
                                                     ) {
                                                 tr[i].style.display = "";
                                             } else {

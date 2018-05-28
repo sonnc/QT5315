@@ -20,24 +20,12 @@
                 return;
             }
         %>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
-            }
-        </style>
         <%    if (session.getAttribute("getInfoNHD") == null) {
         %>
         <s:action name="getInfoNHD" executeResult="true"/>
         <%
             }
         %>
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
     </head>
     <%
         if (session.getAttribute("getInfoNHD") != null) {
@@ -53,7 +41,7 @@
         <section id="content">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 col-md-8">
                         <%                                if (session.getAttribute("message") != null) {
                         %>
                         <script type="text/javascript">
@@ -63,32 +51,60 @@
                                 session.removeAttribute("message");
                             }
                         %>
+                        
                         <form role="form" id="formValidate" action="updateInfoNHD" method="post" enctype = "multipart/form-data"> 
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                 <p style="margin: 0px">CẬP NHẬT THÔNG TIN CÁ NHÂN</p>
                             </div>
                             <div class="row">    
-                                <div class="col-lg-8">
+                                <div class="col-lg-8 col-md-8">
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="nhd.hoTen" readonly="true" value="%{nhd.hoTen}" placeholder="Họ và tên" required="true"/>
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="nhd.chucvu"  value="%{nhd.chucvu}" placeholder="Lớp" required="true"/>
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="nhd.dienThoai"   value="%{nhd.dienThoai}" placeholder="Khóa" required="true"/>
                                     <s:textfield cssStyle="margin-bottom: 15px;height: 45px;" cssClass="form-control" name="nhd.diaChi"  value="%{nhd.diaChi}" placeholder="Khoa/ Viện" required="true"/>
 
                                 </div>
-                                <div class="col-lg-4"></div>
+                                <div class="col-lg-4 col-md-4"></div>
                             </div> 
                             <div class="row">    
-                                <div class="col-lg-12">
+                                <div class="col-lg-12 col-md-12">
                                     <s:textarea cssStyle="margin-bottom: 15px;height: 150px;" cssClass="form-control" name="nhd.linhVucHoatDong" value="%{nhd.linhVucHoatDong}"></s:textarea>
                                     </div>
-                                    <div class="col-lg-12" style="margin-top: 20px">
+                                    <div class="col-lg-12 col-md-12" style="margin-top: 20px">
                                     <s:textarea cssStyle="margin-bottom: 15px;height: 150px;" cssClass="form-control" name="nhd.duAn" value="%{nhd.duAn}"></s:textarea>
                                     </div>
                                 </div>
                                 <button style="float: right;" class="btn btn-success">CẬP NHẬT THÔNG TIN</button>
                             </form>
-
+<script>
+                            document.querySelector('#formValidate').addEventListener('submit', function (e) {
+                                var form = this;
+                                e.preventDefault();
+                                swal({
+                                    title: "CẬP NHẬT THÔNG TIN",
+                                    text: "Bạn có chắc chắn muốn cập nhật thông tin cá nhân hay không?",
+                                    icon: "warning",
+                                    buttons: [
+                                        'KHÔNG, Hãy hủy bỏ!',
+                                        'CÓ, Tôi chắc chắn!'
+                                    ],
+                                    dangerMode: true,
+                                }).then(function (isConfirm) {
+                                    if (isConfirm) {
+                                        swal({
+                                            title: 'ĐANG XỬ LÝ',
+                                            text: 'Bạn đã xác nhận cập nhật thông tin cá nhân, xin vui lòng đợi phản hồi từ hệ thống!',
+                                            icon: 'success'
+                                        }).then(function () {
+                                            form.submit();
+                                        });
+                                    } else {
+                                        swal("HỦY BỎ", "Bạn đã hủy bỏ hành động cập nhật !", "error");
+                                    }
+                                });
+                            });
+                        </script>
                             <div class="clear"></div>
 
                         </div>  

@@ -41,19 +41,19 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
                                 <p style="margin: 0px">DANH SÁCH CÔNG TY</p>
                             </div>
                             <div>
                                 <div class="row">
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-6 col-md-6">
                                         <a href="<%session.getAttribute("httpURL");%>pages/gvhd/danhsachcongty.jsp"><button class="btn btn-info">All</button></a>
                                         <a href="<%session.getAttribute("httpURL");%>pages/gvhd/duyetCT.jsp"><button class="btn btn-danger">Chưa duyệt</button></a>
                                         <a href="<%session.getAttribute("httpURL");%>pages/gvhd/duyetCTED.jsp"><button class="btn btn-primary">Đã duyệt</button></a>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-6 col-md-6">
                                         <input  class="form-control" id="myInput" onkeyup="myFunction() style ="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
                                     </div>
                                 </div>
@@ -74,8 +74,8 @@
                                 <s:iterator value="lstCongTy">
                                     <tr>
                                         <td><a href="<s:property value="maCongTy"/>"><img style="height: 50px; width: 50px; margin-bottom: 0px" src="<s:property value="logo"/>"/></a></td>
-                                        <td><a href="<s:property value="maCongTy"/>"><s:property value="tenCongTy"/></a></td>
-                                        <td><a href="<s:property value="maDaiDien"/>"><s:property value="daiDien"/></a></td>
+                                        <td><a href="chiTietCongTy?maCongTy=<s:property value="maCongTy"/>"><s:property value="tenCongTy"/></a></td>
+                                        <td><s:property value="daiDien"/></td>
                                         <td><s:property value="diaChi"/></td>
                                         <td><s:property value="email"/></td>
                                         <td><s:property value="dienThoai"/></td>

@@ -42,7 +42,7 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
                                 <p style="margin: 0px">BÁO CÁO SINH VIÊN</p>

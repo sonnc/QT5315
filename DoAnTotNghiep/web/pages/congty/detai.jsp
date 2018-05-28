@@ -18,25 +18,12 @@
                 return;
             }
         %>
-        <style>
-            .error{
-                color: red;
-                text-orientation: initial;
-            }
-        </style>
         <%            if (session.getAttribute("GetAllDeTaiByCongTy") == null) {
 
         %>
         <s:action name="GetAllDeTaiByCongTy" executeResult="true"/>
         <%            }
         %>
-
-        <script>
-            setTimeout(function () {
-                $('body').removeClass('preloading');
-                $('#preload').delay(1000).fadeOut('fast');
-            }, 1000);
-        </script>
     </head>
     <%
         if (session.getAttribute("GetAllDeTaiByCongTy") != null) {
@@ -52,7 +39,7 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <%                                if (session.getAttribute("messageDeleteDetai") != null) {
                             %>
                             <script type="text/javascript">
@@ -77,7 +64,7 @@
                             </div>
                             <div>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
                                         <script>
                                             $(document).ready(function () {
                                                 $(".btn-open-popup").click(function (even) {
@@ -122,7 +109,7 @@
                                             });
                                         </script>
                                         <div class="row" style="margin: 0px">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-12 col-md-12">
                                                 <a class="btn-open-popup" href=""><input class="btn btn-success" value="Đăng đề tài"/></a>
                                                 <!--Phần hiển thị popup-->
                                                 <!--popup content-->
@@ -140,16 +127,16 @@
                                                                         <p style="margin: 0px">ĐĂNG ĐỀ TÀI</p>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <div class="col-lg-12">
+                                                                        <div class="col-lg-12 col-md-12">
                                                                             <input style="margin-bottom: 15px;height: 45px;" class="form-control" name="deTai.tenDeTai" placeholder="Tên đề tài" required="true"/>
                                                                             <div class="row">
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-lg-3 col-md-3">
                                                                                     <input style="height: 45px;" class="form-control" name="deTai.soLuong" placeholder="Số lượng" required="true"/>
                                                                                 </div>
-                                                                                <div class="col-lg-3">
+                                                                                <div class="col-lg-3 col-md-3">
                                                                                     <input style="height: 45px;" class="form-control" name="hanDangKy" placeholder="Hạn đăng ký (dd-mm-yyyy)" required="true"/>
                                                                                 </div>
-                                                                                <div class="col-lg-6">
+                                                                                <div class="col-lg-6 col-md-6">
                                                                                     <select style="margin-bottom: 15px;height: 45px;" name="deTai.maGvhd" class="form-control" required="required"> 
                                                                                         <option value="">Chọn người hướng dẫn đề tài</option>
                                                                                         <s:iterator value="lstNguoiHuongDans">
@@ -210,7 +197,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 col-md-6">
                                         <input class="form-control"  type="text" id="myInput" onkeyup="myFunction()" style ="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm đề tài, người hướng dẫn, trạng thái,..." type="text">
                                     </div>
                                 </div>
@@ -218,7 +205,7 @@
                             <style>
                                 td,th{padding: 5px};
                             </style>
-                            <table id="myTable" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
+                            <table id="results" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                 <tr>
                                     <th><strong> Mã DT </strong></th>
                                     <th><strong> Tên đề tài </strong></th>
@@ -273,21 +260,25 @@
                                 function myFunction() {
                                     // Declare variables 
                                     var input, filter, table, tr, td, i;
-                                    var td1, td2;
+                                    var td1, td2, td3, td4;
                                     input = document.getElementById("myInput");
                                     filter = input.value.toUpperCase();
-                                    table = document.getElementById("myTable");
+                                    table = document.getElementById("results");
                                     tr = table.getElementsByTagName("tr");
 
                                     // Loop through all table rows, and hide those who don't match the search query
                                     for (i = 0; i < tr.length; i++) {
+                                        td4 = tr[i].getElementsByTagName("td")[0];
                                         td = tr[i].getElementsByTagName("td")[1];
                                         td1 = tr[i].getElementsByTagName("td")[2];
-                                        td2 = tr[i].getElementsByTagName("td")[4];
-                                        if (td || td1) {
+                                        td2 = tr[i].getElementsByTagName("td")[3];
+                                        td3 = tr[i].getElementsByTagName("td")[4];
+                                        if (td || td1 || td2 || td3) {
                                             if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
                                                     td1.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-                                                    td2.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                                    td2.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td3.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td4.innerHTML.toUpperCase().indexOf(filter) > -1) {
                                                 tr[i].style.display = "";
                                             } else {
                                                 tr[i].style.display = "none";
@@ -296,12 +287,13 @@
                                     }
                                 }
                             </script>
-                            <div id="pagination">
-                                <span class="all">Page 1 of 3</span>
-                                <span class="current">1</span>
-                                <a href="#" class="inactive">2</a>
-                                <a href="#" class="inactive">3</a>
-                            </div>
+                            <div id="pageNavPosition" style="float: right"></div>
+                            <script type="text/javascript">
+                                var pager = new Pager('results', 15);
+                                pager.init();
+                                pager.showPageNav('pager', 'pageNavPosition');
+                                pager.showPage(1);
+                            </script>
                             <div class="clear"></div>
                         </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>

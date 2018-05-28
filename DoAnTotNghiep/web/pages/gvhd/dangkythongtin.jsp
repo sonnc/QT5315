@@ -122,8 +122,8 @@
                                         var form = this;
                                         e.preventDefault();
                                         swal({
-                                            title: "CẬP NHẬT THÔNG TIN",
-                                            text: "Bạn có chắc chắn muốn cập nhật thông tin cá nhân không?",
+                                            title: "ĐĂNG KÝ THÔNG TIN",
+                                            text: "Bạn có chắc chắn muốn đăng ký thông tin cá nhân không?",
                                             icon: "warning",
                                             buttons: [
                                                 'KHÔNG, Hãy hủy bỏ!',
@@ -134,13 +134,13 @@
                                             if (isConfirm) {
                                                 swal({
                                                     title: 'ĐANG XỬ LÝ',
-                                                    text: 'Bạn đã xác nhận cập nhật thông tin các nhân, xin vui lòng đợi phản hồi từ hệ thống!',
+                                                    text: 'Bạn đã xác nhận đăng ký thông tin các nhân, xin vui lòng đợi phản hồi từ hệ thống!',
                                                     icon: 'success'
                                                 }).then(function () {
                                                     form.submit();
                                                 });
                                             } else {
-                                                swal("HỦY BỎ", "Bạn đã hủy bỏ việc cập nhật thông tin cá nhân.", "error");
+                                                swal("HỦY BỎ", "Bạn đã hủy bỏ việc đăng ký thông tin cá nhân.", "error");
                                             }
                                         });
                                     });

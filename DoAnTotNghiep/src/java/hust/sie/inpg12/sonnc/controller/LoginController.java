@@ -239,6 +239,22 @@ public class LoginController {
         }
         return lst;
     }
+    
+    public void logs(Logs logs) {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(logs);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
 
 //    public List<DeTai> getTest() {
 //        List<DeTai> list = new ArrayList<>();

@@ -1,6 +1,6 @@
 <%-- 
     Document   : chitietdetai
-    Created on : Mar 20, 2018, 7:26:22 PM
+    Created on : May 28, 2018, 11:07:35 AM
     Author     : sonnc
 --%>
 
@@ -17,7 +17,6 @@
 
             }
         %>
-
     </head>
 
     <body  class="preloading">

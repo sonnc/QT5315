@@ -44,30 +44,31 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 25px">
                                 <p style="margin: 0px">DUYỆT ĐỀ TÀI CÔNG TY</p>
                             </div>
                             <div>
                                 <div class="row">
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-6 col-md-6">
                                         <a href="<%session.getAttribute("httpURL");%>pages/gvhd/detaicongty.jsp"><button class="btn btn-info">All</button></a>
                                         <a href="<%session.getAttribute("httpURL");%>pages/gvhd/duyetDTCT.jsp"><button class="btn btn-danger">Chưa duyệt</button></a>
                                         <a href="<%session.getAttribute("httpURL");%>pages/gvhd/duyetDTCTED.jsp"><button class="btn btn-primary">Đã duyệt</button></a>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <input class="form-control" id="s" style="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
+                                    <div class="col-lg-6 col-md-6">
+                                        <input class="form-control" id="myInput" onkeyup="myFunction()" style="float: right; width: 100%; margin-bottom: 15px" placeholder="Tìm kiếm.." type="text">
                                     </div>
                                 </div>
                             </div>
                             <style>
-                                td{padding: 5px; font-size: 13px}
+                                td,th{padding: 5px; font-size: 13px}
+                                th{text-align: center}
                             </style>
-                            <table border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
+                            <table id="results" border="1" style="border: 1px solid #0a6d9b; padding: 5px 5px; width: 100%">
                                 <tr>
-                                    <td><strong> ĐỀ TÀI CÔNG TY</strong></td>
-                                    <td><strong> TRẠNG THÁI </strong></td>
+                                    <th><strong> ĐỀ TÀI CÔNG TY</strong></th>
+                                    <th><strong> TRẠNG THÁI </strong></th>
                                 </tr>
                                 <s:iterator value="lstDTCTNHD">
                                     <script>
@@ -116,10 +117,10 @@
                                     <tr>
                                         <td>
                                             <div class="row" style="margin: 0px">
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-2 col-md-2">
                                                     <img style="height: 100px; width: 100px; margin: 0px" src="<s:property value="logo"/>"/>
                                                 </div>
-                                                <div class="col-lg-10">
+                                                <div class="col-lg-10 col-md-10">
                                                     <p style="margin: 0 0 0 10px">Đề tài: <a class="btn-open-popup<s:property value="maDeTai"/>"  style="transition: 0.3s;" href="#">
                                                             <s:property value="tenDeTai"/></a> </p>
                                                     <p style="margin: 0 0 0 10px">Công ty: <s:property value="tenCongTy"/></p>
@@ -135,10 +136,10 @@
                                                         <div id="popup-content<s:property value="maDeTai"/>" style="width: 100%; height: 100%; min-height: 400px; min-width: 500px;">
                                                             <div class="container" style="width: 100%; min-height: 400px; background: #fff; border-radius: 3px;box-shadow: 0 0 1px #ccc; margin-top: 20px;">
                                                                 <div class="row">
-                                                                    <div class="col-lg-2">
+                                                                    <div class="col-lg-2 col-md-2">
                                                                         <img style="height: 100px; width: 100px; margin: 0px" src="<s:property value="logo"/>"/>
                                                                     </div>
-                                                                    <div class="col-lg-10">
+                                                                    <div class="col-lg-10 col-md-10">
                                                                         <p><strong>Công ty:</strong> <s:property value="tenCongTy"/></p>
                                                                         <p><strong>Đề tài:</strong> <s:property value="tenDeTai"/></p>
                                                                         <p><strong>Nội dung:</strong> <s:property value="noiDung"/></p>
@@ -166,12 +167,40 @@
                                     </tr>
                                 </s:iterator>
                             </table>
-                            <div id="pagination">
-                                <span class="all">Page 1 of 3</span>
-                                <span class="current">1</span>
-                                <a href="#" class="inactive">2</a>
-                                <a href="#" class="inactive">3</a>
-                            </div>
+                            <script>
+                                function myFunction() {
+                                    // Declare variables 
+                                    var input, filter, table, tr, td, i;
+                                    var td1;
+                                    input = document.getElementById("myInput");
+                                    filter = input.value.toUpperCase();
+                                    table = document.getElementById("results");
+                                    tr = table.getElementsByTagName("tr");
+
+                                    // Loop through all table rows, and hide those who don't match the search query
+                                    for (i = 0; i < tr.length; i++) {
+                                        td = tr[i].getElementsByTagName("td")[0];
+                                        td1 = tr[i].getElementsByTagName("td")[1];;
+                                        ;
+                                        if (td || td1 ) {
+                                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
+                                                    td1.innerHTML.toUpperCase().indexOf(filter) > -1 
+                                                    ) {
+                                                tr[i].style.display = "";
+                                            } else {
+                                                tr[i].style.display = "none";
+                                            }
+                                        }
+                                    }
+                                }
+                            </script>
+                            <div id="pageNavPosition" style="float: right"></div>
+                            <script type="text/javascript">
+                                var pager = new Pager('results', 10);
+                                pager.init();
+                                pager.showPageNav('pager', 'pageNavPosition');
+                                pager.showPage(1);
+                            </script>
                             <div class="clear"></div>
                         </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>

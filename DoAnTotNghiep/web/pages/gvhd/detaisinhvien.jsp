@@ -78,8 +78,8 @@
                                     <tr>
                                         <td><s:property value="mssv"/></td>
                                         <td><s:property value="hoTen"/></td>
-                                        <td><a href=""><s:property value="deTai"/></a></td>
-                                        <td><a href=""><s:property value="congTy"/></a></td>
+                                        <td><a href="getDeTaiInfo?maDeTai=<s:property value="maDeTai"/>"><s:property value="deTai"/></a></td>
+                                        <td><a href="chiTietCongTy?maCongTy=<s:property value="maCongTy"/>"><s:property value="congTy"/></a></td>
                                         <td><a href=""><s:property value="nguoiHuongDan"/></a></td>
                                         <td><s:property value="soKhop"/>%</td>
                                         <td><s:property value="dotThucTap"/></td>

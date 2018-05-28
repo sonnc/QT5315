@@ -11,11 +11,13 @@ import com.opensymphony.xwork2.ActionSupport;
 import hust.sie.inpg12.sonnc.controller.NhdController;
 import hust.sie.inpg12.sonnc.entities.CongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
+import hust.sie.inpg12.sonnc.entities.Logs;
 import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
 import hust.sie.inpg12.sonnc.entities.SinhVienFile;
 import hust.sie.inpg12.sonnc.other.CongTyvaDaiDienCongTy;
 import hust.sie.inpg12.sonnc.other.DanhSachSinhVien;
 import java.io.File;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -312,11 +314,10 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
             File fileToCreate = new File(path, this.myFileFileName);
             FileUtils.copyFile(this.myFile, fileToCreate);
             link = "file/sinhvien/" + myFileFileName;
-            System.out.println(link);
-            System.out.println(path);
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
+             Logs((String)session.get("email"), "Lỗi đường dẫn khi upload file đánh giá cho sinh viên: "+request.getParameter("mssv")+" lên hệ thống thất bại");
         }
 
         SinhVienFile svf = new SinhVienFile();
@@ -329,8 +330,10 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         svf.setTenFile("ĐÁNH GIÁ SINH VIÊN: " + mssv + "");
         svf.setLink(link);
         if (nhdController.saveFileSV(svf)) {
+            Logs((String)session.get("email"), "Đăng file đánh giá cho sinh viên: "+request.getParameter("mssv")+" thành công");
             session.put("message", "Quý vị đã đánh giá thành công cho sinh viên: " + mssv + ". Xin cảm ơn quý vị.!");
         } else {
+            Logs((String)session.get("email"), "Đăng file đánh giá cho sinh viên: "+request.getParameter("mssv")+" thất bại");
             session.put("message", "Đã có lỗi xảy ra khi đánh giá cho sinh viên: " + mssv + ". Xin quý vị thử lại sau!");
         }
         return SUCCESS;
@@ -344,11 +347,11 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
             File fileToCreate = new File(path, this.myFileFileName);
             FileUtils.copyFile(this.myFile, fileToCreate);
             link = "file/sinhvien/" + myFileFileName;
-            System.out.println(link);
-            System.out.println(path);
+            
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
+            Logs((String)session.get("email"), "Lỗi đường dẫn khi upload file chấm công cho sinh viên: "+request.getParameter("mssv")+" lên hệ thống thất bại");
         }
 
         SinhVienFile svf = new SinhVienFile();
@@ -361,8 +364,10 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         svf.setTenFile("CHẤM CÔNG SINH VIÊN: " + mssv + "");
         svf.setLink(link);
         if (nhdController.saveFileSV(svf)) {
+            Logs((String)session.get("email"), "Đăng file chấm công cho sinh viên: "+request.getParameter("mssv")+" thành công");
             session.put("message", "Quý vị đã GỬI FILE CHẤM CÔNG thành công cho sinh viên: " + mssv + ". Xin cảm ơn quý vị.!");
         } else {
+            Logs((String)session.get("email"), "Đăng file chấm công cho sinh viên: "+request.getParameter("mssv")+" thất bại");
             session.put("message", "Đã có lỗi xảy ra khi GỬI FILE CHẤM CÔNG cho sinh viên: " + mssv + ". Xin quý vị thử lại sau!");
         }
         return SUCCESS;
@@ -378,13 +383,28 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         this.nhd.setMaGvhd(nguoiHuongDan.getMaGvhd());
         this.nhd.setHoTen(nguoiHuongDan.getHoTen());
         if (nhdController.updateInFo(nhd)) {
+            Logs((String)session.get("email"), "Cập nhật thông tin cá nhân thành công");
             session.put("message", "Cập nhật thông tin cá nhân thành công !");
         } else {
+            Logs((String)session.get("email"), "Cập nhật thông tin cá nhân thất bại");
             session.put("message", " cập nhật thông tin thất bại. Đã có lỗi xáy ra, vui lòng thử đăng nhập lại và thực hiện sau hoặc liên hệ với quản trị viên.");
         }
         return SUCCESS;
     }
 
+    public void Logs(String email, String noidung) {
+        Logs logs = new Logs();
+        Date d = new Date();
+        java.sql.Date date = new java.sql.Date(d.getTime());
+        Time time = new Time(d.getTime());
+        logs.setNgayThang(date);
+        logs.setNguoiDung(email);
+        logs.setNoiDung(noidung);
+        logs.setThoiGian(time);
+        nhdController.logs(logs);
+    }
+
+    
     @Override
     public void setSession(Map<String, Object> map) {
         this.session = map;

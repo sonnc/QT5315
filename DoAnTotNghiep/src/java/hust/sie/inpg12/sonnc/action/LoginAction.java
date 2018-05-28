@@ -14,11 +14,14 @@ import hust.sie.inpg12.sonnc.entities.DeTai;
 import hust.sie.inpg12.sonnc.entities.FileAll;
 import hust.sie.inpg12.sonnc.entities.GiangVienHuongDan;
 import hust.sie.inpg12.sonnc.entities.Login;
+import hust.sie.inpg12.sonnc.entities.Logs;
 import hust.sie.inpg12.sonnc.entities.NguoiHuongDan;
 import hust.sie.inpg12.sonnc.entities.SinhVien;
 import hust.sie.inpg12.sonnc.entities.SinhVienThucTap;
 import hust.sie.inpg12.sonnc.entities.ThongBao;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -107,7 +110,6 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         lstLogin = loginController.login(email, password);
-
         if (lstLogin.size() == 1) {
             if (lstLogin.get(0).getStatus().equals("LOCKED")) {
                 addFieldError("email", "Tài khoản này đã bị đóng.");
@@ -170,9 +172,11 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
                 }
             }
         } else {
+            Logs((String)session.get("email"), "Đăng nhập vào hệ thống không thành công.");
             addFieldError("email", "Tài khoản hoặc mật khẩu không đúng !");
             return INPUT;
         }
+         Logs((String)session.get("email"), "Đăng nhập vào hệ thống thành công.");
         return SUCCESS;
     }
 
@@ -205,10 +209,12 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         login.setRule(role);
         login.setStatus("ACTIVE");
         if (loginController.SaveRegister(login)) {
+             Logs((String)session.get("email"), "Đăng ký tài khoản thành công.");
             addFieldError("email", "Đăng ký tài khoản thành công. Vui lòng đăng nhập lại.");
             session.put("login", login);
             return SUCCESS;
         }
+         Logs((String)session.get("email"), "Đăng ký tài khoản thất bại");
         addFieldError("email", "Đăng ký tài khoản thất bại. Vui lòng kiểm tra lại thông tin.");
         session.put("login", login);
         return INPUT;
@@ -219,6 +225,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
      * cho mọi đối tượng
      */
     public String logout() {
+         Logs((String)session.get("email"), "Đăng xuất ra khỏi hệ thống");
         session.clear();
         return SUCCESS;
     }
@@ -241,7 +248,17 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
         session.put("GetDetailThongBao", "GetDetailThongBao");
         return SUCCESS;
     }
-
+ public void Logs(String email, String noidung) {
+        Logs logs = new Logs();
+        Date d = new Date();
+        java.sql.Date date = new java.sql.Date(d.getTime());
+        Time time = new Time(d.getTime());
+        logs.setNgayThang(date);
+        logs.setNguoiDung(email);
+        logs.setNoiDung(noidung);
+        logs.setThoiGian(time);
+        loginController.logs(logs);
+    }
     @Override
     public void setSession(Map<String, Object> map) {
         this.session = map;

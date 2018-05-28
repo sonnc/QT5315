@@ -42,7 +42,7 @@
             <section id="content">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 col-md-8">
                             <div style="background-color: #5bc0de; border-color: #46b8da; color: white; 
                                  padding: 6px 12px; font-size: 20px; border-radius: 5px; margin-bottom: 15px">
                                 <p style="margin: 0px">QUẢN LÝ TÀI LIỆU</p>
@@ -68,10 +68,10 @@
                                         <option value="2">Hạn chế</option>
                                     </select>
                                     <div class="row">
-                                        <div class="col-lg-8"> 
+                                        <div class="col-lg-8 col-md-8"> 
                                             <s:textfield name="myFile" type="file" accept="file/*" required="required"/>
                                         </div>
-                                        <div class="col-lg-4" >
+                                        <div class="col-lg-4 col-md4" >
                                             <script>
                                                 document.querySelector('#formValidate').addEventListener('submit', function (e) {
                                                     var form = this;
@@ -116,10 +116,10 @@
                                     <div class="alert alert-success">
                                         <s:iterator value="lstFileAll">
                                             <div class="row" style="margin-bottom: 0px">
-                                                <div class="col-lg-11">
+                                                <div class="col-lg-11 col-md-11">
                                                     <p><s:property value="tenFile"/></p>
                                                 </div>
-                                                <div class="col-lg-1"> 
+                                                <div class="col-lg-1 col-md-1"> 
                                                     <a href="<s:property value="link"/>"><i class="glyphicon glyphicon-download-alt"></i></a>
                                                     <a  id="tagA<s:property value="id"/>" href="deleteTaiLieuGVHD?maTaiLieu=<s:property value="id"/>"><i class="glyphicon glyphicon-trash"></i></a>
                                                     <script>

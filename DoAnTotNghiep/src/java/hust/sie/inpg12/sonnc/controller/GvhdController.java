@@ -43,10 +43,10 @@ public class GvhdController {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            results = (List<Object[]>) session.createSQLQuery("select a.mssv, a.ho_ten, a.lop, a.khoa, a.khoa_vien, b.dot_thuc_tap, b.trang_thai \n"
-                    + "from sinh_vien a, sinh_vien_thuc_tap b\n"
-                    + "where a.mssv = b.mssv\n"
-                    + "order by b.dot_thuc_tap desc").list();
+            results = (List<Object[]>) session.createSQLQuery("select a.mssv, a.ho_ten, a.lop, a.khoa, a.khoa_vien, \n"
+                    + "b.dot_thuc_tap, ifnull(b.trang_thai, true) as trang_thai\n"
+                    + "from sinh_vien a left join sinh_vien_thuc_tap b on a.mssv = b.mssv\n"
+                    + "order by b.dot_thuc_tap desc;").list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -318,7 +318,7 @@ public class GvhdController {
         }
         return r;
     }
-    
+
     public boolean CloseThucTapSinhVien(int mssv, int dotThucTap) {
         boolean r = false;
         try {
@@ -953,6 +953,7 @@ public class GvhdController {
         }
         return results;
     }
+
     public void logs(Logs logs) {
         try {
             session = HibernateUtil.getSessionFactory().openSession();

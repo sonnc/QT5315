@@ -235,7 +235,11 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
                 d.setLop((String) result[2]);
                 d.setKhoa((int) result[3]);
                 d.setKhoaVien((String) result[4]);
+                if (result[5] == null) {
+                    d.setDotThucTap(0);
+                }else{
                 d.setDotThucTap((int) result[5]);
+                }
                 if ((boolean) result[6]) {
                     d.setTrangThai("Hoạt động");
                 } else {

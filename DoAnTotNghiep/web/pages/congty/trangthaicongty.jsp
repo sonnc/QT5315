@@ -34,11 +34,12 @@
                             <script type="text/javascript">
                                 swal("Thông báo", "<%=session.getAttribute("CongtyStatus")%>", "info");
                             </script>
+                            
+                            <p style="color: red; font-size: 17px;"><%=session.getAttribute("CongtyStatus")%></p>
                             <%
                                     session.removeAttribute("CongtyStatus");
                                 }
                             %>
-                            <p style="color: red; font-size: 17px;"><%=session.getAttribute("CongtyStatus")%></p>
                             <%
                                 session.removeAttribute("email");
                             %>

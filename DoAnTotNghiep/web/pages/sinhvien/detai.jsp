@@ -49,44 +49,50 @@
                                 session.removeAttribute("messageDangKyDeTai");
                             %>
 
-                            <s:iterator value="lstDeTai">
-                                <div class="row" style="margin: 0px">
-                                    <div class="col-lg-2 col-md-2">
-                                        <img src="<s:property value="logo"/>" alt="" class="img-responsive" style="height: 100%; width: 100%" />
-                                    </div>
-                                    <div class="col-lg-8 col-md-8">
-                                        <article style="margin-bottom: 0px; padding-bottom: 0px">
-                                            <div class="post-image" style="margin: 0px">
-                                                <div class="post-heading">
-                                                    <p style="margin: 0;"><a href="<%session.getAttribute("URL");%>getDeTaiInfo?maDeTai=<s:property value="maDeTai"/>"><strong><s:property value="tenDeTai"/></strong></a></p>
+                            <table id="results">
+                                <tr>
+                                    <th></th>
+                                </tr>
+                                <s:iterator value="lstDeTai">
+                                    <tr>
+                                        <td>
+                                            <div class="row" style="margin: 0px">
+                                                <div class="col-lg-2 col-md-2">
+                                                    <img src="<s:property value="logo"/>" alt="" class="img-responsive" style="height: 100%; width: 100%" />
                                                 </div>
-                                            </div>
-                                            <style>
-                                                .max-lines {
-                                                    text-overflow: ellipsis;
-                                                    word-wrap: break-word;
-                                                    overflow: hidden;
-                                                    max-height: 5.6em;
-                                                    line-height: 1.8em;
-                                                }
-                                            </style>
-                                            <p style="margin: 0;"><strong>Công ty: </strong><s:property value="tenCongTy"/></p>
-                                            <div class="max-lines" style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung" escapeHtml="false"/></div>
-                                            <div class="max-lines" style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh" escapeHtml="false"/></div>
-                                            <div class="max-lines" style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac" escapeHtml="false"/></div>
-                                            <div style="margin-bottom: 20px">
-                                                <ul class="meta-post">
-                                                    <li style="padding-right: 0px"><i class="fa fa-calendar"></i><a>Ngày đăng: <s:property value="ngayDang"/></a></li>
-                                                    <li style="padding-right: 0px"><i class="fa fa-calendar-o"></i><a>Hạn đăng ký: <s:property value="hanDangKy"/></a></li>
-                                                    <li style="padding-right: 0px"><i class="fa fa-users"></i><a>Số lượng: <s:property value="soLuong"/></a></li>
-                                                </ul>
-                                            </div>
-                                        </article>
-                                    </div> 
-                                    <div class="col-lg-2 col-md-2">
-                                        <p><strong style="color: blue"><s:property value="soLuongCon"/></strong>/<strong style="color: red"><s:property value="soLuong"/></strong></p>
-                                        <a class="btn btn-info" id="tagA<s:property value="maDeTai"/>" href="dangkydetai?maDeTai=<s:property value="maDeTai"/>"> ĐĂNG KÝ</a>
-                                        <script>
+                                                <div class="col-lg-8 col-md-8">
+                                                    <article style="margin-bottom: 0px; padding-bottom: 0px">
+                                                        <div class="post-image" style="margin: 0px">
+                                                            <div class="post-heading">
+                                                                <p style="margin: 0;"><a href="<%session.getAttribute("URL");%>getDeTaiInfo?maDeTai=<s:property value="maDeTai"/>"><strong><s:property value="tenDeTai"/></strong></a></p>
+                                                            </div>
+                                                        </div>
+                                                        <style>
+                                                            .max-lines {
+                                                                text-overflow: ellipsis;
+                                                                word-wrap: break-word;
+                                                                overflow: hidden;
+                                                                max-height: 5.6em;
+                                                                line-height: 1.8em;
+                                                            }
+                                                        </style>
+                                                        <p style="margin: 0;"><strong>Công ty: </strong><s:property value="tenCongTy"/></p>
+                                                        <div class="max-lines" style="margin: 0;"><strong>Nội dung: </strong><s:property value="noiDung" escapeHtml="false"/></div>
+                                                        <div class="max-lines" style="margin: 0;"><strong>Yêu cầu lập trình: </strong><s:property value="yeuCauLapTrinh" escapeHtml="false"/></div>
+                                                        <div class="max-lines" style="margin: 0;"><strong>Yêu cầu khác: </strong><s:property value="yeuCauKhac" escapeHtml="false"/></div>
+                                                        <div style="margin-bottom: 20px">
+                                                            <ul class="meta-post">
+                                                                <li style="padding-right: 0px"><i class="fa fa-calendar"></i><a>Ngày đăng: <s:property value="ngayDang"/></a></li>
+                                                                <li style="padding-right: 0px"><i class="fa fa-calendar-o"></i><a>Hạn đăng ký: <s:property value="hanDangKy"/></a></li>
+                                                                <li style="padding-right: 0px"><i class="fa fa-users"></i><a>Số lượng: <s:property value="soLuong"/></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </article>
+                                                </div> 
+                                                <div class="col-lg-2 col-md-2">
+                                                    <p><strong style="color: blue"><s:property value="soLuongCon"/></strong>/<strong style="color: red"><s:property value="soLuong"/></strong></p>
+                                                    <a class="btn btn-info" id="tagA<s:property value="maDeTai"/>" href="dangkydetai?maDeTai=<s:property value="maDeTai"/>"> ĐĂNG KÝ</a>
+                                                    <script>
                                             var action = document.getElementById("tagA<s:property value="maDeTai"/>");
                                             action.addEventListener('click', function (e) {
                                                 var form = this;
@@ -114,16 +120,20 @@
                                                     }
                                                 });
                                             });
-                                        </script>
-                                    </div>
-                                </div>
-                            </s:iterator>
-                            <div id="pagination">
-                                <span class="all">Page 1 of 3</span>
-                                <span class="current">1</span>
-                                <a href="#" class="inactive">2</a>
-                                <a href="#" class="inactive">3</a>
-                            </div>
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </s:iterator>
+                            </table>
+                            <div id="pageNavPosition" style="float: right"></div>
+                            <script type="text/javascript">
+                                var pager = new Pager('results', 5);
+                                pager.init();
+                                pager.showPageNav('pager', 'pageNavPosition');
+                                pager.showPage(1);
+                            </script>
                             <div class="clear"></div>
                         </div>
                         <%@include file="../../mains/RightSidebar.jsp" %>

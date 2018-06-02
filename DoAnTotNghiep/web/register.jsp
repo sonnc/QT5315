@@ -43,7 +43,13 @@
                         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
                             <form role="form" action="registerAcount" method="post" id="formValidate" class="register-form"  >
                                 <h2>ĐĂNG KÝ <small>tài khoản.</small></h2>
-                                   <hr class="colorgraph">
+                                <hr class="colorgraph">
+                                <script>
+                                    swal("LƯU Ý ĐĂNG KÝ TÀI KHOẢN", "Đối với sinh viên và giảng viên trường, đăng ký tài khoản Gmail của nhà trường\n\
+Sinh viên: mssv@student.hust.edu.vn\n\
+Giảng viên: @soict.hust.edu.vn/ @hust.edu.vn\n\
+Các trường hợp khác, đăng ký theo tài khoản mail bình thường.", "warning");
+                                </script>
                                 <div class="form-group">
                                     <s:textfield type="email" name="email" cssClass="form-control input-lg" placeholder="Tài khoản" tabindex="4" required="true"></s:textfield>
                                     </div>

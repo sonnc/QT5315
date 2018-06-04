@@ -8,6 +8,9 @@ package hust.sie.inpg12.sonnc.action;
 import static com.opensymphony.xwork2.Action.ERROR;
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import static hust.sie.inpg12.sonnc.apachepoi.TestRead.getFile;
+import static hust.sie.inpg12.sonnc.apachepoi.TestRead.replaceDocument;
+import static hust.sie.inpg12.sonnc.apachepoi.TestRead.saveDocxFile;
 import hust.sie.inpg12.sonnc.controller.NhdController;
 import hust.sie.inpg12.sonnc.entities.CongTy;
 import hust.sie.inpg12.sonnc.entities.DeTai;
@@ -17,13 +20,18 @@ import hust.sie.inpg12.sonnc.entities.SinhVienFile;
 import hust.sie.inpg12.sonnc.other.CongTyvaDaiDienCongTy;
 import hust.sie.inpg12.sonnc.other.DanhSachSinhVien;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -317,7 +325,7 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
-             Logs((String)session.get("email"), "Lỗi đường dẫn khi upload file đánh giá cho sinh viên: "+request.getParameter("mssv")+" lên hệ thống thất bại");
+            Logs((String) session.get("email"), "Lỗi đường dẫn khi upload file đánh giá cho sinh viên: " + request.getParameter("mssv") + " lên hệ thống thất bại");
         }
 
         SinhVienFile svf = new SinhVienFile();
@@ -330,10 +338,10 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         svf.setTenFile("ĐÁNH GIÁ SINH VIÊN: " + mssv + "");
         svf.setLink(link);
         if (nhdController.saveFileSV(svf)) {
-            Logs((String)session.get("email"), "Đăng file đánh giá cho sinh viên: "+request.getParameter("mssv")+" thành công");
+            Logs((String) session.get("email"), "Đăng file đánh giá cho sinh viên: " + request.getParameter("mssv") + " thành công");
             session.put("message", "Quý vị đã đánh giá thành công cho sinh viên: " + mssv + ". Xin cảm ơn quý vị.!");
         } else {
-            Logs((String)session.get("email"), "Đăng file đánh giá cho sinh viên: "+request.getParameter("mssv")+" thất bại");
+            Logs((String) session.get("email"), "Đăng file đánh giá cho sinh viên: " + request.getParameter("mssv") + " thất bại");
             session.put("message", "Đã có lỗi xảy ra khi đánh giá cho sinh viên: " + mssv + ". Xin quý vị thử lại sau!");
         }
         return SUCCESS;
@@ -347,11 +355,11 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
             File fileToCreate = new File(path, this.myFileFileName);
             FileUtils.copyFile(this.myFile, fileToCreate);
             link = "file/sinhvien/" + myFileFileName;
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
-            Logs((String)session.get("email"), "Lỗi đường dẫn khi upload file chấm công cho sinh viên: "+request.getParameter("mssv")+" lên hệ thống thất bại");
+            Logs((String) session.get("email"), "Lỗi đường dẫn khi upload file chấm công cho sinh viên: " + request.getParameter("mssv") + " lên hệ thống thất bại");
         }
 
         SinhVienFile svf = new SinhVienFile();
@@ -364,10 +372,10 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         svf.setTenFile("CHẤM CÔNG SINH VIÊN: " + mssv + "");
         svf.setLink(link);
         if (nhdController.saveFileSV(svf)) {
-            Logs((String)session.get("email"), "Đăng file chấm công cho sinh viên: "+request.getParameter("mssv")+" thành công");
+            Logs((String) session.get("email"), "Đăng file chấm công cho sinh viên: " + request.getParameter("mssv") + " thành công");
             session.put("message", "Quý vị đã GỬI FILE CHẤM CÔNG thành công cho sinh viên: " + mssv + ". Xin cảm ơn quý vị.!");
         } else {
-            Logs((String)session.get("email"), "Đăng file chấm công cho sinh viên: "+request.getParameter("mssv")+" thất bại");
+            Logs((String) session.get("email"), "Đăng file chấm công cho sinh viên: " + request.getParameter("mssv") + " thất bại");
             session.put("message", "Đã có lỗi xảy ra khi GỬI FILE CHẤM CÔNG cho sinh viên: " + mssv + ". Xin quý vị thử lại sau!");
         }
         return SUCCESS;
@@ -383,12 +391,82 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         this.nhd.setMaGvhd(nguoiHuongDan.getMaGvhd());
         this.nhd.setHoTen(nguoiHuongDan.getHoTen());
         if (nhdController.updateInFo(nhd)) {
-            Logs((String)session.get("email"), "Cập nhật thông tin cá nhân thành công");
+            Logs((String) session.get("email"), "Cập nhật thông tin cá nhân thành công");
             session.put("message", "Cập nhật thông tin cá nhân thành công !");
         } else {
-            Logs((String)session.get("email"), "Cập nhật thông tin cá nhân thất bại");
+            Logs((String) session.get("email"), "Cập nhật thông tin cá nhân thất bại");
             session.put("message", " cập nhật thông tin thất bại. Đã có lỗi xáy ra, vui lòng thử đăng nhập lại và thực hiện sau hoặc liên hệ với quản trị viên.");
         }
+
+        session.put("getAllDSSVDanhGia", "getAllDSSVDanhGia");
+        return SUCCESS;
+    }
+
+    public String DanhGiaSinhVien() throws FileNotFoundException {
+        String STR_FIRST_FIELD = "#";
+        String STR_LAST_FIELD = "#";
+        String STR_MATCHER = "(?i).*#[a-zA-Z_0-9]+#.*";
+        String STR_MATCHER_CHILD = "#[a-zA-Z_0-9]+#";
+        Date dateU = new Date();
+        String date = dateU.toString();
+
+        String sinhVien = request.getParameter("SINHVIEN");
+
+        int maNHD = nhdController.getMaNHD((String) session.get("email"));
+        NguoiHuongDan nhd = nhdController.getInfoNHD(maNHD);
+        CongTy ct = nhdController.getInfoct(nhd.getMaCongTy());
+        Map fieldReport = new HashMap();
+        for (int i = 0; i < 22; i++) {
+            fieldReport.put("D" + i + "", request.getParameter("D" + i + ""));
+            fieldReport.put("NX" + i + "", request.getParameter("NX" + i + ""));
+        }
+        fieldReport.put("DATE", date);
+        fieldReport.put("NHD", nhd.getHoTen());
+        fieldReport.put("EMAIL", nhd.getEmail());
+        fieldReport.put("DIENTHOAI", nhd.getDienThoai());
+        fieldReport.put("COSOTHUCTAP", ct.getTenCongTy());
+        fieldReport.put("DIACHI", ct.getDiaChi());
+        fieldReport.put("SINHVIEN", sinhVien);
+        fieldReport.put("DANHGIACHUNG", request.getParameter("DANHGIACHUNG"));
+        fieldReport.put("NHANSINHVIEN", request.getParameter("NHANSINHVIEN"));
+        fieldReport.put("KIENTHUCCOSO", request.getParameter("KIENTHUCCOSO"));
+        fieldReport.put("NGONNGULAPTRINH", request.getParameter("NGONNGULAPTRINH"));
+        fieldReport.put("PHANMEM", request.getParameter("PHANMEM"));
+        fieldReport.put("PHANCUNG", request.getParameter("PHANCUNG"));
+        fieldReport.put("KHAC", request.getParameter("KHAC"));
+        fieldReport.put("Q_NHOMKIENTHUC", request.getParameter("Q_NHOMKIENTHUC"));
+        fieldReport.put("Q_NGOAINGU", request.getParameter("Q_NGOAINGU"));
+        fieldReport.put("Q_TRINHDONGOAINGU", request.getParameter("Q_TRINHDONGOAINGU"));
+        fieldReport.put("Q_THIEUSOT", request.getParameter("Q_THIEUSOT"));
+        fieldReport.put("Q_UUDIEM", request.getParameter("Q_UUDIEM"));
+        fieldReport.put("Q_CAITIEN", request.getParameter("Q_CAITIEN"));
+        path = request.getSession().getServletContext().getRealPath("/");
+        XWPFDocument document = getFile(path + "DOCX/BM01_2_4_CongtyDanhgiaketqua.docx");
+        System.out.println(path);
+        document = replaceDocument(document, fieldReport, STR_FIRST_FIELD, STR_LAST_FIELD, STR_MATCHER, STR_MATCHER_CHILD);
+        saveDocxFile(path + "file/sinhvien/danhgia/BM01_2_4_CongtyDanhgiaketqua_" + sinhVien + ".docx", document);
+
+        
+        SinhVienFile svf = new SinhVienFile();
+        svf.setLoaiFile(3);
+        svf.setMoTa("ĐÁNH GIÁ SINH VIÊN: " + sinhVien + "");
+        int mssv = Integer.parseInt(sinhVien.substring(0, 8));
+        svf.setMssv(mssv);
+        Date dateUtil = new Date();
+        java.sql.Date dateSql = new java.sql.Date(dateUtil.getTime());
+        svf.setNgayThang(dateSql);
+        svf.setTenFile("ĐÁNH GIÁ SINH VIÊN: " + sinhVien + "");
+        svf.setLink("file/sinhvien/danhgia/BM01_2_4_CongtyDanhgiaketqua_" + sinhVien + ".doc");
+        
+         if (nhdController.saveFileSV(svf)) {
+            Logs((String) session.get("email"), "Đánh giá thực tập cho sinh viên: "+sinhVien+"");
+            session.put("message", "Cảm ơn quý vị đã đánh giá thực tập cho sinh viên: "+sinhVien+"");
+        } else {
+            Logs((String) session.get("email"), "Đánh giá thực tập cho sinh viên: "+sinhVien+"");
+            session.put("message", "Đã có lỗi xảy ra khi đánh giá thực tập cho sinh viên: " + sinhVien + ". Xin quý vị thử lại sau!");
+        }
+        
+        session.put("getAllDSSVDanhGia", "getAllDSSVDanhGia");
         return SUCCESS;
     }
 
@@ -404,7 +482,6 @@ public class NhdAction extends ActionSupport implements SessionAware, ServletReq
         nhdController.logs(logs);
     }
 
-    
     @Override
     public void setSession(Map<String, Object> map) {
         this.session = map;

@@ -320,6 +320,23 @@ public class NhdController {
         }
         return nhd;
     }
+    public CongTy getInfoct(int MACT) {
+        CongTy ct = new CongTy();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            ct = (CongTy) session.get(CongTy.class, MACT);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return ct;
+    }
     
     public void logs(Logs logs) {
         try {

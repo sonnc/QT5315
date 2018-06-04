@@ -353,6 +353,10 @@
             <result name="success" type="">/pages/nhd/detai.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
+        <action name="DanhGiaSinhVien" class="hust.sie.inpg12.sonnc.action.NhdAction" method="DanhGiaSinhVien">
+            <result name="success" type="">/pages/nhd/danhgia.jsp</result>
+            <result name="error" type="redirect">404.jsp</result>
+        </action>
         
         
         

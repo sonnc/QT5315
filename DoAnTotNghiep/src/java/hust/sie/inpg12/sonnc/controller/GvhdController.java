@@ -410,6 +410,32 @@ public class GvhdController {
         return results;
     }
 
+    public List<Object[]> getAllDiemSinhVienByKTT(int kyThucTap) {
+        List<Object[]> results = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createSQLQuery("select a.mssv, a.ho_ten, a.lop, b.dot_thuc_tap, c.diem_qua_trinh, c.diem_cuoi_ky\n"
+                    + "from sinh_vien a, sinh_vien_thuc_tap b, sinh_vien_diem c\n"
+                    + "where a.mssv = b.mssv\n"
+                    + "and c.mssv = a.mssv\n"
+                    + "and c.dot_thuc_tap = b.dot_thuc_tap\n"
+                    + "and b.trang_thai = false\n"
+                    + "and b.dot_thuc_tap =:ktt");
+            q.setParameter("ktt", kyThucTap);
+            results = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+
     public List getAllFileGVHD(String email) {
         List<FileAll> lst = new ArrayList<>();
         try {

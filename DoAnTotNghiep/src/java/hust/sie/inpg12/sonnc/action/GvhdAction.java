@@ -7,6 +7,9 @@ package hust.sie.inpg12.sonnc.action;
 
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import static hust.sie.inpg12.sonnc.apachepoi.TestRead.getFile;
+import static hust.sie.inpg12.sonnc.apachepoi.TestRead.replaceDocument;
+import static hust.sie.inpg12.sonnc.apachepoi.TestRead.saveDocxFile;
 import hust.sie.inpg12.sonnc.controller.GvhdController;
 import hust.sie.inpg12.sonnc.controller.SinhVienController;
 import hust.sie.inpg12.sonnc.entities.CongTy;
@@ -29,6 +32,7 @@ import hust.sie.inpg12.sonnc.other.DanhSachSinhVien;
 import hust.sie.inpg12.sonnc.other.DetaiCongtyNguoihuongdan;
 import hust.sie.inpg12.sonnc.other.SinhVienDiemThi;
 import hust.sie.inpg12.sonnc.other.SvDtCtNhd;
+import hust.sie.inpg12.sonnc.apachepoi.TestRead;
 import java.io.File;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -37,10 +41,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -237,10 +244,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
                 d.setKhoaVien((String) result[4]);
                 if (result[5] == null) {
                     d.setDotThucTap(0);
-                }else{
-                d.setDotThucTap((int) result[5]);
+                } else {
+                    d.setDotThucTap((int) result[5]);
                 }
-                if ((boolean) result[6]) {
+                if (result[6].equals(1)) {
                     d.setTrangThai("Hoạt động");
                 } else {
                     d.setTrangThai("Đã đóng");
@@ -379,10 +386,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
                     Integer.parseInt(request.getParameter("maDeTai")));
             svdk.setTrangThai(0);
             if (gvhdController.updateDetaiMotSinhVienDangKy(svdk)) {
-                Logs((String)session.get("email"), "Từ chối đề tài của sinh viên : " + request.getParameter("mssv")+" - đợt thực tập: "+request.getParameter("dotThucTap")+"");
+                Logs((String) session.get("email"), "Từ chối đề tài của sinh viên : " + request.getParameter("mssv") + " - đợt thực tập: " + request.getParameter("dotThucTap") + "");
                 session.put("messageDuyetDetai", "Đã từ chối thành công đề tài cho sinh viên: " + request.getParameter("mssv"));
             } else {
-                Logs((String)session.get("email"), "Đã có lỗi xảy ra khi thực hiện hành động từ chối đề tài sinh viên.");
+                Logs((String) session.get("email"), "Đã có lỗi xảy ra khi thực hiện hành động từ chối đề tài sinh viên.");
                 session.put("messageDuyetDetai", "Đã có lỗi xảy ra khi xử lý hành động này, vui lòng thử lại sau.");
             }
             return SUCCESS;
@@ -437,15 +444,15 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
                 sinhVienDiem.setDotThucTap(Integer.parseInt(request.getParameter("dotThucTap")));
 
                 if (gvhdController.saveSVTT(sinhVienThucTap, sinhVienDiem)) {
-                    Logs((String)session.get("email"), "Duyệt thành công đề tài cho sinh viên: "+request.getParameter("mssv")+" - kỳ thực tập: "+request.getParameter("dotThucTap")+"");
+                    Logs((String) session.get("email"), "Duyệt thành công đề tài cho sinh viên: " + request.getParameter("mssv") + " - kỳ thực tập: " + request.getParameter("dotThucTap") + "");
                     session.put("messageDuyetDetai", "Duyệt thành công");
                 } else {
-                    Logs((String)session.get("email"), "Lỗi xảy ra khi duyệt đề tài cho sinh viên: "+request.getParameter("mssv")+" - kỳ thực tập: "+request.getParameter("dotThucTap")+"");
+                    Logs((String) session.get("email"), "Lỗi xảy ra khi duyệt đề tài cho sinh viên: " + request.getParameter("mssv") + " - kỳ thực tập: " + request.getParameter("dotThucTap") + "");
                     session.put("messageDuyetDetai", "Duyệt thất bại");
                 }
                 return SUCCESS;
             } else {
-                Logs((String)session.get("email"), "Lỗi không tìm thấy mã số sinh viên.");
+                Logs((String) session.get("email"), "Lỗi không tìm thấy mã số sinh viên.");
                 session.put("messageDuyetDetai", "Không tìm thấy sinh viên, thử lại sau.");
             }
 
@@ -505,18 +512,18 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             svd.setMssv(mssv);
             if (gvhdController.chamDiem(svd)) {
                 if (gvhdController.CloseThucTapSinhVien(mssv, dotThucTap)) {
-                    Logs((String)session.get("email"), "Chấm điểm thành công và kết thúc thực tập "+dotThucTap+" cho sinh viên "+mssv+"");
+                    Logs((String) session.get("email"), "Chấm điểm thành công và kết thúc thực tập " + dotThucTap + " cho sinh viên " + mssv + "");
                     session.put("messageDiemThi", "Chấm điểm thành công.!");
                 } else {
-                    Logs((String)session.get("email"), "Lỗi kết thúc thực tập "+dotThucTap+" cho sinh viên "+mssv+", nhưng đã chấm điểm thành công.");
+                    Logs((String) session.get("email"), "Lỗi kết thúc thực tập " + dotThucTap + " cho sinh viên " + mssv + ", nhưng đã chấm điểm thành công.");
                     session.put("messageDiemThi", "Chấm điểm thành công nhưng đóng kỳ thực tập của sinh viên thất bại;");
                 }
             } else {
-                Logs((String)session.get("email"), "Lỗi khi thực hiện chấm điểm kỳ thực tập "+dotThucTap+" cho sinh viên "+mssv+"");
+                Logs((String) session.get("email"), "Lỗi khi thực hiện chấm điểm kỳ thực tập " + dotThucTap + " cho sinh viên " + mssv + "");
                 session.put("messageDiemThi", "Chấm điểm thất bại. Đã có lỗi xảy ra.");
             }
         } else {
-            Logs((String)session.get("email"), "Lỗi không tìm thấy sinh viên "+mssv+"");
+            Logs((String) session.get("email"), "Lỗi không tìm thấy sinh viên " + mssv + "");
             session.put("messageDiemThi", "Không tìm thấy mã sinh viên " + mssv + " với kỳ thực tập " + dotThucTap + "");
         }
 
@@ -574,7 +581,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             } catch (Exception e) {
                 e.printStackTrace();
                 addActionError(e.getMessage());
-                Logs((String)session.get("email"), "Lỗi đường dẫn khi lưu file lên hệ thống");
+                Logs((String) session.get("email"), "Lỗi đường dẫn khi lưu file lên hệ thống");
                 session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
             }
             fileAll.setEmail((String) session.get("email"));
@@ -584,15 +591,15 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             fileAll.setTenFile(request.getParameter("tenFile"));
             fileAll.settype(Integer.parseInt(request.getParameter("type")));
             if (gvhdController.UploadFileGVHD(fileAll)) {
-                Logs((String)session.get("email"), "Tải tài liệu: "+request.getParameter("tenFile")+" lên hệ thống thành công");
+                Logs((String) session.get("email"), "Tải tài liệu: " + request.getParameter("tenFile") + " lên hệ thống thành công");
                 session.put("messageUploadFile", " Tải tài liệu lên hệ thống thành công.");
             } else {
-                 Logs((String)session.get("email"), "Tải tài liệu: "+request.getParameter("tenFile")+" lên hệ thống thất bại");
+                Logs((String) session.get("email"), "Tải tài liệu: " + request.getParameter("tenFile") + " lên hệ thống thất bại");
                 session.put("messageUploadFile", " Tải tài liệu liệu lên hệ thống không thành công, vui lòng kiểm tra lại.");
             }
         } catch (Exception e) {
             e.printStackTrace();
-             Logs((String)session.get("email"), "Lỗi không xác định khi tải tài liệu: "+request.getParameter("tenFile")+" lên hệ thống");
+            Logs((String) session.get("email"), "Lỗi không xác định khi tải tài liệu: " + request.getParameter("tenFile") + " lên hệ thống");
             session.put("messageUploadFile", "Lỗi không xác định.");
         }
         return SUCCESS;
@@ -600,11 +607,11 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
 
     public String deleteTaiLieuGVHD() {
         if (gvhdController.deleteTaiLieuGVHD(Integer.parseInt(request.getParameter("maTaiLieu")), (String) session.get("email"))) {
-             Logs((String)session.get("email"), "Xóa tài liệu: "+request.getParameter("maTaiLieu")+" trên hệ thống thành công");
+            Logs((String) session.get("email"), "Xóa tài liệu: " + request.getParameter("maTaiLieu") + " trên hệ thống thành công");
             session.put("messageTaiLieuSinhVien", "Xóa tài liệu thành công. Mã lài liệu đã xóa là: " + request.getParameter("maTaiLieu") + "");
             return SUCCESS;
         } else {
-             Logs((String)session.get("email"), "Có lỗi xảy ra khi xóa tài liệu: "+request.getParameter("maTaiLieu")+" trên hệ thống");
+            Logs((String) session.get("email"), "Có lỗi xảy ra khi xóa tài liệu: " + request.getParameter("maTaiLieu") + " trên hệ thống");
             session.put("messageTaiLieuSinhVien", "Đã có lỗi xảy ra khi xóa tài liệu này. "
                     + " Mã lài liệu đã xóa là: " + request.getParameter("maTaiLieu") + "");
             return ERROR;
@@ -666,11 +673,11 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
                 ct.setTrangThai(0);
             }
             if (gvhdController.AcceptRefuseCongTy(ct)) {
-                 Logs((String)session.get("email"), "Chấp nhận công ty với mã số là: "+maCongTy+"");
+                Logs((String) session.get("email"), "Chấp nhận công ty với mã số là: " + maCongTy + "");
                 session.put("messageAcceptRefuse", "Chấp nhận thành công cho công ty này.");
             }
         } else {
-             Logs((String)session.get("email"), "Lỗi không tìm thấy mã công ty: "+maCongTy+"");
+            Logs((String) session.get("email"), "Lỗi không tìm thấy mã công ty: " + maCongTy + "");
             session.put("messageAcceptRefuse", "Lỗi: Không tìm thấy mã công ty, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
         }
         return SUCCESS;
@@ -765,11 +772,11 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
                 dt.setTrangThai(0);
             }
             if (gvhdController.AcceptRefuseDeTai(dt)) {
-                 Logs((String)session.get("email"), "Chấp nhận đề tài công ty với mã đề tài: "+maDeTai+"");
+                Logs((String) session.get("email"), "Chấp nhận đề tài công ty với mã đề tài: " + maDeTai + "");
                 session.put("messageAcceptRefuseDTCT", "Chấp nhận thành công cho đề tài này.");
             }
         } else {
-             Logs((String)session.get("email"), "Lỗi không tìm thấy mã đề tài: "+maDeTai+"");
+            Logs((String) session.get("email"), "Lỗi không tìm thấy mã đề tài: " + maDeTai + "");
             session.put("messageAcceptRefuseDTCT", "Lỗi: Không tìm thấy mã đề tài, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
         }
         return SUCCESS;
@@ -823,10 +830,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         email.setTrangThai(Boolean.FALSE);
         email.setThoiGian(sqlDate);
         if (gvhdController.sendEmailGVHD(email)) {
-             Logs((String)session.get("email"), "Gửi mail tới: "+request.getParameter("nguoiNhan")+" thành công.");
+            Logs((String) session.get("email"), "Gửi mail tới: " + request.getParameter("nguoiNhan") + " thành công.");
             session.put("emailMessage", "Bạn đã gửi Email trong hệ thống thành công !");
         } else {
-             Logs((String)session.get("email"), "Có lỗi xảy ra khi gửi mail tới: "+request.getParameter("nguoiNhan")+"");
+            Logs((String) session.get("email"), "Có lỗi xảy ra khi gửi mail tới: " + request.getParameter("nguoiNhan") + "");
             session.put("emailMessage", "Đã có lỗi khi thực hiện hành động gửi Email này. Nếu tình trạng này tiếp tục xảy ra, vui lòng liên hệ với quản trị viên.!");
         }
         return SUCCESS;
@@ -866,10 +873,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             quyTrinh.setNoiDung(request.getParameter("noiDung"));
             quyTrinh.setTieuDe(request.getParameter("tieuDe"));
             if (gvhdController.SaveLichTrinh(quyTrinh)) {
-                 Logs((String)session.get("email"), "Đăng lịch trình: "+request.getParameter("tieuDe")+"");
+                Logs((String) session.get("email"), "Đăng lịch trình: " + request.getParameter("tieuDe") + "");
                 session.put("messageLichTrinh", "Lưu thành công lịch trình vào hệ thống!");
             } else {
-                 Logs((String)session.get("email"), "Đã có lỗi xảy ra khi đăng lịch trình");
+                Logs((String) session.get("email"), "Đã có lỗi xảy ra khi đăng lịch trình");
                 session.put("messageLichTrinh", "Đã có lỗi xảy ra khi lưu lịch trình vào hệ thống, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
             }
         } catch (Exception e) {
@@ -881,10 +888,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
     public String DeleteLichTrinh() {
         int id = Integer.parseInt(request.getParameter("id"));
         if (gvhdController.DeleteLichTrinh(id)) {
-             Logs((String)session.get("email"), "Xóa lịch trình với mã: "+id+"");
+            Logs((String) session.get("email"), "Xóa lịch trình với mã: " + id + "");
             session.put("messageLichTrinh", "Xóa lịch trình thành công!");
         } else {
-             Logs((String)session.get("email"), "Có lỗi xảy ra khi xóa lịch trình");
+            Logs((String) session.get("email"), "Có lỗi xảy ra khi xóa lịch trình");
             session.put("messageLichTrinh", "Đã có lỗi xảy ra khi xóa, vui lòng kiểm tra lại.");
         }
         return SUCCESS;
@@ -901,7 +908,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         } catch (Exception e) {
             e.printStackTrace();
             addActionError(e.getMessage());
-             Logs((String)session.get("email"), "Lỗi đường dẫn khi lưu file avatar");
+            Logs((String) session.get("email"), "Lỗi đường dẫn khi lưu file avatar");
             session.put("messageUploadFile", "Lỗi đường dẫn khi lưu file lên hệ thống. Hãy liên hệ với quản trị viên.");
         }
         GiangVienHuongDan gvhd = new GiangVienHuongDan();
@@ -909,10 +916,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         gvhd.setAvatar(avatar);
         if (gvhdController.SaveThongTinCaNhan(gvhd)) {
             session.put("rule", 2);
-             Logs((String)session.get("email"), "Đăng ký thông tin cá nhân thành công");
+            Logs((String) session.get("email"), "Đăng ký thông tin cá nhân thành công");
             session.put("messageRegister", "Đăng ký thông tin cá nhân thành công.");
         } else {
-             Logs((String)session.get("email"), "Đăng ký thông tin cá nhân thất bại");
+            Logs((String) session.get("email"), "Đăng ký thông tin cá nhân thất bại");
             session.put("messageRegister", "Đã có lỗi xảy ra, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
             return ERROR;
         }
@@ -941,10 +948,10 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         gvhd.setMonGiangDay(this.gvhd.getMonGiangDay());
         gvhd.setSachXuatBan(this.gvhd.getSachXuatBan());
         if (gvhdController.updateThongTinCaNhan(gvhd)) {
-             Logs((String)session.get("email"), "Cập nhật thông tin cá nhân thành công");
+            Logs((String) session.get("email"), "Cập nhật thông tin cá nhân thành công");
             session.put("messageUpdateInfo", "Cập nhật thông tin cá nhân thành công.");
         } else {
-             Logs((String)session.get("email"), "Cập nhật thông tin cá nhân thất bại");
+            Logs((String) session.get("email"), "Cập nhật thông tin cá nhân thất bại");
             session.put("messageUpdateInfo", "Đã có lỗi xảy ra, vui lòng kiểm tra lại hoặc liên hệ với quản trị viên.");
         }
         return SUCCESS;
@@ -983,6 +990,73 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
             lstBaoCaoSinhVien.add(a);
         }
         session.put("GetAllBaoCaoQTCK", "GetAllBaoCaoQTCK");
+        return SUCCESS;
+    }
+
+    public String fillDataDiemThiSinhVien() {
+//        int x = Integer.parseInt(request.getParameter("kyThucTap"));
+//        int count = 1;
+//        try {
+//            List<Object[]> results = gvhdController.getAllDiemSinhVienByKTT(x);
+//            for (Object[] result : results) {
+//                count++;
+//                SinhVienDiemThi d = new SinhVienDiemThi();
+//                d.setMssv((int) result[0]);
+//                d.setHoTen((String) result[1]);
+//                d.setLop((String) result[2]);
+//                d.setDotThucTap((int) result[3]);
+//                // Khoa học sẽ thay thế bằng STT
+//                d.setKhoa(count);
+//                d.setDiemBCCK((double) result[5]);
+//                d.setDiemQuaTrinh((double) result[4]);
+//                lstSinhVienDiemThi.add(d);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ERROR;
+//        }
+
+        for (int i = 0; i < 10; i++) {
+            SinhVienDiemThi d = new SinhVienDiemThi();
+            d.setMssv(i);
+            d.setHoTen("" + i + "");
+            d.setLop("" + i + "");
+            d.setDotThucTap(i);
+            // Khoa học sẽ thay thế bằng STT
+            d.setKhoa(i);
+            d.setDiemBCCK(i);
+            d.setDiemQuaTrinh(i);
+            lstSinhVienDiemThi.add(d);
+        }
+
+        String STR_FIRST_FIELD = "#";
+        String STR_LAST_FIELD = "#";
+        String STR_MATCHER = "(?i).*#[a-zA-Z_0-9]+#.*";
+        String STR_MATCHER_CHILD = "#[a-zA-Z_0-9]+#";
+
+        Map fieldReport = new HashMap();
+        for (int i = 0; i < 10; i++) {
+            fieldReport.put("STT" + i + "", "00"+i);
+            fieldReport.put("MSSV" + i + "", "00"+i);
+            fieldReport.put("HOTEN" + i + "", "00"+i);
+            fieldReport.put("LOP" + i + "", "00"+i);
+            fieldReport.put("KTT" + i + "", "00"+i);
+            fieldReport.put("DQT" + i + "", "00"+i);
+            fieldReport.put("DCK" + i + "", "00"+i);
+        }
+
+        path = request.getSession().getServletContext().getRealPath("/");
+        XWPFDocument document = getFile(path + "DOCX/BM01_2_7_GiangvienBaocao.docx");
+        System.out.println(path);
+
+        XWPFTable table = document.getTables().get(1);
+        document = TestRead.loopRow(document, table, 10);
+        saveDocxFile(path + "DOCX/BM01_2_7_GiangvienBaocaoLoop.docx", document);
+
+        XWPFDocument documentFillData = getFile(path + "DOCX/BM01_2_7_GiangvienBaocaoLoop.docx");
+        documentFillData = replaceDocument(documentFillData, fieldReport, STR_FIRST_FIELD, STR_LAST_FIELD, STR_MATCHER, STR_MATCHER_CHILD);
+        saveDocxFile(path + "file/gvhd/BM01_2_7_GiangvienBaocao.docx", documentFillData);
+
         return SUCCESS;
     }
 

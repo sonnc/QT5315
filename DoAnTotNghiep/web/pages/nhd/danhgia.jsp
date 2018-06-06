@@ -162,9 +162,8 @@
                                         <select style="margin-bottom: 15px" name="SINHVIEN" class="form-control" required="true"> 
                                             <option value="">Chọn sinh viên để đánh giá</option>
                                             <s:iterator value="lstDanhSachSinhViens">
-                                                <option value="<s:property value="mssv" />"><s:property value="mssv"/> - <s:property value="hoTen" /></option>
+                                                <option value="<s:property value="mssv"/>-<s:property value="hoTen" />"><s:property value="mssv"/> - <s:property value="hoTen" /></option>
                                             </s:iterator>
-                                            <option value="20138374-Nguyễn Công Sơn">20138374-Nguyễn Công Sơn</option>
                                         </select>
                                     </div>
                                     <div class="col-lg-12 col-md-12" style="margin-bottom: 10px">

@@ -36,6 +36,7 @@
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/diemthi.jsp">Điểm thi</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/file.jsp">File</a></li>
                                     <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/lichtrinh.jsp">Lịch trình</a></li>
+                                    <li><a href="<%=session.getAttribute("httpURL")%>pages/gvhd/report.jsp">In báo cáo</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">

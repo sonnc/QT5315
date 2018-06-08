@@ -995,39 +995,40 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
 
     public String fillDataDiemThiSinhVien() {
 //        int x = Integer.parseInt(request.getParameter("kyThucTap"));
-//        int count = 1;
-//        try {
-//            List<Object[]> results = gvhdController.getAllDiemSinhVienByKTT(x);
-//            for (Object[] result : results) {
-//                count++;
-//                SinhVienDiemThi d = new SinhVienDiemThi();
-//                d.setMssv((int) result[0]);
-//                d.setHoTen((String) result[1]);
-//                d.setLop((String) result[2]);
-//                d.setDotThucTap((int) result[3]);
-//                // Khoa học sẽ thay thế bằng STT
-//                d.setKhoa(count);
-//                d.setDiemBCCK((double) result[5]);
-//                d.setDiemQuaTrinh((double) result[4]);
-//                lstSinhVienDiemThi.add(d);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ERROR;
-//        }
-
-        for (int i = 0; i < 10; i++) {
-            SinhVienDiemThi d = new SinhVienDiemThi();
-            d.setMssv(i);
-            d.setHoTen("" + i + "");
-            d.setLop("" + i + "");
-            d.setDotThucTap(i);
-            // Khoa học sẽ thay thế bằng STT
-            d.setKhoa(i);
-            d.setDiemBCCK(i);
-            d.setDiemQuaTrinh(i);
-            lstSinhVienDiemThi.add(d);
+        int x = 20183;
+        int count = 0;
+        try {
+            List<Object[]> results = gvhdController.getAllDiemSinhVienByKTT(x);
+            for (Object[] result : results) {
+                count++;
+                SinhVienDiemThi d = new SinhVienDiemThi();
+                d.setMssv((int) result[0]);
+                d.setHoTen((String) result[1]);
+                d.setLop((String) result[2]);
+                d.setDotThucTap((int) result[3]);
+                // Khoa học sẽ thay thế bằng STT
+                d.setKhoa(count);
+                d.setDiemBCCK((double) result[5]);
+                d.setDiemQuaTrinh((double) result[4]);
+                lstSinhVienDiemThi.add(d);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ERROR;
         }
+
+//        for (int i = 0; i < 10; i++) {
+//            SinhVienDiemThi d = new SinhVienDiemThi();
+//            d.setMssv(i);
+//            d.setHoTen("" + i + "");
+//            d.setLop("" + i + "");
+//            d.setDotThucTap(i);
+//            // Khoa học sẽ thay thế bằng STT
+//            d.setKhoa(i);
+//            d.setDiemBCCK(i);
+//            d.setDiemQuaTrinh(i);
+//            lstSinhVienDiemThi.add(d);
+//        }
 
         String STR_FIRST_FIELD = "#";
         String STR_LAST_FIELD = "#";
@@ -1035,14 +1036,14 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         String STR_MATCHER_CHILD = "#[a-zA-Z_0-9]+#";
 
         Map fieldReport = new HashMap();
-        for (int i = 0; i < 10; i++) {
-            fieldReport.put("STT" + i + "", "00"+i);
-            fieldReport.put("MSSV" + i + "", "00"+i);
-            fieldReport.put("HOTEN" + i + "", "00"+i);
-            fieldReport.put("LOP" + i + "", "00"+i);
-            fieldReport.put("KTT" + i + "", "00"+i);
-            fieldReport.put("DQT" + i + "", "00"+i);
-            fieldReport.put("DCK" + i + "", "00"+i);
+        for (int i = 0; i < lstSinhVienDiemThi.size(); i++) {
+            fieldReport.put("STT" + i + "", ""+lstSinhVienDiemThi.get(i).getKhoa()+"");
+            fieldReport.put("MSSV" + i + "", ""+lstSinhVienDiemThi.get(i).getMssv()+"");
+            fieldReport.put("HOTEN" + i + "", ""+lstSinhVienDiemThi.get(i).getHoTen()+"");
+            fieldReport.put("LOP" + i + "", ""+lstSinhVienDiemThi.get(i).getLop()+"");
+            fieldReport.put("KTT" + i + "", ""+lstSinhVienDiemThi.get(i).getDotThucTap()+"");
+            fieldReport.put("DQT" + i + "", ""+lstSinhVienDiemThi.get(i).getDiemQuaTrinh()+"");
+            fieldReport.put("DCK" + i + "", ""+lstSinhVienDiemThi.get(i).getDiemBCCK()+"");
         }
 
         path = request.getSession().getServletContext().getRealPath("/");
@@ -1050,12 +1051,12 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         System.out.println(path);
 
         XWPFTable table = document.getTables().get(1);
-        document = TestRead.loopRow(document, table, 10);
+        document = TestRead.loopRow(document, table, lstSinhVienDiemThi.size());
         saveDocxFile(path + "DOCX/BM01_2_7_GiangvienBaocaoLoop.docx", document);
 
         XWPFDocument documentFillData = getFile(path + "DOCX/BM01_2_7_GiangvienBaocaoLoop.docx");
         documentFillData = replaceDocument(documentFillData, fieldReport, STR_FIRST_FIELD, STR_LAST_FIELD, STR_MATCHER, STR_MATCHER_CHILD);
-        saveDocxFile(path + "file/gvhd/BM01_2_7_GiangvienBaocao.docx", documentFillData);
+        saveDocxFile(path + "file/gvhd/BM01_2_7_GiangvienBaocaoDaTa.docx", documentFillData);
 
         return SUCCESS;
     }

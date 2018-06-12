@@ -75,8 +75,8 @@
 
                                 </script>
                                 <div id="calendar"></div>
-                                <div>Dưới đây là mọi thông tin của quy trình thực tập <strong>20181</strong>
-                                    . Hãy thực hiện đúng theo quy trình và thời hạn của mỗi nhiệm vụ. </div>
+                                <br/>
+                                <div>Sinh viên nên thực hiện theo đúng lịch trình thực tập để đảm bảo thực tập tại doanh nghiệp được thuận lợi nhất.</div>
                                 <!--                                <table border="1">
                                                                     <tr>
                                                                         <th>ID</th>

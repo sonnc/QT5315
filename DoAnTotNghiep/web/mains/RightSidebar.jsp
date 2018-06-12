@@ -60,20 +60,20 @@
         </div>
 
         <div class="widget">
-            <h5 class="widgetheading">Popular tags</h5>
-            <ul class="tags">
-                <li><a href="#">Web design</a></li>
-                <li><a href="#">Trends</a></li>
-                <li><a href="#">Technology</a></li>
-                <li><a href="#">Internet</a></li>
-                <li><a href="#">Tutorial</a></li>
-                <li><a href="#">Development</a></li>
-                <li><a href="#">Web design</a></li>
-                <li><a href="#">Trends</a></li>
-                <li><a href="#">Technology</a></li>
-                <li><a href="#">Internet</a></li>
-                <li><a href="#">Tutorial</a></li>
-                <li><a href="#">Development</a></li>
+            <h5 class="widgetheading">LIÊN KẾT</h5>
+            <ul>
+                <li><a href="#">Đại học Bách Khoa Hà Nội</a></li>
+                <li><a href="#">Phòng CTCT & CTSV</a></li>
+                <li><a href="#">Phòng Đào tạo Đại học</a></li>
+                <li><a href="#">Tuyển sinh ĐHBK</a></li>
+                <li><a href="#">Thư viện Tạ Quang Bửu</a></li>
+                <li><a href="#">Đào tạo sau đại học SIE</a></li>
+                <li><a href="#">Trung tâm ngoại ngữ CFL</a></li>
+                <li><a href="#">Viện Cơ khí</a></li>
+                <li><a href="#">Viện CNTT & TT</a></li>
+                <li><a href="#">Viện Điện tử Viễn thông</a></li>
+                <li><a href="#">Viện Kinh tế và Quản lý</a></li>
+                <li><a href="#">Tuyển sinh VB2 chính quy</a></li>
             </ul>
         </div>
     </aside>

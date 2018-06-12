@@ -152,7 +152,7 @@
                                                 <div class="validation"></div>
                                             </div>
                                             <div class="form-group">
-                                                <textarea class="form-control" name="noiDung" rows="10"  placeholder="Nội dung: ..."  ></textarea>
+                                                <textarea style="height: 400px" class="form-control" name="noiDung" rows="30"  placeholder="Nội dung: ..."  ></textarea>
                                                 <div class="validation"></div>
                                             </div>
                                             <div class="text-center"><button type="submit" class="btn btn-theme btn-block btn-md">GỬI ĐI</button></div>

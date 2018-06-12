@@ -69,7 +69,7 @@
                                     <tbody>
                                         <s:iterator value="lstCongTy">
                                             <tr>
-                                                <td><img src="<s:property value="logo"/>" style="height: 50px; width: 50px"/></td>
+                                                <td> <img src="<%= session.getAttribute("httpURL")%><s:property value="logo"/>" style="height: 50px; width: 50px"/></td>
                                                 <td><s:property value="tenCongTy"/></td>
                                                 <td><s:property value="email"/></td>
                                                 <td><s:property value="diaChi"/></td>

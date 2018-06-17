@@ -313,8 +313,8 @@
             <result name="success" type="">/pages/gvhd/capnhatthongtin.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
-        <action name="fillDataDiemThiSinhVien" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="fillDataDiemThiSinhVien">
-            <result name="success" type="">/home.jsp</result>
+        <action name="report" class="hust.sie.inpg12.sonnc.action.GvhdAction" method="report">
+            <result name="success" type="">/pages/gvhd/report.jsp</result>
             <result name="error" type="redirect">404.jsp</result>
         </action>
         

@@ -38,6 +38,7 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -247,7 +248,7 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
                 } else {
                     d.setDotThucTap((int) result[5]);
                 }
-                if (result[6].equals(1)) {
+                if (result[6].toString().contains("1")) {
                     d.setTrangThai("Hoạt động");
                 } else {
                     d.setTrangThai("Đã đóng");
@@ -993,71 +994,111 @@ public class GvhdAction extends ActionSupport implements SessionAware, ServletRe
         return SUCCESS;
     }
 
-    public String fillDataDiemThiSinhVien() {
-//        int x = Integer.parseInt(request.getParameter("kyThucTap"));
-        int x = 20183;
+    public String report() {
+        int x = Integer.parseInt(request.getParameter("kyThucTap"));
         int count = 0;
-        try {
-            List<Object[]> results = gvhdController.getAllDiemSinhVienByKTT(x);
-            for (Object[] result : results) {
-                count++;
-                SinhVienDiemThi d = new SinhVienDiemThi();
-                d.setMssv((int) result[0]);
-                d.setHoTen((String) result[1]);
-                d.setLop((String) result[2]);
-                d.setDotThucTap((int) result[3]);
-                // Khoa học sẽ thay thế bằng STT
-                d.setKhoa(count);
-                d.setDiemBCCK((double) result[5]);
-                d.setDiemQuaTrinh((double) result[4]);
-                lstSinhVienDiemThi.add(d);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ERROR;
-        }
-
-//        for (int i = 0; i < 10; i++) {
-//            SinhVienDiemThi d = new SinhVienDiemThi();
-//            d.setMssv(i);
-//            d.setHoTen("" + i + "");
-//            d.setLop("" + i + "");
-//            d.setDotThucTap(i);
-//            // Khoa học sẽ thay thế bằng STT
-//            d.setKhoa(i);
-//            d.setDiemBCCK(i);
-//            d.setDiemQuaTrinh(i);
-//            lstSinhVienDiemThi.add(d);
-//        }
-
+        int loop = 0;
+        Map fieldReport = null;
         String STR_FIRST_FIELD = "#";
         String STR_LAST_FIELD = "#";
         String STR_MATCHER = "(?i).*#[a-zA-Z_0-9]+#.*";
         String STR_MATCHER_CHILD = "#[a-zA-Z_0-9]+#";
+        String templateName = "";
+        if (request.getParameter("BieuMau").contains("BM01_2_7")) {
+            templateName = "BM01_2_7_GiangvienBaocao";
+            try {
+                List<Object[]> results = gvhdController.getAllDiemSinhVienByKTT(x);
+                for (Object[] result : results) {
+                    count++;
+                    SinhVienDiemThi d = new SinhVienDiemThi();
+                    d.setMssv((int) result[0]);
+                    d.setHoTen((String) result[1]);
+                    d.setLop((String) result[2]);
+                    d.setDotThucTap((int) result[3]);
+                    // Khoa học sẽ thay thế bằng STT
+                    d.setKhoa(count);
+                    d.setDiemBCCK((double) result[5]);
+                    d.setDiemQuaTrinh((double) result[4]);
+                    lstSinhVienDiemThi.add(d);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ERROR;
+            }
 
-        Map fieldReport = new HashMap();
-        for (int i = 0; i < lstSinhVienDiemThi.size(); i++) {
-            fieldReport.put("STT" + i + "", ""+lstSinhVienDiemThi.get(i).getKhoa()+"");
-            fieldReport.put("MSSV" + i + "", ""+lstSinhVienDiemThi.get(i).getMssv()+"");
-            fieldReport.put("HOTEN" + i + "", ""+lstSinhVienDiemThi.get(i).getHoTen()+"");
-            fieldReport.put("LOP" + i + "", ""+lstSinhVienDiemThi.get(i).getLop()+"");
-            fieldReport.put("KTT" + i + "", ""+lstSinhVienDiemThi.get(i).getDotThucTap()+"");
-            fieldReport.put("DQT" + i + "", ""+lstSinhVienDiemThi.get(i).getDiemQuaTrinh()+"");
-            fieldReport.put("DCK" + i + "", ""+lstSinhVienDiemThi.get(i).getDiemBCCK()+"");
+            fieldReport = new HashMap();
+            for (int i = 0; i < lstSinhVienDiemThi.size(); i++) {
+                fieldReport.put("STT" + i + "", "" + lstSinhVienDiemThi.get(i).getKhoa() + "");
+                fieldReport.put("MSSV" + i + "", "" + lstSinhVienDiemThi.get(i).getMssv() + "");
+                fieldReport.put("HOTEN" + i + "", "" + lstSinhVienDiemThi.get(i).getHoTen() + "");
+                fieldReport.put("LOP" + i + "", "" + lstSinhVienDiemThi.get(i).getLop() + "");
+                fieldReport.put("KTT" + i + "", "" + lstSinhVienDiemThi.get(i).getDotThucTap() + "");
+                fieldReport.put("DQT" + i + "", "" + lstSinhVienDiemThi.get(i).getDiemQuaTrinh() + "");
+                fieldReport.put("DCK" + i + "", "" + lstSinhVienDiemThi.get(i).getDiemBCCK() + "");
+            }
+            loop = lstSinhVienDiemThi.size();
+        } else if (request.getParameter("BieuMau").contains("BM01_2_8")) {
+            templateName = "BM01_2_8_TongHopNguyenVongSinhVien";
+            List<DanhSachSinhVien> lst = new ArrayList<>();
+            try {
+                List<Object[]> results = gvhdController.reportNguyenVongSinhVien(x);
+                for (Object[] result : results) {
+                    count++;
+                    DanhSachSinhVien d = new DanhSachSinhVien();
+                    d.setMssv((int) result[0]);
+                    d.setHoTen((String) result[1]);
+                    d.setLop((String) result[2]);
+                    d.setStartDate((Date) result[3]);
+                    d.setTenCongty((String) result[4]);
+                    d.setTenDeTai((String) result[5]);
+                    d.setSoKhop((double) result[6]);
+                    d.setKhoa(count);
+                    lst.add(d);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ERROR;
+            }
+
+            fieldReport = new HashMap();
+            Date date = Calendar.getInstance().getTime();
+            DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+            String strDate = dateFormat.format(date);
+            for (int i = 0; i < lst.size(); i++) {
+                fieldReport.put("KYTHUCTAP", String.valueOf(x).toString());
+                fieldReport.put("DATE", strDate);
+                fieldReport.put("STT" + i + "", "" + lst.get(i).getKhoa() + "");
+                fieldReport.put("MSSV" + i + "", "" + lst.get(i).getMssv() + "");
+                fieldReport.put("HOTEN" + i + "", "" + lst.get(i).getHoTen()+ "");
+                fieldReport.put("LOP" + i + "", "" + lst.get(i).getLop()+ "");
+                fieldReport.put("STARTDATE" + i + "", "" + lst.get(i).getStartDate()+ "");
+                fieldReport.put("TENCONGTY" + i + "", "" + lst.get(i).getTenCongty()+ "");
+                fieldReport.put("TENDETAI" + i + "", "" + lst.get(i).getTenDeTai()+ "");
+                fieldReport.put("SOKHOP" + i + "", "" + lst.get(i).getSoKhop()+ "");
+            }
+            loop = lst.size();
         }
 
         path = request.getSession().getServletContext().getRealPath("/");
-        XWPFDocument document = getFile(path + "DOCX/BM01_2_7_GiangvienBaocao.docx");
+        XWPFDocument document = getFile(path + "DOCX/" + templateName + ".docx");
         System.out.println(path);
 
-        XWPFTable table = document.getTables().get(1);
-        document = TestRead.loopRow(document, table, lstSinhVienDiemThi.size());
-        saveDocxFile(path + "DOCX/BM01_2_7_GiangvienBaocaoLoop.docx", document);
+        int tableIndex = 0;
+        if (request.getParameter("BieuMau").contains("BM01_2_7")) {
+            tableIndex = 1;
+        } else if (request.getParameter("BieuMau").contains("BM01_2_8")) {
+            tableIndex = 0;
+        }
+        XWPFTable table = document.getTables().get(tableIndex);
+        document = TestRead.loopRow(document, table, loop, request.getParameter("BieuMau"));
+        saveDocxFile(path + "DOCX/" + templateName + "Loop.docx", document);
 
-        XWPFDocument documentFillData = getFile(path + "DOCX/BM01_2_7_GiangvienBaocaoLoop.docx");
+        XWPFDocument documentFillData = getFile(path + "DOCX/" + templateName + "Loop.docx");
         documentFillData = replaceDocument(documentFillData, fieldReport, STR_FIRST_FIELD, STR_LAST_FIELD, STR_MATCHER, STR_MATCHER_CHILD);
-        saveDocxFile(path + "file/gvhd/BM01_2_7_GiangvienBaocaoDaTa.docx", documentFillData);
+        saveDocxFile(path + "file/gvhd/" + templateName + "DaTa.docx", documentFillData);
 
+        session.put("path", "file/gvhd/" + templateName + "DaTa.docx");
+        session.put("fileName", templateName);
         return SUCCESS;
     }
 

@@ -46,7 +46,7 @@ public class GvhdController {
             results = (List<Object[]>) session.createSQLQuery("select a.mssv, a.ho_ten, a.lop, a.khoa, a.khoa_vien, \n"
                     + "b.dot_thuc_tap, ifnull(b.trang_thai, true) as trang_thai\n"
                     + "from sinh_vien a left join sinh_vien_thuc_tap b on a.mssv = b.mssv\n"
-                    + "order by b.dot_thuc_tap desc;").list();
+                    + "order by b.dot_thuc_tap desc").list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -423,6 +423,35 @@ public class GvhdController {
                     + "and b.trang_thai = false\n"
                     + "and b.dot_thuc_tap =:ktt");
             q.setParameter("ktt", kyThucTap);
+            results = q.list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+
+    public List<Object[]> reportNguyenVongSinhVien(int kyThucTap) {
+        List<Object[]> results = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            Query q = session.createSQLQuery("SELECT a.mssv, a.ho_ten, a.lop, d.thoi_gian_bat_dau, e.ten_cong_ty, b.ten_de_tai, f.so_khop\n"
+                    + "from sinh_vien a, de_tai b, sinh_vien_thuc_tap d, cong_ty e, sinh_vien_dang_ky f\n"
+                    + "where a.mssv = d.mssv\n"
+                    + "and a.mssv = f.mssv\n"
+                    + "and d.mssv = f.mssv\n"
+                    + "and d.ma_de_tai = b.ma_de_tai\n"
+                    + "and b.ma_cong_ty = e.ma_cong_ty\n"
+                    + "and f.trang_thai = 1\n"
+                    + "and d.trang_thai = true\n"
+                    + "and d.dot_thuc_tap =:kyThucTap");
+            q.setParameter("kyThucTap", kyThucTap);
             results = q.list();
             transaction.commit();
         } catch (Exception e) {

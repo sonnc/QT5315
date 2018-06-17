@@ -318,37 +318,53 @@ public class TestRead {
         }
     }
 
-    public static XWPFDocument loopRow(XWPFDocument document, XWPFTable table, int loopRow) {
-        try {
-            // create loop for each query
-            for (int j = 0; j < loopRow; j++) {
-                // create row: copy and replace row
-                XWPFTableRow row = table.createRow();
-                row.getCell(0).setText("#STT"+j+"#");
-                row.getCell(1).setText("#MSSV"+j+"#");
-                row.getCell(2).setText("#HOTEN"+j+"#");
-                row.getCell(3).setText("#LOP"+j+"#");
-                row.getCell(4).setText("#KTT"+j+"#");
-                row.getCell(5).setText("#DQT"+j+"#");
-                row.getCell(6).setText("#DCK"+j+"#");
-                // add new row
-              //  table.addRow(newRow, j + 1);
+    public static XWPFDocument loopRow(XWPFDocument document, XWPFTable table, int loopRow, String doc) {
+        if (doc.equals("BM01_2_7")) {
+            try {
+                // create loop for each query
+                for (int j = 0; j < loopRow; j++) {
+                    // create row: copy and replace row
+                    XWPFTableRow row = table.createRow();
+                    row.getCell(0).setText("#STT" + j + "#");
+                    row.getCell(1).setText("#MSSV" + j + "#");
+                    row.getCell(2).setText("#HOTEN" + j + "#");
+                    row.getCell(3).setText("#LOP" + j + "#");
+                    row.getCell(4).setText("#KTT" + j + "#");
+                    row.getCell(5).setText("#DQT" + j + "#");
+                    row.getCell(6).setText("#DCK" + j + "#");
+                    // add new row
+                    //  table.addRow(newRow, j + 1);
+                }
+                // delete row originally
+                //     table.removeRow(1);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            // delete row originally
-       //     table.removeRow(1);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            try {
+                // create loop for each query
+                for (int j = 0; j < loopRow; j++) {
+                    // create row: copy and replace row
+                    XWPFTableRow row = table.createRow();
+                    row.getCell(0).setText("#STT" + j + "#");
+                    row.getCell(1).setText("#MSSV" + j + "#");
+                    row.getCell(2).setText("#HOTEN" + j + "#");
+                    row.getCell(3).setText("#LOP" + j + "#");
+                    row.getCell(4).setText("#STARTDATE" + j + "#");
+                    row.getCell(5).setText("#TENCONGTY" + j + "#");
+                    row.getCell(6).setText("#TENDETAI" + j + "#");
+                    row.getCell(6).setText("#SOKHOP" + j + "#");
+                    // add new row
+                    //  table.addRow(newRow, j + 1);
+                }
+                // delete row originally
+                //     table.removeRow(1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         return document;
     }
 
-//    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-//        // TODO code application logic here
-//        XWPFDocument document = getFile("./VIEWS/ES template_FI_4Jan2018.docx");
-//        Map fieldsForReport = putMap();
-//        document = replaceDocument(document, fieldsForReport, STR_FIRST_FIELD, STR_LAST_FIELD, STR_MATCHER, STR_MATCHER_CHILD);
-//        saveDocxFile("./VIEWS/ES templSate_FI_4Jan2018_update.docx", document);
-//    }
 }
-// vấn đề: tự động fill tạo thêm hàng và cột trong bảng dữ liệu khi truy vấn có 
-// nhiều hơn 2 bản ghi.

@@ -12,6 +12,7 @@ import java.util.Date;
  * @author sonnc
  */
 public class DanhSachSinhVien {
+
     private int mssv;
     private String hoTen;
     private String lop;
@@ -23,6 +24,16 @@ public class DanhSachSinhVien {
     private int maDeTai;
     private Date startDate;
     private Date endDate;
+    private String tenCongty;
+    private double soKhop;
+
+    public double getSoKhop() {
+        return soKhop;
+    }
+
+    public void setSoKhop(double soKhop) {
+        this.soKhop = soKhop;
+    }
 
     public Date getStartDate() {
         return startDate;
@@ -32,6 +43,14 @@ public class DanhSachSinhVien {
         this.startDate = startDate;
     }
 
+    public String getTenCongty() {
+        return tenCongty;
+    }
+
+    public void setTenCongty(String tenCongty) {
+        this.tenCongty = tenCongty;
+    }
+
     public Date getEndDate() {
         return endDate;
     }
@@ -39,8 +58,6 @@ public class DanhSachSinhVien {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
-    
 
     public String getTenDeTai() {
         return tenDeTai;
@@ -57,7 +74,7 @@ public class DanhSachSinhVien {
     public void setMaDeTai(int maDeTai) {
         this.maDeTai = maDeTai;
     }
-    
+
     public int getMssv() {
         return mssv;
     }
@@ -113,6 +130,5 @@ public class DanhSachSinhVien {
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
-    
-    
+
 }

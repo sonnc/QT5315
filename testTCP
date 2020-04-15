@@ -1,0 +1,78 @@
+#create a simulator object
+set ns [new Simulator]
+$ns color 1 blue
+$ns color 2 red
+# Open the nam trace file
+set tf [open Tahoe.tr w]
+$ns trace-all $tf
+#open the throughput, congestion window size, and acknowledgement number
+output file
+set thrptf [open thrptTahoe.tr w]
+set cwndf [open cwndTahoe.tr w]
+set awndf [open awndTahoe.tr w]
+set rttf [open rttTahoe.tr w]
+set dupackf [open dupTahoe.tr w]
+#Define a 'finish' procedure
+proc finish {} {
+global ns tf thrptf cwndf awndf rttf dupackf
+$ns flush-trace
+close $tf
+close $thrptf
+close $cwndf
+close $awndf
+close $rttf
+close $dupackf
+exit 0
+}
+proc update_file {} {
+global ns qmon
+global thrptf cwndf awndf rttf dupackf
+global TcpTahoe
+set interval 0.08
+ set now [$ns now]
+set bw [$qmon set bdepartures_]
+ # puts "time = $now bw = $bw"
+puts $thrptf "$now \t [expr $bw*8/$interval/1000000]"
+$qmon set bdepartures_ 0
+puts $cwndf "$now \t [$TcpTahoe set cwnd_]"
+ puts $awndf "$now \t [$TcpTahoe set awnd_]"
+ puts $rttf "$now \t [$TcpTahoe set rtt_]"
+puts $dupackf "$now \t [$TcpTahoe set dupacks_]"
+$ns at [expr $now+$interval] "update_file"
+}
+# create six nodes
+for {set i 0} {$i < 3} {incr i} {
+set node($i) [$ns node]
+}
+#create links between nodes
+$ns duplex-link $node(0) $node(1) 100Mb 1ms DropTail
+$ns duplex-link $node(1) $node(2) 0.1Mb 10ms DropTail
+$ns queue-limit $node(1) $node(2) 10
+# set for nam
+$ns duplex-link-op $node(0) $node(1) orient right
+$ns duplex-link-op $node(1) $node(2) orient right
+#Monitor the queue for the link between node 3 and node 4
+#$ns duplex-link-op $node(3) $node(4) queuePos 0.5
+set qmon [$ns monitor-queue $node(1) $node(2) ""]
+# TCP-Tahoe traffic source
+set TcpTahoe [new Agent/TCP]
+$ns attach-agent $node(0) $TcpTahoe
+$TcpTahoe set fid_ 1
+$TcpTahoe set class_ 1
+$TcpTahoe set packetSize_ 1000
+set sink1 [new Agent/TCPSink]
+$ns attach-agent $node(2) $sink1
+$ns connect $TcpTahoe $sink1
+# create CBR traffic for tcp Tahoe
+set CbrTahoe [new Application/Traffic/CBR]
+$CbrTahoe attach-agent $TcpTahoe
+$CbrTahoe set packetSize_ 1000
+$CbrTahoe set interval_ 0.01
+$CbrTahoe set random_ false
+#Schedule event for all the flows
+$ns at 0.0 "update_file"
+$ns at 0.1 "$CbrTahoe start"
+$ns at 5.0 "$CbrTahoe stop"
+$ns at 5.1 "finish"
+# run the simulation
+$ns run
